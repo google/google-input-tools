@@ -18,6 +18,7 @@
 goog.provide('goog.ime.chrome.os.ConfigFactory');
 
 goog.require('goog.ime.chrome.os.Config');
+goog.require('goog.ime.chrome.os.CangjieConfig');
 goog.require('goog.ime.chrome.os.PinyinConfig');
 goog.require('goog.ime.chrome.os.ZhuyinConfig');
 goog.require('goog.ime.offline.InputToolCode');
@@ -131,4 +132,7 @@ goog.ime.chrome.os.ConfigFactory.prototype.buildConfigs_ = function() {
 
   var zhuyinConfig = new goog.ime.chrome.os.ZhuyinConfig();
   this.map_[code.INPUTMETHOD_ZHUYIN_CHINESE_TRADITIONAL] = zhuyinConfig;
+
+  var cangjieConfig = new goog.ime.chrome.os.CangjieConfig();
+  this.map_[code.INPUTMETHOD_CANGJIE87_CHINESE_TRADITIONAL] = cangjieConfig;
 };

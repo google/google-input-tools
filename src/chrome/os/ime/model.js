@@ -394,8 +394,7 @@ goog.ime.chrome.os.Model.prototype.updateSource = function(text) {
   // Check the max input length. If it's going to exceed the limit, do nothing.
   if (this.source.length + text.length >
       this.configFactory.getCurrentConfig().maxInputLen) {
-    this.source += text;
-    return;
+    this.selectCandidate(undefined, '');
   }
 
   this.source += text;

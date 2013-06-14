@@ -107,7 +107,7 @@ goog.ime.offline.DataLoader = function(inputTool) {
    *
    * @type {string}
    */
-  this.initialTokens;
+  this.initialTokens = '';
 
   /**
    * Whether the data is ready now.
