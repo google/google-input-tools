@@ -1,0 +1,75 @@
+// Copyright 2013 Google Inc. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+{
+  "name": "Chrome OS Hangul IME",
+  "version": "1.0.0.12",
+  "permissions": [
+    "input",
+    "unlimitedStorage"
+  ],
+  "manifest_version": 2,
+  "minimum_chrome_version": "22",
+  "description": "Korean input method on Chrome OS",
+  "default_locale": "en",
+  "background": {
+    "page": "backgroundpage.html"
+  },
+  "input_components": [{
+    "name": "__MSG_Hangul_2_Set__",
+    "type": "ime",
+    "id": "hangul_2set",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }, {
+    "name": "__MSG_Hangul_3_Set_390__",
+    "type": "ime",
+    "id": "hangul_3set390",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }, {
+    "name": "__MSG_Hangul_3_Set_Final__",
+    "type": "ime",
+    "id": "hangul_3setfinal",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }, {
+    "name": "__MSG_Hangul_3_Set_No_Shift__",
+    "type": "ime",
+    "id": "hangul_3setnoshift",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }, {
+    "name": "__MSG_Hangul_Romaja__",
+    "type": "ime",
+    "id": "hangul_romaja",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }, {
+    "name": "__MSG_Hangul_Ahnmatae__",
+    "type": "ime",
+    "id": "hangul_ahnmatae",
+    "description": "",
+    "language": "ko",
+    "layouts": ["us"]
+  }],
+  "icons": {
+    "128": "icon128.png"
+  }
+}
