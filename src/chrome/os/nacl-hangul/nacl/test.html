@@ -1,0 +1,207 @@
+<!--
+  Copyright 2013 Google Inc. All Rights Reserved.
+  
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+  
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hangul Native Client Test</title>
+</head>
+<body onload="pageDidLoad()">
+
+<div id="listener">
+  <embed name="nacl_module"
+     id="hangul"
+     width=0 height=0
+     src="hangul.nmf"
+     type="application/x-nacl" />
+</div>
+
+<div>
+  <select id="keyboard">
+    <option value="2">2 Set</option>
+    <option value="39">3 Set (390)</option>
+    <option value="3f">3 Set (Final)</option>
+    <option value="3s">3 Set (No Shift)</option>
+    <option value="ro">Romaja</option>
+    <option value="ahn">Ahnmatae</option>
+  </select>
+</div>
+
+<div>
+  <input type="text" id="user_input">
+</div>
+
+<h2>Status</h2>
+<div id="status_field">NO-STATUS</div>
+
+<h2>Hangul</h2>
+<span id="hangul_field"></span>
+
+<h2>Hanja</h2>
+<div id="hanja_field"></div>
+
+<script type="text/javascript">
+HangulModule = null;
+statusText = 'NO-STATUS';
+var commitHangul = '';
+
+function moduleDidLoad() {
+  HangulModule = document.getElementById('hangul');
+  updateStatus('SUCCESS');
+}
+
+var userInput = document.getElementById('user_input');
+var hangulField = document.getElementById('hangul_field');
+var hanjaField = document.getElementById('hanja_field');
+var keyboardSelect = document.getElementById('keyboard');
+
+function handleMessage(message_event) {
+  console.log(message_event.data);
+  var response = JSON.parse(message_event.data);
+  if (response[0] !== 'SUCCESS') {
+    console.error(response);
+    return;
+  }
+  var payload = response[1];
+  var result = payload[0];
+  var orig = result[0];
+  var candidates_list = result[1];
+  var matched_length = result[2];
+  var other_props = result[3];
+  var annotations = other_props.annotations;
+
+  var display = '';
+  if (candidates_list) {
+    for (var i = 0; i < candidates_list.length; i++) {
+      var candidate = candidates_list[i];
+      display += ' ' + candidate;
+      if (annotations) {
+        display += '(' + annotations[i] + ')';
+      }
+    }
+  }
+
+  if (orig.length > 0) {
+    var isHanja = false;
+    if (orig[0].charCodeAt(0) > 255) {
+      isHanja = true;
+    }
+    if (!isHanja) {
+      userInput.value = orig;
+      hangulField.innerHTML = display;
+      commitHangul = candidates_list.join('');
+    } else {
+      hanjaField.innerHTML = display;
+      commitHangul = '';
+    }
+  } else {
+    userInput.value = '';
+    hangulField.innerHTML = '';
+  }
+}
+
+function pageDidLoad() {
+  if (HangulModule == null) {
+    updateStatus('LOADING...');
+  } else {
+    updateStatus();
+  }
+}
+
+function updateStatus(opt_message) {
+  statusText = opt_message;
+  var statusField = document.getElementById('status_field');
+  if (statusField) {
+    statusField.innerHTML = statusText;
+  }
+}
+
+var listener = document.getElementById('listener');
+listener.addEventListener('load', moduleDidLoad, true);
+listener.addEventListener('message', handleMessage, true);
+var input = '';
+
+userInput.onkeydown = function (event) {
+  if (event.keyCode === 8) { //Backspace
+    if (input.length > 0) {
+      input = input.substr(0, input.length - 1);
+      updateInput();
+    }
+    event.preventDefault();
+  } else if (event.keyCode === 13) { //Enter
+    event.preventDefault();
+  } else if (event.keyCode === 32) { //Space
+    if (commitHangul.length > 0) {
+      updateHanja();
+    }
+    event.preventDefault();
+  }
+};
+
+userInput.onkeypress = function (event) {
+  if (!event.charCode) {
+    return;
+  }
+  input += String.fromCharCode(event.charCode);
+  updateInput();
+  event.preventDefault();
+};
+
+keyboardSelect.onchange = function(event) {
+  var kb = keyboardSelect.options[keyboardSelect.options.selectedIndex].value;
+  var request = JSON.stringify({
+    app: 'chos',
+    keyboard: kb,
+  });
+  HangulModule.postMessage(request);
+  console.log(request);
+};
+
+var updateInput = function() {
+  var request = JSON.stringify({
+    text: input,
+    ime: 'hangul',
+    num: 0,
+    cp: '0',
+    cs: '0',
+    ie: 'utf-8',
+    oe: 'utf-8',
+    app: 'chos',
+  });
+  HangulModule.postMessage(request);
+  console.log(request);
+};
+
+var updateHanja = function() {
+  userInput.value = '';
+  input = '';
+  var request = JSON.stringify({
+    text: commitHangul,
+    ime: 'hangul',
+    num: 0,
+    cp: '0',
+    cs: '0',
+    ie: 'utf-8',
+    oe: 'utf-8',
+    app: 'chos',
+  });
+  HangulModule.postMessage(request);
+  console.log(request);
+};
+</script>
+</body>
+</html>
