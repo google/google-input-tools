@@ -1,0 +1,38 @@
+{
+  "zhuyin_inputmethod": {
+    "message": "Zhuyin input method"
+  },
+  "zhuyin_setting_page": {
+    "message": "Zhuyin Setting Page"
+  },
+  "fuzzy_pinyin": {
+    "message": "Enable Fuzzy-Pinyin mode"
+  },
+  "user_dict": {
+    "message": "Enable user dictionary"
+  },
+  "move_page_key_above": {
+    "message": "Use - and = keys to page a candidate list"
+  },
+  "move_page_key_below": {
+    "message": "Use , and . keys to page a candidate list"
+  },
+  "init_lang": {
+    "message": "Initial input language is Chinese"
+  },
+  "init_punc": {
+    "message": "Initial punctuation width is Full"
+  },
+  "init_sbc": {
+    "message": "Initial character width is Full"
+  },
+  "zhuyin_keyboard_layout": {
+    "message": "Keyboard type"
+  },
+  "zhuyin_select_keys": {
+    "message": "Selection keys"
+  },
+  "zhuyin_page_size": {
+    "message": "Number of candidates to display per page"
+  }
+}

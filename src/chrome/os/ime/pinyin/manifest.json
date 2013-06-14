@@ -1,0 +1,26 @@
+{
+  "name": "Chrome OS IME (Pinyin)",
+  "version": "1.0.0.0",
+  "default_locale": "en",
+  "permissions": [
+    "http://*/",
+    "https://*/",
+    "input",
+    "unlimitedStorage"
+  ],
+  "background": {
+    "page": "backgroundpage.html"
+  },
+  "input_components": [
+    {
+    "name": "__MSG_PINYIN_INPUTMETHOD__",
+    "type": "ime",
+    "id": "zh-t-i0-pinyin",
+    "description": "Pinyin",
+    "language": "zh",
+    "layouts": ["us"]
+    }
+  ],
+  "options_page": "option.html",
+  "manifest_version": 2
+}

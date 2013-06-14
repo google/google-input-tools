@@ -1,0 +1,41 @@
+{
+  "Vietnamese_telex": {
+    "message": "Vietnamese input method (TELEX)"
+  },
+  "Thai_TIS": {
+    "message": "Thai input method (TIS-820.2538 keyboard)"
+  },
+  "Vietnamese_viqr": {
+    "message": "Vietnamese input method (VIQR)"
+  },
+  "Tamil_Phonetic": {
+    "message": "Tamil input method (Phonetic)"
+  },
+  "Persian": {
+    "message": "Persian input method (ISIRI 2901 layout)"
+  },
+  "Tamil_Itrans": {
+    "message": "Tamil input method (itrans)"
+  },
+  "Tamil_Typewriter": {
+    "message": "Tamil input method (Typewriter)"
+  },
+  "Tamil_Inscript": {
+    "message": "Tamil input method (InScript)"
+  },
+  "Thai_pattajoti": {
+    "message": "Thai input method (Pattachote keyboard)"
+  },
+  "Tamil_Tamil99": {
+    "message": "Tamil input method (Tamil99)"
+  },
+  "Vietnamese_tcvn": {
+    "message": "Vietnamese input method (TCVN6064)"
+  },
+  "Thai_kedmanee": {
+    "message": "Thai input method (Kedmanee keyboard)"
+  },
+  "Standard_input_method": {
+    "message": "Standard input method"
+  }
+}

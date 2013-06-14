@@ -1,0 +1,34 @@
+# Chrome OS IME
+
+Chrome OS IME is JS-based IME for various languages which runs in
+Chrome OS.
+
+## Requirements
+
+* [Closure Compiler](https://code.google.com/p/closure-compiler/)
+* [Closure Library](https://code.google.com/p/closure-library/)
+
+## How to build
+
+Set up these environment vairbles:
+
+* `CLOSURE_COMPILER` to the closure compiler binary.
+  e.g. /home/<USER>/closure-compiler/compiler.jar
+* `CLOSURE_LIB` to the closure library root.
+  e.g. /home/<USER>/closure-library
+
+Then run this under "pinyin" folder:
+
+    make
+
+And you will find the folder `files` generated, in which the compiled JS files
+and manifest are generated, as well as the tar.gz extension package of pinyin
+for Chrome OS.
+
+And run this under "zhuyin" folder:
+
+    make
+
+And you will find the folder `files` generated, in which the compiled JS files
+and manifest are generated, as well as the tar.gz extension package of zhuyin
+for Chrome OS.
