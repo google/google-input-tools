@@ -1,38 +1,38 @@
 {
-  "None": {
+  "keyboard_none": {
     "message": "Keyboard"
   },
-  "Phonetic": {
+  "keyboard_phonetic": {
     "message": "Keyboard (phonetic)"
   },
-  "Inscript": {
+  "keyboard_inscript": {
     "message": "Keyboard (inscript)"
   },
-  "Tamil99": {
+  "keyboard_tamil99": {
     "message": "Keyboard (tamil99)"
   },
-  "Itrans": {
+  "keyboard_itrans": {
     "message": "Keyboard (itrans)"
   },
-  "Typewriter": {
+  "keyboard_typewriter": {
     "message": "Keyboard (typewriter)"
   },
-  "Tcvn": {
+  "keyboard_tcvn": {
     "message": "Keyboard (tcvn)"
   },
-  "Telex": {
+  "keyboard_telex": {
     "message": "Keyboard (telex)"
   },
-  "Viqr": {
+  "keyboard_viqr": {
     "message": "Keyboard (viqr)"
   },
-  "Pattachote": {
+  "keyboard_pattachote": {
     "message": "Keyboard (pattachote)"
   },
-  "Tis": {
+  "keyboard_tis": {
     "message": "Keyboard (TIS 820-2531)"
   },
-  "Kedmanee": {
+  "keyboard_kedmanee": {
     "message": "Keyboard (kedmanee)"
   }
 }
