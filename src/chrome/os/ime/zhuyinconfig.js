@@ -45,7 +45,7 @@ goog.ime.chrome.os.ZhuyinConfig = function() {
    * @type {!RegExp}
    * @private
    */
-  this.vow_ = /[\u311a-\u3129]/;
+  this.vow_ = /[\u3110-\u3129]/;
 
   /**
    * The tons in zhuyin, which can only append after a vow.
