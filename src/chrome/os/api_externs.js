@@ -26,6 +26,10 @@ chrome.input = {};
 chrome.input.ime = {};
 
 
+/** @const */
+chrome.inputMethodPrivate = {};
+
+
 
 /**
  * @see http://code.google.com/chrome/extensions/events.html
@@ -261,6 +265,9 @@ chrome.input.ime.onSurroundingTextChanged;
 
 /** @type {!ChromeEvent} */
 chrome.input.ime.onReset;
+
+
+chrome.inputMethodPrivate.startIme = function() {};
 
 
 /**

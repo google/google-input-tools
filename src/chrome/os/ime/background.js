@@ -101,6 +101,10 @@ goog.ime.chrome.os.Background.prototype.init_ = function() {
       engineID, stateID) {
         self.controller_.switchInputToolState(stateID);
       });
+
+  if (chrome.inputMethodPrivate && chrome.inputMethodPrivate.startIme) {
+    chrome.inputMethodPrivate.startIme();
+  }
 };
 
 

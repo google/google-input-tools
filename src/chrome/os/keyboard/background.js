@@ -143,4 +143,8 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
       chrome.input.ime.keyEventHandled(keyEvent.requestId, ret);
     }
   }, ['async']);
+
+  if (chrome.inputMethodPrivate && chrome.inputMethodPrivate.startIme) {
+    chrome.inputMethodPrivate.startIme();
+  }
 })();
