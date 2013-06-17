@@ -1,41 +1,38 @@
 {
-  "Vietnamese_telex": {
-    "message": "Vietnamese input method (TELEX)"
+  "keyboard_none": {
+    "message": "Keyboard"
   },
-  "Thai_TIS": {
-    "message": "Thai input method (TIS-820.2538 keyboard)"
+  "keyboard_phonetic": {
+    "message": "Keyboard (phonetic)"
   },
-  "Vietnamese_viqr": {
-    "message": "Vietnamese input method (VIQR)"
+  "keyboard_inscript": {
+    "message": "Keyboard (inscript)"
   },
-  "Tamil_Phonetic": {
-    "message": "Tamil input method (Phonetic)"
+  "keyboard_tamil99": {
+    "message": "Keyboard (tamil99)"
   },
-  "Persian": {
-    "message": "Persian input method (ISIRI 2901 layout)"
+  "keyboard_itrans": {
+    "message": "Keyboard (itrans)"
   },
-  "Tamil_Itrans": {
-    "message": "Tamil input method (itrans)"
+  "keyboard_typewriter": {
+    "message": "Keyboard (typewriter)"
   },
-  "Tamil_Typewriter": {
-    "message": "Tamil input method (Typewriter)"
+  "keyboard_tcvn": {
+    "message": "Keyboard (tcvn)"
   },
-  "Tamil_Inscript": {
-    "message": "Tamil input method (InScript)"
+  "keyboard_telex": {
+    "message": "Keyboard (telex)"
   },
-  "Thai_pattajoti": {
-    "message": "Thai input method (Pattachote keyboard)"
+  "keyboard_viqr": {
+    "message": "Keyboard (viqr)"
   },
-  "Tamil_Tamil99": {
-    "message": "Tamil input method (Tamil99)"
+  "keyboard_pattachote": {
+    "message": "Keyboard (pattachote)"
   },
-  "Vietnamese_tcvn": {
-    "message": "Vietnamese input method (TCVN6064)"
+  "keyboard_tis": {
+    "message": "Keyboard (TIS 820-2531)"
   },
-  "Thai_kedmanee": {
-    "message": "Thai input method (Kedmanee keyboard)"
-  },
-  "Standard_input_method": {
-    "message": "Standard input method"
+  "keyboard_kedmanee": {
+    "message": "Keyboard (kedmanee)"
   }
 }

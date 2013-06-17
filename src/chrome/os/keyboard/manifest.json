@@ -1,6 +1,6 @@
 {
   "name": "Chrome OS Keyboard",
-  "version": "1.1.0.2",
+  "version": "1.1.1.0",
   "description": "Chrome OS Keyboard",
   "default_locale": "en",
   "permissions": [
@@ -13,7 +13,7 @@
   },
   "input_components": [
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_bn_phone",
       "description": "",
@@ -21,7 +21,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_gu_phone",
       "description": "",
@@ -29,7 +29,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_deva_phone",
       "description": "",
@@ -37,7 +37,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_kn_phone",
       "description": "",
@@ -45,7 +45,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_ml_phone",
       "description": "",
@@ -53,7 +53,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_deva_phone-",
       "description": "",
@@ -61,7 +61,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Tamil_Inscript__",
+      "name": "__MSG_keyboard_inscript__",
       "type": "ime",
       "id": "vkd_ta_inscript",
       "description": "",
@@ -69,7 +69,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Tamil_Phonetic__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_ta_phone",
       "description": "",
@@ -77,7 +77,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Tamil_Tamil99__",
+      "name": "__MSG_keyboard_tamil99__",
       "type": "ime",
       "id": "vkd_ta_tamil99",
       "description": "",
@@ -85,7 +85,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Tamil_Typewriter__",
+      "name": "__MSG_keyboard_typewriter__",
       "type": "ime",
       "id": "vkd_ta_typewriter",
       "description": "",
@@ -93,7 +93,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Tamil_Itrans__",
+      "name": "__MSG_keyboard_itrans__",
       "type": "ime",
       "id": "vkd_ta_itrans",
       "description": "",
@@ -101,7 +101,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_phonetic__",
       "type": "ime",
       "id": "vkd_te_phone",
       "description": "",
@@ -109,7 +109,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Standard_input_method__",
+      "name": "__MSG_keyboard_none__",
       "type": "ime",
       "id": "vkd_ethi",
       "description": "",
@@ -117,7 +117,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Thai_kedmanee__",
+      "name": "__MSG_keyboard_kedmanee__",
       "type": "ime",
       "id": "vkd_th",
       "description": "",
@@ -125,7 +125,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Thai_pattajoti__",
+      "name": "__MSG_keyboard_pattachote__",
       "type": "ime",
       "id": "vkd_th_pattajoti",
       "description": "",
@@ -133,7 +133,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Thai_TIS__",
+      "name": "__MSG_keyboard_tis__",
       "type": "ime",
       "id": "vkd_th_tis",
       "description": "",
@@ -141,7 +141,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Persian__",
+      "name": "__MSG_keyboard_none__",
       "type": "ime",
       "id": "vkd_fa",
       "description": "",
@@ -149,7 +149,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Vietnamese_tcvn__",
+      "name": "__MSG_keyboard_tcvn__",
       "type": "ime",
       "id": "vkd_vi_tcvn",
       "description": "",
@@ -157,7 +157,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Vietnamese_telex__",
+      "name": "__MSG_keyboard_telex__",
       "type": "ime",
       "id": "vkd_vi_telex",
       "description": "",
@@ -165,7 +165,7 @@
       "layouts": ["us"]
     },
     {
-      "name": "__MSG_Vietnamese_viqr__",
+      "name": "__MSG_keyboard_viqr__",
       "type": "ime",
       "id": "vkd_vi_viqr",
       "description": "",

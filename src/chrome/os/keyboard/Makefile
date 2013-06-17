@@ -59,7 +59,7 @@ manifest: dir
 	@cp manifest.json files/; cp -r locales files/_locales
 
 pack:
-	@tar -zcf $(PACKAGE) -C files .
+	@mv files $(PROJECT); tar -zcf $(PACKAGE) $(PROJECT); mv $(PROJECT) files
 
 clean:
 	@rm -rf files/ $(PACKAGE)
