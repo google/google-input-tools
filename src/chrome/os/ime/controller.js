@@ -495,7 +495,7 @@ goog.ime.chrome.os.Controller.prototype.processCommitKey = function(e) {
       this.model.status == goog.ime.chrome.os.Status.SELECT) {
     this.model.selectCandidate(-1, '');
   } else {
-    this.model.selectCandidate(undefined, '');
+    this.model.selectCandidate(undefined);
   }
   return true;
 };

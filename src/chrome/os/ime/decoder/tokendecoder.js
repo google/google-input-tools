@@ -136,6 +136,14 @@ goog.ime.offline.TokenDecoder = function(
   this.tones_ = '\u02c9\u02ca\u02c7\u02cb\u02d9';
 
   /**
+   * The invalid tokens in pinyin input method.
+   *
+   * @type {string}
+   * @private
+   */
+  this.invalidChars_ = 'iuv';
+
+  /**
    * The initial character map, it maps an initial character to all possible
    * normalized tokens.
    *
@@ -180,6 +188,16 @@ goog.ime.offline.TokenDecoder = function(
       goog.bind(this.init_, this, opt_fuzzyPairs));
 };
 goog.inherits(goog.ime.offline.TokenDecoder, goog.events.EventTarget);
+
+
+/**
+ * The init number given to invalid path, to make sure it is larger than any
+ * valid path.
+ *
+ * @type {number}
+ * @private
+ */
+goog.ime.offline.TokenDecoder.INVALID_PATH_INIT_NUM_ = 100;
 
 
 /**
@@ -476,6 +494,10 @@ goog.ime.offline.TokenDecoder.prototype.append_ = function(source) {
           var preInitNum = this.lattice_[lastIndex - suffix.length].initNum;
           initNums[index] = this.initialMap_[suffix] ?
               preInitNum + 1 : preInitNum;
+          if (this.invalidChars_.indexOf(suffix) >= 0) {
+            initNums[index] +=
+                goog.ime.offline.TokenDecoder.INVALID_PATH_INIT_NUM_;
+          }
           return Math.min(minInitNum, initNums[index]);
         }, Infinity, this);
 
@@ -654,6 +676,12 @@ goog.ime.offline.TokenDecoder.prototype.getSuffixTokens_ = function(source) {
     if (suffix.match(this.tokenReg_)) {
       ret.push(suffix);
     }
+  }
+
+  if (ret.length == 0) {
+    // If there is no matched suffix, for example, "i" in Pinyin, push the last
+    // character to the result.
+    ret.push(source.slice(-1));
   }
   return ret;
 };
