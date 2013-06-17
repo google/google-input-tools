@@ -15,7 +15,7 @@ It depends on [libhangul](https://code.google.com/p/libhangul/).
 Set up these environment vairbles:
 
 * `CLOSURE_COMPILER` to the closure compiler binary.
-    By default it is `java -jar ~/closure/compiler.jar`.
+    By default it is `~/closure/compiler.jar`.
 * `NACL_SDK_ROOT` to your Native Client SDK.
 
 Check into folder `naclports/src`, and run
