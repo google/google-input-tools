@@ -15,7 +15,9 @@
 JS_SOURCES:= ime.js keyboard.js
 JS_EXTERNS:= ../../api_externs.js
 JS_TARGET:= ime_build.js
-CLOSURE_COMPILER?= java -jar ~/closure/compiler.jar
+CLOSURE_COMPILER?= ~/closure/compiler.jar
+JAVA?=java
+CLOSURE:=$(JAVA) -jar $(CLOSURE_COMPILER)
 CLOSURE_OPTIONS:= \
 	--language_in=ECMASCRIPT5_STRICT \
 	--compilation_level=ADVANCED_OPTIMIZATIONS \
@@ -25,7 +27,7 @@ CLOSURE_OPTIONS:= \
 all: $(JS_TARGET)
 
 $(JS_TARGET): $(JS_SOURCES) $(JS_EXTERNS)
-	$(CLOSURE_COMPILER) $(JS_SOURCES) $(CLOSURE_OPTIONS) --js_output_file=$@
+	$(CLOSURE) $(JS_SOURCES) $(CLOSURE_OPTIONS) --js_output_file=$@
 
 clean:
 	rm -f $(JS_TARGET)
