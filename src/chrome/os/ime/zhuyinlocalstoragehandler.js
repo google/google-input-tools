@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * @fileoverview local storage handlers for pinyin.
+ * @fileoverview local storage handlers for zhuyin.
  */
 goog.provide('goog.ime.chrome.os.ZhuyinLocalStorageHandler');
 

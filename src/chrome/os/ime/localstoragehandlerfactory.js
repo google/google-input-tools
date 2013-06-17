@@ -82,6 +82,11 @@ goog.ime.chrome.os.LocalStorageHandlerFactory.prototype.init_ = function() {
   var pinyinHandler = new goog.ime.chrome.os.PinyinLocalStorageHandler();
   this.map_[code.INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED] = pinyinHandler;
 
+  var traditionalPinyinHandler =
+      new goog.ime.chrome.os.PinyinLocalStorageHandler();
+  this.map_[code.INPUTMETHOD_PINYIN_CHINESE_TRADITIONAL] =
+      traditionalPinyinHandler;
+
   var zhuyinHandler = new goog.ime.chrome.os.ZhuyinLocalStorageHandler();
   this.map_[code.INPUTMETHOD_ZHUYIN_CHINESE_TRADITIONAL] = zhuyinHandler;
 };

@@ -27,6 +27,7 @@ goog.provide('goog.ime.offline.InputToolCode');
  */
 goog.ime.offline.InputToolCode = {
   INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED: 'zh-t-i0-pinyin',
+  INPUTMETHOD_PINYIN_CHINESE_TRADITIONAL: 'zh-hant-t-i0-pinyin',
   INPUTMETHOD_ZHUYIN_CHINESE_TRADITIONAL: 'zh-hant-t-i0-und',
   INPUTMETHOD_CANGJIE87_CHINESE_TRADITIONAL: 'zh-hant-t-i0-cangjie-1987'
 };
