@@ -203,8 +203,7 @@ goog.ime.offline.DataLoader.prototype.buildTokens_ = function() {
       initialTokens.push(String.fromCharCode(i));
     }
     this.initialTokens = initialTokens.join('|');
-  } else if (this.inputTool == code.INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED ||
-      this.inputTool == code.INPUTMETHOD_PINYIN_CHINESE_TRADITIONAL) {
+  } else if (this.inputTool == code.INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED) {
     this.initialTokens = 'b|p|m|f|d|t|n|l|k|g|h|j|q|x|zh|ch|sh|r|z|c|s|y|w';
   }
 };
