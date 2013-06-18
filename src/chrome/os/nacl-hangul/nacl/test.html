@@ -164,8 +164,7 @@ userInput.onkeypress = function (event) {
 keyboardSelect.onchange = function(event) {
   var kb = keyboardSelect.options[keyboardSelect.options.selectedIndex].value;
   var request = JSON.stringify({
-    app: 'chos',
-    keyboard: kb,
+    keyboard: kb
   });
   HangulModule.postMessage(request);
   console.log(request);
@@ -174,13 +173,7 @@ keyboardSelect.onchange = function(event) {
 var updateInput = function() {
   var request = JSON.stringify({
     text: input,
-    ime: 'hangul',
-    num: 0,
-    cp: '0',
-    cs: '0',
-    ie: 'utf-8',
-    oe: 'utf-8',
-    app: 'chos',
+    num: 0
   });
   HangulModule.postMessage(request);
   console.log(request);
@@ -191,13 +184,7 @@ var updateHanja = function() {
   input = '';
   var request = JSON.stringify({
     text: commitHangul,
-    ime: 'hangul',
-    num: 0,
-    cp: '0',
-    cs: '0',
-    ie: 'utf-8',
-    oe: 'utf-8',
-    app: 'chos',
+    num: 0
   });
   HangulModule.postMessage(request);
   console.log(request);

@@ -342,13 +342,7 @@ HangulIme.prototype.requestCandidates_ = function(opt_text) {
   var text = opt_text || this.inputText_;
   var request = JSON.stringify({
     'text': text,
-    'ime': 'hangul',
-    'num': 0,
-    'cp': '0',
-    'cs': '0',
-    'ie': 'utf-8',
-    'oe': 'utf-8',
-    'app': 'chos'
+    'num': 0
   });
 
   // this.updateCandidates will be called after NaCl responded
@@ -1116,8 +1110,7 @@ HangulIme.prototype.switchKeyboard = function(engineID) {
     this.currentKeyboard_ = keyboard;
     // Send message to NaCl to switch keyboard layout
     var request = JSON.stringify({
-      'keyboard': keyboard.name,
-      'app': 'chos'
+      'keyboard': keyboard.name
     });
     this.naclModule_.postMessage(request);
   }

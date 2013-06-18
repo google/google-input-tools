@@ -57,8 +57,7 @@ class HangulInstance : public pp::Instance {
   // format is {"keyboard": layout}.
   // The other is to convert raw input to hangul or hangul to hanja,
   // where the format is like:
-  // {"text":"ganji", "ime":"hangul", "num":10,
-  //  "cp":"0", "cs":"0", "ie":"utf-8", "oe":"utf-8", "app":"chos"}
+  // {"text":"ganji", "num":10}
   virtual void HandleMessage(const pp::Var &message) {
     if (!message.is_string()) {
       ReportError("Request is not a string");
@@ -71,11 +70,6 @@ class HangulInstance : public pp::Instance {
     Json::Reader reader;
     if (!reader.parse(json_string, request)) {
       ReportError("Failed to parse request json");
-      return;
-    }
-    const Json::Value app_field = request["app"];
-    if (!app_field.isString()) {
-      ReportError("Invalid format: property 'app' is not a string");
       return;
     }
 
@@ -133,10 +127,6 @@ class HangulInstance : public pp::Instance {
     size_t input_len = input.length();
     Json::Value hangul_candidates;
     Json::Value matched_length;
-    // candidate_type is always 0
-    Json::Value candidate_type;
-    // is_confident is always 0 except for the first candidate
-    Json::Value is_confident;
 
     UCSString hangul = Transliterate(input);
     size_t hangul_len = hangul.length();
@@ -156,18 +146,9 @@ class HangulInstance : public pp::Instance {
       }
       matched_length.append(len);
       offset += len;
-      candidate_type.append(0);
-      if (i == 0) {
-        is_confident.append(1);
-      } else {
-        is_confident.append(0);
-      }
     }
-
     Json::Value additional_fields;
     additional_fields["matched_length"] = matched_length;
-    additional_fields["candidate_type"] = candidate_type;
-    additional_fields["is_confident"] = is_confident;
     GenerateResponse(text,
                      hangul_candidates,
                      matched_length,
@@ -196,10 +177,6 @@ class HangulInstance : public pp::Instance {
     Json::Value hanja_candidates;
     Json::Value matched_length;
     Json::Value annotation;
-    // candidate_type is always 0
-    Json::Value candidate_type;
-    // is_confident is always 0
-    Json::Value is_confident;
     // Match every prefix of hangul_text
     for (size_t len = hangul_len; len >= 1; len--) {
       hangul_text[len] = 0;
@@ -210,8 +187,6 @@ class HangulInstance : public pp::Instance {
         hanja_candidates.append(iter->hanja);
         matched_length.append(len);
         annotation.append(iter->comment);
-        candidate_type.append(0);
-        is_confident.append(0);
         num_matched_candidates++;
         if (num_candidates > 0 && num_matched_candidates == num_candidates) {
           break;
@@ -224,8 +199,6 @@ class HangulInstance : public pp::Instance {
     Json::Value additional_fields;
     additional_fields["matched_length"] = matched_length;
     additional_fields["annotation"] = annotation;
-    additional_fields["candidate_type"] = candidate_type;
-    additional_fields["is_confident"] = is_confident;
     GenerateResponse(text,
                      hanja_candidates,
                      matched_length,
