@@ -130,7 +130,7 @@ goog.ime.chrome.os.ConfigFactory.prototype.buildConfigs_ = function() {
   var pinyinConfig = new goog.ime.chrome.os.PinyinConfig();
   this.map_[code.INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED] = pinyinConfig;
 
-  var traditionalPinyinConfig = new goog.ime.chrome.hmm.PinyinConfig();
+  var traditionalPinyinConfig = new goog.ime.chrome.os.PinyinConfig();
   this.map_[code.INPUTMETHOD_PINYIN_CHINESE_TRADITIONAL] =
       traditionalPinyinConfig;
 
