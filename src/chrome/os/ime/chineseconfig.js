@@ -34,14 +34,6 @@ goog.require('goog.ime.chrome.os.StateID');
 goog.ime.chrome.os.ChineseConfig = function() {
   goog.base(this);
   /**
-   * The sbc char map.
-   *
-   * @type {!Object.<string, string>}
-   * @protected
-   */
-  this.sbcMap = {};
-
-  /**
    * The punctuation sbc map.
    *
    * @type {!Object.<string, string|!Array>}
@@ -50,8 +42,11 @@ goog.ime.chrome.os.ChineseConfig = function() {
   this.puncMap = {
     '~': '～',
     '!': '！',
+    '@': '＠',
+    '#': '＃',
     '$': '￥',
     '^': '……',
+    '&': '＆',
     '*': '×',
     '(': '（',
     ')': '）',
@@ -70,9 +65,46 @@ goog.ime.chrome.os.ChineseConfig = function() {
     '.': '。',
     '<': '《',
     '>': '》',
+    '/': '／',
     '?': '？'
   };
 
+  /**
+   * The sbc char map.
+   *
+   * @type {!Object.<string, string>}
+   * @protected
+   */
+  this.sbcMap = {
+    '~': '～',
+    '!': '！',
+    '@': '＠',
+    '#': '＃',
+    '$': '＄',
+    '^': '＾',
+    '&': '＆',
+    '*': '＊',
+    '(': '（',
+    ')': '）',
+    '-': '－',
+    '_': '＿',
+    '[': '［',
+    ']': '］',
+    '{': '｛',
+    '}': '｝',
+    '\\': '＼',
+    '|': '｜',
+    ';': '；',
+    ':': '：',
+    '\'': '＇',
+    '"': '＂',
+    ',': '，',
+    '.': '．',
+    '<': '＜',
+    '>': '＞',
+    '/': '／',
+    '?': '？'
+  };
 
   var sbcStr = '０１２３４５６７８９' +
       'ａｂｃｄｅｆｇｈｉｊｋｌｍｎ' +
@@ -126,16 +158,8 @@ goog.ime.chrome.os.ChineseConfig.prototype.preTransform = function(ch) {
     return '';
   }
 
-  if (this.states[stateID.SBC].value) {
-    if (!this.states[stateID.LANG].value || ch >= '0' && ch <= '9') {
-      var sbc = this.sbcMap[ch];
-      if (sbc) {
-        return sbc;
-      }
-    }
-  }
-
-  if (this.states[stateID.PUNC].value) {
+  if (this.states[stateID.PUNC].value &&
+      this.states[stateID.LANG].value) {
     var punc = this.puncMap[ch];
     if (punc) {
       if (punc.length > 1) {
@@ -146,6 +170,16 @@ goog.ime.chrome.os.ChineseConfig.prototype.preTransform = function(ch) {
       return punc;
     }
   }
+
+  if (this.states[stateID.SBC].value) {
+    if (!this.states[stateID.LANG].value || !/[a-z]/i.test(ch)) {
+      var sbc = this.sbcMap[ch];
+      if (sbc) {
+        return sbc;
+      }
+    }
+  }
+
   return '';
 };
 

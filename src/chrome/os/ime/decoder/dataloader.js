@@ -208,22 +208,3 @@ goog.ime.offline.DataLoader.prototype.buildTokens_ = function() {
     this.initialTokens = 'b|p|m|f|d|t|n|l|k|g|h|j|q|x|zh|ch|sh|r|z|c|s|y|w';
   }
 };
-
-
-/**
- * Gets the Directory of the input tool.
- *
- * @param {string} inputTool The input tool.
- * @return {string} The subdir of version of the input tool. '' for default.
- * @private
- */
-goog.ime.offline.DataLoader.prototype.getDirectory_ = function(inputTool) {
-  var code = goog.ime.offline.InputToolCode;
-  switch (inputTool) {
-    case code.INPUTMETHOD_PINYIN_CHINESE_SIMPLIFIED:
-      return 'pinyin/';
-    case code.INPUTMETHOD_ZHUYIN_CHINESE_TRADITIONAL:
-      return 'zhuyin/';
-  }
-  return '';
-};
