@@ -3,36 +3,36 @@
     "message": "Keyboard"
   },
   "keyboard_phonetic": {
-    "message": "Keyboard (phonetic)"
+    "message": "Keyboard (Phonetic)"
   },
   "keyboard_inscript": {
-    "message": "Keyboard (inscript)"
+    "message": "Keyboard (InScript)"
   },
   "keyboard_tamil99": {
-    "message": "Keyboard (tamil99)"
+    "message": "Keyboard (Tamil99)"
   },
   "keyboard_itrans": {
     "message": "Keyboard (itrans)"
   },
   "keyboard_typewriter": {
-    "message": "Keyboard (typewriter)"
+    "message": "Keyboard (Typewriter)"
   },
   "keyboard_tcvn": {
-    "message": "Keyboard (tcvn)"
+    "message": "Keyboard (TCVN)"
   },
   "keyboard_telex": {
-    "message": "Keyboard (telex)"
+    "message": "Keyboard (Telex)"
   },
   "keyboard_viqr": {
-    "message": "Keyboard (viqr)"
+    "message": "Keyboard (VIQR)"
   },
   "keyboard_pattachote": {
-    "message": "Keyboard (pattachote)"
+    "message": "Keyboard (Pattachote)"
   },
   "keyboard_tis": {
     "message": "Keyboard (TIS 820-2531)"
   },
   "keyboard_kedmanee": {
-    "message": "Keyboard (kedmanee)"
+    "message": "Keyboard (Kedmanee)"
   }
 }
