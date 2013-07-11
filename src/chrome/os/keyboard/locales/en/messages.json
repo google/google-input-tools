@@ -1,41 +1,62 @@
 {
-  "keyboard_none": {
-    "message": "Keyboard"
+  "keyboard_bengali_phonetic": {
+    "message": "Bengali keyboard (Phonetic)"
   },
-  "keyboard_phonetic": {
-    "message": "Keyboard (Phonetic)"
+  "keyboard_gujarati_phonetic": {
+    "message": "Gujarati keyboard (Phonetic)"
   },
-  "keyboard_inscript": {
-    "message": "Keyboard (InScript)"
+  "keyboard_devanagari_phonetic": {
+    "message": "Devanagari keyboard (Phonetic)"
   },
-  "keyboard_tamil99": {
-    "message": "Keyboard (Tamil99)"
+  "keyboard_kannada_phonetic": {
+    "message": "Kannada keyboard (Phonetic)"
   },
-  "keyboard_itrans": {
-    "message": "Keyboard (itrans)"
+  "keyboard_malayalam_phonetic": {
+    "message": "Malayalam keyboard (Phonetic)"
   },
-  "keyboard_typewriter": {
-    "message": "Keyboard (Typewriter)"
+  "keyboard_tamil_inscript": {
+    "message": "Tamil keyboard (InScript)"
   },
-  "keyboard_tcvn": {
-    "message": "Keyboard (TCVN)"
+  "keyboard_tamil_phonetic": {
+    "message": "Tamil keyboard (Phonetic)"
   },
-  "keyboard_telex": {
-    "message": "Keyboard (Telex)"
+  "keyboard_tamil_tamil99": {
+    "message": "Tamil keyboard (Tamil99)"
   },
-  "keyboard_viqr": {
-    "message": "Keyboard (VIQR)"
+  "keyboard_tamil_typewriter": {
+    "message": "Tamil keyboard (Typewriter)"
   },
-  "keyboard_vni": {
-    "message": "Keyboard (VNI)"
+  "keyboard_tamil_itrans": {
+    "message": "Tamil keyboard (itrans)"
   },
-  "keyboard_pattachote": {
-    "message": "Keyboard (Pattachote)"
+  "keyboard_telugu_phonetic": {
+    "message": "Telugu keyboard (Phonetic)"
   },
-  "keyboard_tis": {
-    "message": "Keyboard (TIS 820-2531)"
+  "keyboard_ethiopic": {
+    "message": "Ethiopic keyboard"
   },
-  "keyboard_kedmanee": {
-    "message": "Keyboard (Kedmanee)"
+  "keyboard_thai_pattachote": {
+    "message": "Thai keyboard (Pattachote)"
+  },
+  "keyboard_thai_tis": {
+    "message": "Thai keyboard (TIS 820-2531)"
+  },
+  "keyboard_thai_kedmanee": {
+    "message": "Thai keyboard (Kedmanee)"
+  },
+  "keyboard_persian": {
+    "message": "Persian keyboard"
+  },
+  "keyboard_vietnamese_tcvn": {
+    "message": "Vietnamese keyboard (TCVN)"
+  },
+  "keyboard_vietnamese_telex": {
+    "message": "Vietnamese keyboard (Telex)"
+  },
+  "keyboard_vietnamese_viqr": {
+    "message": "Vietnamese keyboard (VIQR)"
+  },
+  "keyboard_vietnamese_vni": {
+    "message": "Vietnamese keyboard (VNI)"
   }
 }

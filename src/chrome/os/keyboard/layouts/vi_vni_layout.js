@@ -96,5 +96,5 @@ var VI_VNI_LAYOUT = {
   }
 };
 
-// Loads the layout and inform the keyboard to switch layout if necessary. cibu
-google.elements.keyboard.loadme(VI_VNI_LAYOUT);
+// Loads the layout and inform the keyboard to switch layout if necessary.
+cros_vk_loadme(VI_VNI_LAYOUT);
