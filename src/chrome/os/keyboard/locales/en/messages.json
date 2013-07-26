@@ -59,4 +59,7 @@
   "keyboard_vietnamese_vni": {
     "message": "Vietnamese keyboard (VNI)"
   }
+  "keyboard_arabic": {
+    "message": "Arabic keyboard"
+  }
 }
