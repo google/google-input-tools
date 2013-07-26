@@ -169,7 +169,7 @@
       "description": "",
       "language": "vi",
       "layouts": ["us"]
-    }
+    },
     {
       "name": "__MSG_keyboard_arabic__",
       "type": "ime",
