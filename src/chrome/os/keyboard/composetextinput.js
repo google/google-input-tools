@@ -151,12 +151,8 @@ goog.inherits(goog.ime.chrome.vk.ComposeTextInput,
  */
 goog.ime.chrome.vk.ComposeTextInput.prototype.setComposingText_ = function(
     text) {
-  if (text) {
-    goog.ime.chrome.vk.DeferredApi.setComposition(
-        this.context.contextID, text, text.length);
-  } else {
-    goog.ime.chrome.vk.DeferredApi.clearComposition(this.context.contextID);
-  }
+  goog.ime.chrome.vk.DeferredApi.setComposition(
+      this.context.contextID, text, text.length);
   this.textBeforeCursor = text;
 };
 
@@ -188,6 +184,10 @@ goog.ime.chrome.vk.ComposeTextInput.prototype.commitText = function(
   }
   var len = this.textBeforeCursor.length;
   text = this.textBeforeCursor.slice(0, len - back) + text;
+  if (!text) {
+    this.setComposingText_(text);
+    return true;
+  }
   var pos = this.model_.predictHistory();
   if (pos > 0) {
     var text2 = text.slice(0, pos + 1);
