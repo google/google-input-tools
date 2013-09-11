@@ -421,10 +421,10 @@ HangulIme.prototype.getPreeditText_ = function() {
  */
 HangulIme.prototype.updatePreedit_ = function() {
   if (this.state_ === HangulIme.State.RESET) {
-    chrome.input.ime.clearComposition({
-      'contextID': this.context_.contextID
-    }, function() {
-      // Do nothing in callback function
+    chrome.input.ime.setComposition({
+      'contextID': this.context_.contextID,
+      'text': '',
+      'cursor': 0
     });
     return;
   }
@@ -603,6 +603,13 @@ HangulIme.prototype.commitCandidate_ = function() {
         this.requestCandidates_(this.hangul_);
       }
       this.commitText_ = candidate.text;
+    }
+
+    if (!this.commitText_) {
+      // If there is no candidate, the commit text is set to the source.
+      var commitText = this.getPreeditText_();
+      this.clear_();
+      this.commitText_ = commitText;
     }
   }
   this.update_();
@@ -884,7 +891,7 @@ HangulIme.prototype.handleSpecialKey_ = function(keyData) {
     } else if (keyData['key'] === 'Enter') {
       this.prepareCommitText_();
       this.update_();
-      return true;
+      return false;
     }
   }
 
