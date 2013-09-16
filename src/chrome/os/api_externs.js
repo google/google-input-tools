@@ -30,7 +30,6 @@ chrome.input.ime = {};
 chrome.inputMethodPrivate = {};
 
 
-
 /**
  * @see http://code.google.com/chrome/extensions/events.html
  * @constructor
@@ -268,6 +267,456 @@ chrome.input.ime.onReset;
 
 
 chrome.inputMethodPrivate.startIme = function() {};
+
+
+/**
+ * @see http://code.google.com/chrome/extensions/runtime.html
+ * @const
+ */
+chrome.runtime = {};
+
+
+/** @type {!Object.<string,string>|undefined} */
+chrome.runtime.lastError;
+
+
+/** @type {string} */
+chrome.runtime.id;
+
+
+/**
+ * @param {function(!Window=): void} callback Callback function.
+ */
+chrome.runtime.getBackgroundPage = function(callback) {};
+
+
+
+/**
+ * Manifest information returned from chrome.runtime.getManifest. See
+ * http://developer.chrome.com/extensions/manifest.html. Note that there are
+ * several other fields not included here. They should be added to these externs
+ * as needed.
+ * @constructor
+ */
+chrome.runtime.Manifest = function() {};
+
+
+/** @type {string} */
+chrome.runtime.Manifest.prototype.name;
+
+
+/** @type {string} */
+chrome.runtime.Manifest.prototype.version;
+
+
+/** @type {number|undefined} */
+chrome.runtime.Manifest.prototype.manifest_version;
+
+
+/** @type {string|undefined} */
+chrome.runtime.Manifest.prototype.description;
+
+
+/** @type {!chrome.runtime.Manifest.Oauth2|undefined} */
+chrome.runtime.Manifest.prototype.oauth2;
+
+
+
+/**
+ * Oauth2 info in the manifest.
+ * See http://developer.chrome.com/apps/app_identity.html#update_manifest.
+ * @constructor
+ */
+chrome.runtime.Manifest.Oauth2 = function() {};
+
+
+/** @type {string} */
+chrome.runtime.Manifest.Oauth2.prototype.client_id;
+
+
+/**
+ * http://developer.chrome.com/extensions/runtime.html#method-getManifest
+ * @return {!chrome.runtime.Manifest} The full manifest file of the app or
+ *     extension.
+ */
+chrome.runtime.getManifest = function() {};
+
+
+/**
+ * @param {string} path A path to a resource within an extension expressed
+ *     relative to it's install directory.
+ * @return {string} The fully-qualified URL to the resource.
+ */
+chrome.runtime.getURL = function(path) {};
+
+
+/**
+ * Reloads the app or extension.
+ */
+chrome.runtime.reload = function() {};
+
+
+/**
+ * @param {function(string, !Object=): void} callback
+ */
+chrome.runtime.requestUpdateCheck = function(callback) {};
+
+
+/**
+ * @param {string|!Object.<string>=} opt_extensionIdOrConnectInfo Either the
+ *     extensionId to connect to, in which case connectInfo params can be
+ *     passed in the next optional argument, or the connectInfo params.
+ * @param {!Object.<string>=} opt_connectInfo The connectInfo object,
+ *     if arg1 was the extensionId to connect to.
+ * @return {!Port} New port.
+ */
+chrome.runtime.connect = function(
+    opt_extensionIdOrConnectInfo, opt_connectInfo) {};
+
+
+/**
+ * @param {string|*} extensionIdOrMessage Either the extensionId to send the
+ *     message to, in which case the message is passed as the next arg, or the
+ *     message itself.
+ * @param {(*|function(*): void)=} opt_messageOrCallback The message, if arg1
+ *     was the extensionId, or the callback, if arg1 was the message, or
+ *     optional.
+ * @param {function(*): void=} opt_callback The callback function which
+ *     takes a JSON response object sent by the handler of the request.
+ */
+chrome.runtime.sendMessage = function(
+    extensionIdOrMessage, opt_messageOrCallback, opt_callback) {};
+
+
+/** @type {!chrome.runtime.PortEvent} */
+chrome.runtime.onConnect;
+
+
+/** @type {!chrome.runtime.PortEvent} */
+chrome.runtime.onConnectExternal;
+
+
+/** @type {!chrome.runtime.ObjectEvent} */
+chrome.runtime.onInstalled;
+
+
+/** @type {!chrome.runtime.MessageSenderEvent} */
+chrome.runtime.onMessage;
+
+
+/** @type {!chrome.runtime.MessageSenderEvent} */
+chrome.runtime.onMessageExternal;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onStartup;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onSuspend;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onSuspendCanceled;
+
+
+/** @type {!chrome.runtime.ObjectEvent} */
+chrome.runtime.onUpdateAvailable;
+
+
+
+/**
+ * Event whose listeners take an Object parameter.
+ * @constructor
+ */
+chrome.runtime.ObjectEvent = function() {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ */
+chrome.runtime.ObjectEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ */
+chrome.runtime.ObjectEvent.prototype.removeListener = function(callback) {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.ObjectEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.ObjectEvent.prototype.hasListeners = function() {};
+
+
+
+/**
+ * Event whose listeners take a Port parameter.
+ * @constructor
+ */
+chrome.runtime.PortEvent = function() {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ */
+chrome.runtime.PortEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ */
+chrome.runtime.PortEvent.prototype.removeListener = function(callback) {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.PortEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.PortEvent.prototype.hasListeners = function() {};
+
+
+
+/**
+ * Event whose listeners take a MessageSender and additional parameters.
+ * @see https://developer.chrome.com/dev/apps/runtime.html#event-onMessage
+ * @constructor
+ */
+chrome.runtime.MessageSenderEvent = function() {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ */
+chrome.runtime.MessageSenderEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ */
+chrome.runtime.MessageSenderEvent.prototype.removeListener = function(callback)
+    {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.MessageSenderEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.MessageSenderEvent.prototype.hasListeners = function() {};
+
+
+
+/**
+ * @see http://code.google.com/chrome/extensions/extension.html#type-Port
+ * @constructor
+ */
+function Port() {}
+
+
+/** @type {string} */
+Port.prototype.name;
+
+
+/** @type {ChromeEvent} */
+Port.prototype.onDisconnect;
+
+
+/** @type {ChromeEvent} */
+Port.prototype.onMessage;
+
+
+/** @type {MessageSender} */
+Port.prototype.sender;
+
+
+/**
+ * @param {Object.<string>} obj Message object.
+ */
+Port.prototype.postMessage = function(obj) {};
+
+
+/**
+ * Note: as of 2012-04-12, this function is no longer documented on
+ * the public web pages, but there are still existing usages.
+ */
+Port.prototype.disconnect = function() {};
+
+
+
+/**
+ * @constructor
+ */
+function MessageSender() {}
+
+
+/** @type {Tab} */
+MessageSender.prototype.tab;
+
+
+/** @type {string} */
+MessageSender.prototype.id;
+
+
+/**
+ * @const
+ * @see http://code.google.com/chrome/extensions/windows.html
+ */
+chrome.windows = {};
+
+
+/**
+ * @param {Object=} opt_createData May have many keys to specify parameters.
+ *     Or the callback.
+ * @param {function(ChromeWindow): void=} opt_callback Callback.
+ */
+chrome.windows.create = function(opt_createData, opt_callback) {};
+
+
+/**
+ * @param {number} id Window id.
+ * @param {Object=} opt_getInfo May have 'populate' key. Or the callback.
+ * @param {function(!ChromeWindow): void=} opt_callback Callback when
+ *     opt_getInfo is an object.
+ */
+chrome.windows.get = function(id, opt_getInfo, opt_callback) {};
+
+
+/**
+ * @param {Object=} opt_getInfo May have 'populate' key. Or the callback.
+ * @param {function(!Array.<!ChromeWindow>): void=} opt_callback Callback.
+ */
+chrome.windows.getAll = function(opt_getInfo, opt_callback) {};
+
+
+/**
+ * @param {Object=} opt_getInfo May have 'populate' key. Or the callback.
+ * @param {function(ChromeWindow): void=} opt_callback Callback.
+ */
+chrome.windows.getCurrent = function(opt_getInfo, opt_callback) { };
+
+
+/**
+ * @param {Object=} opt_getInfo May have 'populate' key. Or the callback.
+ * @param {function(ChromeWindow): void=} opt_callback Callback.
+ */
+chrome.windows.getLastFocused = function(opt_getInfo, opt_callback) { };
+
+
+/**
+ * @param {number} tabId Tab Id.
+ * @param {function(): void=} opt_callback Callback.
+ */
+chrome.windows.remove = function(tabId, opt_callback) {};
+
+
+/**
+ * @param {number} tabId Tab Id.
+ * @param {Object} updateProperties An object which may have many keys for
+ *     various options.
+ * @param {function(): void=} opt_callback Callback.
+ */
+chrome.windows.update = function(tabId, updateProperties, opt_callback) {};
+
+
+/** @type {ChromeEvent} */
+chrome.windows.onCreated;
+
+
+/** @type {ChromeEvent} */
+chrome.windows.onFocusChanged;
+
+
+/** @type {ChromeEvent} */
+chrome.windows.onRemoved;
+
+
+/**
+ * @see http://code.google.com/chrome/extensions/windows.html#property-WINDOW_ID_NONE
+ * @type {number}
+ */
+chrome.windows.WINDOW_ID_NONE;
+
+
+/**
+ * @see http://code.google.com/chrome/extensions/windows.html#property-WINDOW_ID_CURRENT
+ * @type {number}
+ */
+chrome.windows.WINDOW_ID_CURRENT;
+
+
+
+/**
+ * @see http://code.google.com/chrome/extensions/windows.html
+ * @constructor
+ */
+function ChromeWindow() {}
+
+
+/** @type {number} */
+ChromeWindow.prototype.id;
+
+
+/** @type {boolean} */
+ChromeWindow.prototype.focused;
+
+
+/** @type {number} */
+ChromeWindow.prototype.top;
+
+
+/** @type {number} */
+ChromeWindow.prototype.left;
+
+
+/** @type {number} */
+ChromeWindow.prototype.width;
+
+
+/** @type {number} */
+ChromeWindow.prototype.height;
+
+
+/** @type {Array.<Tab>} */
+ChromeWindow.prototype.tabs;
+
+
+/** @type {boolean} */
+ChromeWindow.prototype.incognito;
+
+
+/** @type {string} */
+ChromeWindow.prototype.type;
+
+
+/** @type {string} */
+ChromeWindow.prototype.state;
+
+
+/** @type {boolean} */
+ChromeWindow.prototype.alwaysOnTop;
 
 
 /**

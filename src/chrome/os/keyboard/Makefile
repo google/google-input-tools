@@ -22,44 +22,69 @@ PROJECT:=chromeos-keyboards
 CLOSURE_BUILDER:=$(CLOSURE_LIB)/closure/bin/build/closurebuilder.py
 VER:=$(shell sed -n -e '/"version"/p' manifest.json | cut -f4 -d '"')
 PACKAGE:=$(PROJECT)-$(VER).tar.gz
+FILES:=/tmp/cros_vk_files
+BG:=$(FILES)/cros_vk_background.js
+BGDBG:=$(FILES)/cros_vk_background_dbg.js
+VIEW:=$(FILES)/cros_vk_view.js
+VIEWDBG:=$(FILES)/cros_vk_view_dbg.js
+EXTERNS:=../api_externs.js
 
 all: js lo manifest pack
 
-debug: jsdbg lo manifest pack
+debug: jsdbg lo manifest_dbg pack
 
 dir:
-	@mkdir -p files/layouts
+	@mkdir -p $(FILES)/layouts
 
-js: dir
+js: | $(BG) $(VIEW)
+
+jsdbg: | $(BGDBG) $(VIEWDBG)
+
+$(BG): *.js $(EXTERNS) | dir
 	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
 		--namespace="goog.ime.chrome.vk.Background" \
 		--output_mode=compiled \
 		--compiler_jar=$(CLOSURE_COMPILER) \
 		--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
-		--compiler_flags="--externs=../api_externs.js" \
-	> files/cros_vk_background.js
+		--compiler_flags="--externs=$(EXTERNS)" > $@
 
-jsdbg: dir
+$(VIEW): *.js $(EXTERNS) | dir
+	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
+		--namespace="goog.ime.chrome.vk.View" \
+		--output_mode=compiled \
+		--compiler_jar=$(CLOSURE_COMPILER) \
+		--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
+		--compiler_flags="--externs=$(EXTERNS)" > $@
+
+$(BGDBG): *.js $(EXTERNS) | dir
 	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
 		--namespace="goog.ime.chrome.vk.Background" \
-		--output_mode=script > files/cros_vk_background.js
+		--output_mode=script > $@
 
-lo: dir
-	@for file in $(shell ls layouts/*_layout.js); \
-	do \
-	  out=$${file:0:$${#file}-10}.js; \
-	  echo $$out; \
-	  java -jar $(CLOSURE_COMPILER) \
+$(VIEWDBG): *.js $(EXTERNS) | dir
+	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
+		--namespace="goog.ime.chrome.vk.View" \
+		--output_mode=script > $@
+
+$(FILES)/layouts/%.js: layouts/%.js layouts/externs.js | dir
+	@echo $<; \
+	java -jar $(CLOSURE_COMPILER) \
 		--compilation_level=ADVANCED_OPTIMIZATIONS \
-		--externs=layouts/externs.js --js $$file \
-		--js_output_file files/$$out; \
-	done
+		--externs=layouts/externs.js --js $< \
+		--js_output_file $@
 
-manifest: dir
-	@cp manifest.json files/; cp -r locales files/_locales
+lo: $(addprefix $(FILES)/,$(filter-out layouts/externs.js,$(wildcard layouts/*.js)))
+
+manifest:
+	@cp manifest.json $(FILES)/; cp -r locales $(FILES)/_locales; \
+	cp *.html $(FILES)/; cp *.png $(FILES)/
+
+manifest_dbg: | manifest
+	@sed -i 's/\.js/_dbg\.js/' $(FILES)/manifest.json; \
+	sed -i 's/\.js/_dbg\.js/' $(FILES)/*.html
 
 pack:
-	@mv files $(PROJECT); tar -zcf $(PACKAGE) $(PROJECT); mv $(PROJECT) files
+	@mv $(FILES) $(PROJECT); tar -zcf $(PACKAGE) $(PROJECT); mv $(PROJECT) $(FILES)
 
 clean:
-	@rm -rf files/ $(PACKAGE)
+	@rm -rf $(FILES)/ $(PACKAGE)

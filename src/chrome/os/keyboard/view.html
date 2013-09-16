@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+      .vk-box, .vk-btn, .vk-btn-n, .vk-cap, .vk-cap-i, .vk-t, .vk-t-btn {
+        display: inline-block;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+      }
+      .vk-box { /* vk outerbox */
+        height: auto;
+        padding: 10px;
+        background-color: white;
+        border: 1px solid rgba(0,0,0,0.3);
+        font-family: arial,sans-serif;
+        font-size: 14px;
+      }
+      .vk-btn { /* vk key button in normal state */
+        /* @alternate */ border: 1px solid #DCDCDC;
+        /* @alternate */ border: 1px solid rgba(0,0,0,0.1);
+        width: 29px;
+        height: 29px;
+        margin: 2px;
+        text-align: center;
+        vertical-align: middle;
+        position: relative;
+        padding: 1px;
+        min-width: 0px;
+        max-width: 500px;
+        min-height: 0px;
+        max-height: 50px;
+        color: #444;
+        background-color: #f5f5f5;
+        /* @alternate */ background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+        /* @alternate */ background-image:
+            -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#f1f1f1));
+        /* @alternate */ background-image:
+            -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+        /* @alternate */ background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+        /* @alternate */ background-image: -ms-linear-gradient(top,#f5f5f5,#f1f1f1);
+        /* @alternate */ background-image: -o-linear-gradient(top,#f5f5f5,#f1f1f1);
+        /* @alternate */ background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f5f5f5',
+            EndColorStr='#f1f1f1');
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+      }
+      .vk-btn.vk-sf-h { /* vk key button when mouse hover */
+        border-color: #C6C6C6;
+        color: #222;
+        background-color: #f8f8f8;
+        /* @alternate */ background-image: -webkit-gradient(
+            linear,left top,left bottom,from(#f8f8f8),to(#f1f1f1));
+        /* @alternate */ background-image:
+            -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+        /* @alternate */ background-image: -moz-linear-gradient(top,#f8f8f8,#f1f1f1);
+        /* @alternate */ background-image: -ms-linear-gradient(top,#f8f8f8,#f1f1f1);
+        /* @alternate */ background-image: -o-linear-gradient(top,#f8f8f8,#f1f1f1);
+        /* @alternate */ background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+        filter: progid:DXImageTransform.Microsoft.gradient(
+            startColorStr='#f8f8f8',EndColorStr='#f1f1f1');
+        box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+      }
+      .vk-btn.vk-sf-a { /* vk key button when mouse down */
+        border-color: #C6C6C6;
+        color: #333;
+        background-color: #f6f6f6;
+        /* @alternate */ background-image: -webkit-gradient(
+            linear,left top,left bottom,from(#f6f6f6),to(#f1f1f1));
+        /* @alternate */ background-image:
+            -webkit-linear-gradient(top,#f6f6f6,#f1f1f1);
+        /* @alternate */ background-image: -moz-linear-gradient(top,#f6f6f6,#f1f1f1);
+        /* @alternate */ background-image: -ms-linear-gradient(top,#f6f6f6,#f1f1f1);
+        /* @alternate */ background-image: -o-linear-gradient(top,#f6f6f6,#f1f1f1);
+        /* @alternate */ background-image: linear-gradient(top,#f6f6f6,#f1f1f1);
+        filter: progid:DXImageTransform.Microsoft.gradient(
+            startColorStr='#f6f6f6',EndColorStr='#f1f1f1');
+        box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
+      }
+      .vk-btn.vk-sf-s { /* vk key button when depressed */
+        border-color: #CCC;
+        color: #333;
+        background-color: #EEEEEE;
+        /* @alternate */ background-image: -webkit-gradient(
+            linear,left top,left bottom,from(#EEEEEE),to(#E0E0E0));
+        /* @alternate */ background-image:
+            -webkit-linear-gradient(top,#EEEEEE,#E0E0E0);
+        /* @alternate */ background-image: -moz-linear-gradient(top,#EEEEEE,#E0E0E0);
+        /* @alternate */ background-image: -ms-linear-gradient(top,#EEEEEE,#E0E0E0);
+        /* @alternate */ background-image: -o-linear-gradient(top,#EEEEEE,#E0E0E0);
+        /* @alternate */ background-image: linear-gradient(top,#EEEEEE,#E0E0E0);
+        filter: progid:DXImageTransform.Microsoft.gradient(
+            startColorStr='#EEEEEE',EndColorStr='#E0E0E0');
+        box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
+      }
+      .vk-cap, .vk-t {
+        font-size: 14px;
+        font-family: arial,sans-serif;
+        font-weight: normal;
+        line-height: 25px;
+      }
+      .vk-cap {
+        cursor: default;
+      }
+      .vk-cap.vk-sf-b, .vk-t-btn {
+        background-repeat: no-repeat;
+      }
+      .vk-cap.vk-sf-b { /* vk state button's caption with background image */
+        background-image: url('sprite.png');
+        width: 22px;
+        height: 17px;
+        opacity: .667;
+      }
+      .vk-cap.vk-sf-b.vk-sf-h {
+        opacity: .9;
+      }
+      .vk-cap.vk-sf-b.vk-sf-c8 {
+        background-position: -714px -16px;
+      }
+      .vk-cap.vk-sf-b.vk-sf-c20 {
+        background-position: -614px -66px;
+      }
+      .vk-cap.vk-sf-b.vk-sf-c16 {
+        background-position: -814px -16px;
+      }
+      .vk-cap.vk-sf-c273 { /* vk state button ALTGR's caption */
+        font-size: 14px;
+      }
+      .vk-cap-i { /* vk button's caption with image  */
+        border: none;
+        width: 20px;
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src='cros_vk_view.js'></script>
+  </body>
+</html>

@@ -58,11 +58,11 @@ goog.ime.chrome.vk.ParsedLayout = function(layout) {
    * @type {!Object}
    */
   this.view = {
-    id: layout['id'],
-    title: layout['title'],
-    isRTL: layout['direction'] == 'rtl',
-    is102: !!layout['is102Keyboard'],
-    mappings: goog.object.create([
+    'id': layout['id'],
+    'title': layout['title'],
+    'isRTL': layout['direction'] == 'rtl',
+    'is102': !!layout['is102Keyboard'],
+    'mappings': goog.object.create([
       '', null,
       's', null,
       'c', null,
@@ -119,7 +119,7 @@ goog.ime.chrome.vk.ParsedLayout = function(layout) {
  */
 goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
     layout) {
-  var codes = this.view.is102 ? goog.ime.chrome.vk.KeyCode.CODES102 :
+  var codes = this.view['is102'] ? goog.ime.chrome.vk.KeyCode.CODES102 :
       goog.ime.chrome.vk.KeyCode.CODES101;
 
   var mappings = layout['mappings'];
@@ -144,7 +144,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
       if (from == '') {
         from = codes;
         // If is 102 keyboard, modify 'to' to be compatible with the old vk.
-        if (this.view.is102) {
+        if (this.view['is102']) {
           // Moves the 26th char {\} to be the 38th char (after {'}).
           var normalizedTo = to.slice(0, 25);
           normalizedTo += to.slice(26, 37);
@@ -187,7 +187,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
       }
     }
     for (var i = 0, mode; mode = modes[i], mode != undefined; ++i) {
-      this.view.mappings[mode] = parsed;
+      this.view['mappings'][mode] = parsed;
     }
   }
 };

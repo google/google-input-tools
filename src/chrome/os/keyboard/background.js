@@ -83,10 +83,12 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
   var controller = new goog.ime.chrome.vk.Controller();
 
   chrome.input.ime.onActivate.addListener(function(engineID) {
+    window.console.log('onActive: ' + engineID);
     controller.activate(engineID);
   });
 
-  chrome.input.ime.onDeactivated.addListener(function() {
+  chrome.input.ime.onDeactivated.addListener(function(engineID) {
+    window.console.log('onDeactive: ' + engineID);
     controller.deactivate();
   });
 
@@ -95,7 +97,7 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
   });
 
   chrome.input.ime.onBlur.addListener(function(contextID) {
-    controller.setContext(null);
+    //controller.setContext(null);
   });
 
   // Handles onReset event to reset text input as necessary.
@@ -115,15 +117,38 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
         controller.handleSurroundingTextChanged(text);
       });
 
+  var openingView = false;
+
   chrome.input.ime.onKeyEvent.addListener(function(engine, keyEvent) {
     var ret = false;
     var keyDown = keyEvent.type == goog.events.EventType.KEYDOWN;
     var code = keyEvent['code'];
+
+    // Hidden shortcut to bring up keyboard view UI.
+    if (keyDown) {
+      if (keyEvent.altKey && keyEvent.ctrlKey && keyEvent.shiftKey) {
+        if (code == 'KeyV') {
+          openingView = true;
+        } else {
+          if (openingView && code == 'KeyK') {
+            controller.createView();
+          }
+          openingView = false;
+        }
+        return ret;
+      }
+      openingView = false;
+    }
+
+    var altGrBit = goog.ime.chrome.vk.Controller.StateBit.ALTGR;
+    var shiftBit = goog.ime.chrome.vk.Controller.StateBit.SHIFT;
     if (code == 'AltRight') {
-      controller.setAltGr(keyDown);
+      controller.setState(altGrBit, keyDown);
+    } else if (/^Shift/.test(code)) {
+      controller.setState(shiftBit, keyDown);
     } else if (keyDown) {
       var e = goog.ime.chrome.vk.Background.generateBrowserEvent(keyEvent);
-      if (e && !e.ctrlKey && (!e.altKey || controller.getAltGr())) {
+      if (e && !e.ctrlKey && (!e.altKey || controller.getState(altGrBit))) {
         ret = !!controller.processEvent(e);
       } else if (code.indexOf('Shift') && code.indexOf('Alt')) {
         // If not modifier keys, do reset.
