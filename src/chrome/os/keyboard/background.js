@@ -48,7 +48,8 @@ goog.ime.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
   } else {
     var ch = goog.ime.chrome.vk.Background.KEY_CODES_[code];
     if (ch) {
-      e.keyCode = ch.charCodeAt(0);
+      e.keyCode = ch[0].charCodeAt(0);
+      e.charCode = ch[1].charCodeAt(0);
     }
   }
   return e.keyCode == 0 ? null : e;
@@ -62,20 +63,20 @@ goog.ime.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
  * @private
  */
 goog.ime.chrome.vk.Background.KEY_CODES_ = {
-  'BackQuote': '\u00c0',
-  'Minus': '\u00bd',
-  'Equal': '\u00bb',
-  'Backspace': '\u0008',
-  'BracketLeft': '\u00db',
-  'BracketRight': '\u00dd',
-  'BlacketRight': '\u00dd', // Workaround API typo bug in M28.
-  'Backslash': '\u00dc',
-  'Semicolon': '\u00ba',
-  'Quote': '\u00de',
-  'Comma': '\u00bc',
-  'Period': '\u00be',
-  'Slash': '\u00bf',
-  'Space': '\u0020'
+  'BackQuote': ['\u00c0', '`'],
+  'Minus': ['\u00bd', '-'],
+  'Equal': ['\u00bb', '='],
+  'Backspace': ['\u0008', '\u0008'],
+  'BracketLeft': ['\u00db', '{'],
+  'BracketRight': ['\u00dd', '}'],
+  'BlacketRight': ['\u00dd'], // Workaround API typo bug in M28.
+  'Backslash': ['\u00dc', '\\'],
+  'Semicolon': ['\u00ba', ';'],
+  'Quote': ['\u00de', '"'],
+  'Comma': ['\u00bc', ','],
+  'Period': ['\u00be', '.'],
+  'Slash': ['\u00bf', '/'],
+  'Space': ['\u0020', ' ']
 };
 
 

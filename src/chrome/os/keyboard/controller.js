@@ -415,8 +415,14 @@ goog.ime.chrome.vk.Controller.prototype.updateState_ = function(e) {
   var state = (this.state_ & (states.CAPS | states.SHIFT_CLICK |
                               states.ALTGR_CLICK));
   // Refreshes the modifier status.
-  if (e.capsLock || e.keyCode == codes.CAPS_LOCK) {
+  if (e.keyCode == codes.CAPS_LOCK) {
     state |= states.CAPS;
+  } else if (e.capsLock != undefined) {
+    if (e.capsLock) {
+      state |= states.CAPS;
+    } else {
+      state &= ~states.CAPS;
+    }
   } else {
     var c = String.fromCharCode(e.charCode);
     if (e.shiftKey && /[a-z]/.test(c) || !e.shiftKey && /[A-Z]/.test(c)) {
