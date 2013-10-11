@@ -28,8 +28,8 @@ var TA_TYPEWRITER_LAYOUT = {
           '\u0ba3\u0b92\u0b89\u0b8e\u0bc6\u0bc7\u0b85\u0b87,.'
     },
     's,l': {
-      '': '\'\ubb8"%\u0b9c\u0bb6\u0bb7{{}}{{}}(){{\u0bb8\ubcd\ubb0\ubc0}}+' +
-          '{{}}{{\u0bb1\u0bc1}}{{\u0ba8\u0bc1}}{{\u0ba9\u0bc1}}' +
+      '': '\'\u0bb8"%\u0b9c\u0bb6\u0bb7{{}}{{}}(){{\u0bb8\u0bcd\u0bb0\u0bc0}}' +
+          '+{{}}{{\u0bb1\u0bc1}}{{\u0ba8\u0bc1}}{{\u0ba9\u0bc1}}' +
           '{{\u0b95\u0bc2}}{{\u0bb2\u0bc1}}{{\u0bb0\u0bc1}}\u0b90' +
           '{{\u0b9f\u0bc0}}\u0bc0\u0bc2\u0bcc\u0bf8' +
           '{{}}{{\u0bb3\u0bc1}}{{\u0ba9\u0bc1}}{{\u0b95\u0bc1}}' +
