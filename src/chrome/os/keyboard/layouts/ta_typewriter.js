@@ -29,7 +29,7 @@ var TA_TYPEWRITER_LAYOUT = {
     },
     's,l': {
       '': '\'\u0bb8"%\u0b9c\u0bb6\u0bb7{{}}{{}}(){{\u0bb8\u0bcd\u0bb0\u0bc0}}' +
-          '+{{}}{{\u0bb1\u0bc1}}{{\u0ba8\u0bc1}}{{\u0ba9\u0bc1}}' +
+          '+{{}}{{\u0bb1\u0bc1}}{{\u0ba8\u0bc1}}{{\u0b9a\u0bc1}}' +
           '{{\u0b95\u0bc2}}{{\u0bb2\u0bc1}}{{\u0bb0\u0bc1}}\u0b90' +
           '{{\u0b9f\u0bc0}}\u0bc0\u0bc2\u0bcc\u0bf8' +
           '{{}}{{\u0bb3\u0bc1}}{{\u0ba9\u0bc1}}{{\u0b95\u0bc1}}' +
