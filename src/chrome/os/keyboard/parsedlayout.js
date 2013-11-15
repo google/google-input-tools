@@ -202,8 +202,6 @@ goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
  */
 goog.ime.chrome.vk.ParsedLayout.prototype.prefixalizeRegexString_ = function(
     re_str) {
-  // Workaround for vi_telex transforms.
-  re_str = re_str.replace(/^\(\.\*\)/g, '');
   // Makes sure [...\[\]...] won't impact the later replaces.
   re_str = re_str.replace(/\\./g, function(m) {
     if (/^\\\[/.test(m)) {

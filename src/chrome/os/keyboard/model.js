@@ -149,35 +149,36 @@ goog.ime.chrome.vk.Model.prototype.predictHistory = function() {
     return -1;
   }
   var parsedLayout = this.layouts_[this.activeLayout_];
-  var textPrev = '', textCurr = '', posPrev = -1, posCurr = -1;
   var history = this.historyState_;
+  var text, transat;
   if (history.ambi) {
+    text = history.previous.text;
+    transat = history.previous.transat;
     // Tries to predict transform for previous history.
-    textPrev = history.previous.text;
-    if (history.previous.transat > 0) {
-      textPrev = textPrev.slice(0, history.previous.transat) + '\u001d' +
-          textPrev.slice(history.previous.transat) + history.ambi;
+    if (transat > 0) {
+      text = text.slice(0, transat) + '\u001d' + text.slice(transat) +
+          history.ambi;
     } else {
-      textPrev += history.ambi;
+      text += history.ambi;
     }
-    posPrev = parsedLayout.predictTransform(textPrev);
+    if (parsedLayout.predictTransform(text) >= 0) {
+      // If matched previous history, always return 0 because outside will use
+      // this to keep the composition text.
+      return 0;
+    }
   }
   // Tries to predict transform for current history.
-  textCurr = history.current.text;
-  if (history.current.transat > 0) {
-    textCurr = textCurr.slice(0, history.current.transat) + '\u001d' +
-        textCurr.slice(history.current.transat);
+  text = history.current.text;
+  transat = history.current.transat;
+  if (transat >= 0) {
+    text = text.slice(0, transat) + '\u001d' + text.slice(transat);
   }
-  posCurr = parsedLayout.predictTransform(textCurr);
-  if (posPrev >= 0 && posPrev < posCurr) {
-    if (textPrev.slice(0, posPrev) == textCurr.slice(0, posPrev)) {
-      // If predict a transform start pos for previous history, and its pos is
-      // less than for current history, and the text'es fore pos are matched,
-      // return the pos for previous history.
-      return posPrev;
-    }
+  var pos = parsedLayout.predictTransform(text);
+  if (transat >= 0 && pos > transat) {
+    // Adjusts the pos for removing the temporary \u001d character.
+    pos--;
   }
-  return posCurr < 0 ? posPrev : posCurr;
+  return pos;
 };
 
 
