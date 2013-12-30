@@ -737,6 +737,16 @@ HangulIme.prototype.handleKey_ = function(keyData) {
     this.commit_();
     return true;
   }
+  // Handles special character '\' and '|' in hanja mode.
+  if (this.state_ == HangulIme.State.HANJA && (
+      keyData['key'] == '|' || keyData['key'] == '\\')) {
+    this.prepareCommitText_();
+    this.update_();
+    // Commit mapped char
+    this.commitText_ = keyData['key'] == '|' ? '\u20a9' : '\uffe6';
+    this.commit_();
+    return true;
+  }
   // Commit current preedit text and let system handle the key if not valid
   if (!this.isValidChar_(keyData)) {
     this.prepareCommitText_();

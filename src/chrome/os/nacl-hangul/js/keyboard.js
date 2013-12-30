@@ -43,7 +43,9 @@ HangulIme.keyboardLayouts.push({
   id: HangulIme.Keyboard.DUBEOLSIK,
   name: '2',
   validKeys: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  charMap: {}
+  charMap: {
+    '$': '\u20A9',
+  }
 });
 
 HangulIme.keyboardLayouts.push({
