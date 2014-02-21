@@ -1,0 +1,390 @@
+{
+  "name": "Chrome OS XKB",
+  "version": "1.0.0.0",
+  "description": "Chrome OS XKB",
+  "default_locale": "en",
+  "permissions": [],
+  "background": {},
+  "input_components": [
+    {
+      "name": "__MSG_us_keyboard__",
+      "type": "ime",
+      "id": "xkb:us::eng",
+      "description": "",
+      "language": ["en-US", "en-AU", "id", "fil", "ms"],
+      "layouts": ["us"]
+    },{
+      "name": "__MSG_us_international_keyboard__",
+      "type": "ime",
+      "id": "xkb:us:intl:eng",
+      "description": "",
+      "language": ["en-US", "nl", "pt-BR"],
+      "layouts": ["us(intl)"]
+    },{
+      "name": "__MSG_us_extended_keyboard__",
+      "type": "ime",
+      "id": "xkb:us:altgr-intl:eng",
+      "description": "",
+      "language": ["en-US"],
+      "layouts": ["us(altgr-intl)"]
+    },{
+      "name": "__MSG_us_dvorak_keyboard__",
+      "type": "ime",
+      "id": "xkb:us:dvorak:eng",
+      "description": "",
+      "language": ["en-US"],
+      "layouts": ["us(dvorak)"]
+    },{
+      "name": "__MSG_us_colemak_keyboard__",
+      "type": "ime",
+      "id": "xkb:us:colemak:eng",
+      "description": "",
+      "language": ["en-US"],
+      "layouts": ["us(colemak)"]
+    },{
+      "name": "__MSG_belgian_keyboard__",
+      "type": "ime",
+      "id": "xkb:be::nld",
+      "description": "",
+      "language": ["nl"],
+      "layouts": ["be"]
+    },{
+      "name": "__MSG_french_keyboard__",
+      "type": "ime",
+      "id": "xkb:fr::fra",
+      "description": "",
+      "language": ["fr"],
+      "layouts": ["fr"]
+    },{
+      "name": "__MSG_belgian_keyboard__",
+      "type": "ime",
+      "id": "xkb:be::fra",
+      "description": "",
+      "language": ["fr"],
+      "layouts": ["be"]
+    },{
+      "name": "__MSG_canadian_french_keyboard__",
+      "type": "ime",
+      "id": "xkb:ca::fra",
+      "description": "",
+      "language": ["fr"],
+      "layouts": ["ca"]
+    },{
+      "name": "__MSG_swiss_french_keyboard__",
+      "type": "ime",
+      "id": "xkb:ch:fr:fra",
+      "description": "",
+      "language": ["fr"],
+      "layouts": ["ch(fr)"]
+    },{
+      "name": "__MSG_canadian_multilingual_keyboard__",
+      "type": "ime",
+      "id": "xkb:ca:multix:fra",
+      "description": "",
+      "language": ["fr"],
+      "layouts": ["ca(multix)"]
+    },{
+      "name": "__MSG_german_keyboard__",
+      "type": "ime",
+      "id": "xkb:de::ger",
+      "description": "",
+      "language": ["de"],
+      "layouts": ["de"]
+    },{
+      "name": "__MSG_german_neo_2_keyboard__",
+      "type": "ime",
+      "id": "xkb:de:neo:ger",
+      "description": "",
+      "language": ["de"],
+      "layouts": ["de(neo)"]
+    },{
+      "name": "__MSG_belgian_keyboard__",
+      "type": "ime",
+      "id": "xkb:be::ger",
+      "description": "",
+      "language": ["de"],
+      "layouts": ["be"]
+    },{
+      "name": "__MSG_swiss_keyboard__",
+      "type": "ime",
+      "id": "xkb:ch::ger",
+      "description": "",
+      "language": ["de"],
+      "layouts": ["ch"]
+    },{
+      "name": "__MSG_japanese_keyboard__",
+      "type": "ime",
+      "id": "xkb:jp::jpn",
+      "description": "",
+      "language": ["ja"],
+      "layouts": ["jp"]
+    },{
+      "name": "__MSG_russian_keyboard__",
+      "type": "ime",
+      "id": "xkb:ru::rus",
+      "description": "",
+      "language": ["ru"],
+      "layouts": ["ru"]
+    },{
+      "name": "__MSG_russian_phonetic_keyboard__",
+      "type": "ime",
+      "id": "xkb:ru:phonetic:rus",
+      "description": "",
+      "language": ["ru"],
+      "layouts": ["ru(phonetic)"]
+    },{
+      "name": "__MSG_brazilian_keyboard__",
+      "type": "ime",
+      "id": "xkb:br::por",
+      "description": "",
+      "language": ["pt-BR"],
+      "layouts": ["br"]
+    },{
+      "name": "__MSG_bulgarian_keyboard__",
+      "type": "ime",
+      "id": "xkb:bg::bul",
+      "description": "",
+      "language": ["bg"],
+      "layouts": ["bg"]
+    },{
+      "name": "__MSG_bulgarian_phonetic_keyboard__",
+      "type": "ime",
+      "id": "xkb:bg:phonetic:bul",
+      "description": "",
+      "language": ["bg"],
+      "layouts": ["bg(phonetic)"]
+    },{
+      "name": "__MSG_canadian_english_keyboard__",
+      "type": "ime",
+      "id": "xkb:ca:eng:eng",
+      "description": "",
+      "language": ["en-CA"],
+      "layouts": ["ca(eng)"]
+    },{
+      "name": "__MSG_czech_keyboard__",
+      "type": "ime",
+      "id": "xkb:cz::cze",
+      "description": "",
+      "language": ["cs"],
+      "layouts": ["cz"]
+    },{
+      "name": "__MSG_czech_qwerty_keyboard__",
+      "type": "ime",
+      "id": "xkb:cz:qwerty:cze",
+      "description": "",
+      "language": ["cs"],
+      "layouts": ["cz(qwerty)"]
+    },{
+      "name": "__MSG_estonian_keyboard__",
+      "type": "ime",
+      "id": "xkb:ee::est",
+      "description": "",
+      "language": ["et"],
+      "layouts": ["ee"]
+    },{
+      "name": "__MSG_spanish_keyboard__",
+      "type": "ime",
+      "id": "xkb:es::spa",
+      "description": "",
+      "language": ["es"],
+      "layouts": ["es"]
+    },{
+      "name": "__MSG_catalan_keyboard__",
+      "type": "ime",
+      "id": "xkb:es:cat:cat",
+      "description": "",
+      "language": ["ca"],
+      "layouts": ["es(cat)"]
+    },{
+      "name": "__MSG_danish_keyboard__",
+      "type": "ime",
+      "id": "xkb:dk::dan",
+      "description": "",
+      "language": ["da"],
+      "layouts": ["dk"]
+    },{
+      "name": "__MSG_greek_keyboard__",
+      "type": "ime",
+      "id": "xkb:gr::gre",
+      "description": "",
+      "language": ["el"],
+      "layouts": ["gr"]
+    },{
+      "name": "__MSG_hebrew_keyboard__",
+      "type": "ime",
+      "id": "xkb:il::heb",
+      "description": "",
+      "language": ["he"],
+      "layouts": ["il"]
+    },{
+      "name": "__MSG_latin_american_keyboard__",
+      "type": "ime",
+      "id": "xkb:latam::spa",
+      "description": "",
+      "language": ["es", "es-419"],
+      "layouts": ["latam"]
+    },{
+      "name": "__MSG_lithuanian_keyboard__",
+      "type": "ime",
+      "id": "xkb:lt::lit",
+      "description": "",
+      "language": ["lt"],
+      "layouts": ["lt"]
+    },{
+      "name": "__MSG_latvian_keyboard__",
+      "type": "ime",
+      "id": "xkb:lv:apostrophe:lav",
+      "description": "",
+      "language": ["lv"],
+      "layouts": ["lv(apostrophe)"]
+    },{
+      "name": "__MSG_croatian_keyboard__",
+      "type": "ime",
+      "id": "xkb:hr::scr",
+      "description": "",
+      "language": ["hr"],
+      "layouts": ["hr"]
+    },{
+      "name": "__MSG_uk_keyboard__",
+      "type": "ime",
+      "id": "xkb:gb:extd:eng",
+      "description": "",
+      "language": ["en-GB"],
+      "layouts": ["gb(extd)"]
+    },{
+      "name": "__MSG_uk_dvorak_keyboard__",
+      "type": "ime",
+      "id": "xkb:gb:dvorak:eng",
+      "description": "",
+      "language": ["en-GB"],
+      "layouts": ["gb(dvorak)"]
+    },{
+      "name": "__MSG_finnish_keyboard__",
+      "type": "ime",
+      "id": "xkb:fi::fin",
+      "description": "",
+      "language": ["fi"],
+      "layouts": ["fi"]
+    },{
+      "name": "__MSG_hungarian_keyboard__",
+      "type": "ime",
+      "id": "xkb:hu::hun",
+      "description": "",
+      "language": ["hu"],
+      "layouts": ["hu"]
+    },{
+      "name": "__MSG_italian_keyboard__",
+      "type": "ime",
+      "id": "xkb:it::ita",
+      "description": "",
+      "language": ["it"],
+      "layouts": ["it"]
+    },{
+      "name": "__MSG_icelandic_keyboard__",
+      "type": "ime",
+      "id": "xkb:is::ice",
+      "description": "",
+      "language": ["is"],
+      "layouts": ["is"]
+    },{
+      "name": "__MSG_norwegian_keyboard__",
+      "type": "ime",
+      "id": "xkb:no::nob",
+      "description": "",
+      "language": ["nb"],
+      "layouts": ["no"]
+    },{
+      "name": "__MSG_polish_keyboard__",
+      "type": "ime",
+      "id": "xkb:pl::pol",
+      "description": "",
+      "language": ["pl"],
+      "layouts": ["pl"]
+    },{
+      "name": "__MSG_portuguese_keyboard__",
+      "type": "ime",
+      "id": "xkb:pt::por",
+      "description": "",
+      "language": ["pt-PT"],
+      "layouts": ["pt"]
+    },{
+      "name": "__MSG_romanian_keyboard__",
+      "type": "ime",
+      "id": "xkb:ro::rum",
+      "description": "",
+      "language": ["ro"],
+      "layouts": ["ro"]
+    },{
+      "name": "__MSG_swedish_keyboard__",
+      "type": "ime",
+      "id": "xkb:se::swe",
+      "description": "",
+      "language": ["sv"],
+      "layouts": ["se"]
+    },{
+      "name": "__MSG_slovakian_keyboard__",
+      "type": "ime",
+      "id": "xkb:sk::slo",
+      "description": "",
+      "language": ["sk"],
+      "layouts": ["sk"]
+    },{
+      "name": "__MSG_slovenian_keyboard__",
+      "type": "ime",
+      "id": "xkb:si::slv",
+      "description": "",
+      "language": ["sl"],
+      "layouts": ["si"]
+    },{
+      "name": "__MSG_serbian_keyboard__",
+      "type": "ime",
+      "id": "xkb:rs::srp",
+      "description": "",
+      "language": ["sr"],
+      "layouts": ["rs"]
+    },{
+      "name": "__MSG_turkish_keyboard__",
+      "type": "ime",
+      "id": "xkb:tr::tur",
+      "description": "",
+      "language": ["tr"],
+      "layouts": ["tr"]
+    },{
+      "name": "__MSG_ukrainian_keyboard__",
+      "type": "ime",
+      "id": "xkb:ua::ukr",
+      "description": "",
+      "language": ["uk"],
+      "layouts": ["ua"]
+    },{
+      "name": "__MSG_belarusian_keyboard__",
+      "type": "ime",
+      "id": "xkb:by::bel",
+      "description": "",
+      "language": ["be"],
+      "layouts": ["by"]
+    },{
+      "name": "__MSG_armenian_phonetic_keyboard__",
+      "type": "ime",
+      "id": "xkb:am:phonetic:arm",
+      "description": "",
+      "language": ["hy"],
+      "layouts": ["am"]
+    },{
+      "name": "__MSG_georgian_keyboard__",
+      "type": "ime",
+      "id": "xkb:ge::geo",
+      "description": "",
+      "language": ["ka"],
+      "layouts": ["ge"]
+    },{
+      "name": "__MSG_mongolian_keyboard__",
+      "type": "ime",
+      "id": "xkb:mn::mon",
+      "description": "",
+      "language": ["mn"],
+      "layouts": ["mn"]
+    }
+  ],
+  "manifest_version": 2
+}
