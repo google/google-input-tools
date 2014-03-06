@@ -14,8 +14,6 @@
 
 /**
  * @fileoverview Defines the global settings variables for ITA.
- * TODO(shuchen): Make all public static variables started with lower case
- *     letter.
  */
 
 goog.provide('i18n.input.common.GlobalSettings');
