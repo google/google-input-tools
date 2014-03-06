@@ -1,5 +1,8 @@
+Quick start:
+Copies kbd.html, kbd.css, kbd.js to web server, navigates kbd.html to try the demo.
+
+How to compile?
 1. Downloads latest closure version from https://code.google.com/p/closure-library/downloads/list . Extracts to a directory. sets it as closure root directory.
 2. Downloads latest closure complier from https://code.google.com/p/closure-compiler/wiki/BinaryDownloads?tm=2 . Extracts compiler.jar to closure root directory.
 3. Edits kbd_compiler.sh set the correct closure directory and src direcotry.
 4. Runs kbd_compiler.sh to generate kbd.js
-5. Navigates kbd.html via webserver to view the demo.
