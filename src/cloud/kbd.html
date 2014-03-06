@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link href="kbd.css" rel="stylesheet" type="text/css">
+  <script src='kbd.js'></script>
+  <script>
+    var controller, visible = true;
+    function onPageLoaded() {
+      var input = document.getElementById('t1');
+      controller = new i18n.input.keyboard.Keyboard();
+      controller.loadLayout('vi_telex');
+      controller.loadLayout('vi_vni');
+      controller.loadLayout('deva_phone');
+      controller.loadLayout('gu_phone');
+      controller.loadLayout('ar');
+      controller.loadLayout('he');
+      controller.loadLayout('ps');
+      controller.loadLayout('ur');
+      controller.loadLayout('fa');
+      controller.loadLayout('ko');
+      controller.loadLayout('bg_phone');
+      controller.loadLayout('yi');
+      controller.loadLayout('fr');
+      controller.loadLayout('ml_phone');
+      controller.loadLayout('kn_phone');
+      controller.loadLayout('sa_phone');
+      controller.loadLayout('ca');
+      controller.loadLayout('th_pattajoti');
+      controller.loadLayout('th_tis');
+      controller.loadLayout('ta_typewriter');
+      controller.loadLayout('ta_itrans');
+      controller.loadLayout('ne_inscript');
+      controller.loadLayout('ne_phone');
+      controller.loadLayout('us_intl');
+      controller.loadLayout('ethi');
+      controller.loadLayout('nv');
+      controller.reposition(input, 5, 4, [5, 0, 0, 0]);
+      controller.activateLayout('ne_inscript');
+      controller.register(input);
+      controller.addEventListener(
+          'kc',
+          function() { visible = false; });
+      input.focus();
+    }
+
+    function onLayoutSelected(layoutCode) {
+      controller.activateLayout(layoutCode);
+      document.getElementById('t1').focus();
+    }
+
+    function toggle() {
+      if (controller) {
+        controller.setVisible(visible = !visible);
+      }
+    }
+  </script>
+</head>
+<body onload='onPageLoaded()'>
+  <select onchange='onLayoutSelected(this.value)'>
+    <option value='vi_vni'>vi_vni</option>
+    <option value='ml_phone'>ml_phone</option>
+    <option value='vi_telex'>vi_telex</option>
+    <option value='deva_phone'>deva_phone</option>
+    <option value='gu_phone'>gu_phone</option>
+    <option value='ar'>ar</option>
+    <option value='he'>he</option>
+    <option value='ps'>ps</option>
+    <option value='ur'>ur</option>
+    <option value='fa'>fa</option>
+    <option value='ko'>ko</option>
+    <option value='yi'>yi</option>
+    <option value='bg_phone'>bg_phone</option>
+    <option value='fr'>fr</option>
+    <option value='kn_phone'>kn_phone</option>
+    <option value='sa_phone'>sa_phone</option>
+    <option value='ca'>ca</option>
+    <option value='th_pattajoti'>th_pattajoti</option>
+    <option value='th_tis'>th_tis</option>
+    <option value='ta_typewriter'>ta_typewriter</option>
+    <option value='ta_itrans'>ta_itrans</option>
+    <option value='ne_inscript' selected>ne_inscript</option>
+    <option value='ne_phone'>ne_phone</option>
+    <option value='us_intl'>us_intl</option>
+    <option value='ethi'>ethi</option>
+    <option value='nv'>nv</option>
+  </select>
+  <input type='input' id='t1' style='width: 400px'>
+  <input type='button' value='Toggle show/hide'
+  onclick='javascript:toggle()'>
+  <br>
+</body>
+</html>
+
