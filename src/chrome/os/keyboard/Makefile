@@ -25,8 +25,6 @@ PACKAGE:=$(PROJECT)-$(VER).tar.gz
 FILES:=/tmp/cros_vk_files
 BG:=$(FILES)/cros_vk_background.js
 BGDBG:=$(FILES)/cros_vk_background_dbg.js
-VIEW:=$(FILES)/cros_vk_view.js
-VIEWDBG:=$(FILES)/cros_vk_view_dbg.js
 EXTERNS:=../api_externs.js
 
 all: js lo manifest pack
@@ -36,21 +34,13 @@ debug: jsdbg lo manifest_dbg pack
 dir:
 	@mkdir -p $(FILES)/layouts
 
-js: | $(BG) $(VIEW)
+js: | $(BG)
 
-jsdbg: | $(BGDBG) $(VIEWDBG)
+jsdbg: | $(BGDBG)
 
 $(BG): *.js $(EXTERNS) | dir
 	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
-		--namespace="goog.ime.chrome.vk.Background" \
-		--output_mode=compiled \
-		--compiler_jar=$(CLOSURE_COMPILER) \
-		--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
-		--compiler_flags="--externs=$(EXTERNS)" > $@
-
-$(VIEW): *.js $(EXTERNS) | dir
-	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
-		--namespace="goog.ime.chrome.vk.View" \
+		--namespace="i18n.input.chrome.vk.Background" \
 		--output_mode=compiled \
 		--compiler_jar=$(CLOSURE_COMPILER) \
 		--compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
@@ -58,12 +48,7 @@ $(VIEW): *.js $(EXTERNS) | dir
 
 $(BGDBG): *.js $(EXTERNS) | dir
 	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
-		--namespace="goog.ime.chrome.vk.Background" \
-		--output_mode=script > $@
-
-$(VIEWDBG): *.js $(EXTERNS) | dir
-	@$(CLOSURE_BUILDER) --root=$(CLOSURE_LIB) --root=./ \
-		--namespace="goog.ime.chrome.vk.View" \
+		--namespace="i18n.input.chrome.vk.Background" \
 		--output_mode=script > $@
 
 $(FILES)/layouts/%.js: layouts/%.js layouts/externs.js | dir
@@ -76,8 +61,7 @@ $(FILES)/layouts/%.js: layouts/%.js layouts/externs.js | dir
 lo: $(addprefix $(FILES)/,$(filter-out layouts/externs.js,$(wildcard layouts/*.js)))
 
 manifest:
-	@cp manifest.json $(FILES)/; cp -r locales $(FILES)/_locales; \
-	cp *.html $(FILES)/; cp *.png $(FILES)/
+	@cp manifest.json $(FILES)/; cp -r locales $(FILES)/_locales
 
 manifest_dbg: | manifest
 	@sed -i 's/\.js/_dbg\.js/' $(FILES)/manifest.json; \

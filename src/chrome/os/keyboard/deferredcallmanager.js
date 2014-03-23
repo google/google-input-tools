@@ -16,7 +16,7 @@
  * @fileoverview Definition of DeferredCallManager.
  */
 
-goog.provide('goog.ime.chrome.vk.DeferredCallManager');
+goog.provide('i18n.input.chrome.vk.DeferredCallManager');
 
 
 
@@ -25,7 +25,7 @@ goog.provide('goog.ime.chrome.vk.DeferredCallManager');
  *
  * @constructor
  */
-goog.ime.chrome.vk.DeferredCallManager = function() {
+i18n.input.chrome.vk.DeferredCallManager = function() {
   /**
    * The deferred function queue.
    *
@@ -34,7 +34,7 @@ goog.ime.chrome.vk.DeferredCallManager = function() {
    */
   this.funcQueue_ = [];
 };
-goog.addSingletonGetter(goog.ime.chrome.vk.DeferredCallManager);
+goog.addSingletonGetter(i18n.input.chrome.vk.DeferredCallManager);
 
 
 /**
@@ -42,7 +42,7 @@ goog.addSingletonGetter(goog.ime.chrome.vk.DeferredCallManager);
  *
  * @param {!Function} func The function object.
  */
-goog.ime.chrome.vk.DeferredCallManager.prototype.addCall = function(func) {
+i18n.input.chrome.vk.DeferredCallManager.prototype.addCall = function(func) {
   this.funcQueue_.push(func);
 };
 
@@ -50,7 +50,7 @@ goog.ime.chrome.vk.DeferredCallManager.prototype.addCall = function(func) {
 /**
  * Executes all function calls in order.
  */
-goog.ime.chrome.vk.DeferredCallManager.prototype.execAll = function() {
+i18n.input.chrome.vk.DeferredCallManager.prototype.execAll = function() {
   for (var i = 0; i < this.funcQueue_.length; i++) {
     this.funcQueue_[i].call();
   }

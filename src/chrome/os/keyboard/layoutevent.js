@@ -16,7 +16,7 @@
  * @fileoverview The definition of layout event.
  */
 
-goog.provide('goog.ime.chrome.vk.LayoutEvent');
+goog.provide('i18n.input.chrome.vk.LayoutEvent');
 
 goog.require('goog.events.Event');
 
@@ -25,13 +25,13 @@ goog.require('goog.events.Event');
 /**
  * The Layout Event.
  *
- * @param {goog.ime.chrome.vk.EventType} type The event type.
+ * @param {i18n.input.chrome.vk.EventType} type The event type.
  * @param {Object} layoutView The layoutView object. See ParsedLayout for
  *     details.
  * @constructor
  * @extends {goog.events.Event}
  */
-goog.ime.chrome.vk.LayoutEvent = function(type, layoutView) {
+i18n.input.chrome.vk.LayoutEvent = function(type, layoutView) {
   goog.base(this, type);
 
   /**
@@ -48,4 +48,4 @@ goog.ime.chrome.vk.LayoutEvent = function(type, layoutView) {
    */
   this.layoutCode = layoutView ? layoutView.id : null;
 };
-goog.inherits(goog.ime.chrome.vk.LayoutEvent, goog.events.Event);
+goog.inherits(i18n.input.chrome.vk.LayoutEvent, goog.events.Event);

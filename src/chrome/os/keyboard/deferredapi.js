@@ -16,9 +16,9 @@
  * @fileoverview Definition of deferred input API.
  */
 
-goog.provide('goog.ime.chrome.vk.DeferredApi');
+goog.provide('i18n.input.chrome.vk.DeferredApi');
 
-goog.require('goog.ime.chrome.vk.DeferredCallManager');
+goog.require('i18n.input.chrome.vk.DeferredCallManager');
 
 
 /**
@@ -27,8 +27,8 @@ goog.require('goog.ime.chrome.vk.DeferredCallManager');
  * @param {number} contextId The context ID.
  * @param {string} text The text to be inserted into the input box.
  */
-goog.ime.chrome.vk.DeferredApi.commitText = function(contextId, text) {
-  goog.ime.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
+i18n.input.chrome.vk.DeferredApi.commitText = function(contextId, text) {
+  i18n.input.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
     chrome.input.ime.commitText({
       'contextID' : contextId,
       'text': text});
@@ -43,9 +43,9 @@ goog.ime.chrome.vk.DeferredApi.commitText = function(contextId, text) {
  * @param {string} text The text to be inserted into the input box.
  * @param {number} cursor The cursor of the composition.
  */
-goog.ime.chrome.vk.DeferredApi.setComposition = function(
+i18n.input.chrome.vk.DeferredApi.setComposition = function(
     contextId, text, cursor) {
-  goog.ime.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
+  i18n.input.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
     chrome.input.ime.setComposition({
       'contextID' : contextId,
       'text': text,
@@ -59,8 +59,8 @@ goog.ime.chrome.vk.DeferredApi.setComposition = function(
  *
  * @param {number} contextId The context ID.
  */
-goog.ime.chrome.vk.DeferredApi.clearComposition = function(contextId) {
-  goog.ime.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
+i18n.input.chrome.vk.DeferredApi.clearComposition = function(contextId) {
+  i18n.input.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
     chrome.input.ime.clearComposition({
       'contextID' : contextId}, function(b) {});
   });
@@ -75,9 +75,9 @@ goog.ime.chrome.vk.DeferredApi.clearComposition = function(contextId) {
  * @param {number} back The backspace count.
  * @param {string} text The text to be inserted into the input box.
  */
-goog.ime.chrome.vk.DeferredApi.deleteSurroundingText = function(
+i18n.input.chrome.vk.DeferredApi.deleteSurroundingText = function(
     engineId, contextId, back, text) {
-  goog.ime.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
+  i18n.input.chrome.vk.DeferredCallManager.getInstance().addCall(function() {
     chrome.input.ime.deleteSurroundingText({
       'engineID' : engineId,
       'contextID' : contextId,

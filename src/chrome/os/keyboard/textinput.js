@@ -16,7 +16,7 @@
  * @fileoverview Definition of text input for vk.
  */
 
-goog.provide('goog.ime.chrome.vk.TextInput');
+goog.provide('i18n.input.chrome.vk.TextInput');
 
 
 
@@ -26,7 +26,7 @@ goog.provide('goog.ime.chrome.vk.TextInput');
  * @param {InputContext} context The input box context.
  * @constructor
  */
-goog.ime.chrome.vk.TextInput = function(context) {
+i18n.input.chrome.vk.TextInput = function(context) {
   /**
    * The input box context.
    *
@@ -42,7 +42,7 @@ goog.ime.chrome.vk.TextInput = function(context) {
  *
  * @type {string}
  */
-goog.ime.chrome.vk.TextInput.prototype.textBeforeCursor = '';
+i18n.input.chrome.vk.TextInput.prototype.textBeforeCursor = '';
 
 
 /**
@@ -50,7 +50,7 @@ goog.ime.chrome.vk.TextInput.prototype.textBeforeCursor = '';
  *
  * @type {string}
  */
-goog.ime.chrome.vk.TextInput.prototype.engineID = '';
+i18n.input.chrome.vk.TextInput.prototype.engineID = '';
 
 
 /**
@@ -58,7 +58,7 @@ goog.ime.chrome.vk.TextInput.prototype.engineID = '';
  *
  * @type {InputContext}
  */
-goog.ime.chrome.vk.TextInput.prototype.inputContext = null;
+i18n.input.chrome.vk.TextInput.prototype.inputContext = null;
 
 
 /**
@@ -66,7 +66,7 @@ goog.ime.chrome.vk.TextInput.prototype.inputContext = null;
  *
  * @param {InputContext} context The input box context.
  */
-goog.ime.chrome.vk.TextInput.prototype.setContext = function(context) {
+i18n.input.chrome.vk.TextInput.prototype.setContext = function(context) {
   this.context = context;
 };
 
@@ -78,10 +78,10 @@ goog.ime.chrome.vk.TextInput.prototype.setContext = function(context) {
  * @param {number} back The number of characters to be deleted before insert.
  * @return {boolean} Whether successfully committed.
  */
-goog.ime.chrome.vk.TextInput.prototype.commitText = goog.abstractMethod;
+i18n.input.chrome.vk.TextInput.prototype.commitText = goog.abstractMethod;
 
 
 /**
  * Resets the text input.
  */
-goog.ime.chrome.vk.TextInput.prototype.reset = goog.nullFunction;
+i18n.input.chrome.vk.TextInput.prototype.reset = goog.nullFunction;

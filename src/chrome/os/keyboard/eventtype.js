@@ -16,7 +16,7 @@
  * @fileoverview The event types for keyboard.
  */
 
-goog.provide('goog.ime.chrome.vk.EventType');
+goog.provide('i18n.input.chrome.vk.EventType');
 
 
 /**
@@ -24,6 +24,6 @@ goog.provide('goog.ime.chrome.vk.EventType');
  *
  * @enum {string}
  */
-goog.ime.chrome.vk.EventType = {
+i18n.input.chrome.vk.EventType = {
   LAYOUT_LOADED: 'lld'
 };

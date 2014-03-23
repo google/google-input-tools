@@ -16,7 +16,7 @@
  * @fileoverview Defines all the key codes and key codes map.
  */
 
-goog.provide('goog.ime.chrome.vk.KeyCode');
+goog.provide('i18n.input.chrome.vk.KeyCode');
 
 
 /**
@@ -24,7 +24,7 @@ goog.provide('goog.ime.chrome.vk.KeyCode');
  *
  * @type {string}
  */
-goog.ime.chrome.vk.KeyCode.CODES101 =
+i18n.input.chrome.vk.KeyCode.CODES101 =
     '\u00c01234567890\u00bd\u00bb' +
     'QWERTYUIOP\u00db\u00dd\u00dc' +
     'ASDFGHJKL\u00ba\u00de' +
@@ -37,7 +37,7 @@ goog.ime.chrome.vk.KeyCode.CODES101 =
  *
  * @type {string}
  */
-goog.ime.chrome.vk.KeyCode.CODES102 =
+i18n.input.chrome.vk.KeyCode.CODES102 =
     '\u00c01234567890\u00bd\u00bb' +
     'QWERTYUIOP\u00db\u00dd' +
     'ASDFGHJKL\u00ba\u00de\u00dc' +
@@ -51,7 +51,7 @@ goog.ime.chrome.vk.KeyCode.CODES102 =
  *
  * @type {string}
  */
-goog.ime.chrome.vk.KeyCode.ALLCODES101 =
+i18n.input.chrome.vk.KeyCode.ALLCODES101 =
     '\u00c01234567890\u00bd\u00bb\u0008' +
     '\u0009QWERTYUIOP\u00db\u00dd\u00dc' +
     '\u0014ASDFGHJKL\u00ba\u00de\u000d' +
@@ -65,7 +65,7 @@ goog.ime.chrome.vk.KeyCode.ALLCODES101 =
  *
  * @type {string}
  */
-goog.ime.chrome.vk.KeyCode.ALLCODES102 =
+i18n.input.chrome.vk.KeyCode.ALLCODES102 =
     '\u00c01234567890\u00bd\u00bb\u0008' +
     '\u0009QWERTYUIOP\u00db\u00dd\u000d' +
     '\u0014ASDFGHJKL\u00ba\u00de\u00dc\u000d' +

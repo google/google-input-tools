@@ -17,10 +17,10 @@
  *     and expose the keymappings and the transforms to Model.
  */
 
-goog.provide('goog.ime.chrome.vk.ParsedLayout');
+goog.provide('i18n.input.chrome.vk.ParsedLayout');
 
-goog.require('goog.ime.chrome.vk.KeyCode');
 goog.require('goog.object');
+goog.require('i18n.input.chrome.vk.KeyCode');
 
 
 
@@ -31,7 +31,7 @@ goog.require('goog.object');
  *     xxx_layout.js.
  * @constructor
  */
-goog.ime.chrome.vk.ParsedLayout = function(layout) {
+i18n.input.chrome.vk.ParsedLayout = function(layout) {
   /**
    * The layout code (a.k.a. id).
    *
@@ -41,19 +41,19 @@ goog.ime.chrome.vk.ParsedLayout = function(layout) {
 
   /**
    * The view object needed by UI rendering, including the key
-   *   mappings. Some extra keys are not appear in following, which are
-   *   '', 's', 'l', 'sl', 'cl', 'sc', 'scl'. They define the key mappings
-   *   for each keyboard mode:
-   *     '' means normal;
-   *     's' means SHIFT;
-   *     'l' means CAPSLOCK;
-   *     'c' means CTRL+ALT.
-   *   Those modes will be filled when parsing the raw layout.
-   *   If certain modes are not defined by the raw layout, this.view.<mode>
-   *   won't be filled in.
-   *   The mode format is: {
-   *     '<keyChar>': ['<disp type(S|P)>', '<disp chars>', '<commit chars>']
-   *   }.
+   * mappings. Some extra keys are not appear in following, which are
+   * '', 's', 'l', 'sl', 'cl', 'sc', 'scl'. They define the key mappings
+   * for each keyboard mode:
+   *   '' means normal;
+   *   's' means SHIFT;
+   *   'l' means CAPSLOCK;
+   *   'c' means CTRL+ALT.
+   * Those modes will be filled when parsing the raw layout.
+   * If certain modes are not defined by the raw layout, this.view.<mode>
+   * won't be filled in.
+   * The mode format is: {
+   *   '<keyChar>': ['<disp type(S|P)>', '<disp chars>', '<commit chars>']
+   * }.
    *
    * @type {!Object}
    */
@@ -76,9 +76,9 @@ goog.ime.chrome.vk.ParsedLayout = function(layout) {
 
   /**
    * The parsed layout transforms. There are only 3 elements of this array.
-   *   !st is the long exgexp to match, 2nd is the map of:
-   *   <match location>: [<regexp>, <replacement>].
-   *   3rd/4th are the regexp for prefix matches.
+   * !st is the long exgexp to match, 2nd is the map of:
+   * <match location>: [<regexp>, <replacement>].
+   * 3rd/4th are the regexp for prefix matches.
    *
    * @type {Array.<!Object>}
    */
@@ -117,10 +117,10 @@ goog.ime.chrome.vk.ParsedLayout = function(layout) {
  *     historyPruneRegex: <regexp string to represent the ambiguities>.
  * @private
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
+i18n.input.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
     layout) {
-  var codes = this.view['is102'] ? goog.ime.chrome.vk.KeyCode.CODES102 :
-      goog.ime.chrome.vk.KeyCode.CODES101;
+  var codes = this.view['is102'] ? i18n.input.chrome.vk.KeyCode.CODES102 :
+      i18n.input.chrome.vk.KeyCode.CODES101;
 
   var mappings = layout['mappings'];
   for (var m in mappings) {
@@ -200,7 +200,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.parseKeyMappings_ = function(
  * @return {string} The prefixalized the regexp string.
  * @private
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.prefixalizeRegexString_ = function(
+i18n.input.chrome.vk.ParsedLayout.prototype.prefixalizeRegexString_ = function(
     re_str) {
   // Makes sure [...\[\]...] won't impact the later replaces.
   re_str = re_str.replace(/\\./g, function(m) {
@@ -246,7 +246,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.prefixalizeRegexString_ = function(
  *     historyPruneRegex: <regexp string to represent the ambiguities>.
  * @private
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.parseTransforms_ = function(
+i18n.input.chrome.vk.ParsedLayout.prototype.parseTransforms_ = function(
     layout) {
   var transforms = layout['transform'];
   if (transforms) {
@@ -306,7 +306,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.parseTransforms_ = function(
  * @param {string} text The given string.
  * @return {number} The matched position in the string. Returns -1 for no match.
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.predictTransform = function(text) {
+i18n.input.chrome.vk.ParsedLayout.prototype.predictTransform = function(text) {
   if (!this.transforms || !text) {
     return -1;
   }
@@ -358,7 +358,7 @@ goog.ime.chrome.vk.ParsedLayout.prototype.predictTransform = function(text) {
  *     chars: <the chars to add at the tail after the deletion>}.
  *     If there is no transform applies, return null.
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.transform = function(
+i18n.input.chrome.vk.ParsedLayout.prototype.transform = function(
     prevstr, transat, ch) {
   if (!this.transforms) return null;
 
@@ -405,6 +405,6 @@ goog.ime.chrome.vk.ParsedLayout.prototype.transform = function(
  * @return {boolean} True if given chars is ambiguious chars, false
  *     otherwise.
  */
-goog.ime.chrome.vk.ParsedLayout.prototype.isAmbiChars = function(chars) {
+i18n.input.chrome.vk.ParsedLayout.prototype.isAmbiChars = function(chars) {
   return this.ambiRegex_ ? !!this.ambiRegex_.exec(chars) : false;
 };

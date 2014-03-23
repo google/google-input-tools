@@ -16,10 +16,10 @@
  * @fileoverview Definition of compose text input.
  */
 
-goog.provide('goog.ime.chrome.vk.ComposeTextInput');
+goog.provide('i18n.input.chrome.vk.ComposeTextInput');
 
-goog.require('goog.ime.chrome.vk.DeferredApi');
-goog.require('goog.ime.chrome.vk.TextInput');
+goog.require('i18n.input.chrome.vk.DeferredApi');
+goog.require('i18n.input.chrome.vk.TextInput');
 
 
 
@@ -27,17 +27,17 @@ goog.require('goog.ime.chrome.vk.TextInput');
  * The compose-style text input, which will show composition line when typing.
  *
  * @param {InputContext} context The input box context.
- * @param {!goog.ime.chrome.vk.Model} model The vk model instance.
+ * @param {!i18n.input.chrome.vk.Model} model The vk model instance.
  * @constructor
- * @extends {goog.ime.chrome.vk.TextInput}
+ * @extends {i18n.input.chrome.vk.TextInput}
  */
-goog.ime.chrome.vk.ComposeTextInput = function(context, model) {
+i18n.input.chrome.vk.ComposeTextInput = function(context, model) {
   goog.base(this, context);
 
   /**
    * The vk model.
    *
-   * @type {!goog.ime.chrome.vk.Model}
+   * @type {!i18n.input.chrome.vk.Model}
    * @private
    */
   this.model_ = model;
@@ -139,8 +139,8 @@ goog.ime.chrome.vk.ComposeTextInput = function(context, model) {
       replace(/S/g, '[' + otherMarkCharSet + ']').
       replace(/A/g, '[^' + nonSpacingCharSet + otherMarkCharSet + ']'));
 };
-goog.inherits(goog.ime.chrome.vk.ComposeTextInput,
-    goog.ime.chrome.vk.TextInput);
+goog.inherits(i18n.input.chrome.vk.ComposeTextInput,
+    i18n.input.chrome.vk.TextInput);
 
 
 /**
@@ -149,9 +149,9 @@ goog.inherits(goog.ime.chrome.vk.ComposeTextInput,
  * @param {string} text The composing text.
  * @private
  */
-goog.ime.chrome.vk.ComposeTextInput.prototype.setComposingText_ = function(
+i18n.input.chrome.vk.ComposeTextInput.prototype.setComposingText_ = function(
     text) {
-  goog.ime.chrome.vk.DeferredApi.setComposition(
+  i18n.input.chrome.vk.DeferredApi.setComposition(
       this.context.contextID, text, text.length);
   this.textBeforeCursor = text;
 };
@@ -163,15 +163,15 @@ goog.ime.chrome.vk.ComposeTextInput.prototype.setComposingText_ = function(
  * @param {string} text The text to be committed.
  * @private
  */
-goog.ime.chrome.vk.ComposeTextInput.prototype.commitText_ = function(
+i18n.input.chrome.vk.ComposeTextInput.prototype.commitText_ = function(
     text) {
-  goog.ime.chrome.vk.DeferredApi.commitText(this.context.contextID, text);
+  i18n.input.chrome.vk.DeferredApi.commitText(this.context.contextID, text);
   this.textBeforeCursor = '';
 };
 
 
 /** @override */
-goog.ime.chrome.vk.ComposeTextInput.prototype.commitText = function(
+i18n.input.chrome.vk.ComposeTextInput.prototype.commitText = function(
     text, back) {
   var onStage = !!this.textBeforeCursor;
   if (!onStage && (back == 1 && !text || back == 0 && text == ' ')) {
@@ -202,7 +202,7 @@ goog.ime.chrome.vk.ComposeTextInput.prototype.commitText = function(
   } else if (pos == 0) {
     this.setComposingText_(text);
   } else {
-    goog.ime.chrome.vk.DeferredApi.commitText(
+    i18n.input.chrome.vk.DeferredApi.commitText(
         this.context.contextID, text.slice(0, pos));
     this.setComposingText_(text.slice(pos));
     // Prunes history so that this.textBeforeCursor is consistent with the
@@ -214,9 +214,9 @@ goog.ime.chrome.vk.ComposeTextInput.prototype.commitText = function(
 
 
 /** @override */
-goog.ime.chrome.vk.ComposeTextInput.prototype.reset = function() {
+i18n.input.chrome.vk.ComposeTextInput.prototype.reset = function() {
   if (this.textBeforeCursor) {
-    goog.ime.chrome.vk.DeferredApi.commitText(
+    i18n.input.chrome.vk.DeferredApi.commitText(
         this.context.contextID, this.textBeforeCursor);
     this.textBeforeCursor = '';
   }

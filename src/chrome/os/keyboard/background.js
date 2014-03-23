@@ -16,12 +16,12 @@
  * @fileoverview The background of Virtual Keyboard extension for ChromeOS.
  */
 
-goog.provide('goog.ime.chrome.vk.Background');
+goog.provide('i18n.input.chrome.vk.Background');
 
 goog.require('goog.events.Event');
 goog.require('goog.events.EventType');
-goog.require('goog.ime.chrome.vk.Controller');
-goog.require('goog.ime.chrome.vk.DeferredCallManager');
+goog.require('i18n.input.chrome.vk.Controller');
+goog.require('i18n.input.chrome.vk.DeferredCallManager');
 
 
 /**
@@ -30,7 +30,7 @@ goog.require('goog.ime.chrome.vk.DeferredCallManager');
  * @param {!ChromeKeyboardEvent} keyEvent The key event of ChromeOS Input API.
  * @return {goog.events.BrowserEvent} The browser event.
  */
-goog.ime.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
+i18n.input.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
   var e = /** @type {!goog.events.BrowserEvent} */ (
       new goog.events.Event(keyEvent.type));
   e.fromChrome = true;
@@ -46,7 +46,7 @@ goog.ime.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
   } else if (code.indexOf('Digit') == 0) {
     e.keyCode = code.charCodeAt(5);
   } else {
-    var ch = goog.ime.chrome.vk.Background.KEY_CODES_[code];
+    var ch = i18n.input.chrome.vk.Background.KEY_CODES_[code];
     if (ch) {
       e.keyCode = ch.charCodeAt(0);
     }
@@ -61,7 +61,7 @@ goog.ime.chrome.vk.Background.generateBrowserEvent = function(keyEvent) {
  * @type {!Object.<string, string>}
  * @private
  */
-goog.ime.chrome.vk.Background.KEY_CODES_ = {
+i18n.input.chrome.vk.Background.KEY_CODES_ = {
   'BackQuote': '\u00c0',
   'Minus': '\u00bd',
   'Equal': '\u00bb',
@@ -80,15 +80,13 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
 
 
 (function() {
-  var controller = new goog.ime.chrome.vk.Controller();
+  var controller = new i18n.input.chrome.vk.Controller();
 
   chrome.input.ime.onActivate.addListener(function(engineID) {
-    window.console.log('onActive: ' + engineID);
     controller.activate(engineID);
   });
 
-  chrome.input.ime.onDeactivated.addListener(function(engineID) {
-    window.console.log('onDeactive: ' + engineID);
+  chrome.input.ime.onDeactivated.addListener(function() {
     controller.deactivate();
   });
 
@@ -117,37 +115,19 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
         controller.handleSurroundingTextChanged(text);
       });
 
-  var openingView = false;
-
   chrome.input.ime.onKeyEvent.addListener(function(engine, keyEvent) {
     var ret = false;
     var keyDown = keyEvent.type == goog.events.EventType.KEYDOWN;
     var code = keyEvent['code'];
 
-    // Hidden shortcut to bring up keyboard view UI.
-    if (keyDown) {
-      if (keyEvent.altKey && keyEvent.ctrlKey && keyEvent.shiftKey) {
-        if (code == 'KeyV') {
-          openingView = true;
-        } else {
-          if (openingView && code == 'KeyK') {
-            controller.createView();
-          }
-          openingView = false;
-        }
-        return ret;
-      }
-      openingView = false;
-    }
-
-    var altGrBit = goog.ime.chrome.vk.Controller.StateBit.ALTGR;
-    var shiftBit = goog.ime.chrome.vk.Controller.StateBit.SHIFT;
+    var altGrBit = i18n.input.chrome.vk.Controller.StateBit.ALTGR;
+    var shiftBit = i18n.input.chrome.vk.Controller.StateBit.SHIFT;
     if (code == 'AltRight') {
       controller.setState(altGrBit, keyDown);
     } else if (/^Shift/.test(code)) {
       controller.setState(shiftBit, keyDown);
     } else if (keyDown) {
-      var e = goog.ime.chrome.vk.Background.generateBrowserEvent(keyEvent);
+      var e = i18n.input.chrome.vk.Background.generateBrowserEvent(keyEvent);
       if (e && !e.ctrlKey && (!e.altKey || controller.getState(altGrBit))) {
         ret = !!controller.processEvent(e);
       } else if (code.indexOf('Shift') && code.indexOf('Alt')) {
@@ -159,12 +139,12 @@ goog.ime.chrome.vk.Background.KEY_CODES_ = {
       // If truely handled the key event, defer call APIs, otherwise it will
       // block some API calls (e.g. commitText when holding ALTGR).
       chrome.input.ime.keyEventHandled(keyEvent.requestId, ret);
-      goog.ime.chrome.vk.DeferredCallManager.getInstance().execAll();
+      i18n.input.chrome.vk.DeferredCallManager.getInstance().execAll();
     } else {
       // If falsely handled the key event, don't defer call APIs, otherwise it
       // will execute the default action before API calls (e.g. ArrowRight
       // before commitText).
-      goog.ime.chrome.vk.DeferredCallManager.getInstance().execAll();
+      i18n.input.chrome.vk.DeferredCallManager.getInstance().execAll();
       chrome.input.ime.keyEventHandled(keyEvent.requestId, ret);
     }
   }, ['async']);

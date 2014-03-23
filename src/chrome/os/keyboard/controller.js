@@ -16,17 +16,17 @@
  * @fileoverview Virtual Keyboard controller for Chrome OS.
  */
 
-goog.provide('goog.ime.chrome.vk.Controller');
+goog.provide('i18n.input.chrome.vk.Controller');
 
 goog.require('goog.Disposable');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.KeyCodes');
-goog.require('goog.ime.chrome.vk.ComposeTextInput');
-goog.require('goog.ime.chrome.vk.DeferredCallManager');
-goog.require('goog.ime.chrome.vk.DirectTextInput');
-goog.require('goog.ime.chrome.vk.EventType');
-goog.require('goog.ime.chrome.vk.KeyCode');
-goog.require('goog.ime.chrome.vk.Model');
+goog.require('i18n.input.chrome.vk.ComposeTextInput');
+goog.require('i18n.input.chrome.vk.DeferredCallManager');
+goog.require('i18n.input.chrome.vk.DirectTextInput');
+goog.require('i18n.input.chrome.vk.EventType');
+goog.require('i18n.input.chrome.vk.KeyCode');
+goog.require('i18n.input.chrome.vk.Model');
 
 
 
@@ -36,16 +36,16 @@ goog.require('goog.ime.chrome.vk.Model');
  * @constructor
  * @extends {goog.Disposable}
  */
-goog.ime.chrome.vk.Controller = function() {
+i18n.input.chrome.vk.Controller = function() {
   goog.base(this);
 
   /**
    * The keyboard module object.
    *
-   * @type {!goog.ime.chrome.vk.Model}
+   * @type {!i18n.input.chrome.vk.Model}
    * @private
    */
-  this.model_ = new goog.ime.chrome.vk.Model();
+  this.model_ = new i18n.input.chrome.vk.Model();
 
   /**
    * The event handler.
@@ -56,44 +56,18 @@ goog.ime.chrome.vk.Controller = function() {
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   this.eventHandler_.listen(this.model_,
-      goog.ime.chrome.vk.EventType.LAYOUT_LOADED, this.onLayoutLoaded_);
-
-  var self = this;
-  chrome.runtime.onConnect.addListener(function(port) {
-    self.port_ = port;
-    if (self.layout_) {
-      port.postMessage({
-        'type': 'layout',
-        'layout': self.layout_.view
-      });
-    }
-    port.onMessage.addListener(goog.bind(self.handleMessage_, self));
-  });
-  chrome.windows.onRemoved.addListener(function(winId) {
-    if (self.port_) {
-      self.port_.disconnect();
-      self.winId_ = 0;
-      self.port_ = null;
-    }
-  });
+      i18n.input.chrome.vk.EventType.LAYOUT_LOADED, this.onLayoutLoaded_);
 };
-goog.inherits(goog.ime.chrome.vk.Controller, goog.Disposable);
-
-
-/**
- * @type {Port}
- * @private
- */
-goog.ime.chrome.vk.Controller.prototype.port_ = null;
+goog.inherits(i18n.input.chrome.vk.Controller, goog.Disposable);
 
 
 /**
  * The text input.
  *
- * @type {goog.ime.chrome.vk.TextInput}
+ * @type {i18n.input.chrome.vk.TextInput}
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.textInput_ = null;
+i18n.input.chrome.vk.Controller.prototype.textInput_ = null;
 
 
 /**
@@ -102,26 +76,26 @@ goog.ime.chrome.vk.Controller.prototype.textInput_ = null;
  * @type {InputContext}
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.context_ = null;
+i18n.input.chrome.vk.Controller.prototype.context_ = null;
 
 
 /**
  * The vk state controled by key modifiers. And it consists of the bit flags
- * goog.ime.chrome.vk.Controller.StateBit.
+ * i18n.input.chrome.vk.Controller.StateBit.
  *
  * @type {number}
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.state_ = 0;
+i18n.input.chrome.vk.Controller.prototype.state_ = 0;
 
 
 /**
  * The layout object.
  *
- * @type {goog.ime.chrome.vk.ParsedLayout}
+ * @type {i18n.input.chrome.vk.ParsedLayout}
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.layout_ = null;
+i18n.input.chrome.vk.Controller.prototype.layout_ = null;
 
 
 /**
@@ -130,16 +104,7 @@ goog.ime.chrome.vk.Controller.prototype.layout_ = null;
  * @type {string}
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.engineID_ = '';
-
-
-/**
- * The view's window id.
- *
- * @type {number}
- * @private
- */
-goog.ime.chrome.vk.Controller.prototype.winId_ = 0;
+i18n.input.chrome.vk.Controller.prototype.engineID_ = '';
 
 
 /**
@@ -148,86 +113,25 @@ goog.ime.chrome.vk.Controller.prototype.winId_ = 0;
  * @enum {number}
  * @const
  */
-goog.ime.chrome.vk.Controller.StateBit = {
+i18n.input.chrome.vk.Controller.StateBit = {
   SHIFT: 1,
   ALTGR: 2,
-  CAPS: 4,
-  SHIFT_CLICK: 256,
-  ALTGR_CLICK: 512
-};
-
-
-/**
- * Handles the messages from view.
- *
- * @param {Object} message The message from view.
- * @private
- */
-goog.ime.chrome.vk.Controller.prototype.handleMessage_ = function(
-    message) {
-  var type = message['type'];
-  if (type != 'click' || !this.port_) {
-    return;
-  }
-  var keyCode = message[type];
-  var codes = goog.events.KeyCodes;
-  var states = goog.ime.chrome.vk.Controller.StateBit;
-  var orgState = this.state_;
-  switch (keyCode) {
-    case codes.SHIFT:
-      // If shift is on, copies shift to shift click, and clear shift state.
-      if (this.state_ & states.SHIFT) {
-        this.state_ |= states.SHIFT_CLICK;
-        this.state_ &= ~states.SHIFT;
-      }
-      this.state_ ^= states.SHIFT_CLICK;
-      break;
-    case 273: // Key code 273 means ALTGR.
-      // If altgr is on, copies altgr to altgr click, and clear altgr state.
-      if ((this.state_ & states.ALT) && (this.state_ & states.CTRL)) {
-        this.state_ |= states.ALTGR_CLICK;
-        this.state_ &= ~(states.ALT | states.CTRL);
-      }
-      this.state_ ^= states.ALTGR_CLICK;
-      break;
-    case codes.CAPS_LOCK:
-      this.state_ ^= states.CAPS;
-      break;
-    default:
-      this.commitChars_(keyCode);
-      goog.ime.chrome.vk.DeferredCallManager.getInstance().execAll();
-      break;
-  }
-  if (this.state_ != orgState) {
-    this.port_.postMessage({
-      'type': 'state',
-      'state': this.getUiState_()
-    });
-  }
+  CAPS: 4
 };
 
 
 /**
  * Sets the ALTGR/SHIFT/CAPS state.
  *
- * @param {goog.ime.chrome.vk.Controller.StateBit} stateBit .
+ * @param {i18n.input.chrome.vk.Controller.StateBit} stateBit .
  * @param {boolean} set Whether to set the state. False to unset.
  */
-goog.ime.chrome.vk.Controller.prototype.setState = function(
+i18n.input.chrome.vk.Controller.prototype.setState = function(
     stateBit, set) {
-  var orgState = this.state_;
   if (set) {
     this.state_ |= stateBit;
   } else {
     this.state_ &= ~stateBit;
-  }
-  if (orgState != this.state_) {
-    if (this.port_) {
-      this.port_.postMessage({
-        'type': 'state',
-        'state': this.getUiState_()
-      });
-    }
   }
 };
 
@@ -235,10 +139,10 @@ goog.ime.chrome.vk.Controller.prototype.setState = function(
 /**
  * Gets the state.
  *
- * @param {goog.ime.chrome.vk.Controller.StateBit} stateBit .
+ * @param {i18n.input.chrome.vk.Controller.StateBit} stateBit .
  * @return {boolean} Whether state is set.
  */
-goog.ime.chrome.vk.Controller.prototype.getState = function(stateBit) {
+i18n.input.chrome.vk.Controller.prototype.getState = function(stateBit) {
   return !!(this.state_ & stateBit);
 };
 
@@ -248,13 +152,13 @@ goog.ime.chrome.vk.Controller.prototype.getState = function(stateBit) {
  *
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.createTextInput_ = function() {
+i18n.input.chrome.vk.Controller.prototype.createTextInput_ = function() {
   if (this.context_ && this.layout_) {
     if (this.model_.hasTransforms()) {
-      this.textInput_ = new goog.ime.chrome.vk.ComposeTextInput(
+      this.textInput_ = new i18n.input.chrome.vk.ComposeTextInput(
           this.context_, this.model_);
     } else {
-      this.textInput_ = new goog.ime.chrome.vk.DirectTextInput(this.context_);
+      this.textInput_ = new i18n.input.chrome.vk.DirectTextInput(this.context_);
     }
     this.textInput_.engineID = this.engineID_;
   }
@@ -266,7 +170,7 @@ goog.ime.chrome.vk.Controller.prototype.createTextInput_ = function() {
  *
  * @param {InputContext} context The input box context.
  */
-goog.ime.chrome.vk.Controller.prototype.setContext = function(context) {
+i18n.input.chrome.vk.Controller.prototype.setContext = function(context) {
   this.context_ = context;
   this.createTextInput_();
 };
@@ -277,10 +181,10 @@ goog.ime.chrome.vk.Controller.prototype.setContext = function(context) {
  *
  * @param {string} text The text before cursor.
  */
-goog.ime.chrome.vk.Controller.prototype.handleSurroundingTextChanged =
+i18n.input.chrome.vk.Controller.prototype.handleSurroundingTextChanged =
     function(text) {
   if (this.textInput_) {
-    if (this.textInput_ instanceof goog.ime.chrome.vk.DirectTextInput) {
+    if (this.textInput_ instanceof i18n.input.chrome.vk.DirectTextInput) {
       this.textInput_.textBeforeCursor = text.slice(-20);
     }
   }
@@ -292,7 +196,7 @@ goog.ime.chrome.vk.Controller.prototype.handleSurroundingTextChanged =
  *
  * @param {string} engineId The engine ID which contains layout code.
  */
-goog.ime.chrome.vk.Controller.prototype.activate = function(engineId) {
+i18n.input.chrome.vk.Controller.prototype.activate = function(engineId) {
   if (engineId) {
     var matches = engineId.match(/^vkd_([^\-]*)/);
     if (matches) {
@@ -306,61 +210,32 @@ goog.ime.chrome.vk.Controller.prototype.activate = function(engineId) {
 /**
  * Deactivates the keyboard.
  */
-goog.ime.chrome.vk.Controller.prototype.deactivate = function() {
+i18n.input.chrome.vk.Controller.prototype.deactivate = function() {
   this.engineID_ = '';
   this.layout_ = null;
   this.state_ = 0;
-  this.setState(goog.ime.chrome.vk.Controller.StateBit.ALTGR, false);
-
-  if (this.winId_ != 0) {
-    chrome.windows.remove(this.winId_);
-    this.winId_ = 0;
-  }
-};
-
-
-/**
- * Creates the window for keyboard view.
- */
-goog.ime.chrome.vk.Controller.prototype.createView = function() {
-  if (this.winId_ > 0) {
-    return;
-  }
-  var self = this;
-  chrome.windows.create({
-    'url': 'view.html',
-    'width': 535,
-    'height': 230,
-    'type': 'panel'
-  }, function(win) {
-    self.winId_ = win.id;
-  });
+  this.setState(i18n.input.chrome.vk.Controller.StateBit.ALTGR, false);
 };
 
 
 /**
  * Handler for layout loaded.
  *
- * @param {!goog.ime.chrome.vk.LayoutEvent} e The event of layout loaded.
+ * @param {!i18n.input.chrome.vk.LayoutEvent} e The event of layout loaded.
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.onLayoutLoaded_ = function(e) {
-  this.layout_ = /** @type {!goog.ime.chrome.vk.ParsedLayout} */ (e.layoutView);
+i18n.input.chrome.vk.Controller.prototype.onLayoutLoaded_ = function(e) {
+  this.layout_ = /** @type {!i18n.input.chrome.vk.ParsedLayout} */ (
+      e.layoutView);
   this.model_.activateLayout(this.layout_.id);
   this.createTextInput_();
-  if (this.port_ && this.layout_) {
-    this.port_.postMessage({
-      'type': 'layout',
-      'layout': this.layout_.view
-    });
-  }
 };
 
 
 /**
  * Resets the text input.
  */
-goog.ime.chrome.vk.Controller.prototype.resetTextInput = function() {
+i18n.input.chrome.vk.Controller.prototype.resetTextInput = function() {
   if (this.textInput_) {
     this.textInput_.reset();
   }
@@ -370,7 +245,7 @@ goog.ime.chrome.vk.Controller.prototype.resetTextInput = function() {
 /**
  * Handles the onReset event.
  */
-goog.ime.chrome.vk.Controller.prototype.handleReset = function() {
+i18n.input.chrome.vk.Controller.prototype.handleReset = function() {
   if (this.textInput_) {
     this.textInput_.textBeforeCursor = '';
   }
@@ -383,15 +258,13 @@ goog.ime.chrome.vk.Controller.prototype.handleReset = function() {
  * @return {string} The UI states represented by a string.
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.getUiState_ = function() {
+i18n.input.chrome.vk.Controller.prototype.getUiState_ = function() {
   var uiState = '';
-  var states = goog.ime.chrome.vk.Controller.StateBit;
-  if (this.state_ & states.SHIFT ||
-      this.state_ & states.SHIFT_CLICK) {
+  var states = i18n.input.chrome.vk.Controller.StateBit;
+  if (this.state_ & states.SHIFT) {
     uiState += 's';
   }
-  if (this.state_ & states.ALTGR ||
-      this.state_ & states.ALTGR_CLICK) {
+  if (this.state_ & states.ALTGR) {
     uiState += 'c';
   }
   if (this.state_ & states.CAPS) {
@@ -407,13 +280,12 @@ goog.ime.chrome.vk.Controller.prototype.getUiState_ = function() {
  * @param {goog.events.BrowserEvent} e The key event.
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.updateState_ = function(e) {
+i18n.input.chrome.vk.Controller.prototype.updateState_ = function(e) {
   var codes = goog.events.KeyCodes;
-  var states = goog.ime.chrome.vk.Controller.StateBit;
+  var states = i18n.input.chrome.vk.Controller.StateBit;
 
   // Initial state needs to carry the current capslock and click status.
-  var state = (this.state_ & (states.CAPS | states.SHIFT_CLICK |
-                              states.ALTGR_CLICK));
+  var state = this.state_ & states.CAPS;
   // Refreshes the modifier status.
   if (e.keyCode == codes.CAPS_LOCK) {
     state |= states.CAPS;
@@ -432,22 +304,12 @@ goog.ime.chrome.vk.Controller.prototype.updateState_ = function(e) {
   if (e.keyCode == codes.SHIFT || e.shiftKey) {
     state |= states.SHIFT;
   }
-  if (e.keyCode == codes.ALT || e.altKey) {
-    state |= states.ALT;
+  if (e.altKey && e.ctrlKey ||
+      e.keyCode == codes.ALT && e.ctrlKey ||
+      e.keyCode == codes.CTRL && e.altKey) {
+    state |= states.ALTGR;
   }
-  if (e.keyCode == codes.CTRL || e.ctrlKey) {
-    state |= states.CTRL;
-  }
-
-  if (this.state_ != state) {
-    this.state_ = state;
-    if (this.port_) {
-      this.port_.postMessage({
-        'type': 'state',
-        'state': this.getUiState_()
-      });
-    }
-  }
+  this.state_ = state;
 };
 
 
@@ -457,7 +319,7 @@ goog.ime.chrome.vk.Controller.prototype.updateState_ = function(e) {
  * @param {goog.events.BrowserEvent} e The key event.
  * @return {boolean} False to continue handling, True otherwise.
  */
-goog.ime.chrome.vk.Controller.prototype.processEvent = function(e) {
+i18n.input.chrome.vk.Controller.prototype.processEvent = function(e) {
   if (!this.textInput_ || !this.layout_) {
     return false;
   }
@@ -465,18 +327,10 @@ goog.ime.chrome.vk.Controller.prototype.processEvent = function(e) {
   this.updateState_(e);
 
   // Check hot key.
-  var states = goog.ime.chrome.vk.Controller.StateBit;
+  var states = i18n.input.chrome.vk.Controller.StateBit;
   if (e.ctrlKey || e.altKey && !(this.state_ & states.ALTGR)) {
     return false;
   }
-
-  if (this.port_) {
-    this.port_.postMessage({
-      'type': 'click',
-      'click': e.keyCode
-    });
-  }
-
   return this.commitChars_(e.keyCode);
 };
 
@@ -488,7 +342,7 @@ goog.ime.chrome.vk.Controller.prototype.processEvent = function(e) {
  * @return {boolean} False to continue hanlding, True otherwise.
  * @private
  */
-goog.ime.chrome.vk.Controller.prototype.commitChars_ = function(keyCode) {
+i18n.input.chrome.vk.Controller.prototype.commitChars_ = function(keyCode) {
   var codes = goog.events.KeyCodes;
   var chars = null;
   var keyChar = String.fromCharCode(keyCode);
@@ -507,8 +361,8 @@ goog.ime.chrome.vk.Controller.prototype.commitChars_ = function(keyCode) {
   }
   if (!chars) {
     // Ignore the space bar for layout backward compatibility.
-    var keyCodes = is102 ? goog.ime.chrome.vk.KeyCode.CODES102 :
-        goog.ime.chrome.vk.KeyCode.CODES101;
+    var keyCodes = is102 ? i18n.input.chrome.vk.KeyCode.CODES102 :
+        i18n.input.chrome.vk.KeyCode.CODES101;
     chars = keyCodes.indexOf(keyChar) >= 0 ? '' : null;
   }
 
@@ -540,7 +394,7 @@ goog.ime.chrome.vk.Controller.prototype.commitChars_ = function(keyCode) {
 
 
 /** @override */
-goog.ime.chrome.vk.Controller.prototype.disposeInternal = function() {
+i18n.input.chrome.vk.Controller.prototype.disposeInternal = function() {
   goog.dispose(this.model_);
   goog.dispose(this.eventHandler_);
 

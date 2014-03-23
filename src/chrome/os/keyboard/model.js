@@ -21,15 +21,15 @@
  *     This is the Model of MVC pattern.
  */
 
-goog.provide('goog.ime.chrome.vk.Model');
+goog.provide('i18n.input.chrome.vk.Model');
 
 goog.require('goog.events.EventTarget');
-goog.require('goog.ime.chrome.vk.EventType');
-goog.require('goog.ime.chrome.vk.LayoutEvent');
-goog.require('goog.ime.chrome.vk.ParsedLayout');
 goog.require('goog.net.jsloader');
 goog.require('goog.object');
 goog.require('goog.string');
+goog.require('i18n.input.chrome.vk.EventType');
+goog.require('i18n.input.chrome.vk.LayoutEvent');
+goog.require('i18n.input.chrome.vk.ParsedLayout');
 
 
 
@@ -39,14 +39,14 @@ goog.require('goog.string');
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-goog.ime.chrome.vk.Model = function() {
+i18n.input.chrome.vk.Model = function() {
   goog.base(this);
 
   /**
    * The registered layouts object.
-   *   Its format is {<layout code>: <parsed layout obj>}.
+   * Its format is {<layout code>: <parsed layout obj>}.
    *
-   * @type {!Object.<!goog.ime.chrome.vk.ParsedLayout|boolean>}
+   * @type {!Object.<!i18n.input.chrome.vk.ParsedLayout|boolean>}
    * @private
    */
   this.layouts_ = {};
@@ -61,7 +61,7 @@ goog.ime.chrome.vk.Model = function() {
 
   /**
    * The layout code of which the layout is "being activated" when the layout
-   *   hasn't been loaded yet.
+   * hasn't been loaded yet.
    *
    * @type {string}
    * @private
@@ -83,7 +83,7 @@ goog.ime.chrome.vk.Model = function() {
   // Exponses the onLayoutLoaded so that the layout JS can call it back.
   goog.exportSymbol('cros_vk_loadme', goog.bind(this.onLayoutLoaded_, this));
 };
-goog.inherits(goog.ime.chrome.vk.Model, goog.events.EventTarget);
+goog.inherits(i18n.input.chrome.vk.Model, goog.events.EventTarget);
 
 
 /**
@@ -91,17 +91,17 @@ goog.inherits(goog.ime.chrome.vk.Model, goog.events.EventTarget);
  *
  * @param {string} layoutCode The layout will be loaded.
  */
-goog.ime.chrome.vk.Model.prototype.loadLayout = function(layoutCode) {
+i18n.input.chrome.vk.Model.prototype.loadLayout = function(layoutCode) {
   if (!layoutCode) return;
 
   var parsedLayout = this.layouts_[layoutCode];
   // The layout is undefined means not loaded, false means loading.
   if (parsedLayout == undefined) {
     this.layouts_[layoutCode] = false;
-    goog.ime.chrome.vk.Model.loadLayoutScript_(layoutCode);
+    i18n.input.chrome.vk.Model.loadLayoutScript_(layoutCode);
   } else if (parsedLayout) {
-    this.dispatchEvent(new goog.ime.chrome.vk.LayoutEvent(
-        goog.ime.chrome.vk.EventType.LAYOUT_LOADED,
+    this.dispatchEvent(new i18n.input.chrome.vk.LayoutEvent(
+        i18n.input.chrome.vk.EventType.LAYOUT_LOADED,
         /** @type {!Object} */ (parsedLayout)));
   }
 };
@@ -112,7 +112,7 @@ goog.ime.chrome.vk.Model.prototype.loadLayout = function(layoutCode) {
  *
  * @param {string} layoutCode The layout will be set as current layout.
  */
-goog.ime.chrome.vk.Model.prototype.activateLayout = function(
+i18n.input.chrome.vk.Model.prototype.activateLayout = function(
     layoutCode) {
   if (!layoutCode) return;
 
@@ -134,7 +134,7 @@ goog.ime.chrome.vk.Model.prototype.activateLayout = function(
  *
  * @return {string} The current layout code.
  */
-goog.ime.chrome.vk.Model.prototype.getCurrentLayout = function() {
+i18n.input.chrome.vk.Model.prototype.getCurrentLayout = function() {
   return this.activeLayout_;
 };
 
@@ -144,7 +144,7 @@ goog.ime.chrome.vk.Model.prototype.getCurrentLayout = function() {
  *
  * @return {number} The matched position. Returns -1 for no match.
  */
-goog.ime.chrome.vk.Model.prototype.predictHistory = function() {
+i18n.input.chrome.vk.Model.prototype.predictHistory = function() {
   if (!this.activeLayout_ || !this.layouts_[this.activeLayout_]) {
     return -1;
   }
@@ -192,7 +192,7 @@ goog.ime.chrome.vk.Model.prototype.predictHistory = function() {
  *     chars back from the caret, and 'chars' means the string insert after the
  *     deletion. Returns null if no result.
  */
-goog.ime.chrome.vk.Model.prototype.translate = function(
+i18n.input.chrome.vk.Model.prototype.translate = function(
     chars, charsBeforeCaret) {
   if (!this.activeLayout_ || !chars) {
     return null;
@@ -288,7 +288,7 @@ goog.ime.chrome.vk.Model.prototype.translate = function(
  *
  * @return {boolean} True if transforms defined, false otherwise.
  */
-goog.ime.chrome.vk.Model.prototype.hasTransforms = function() {
+i18n.input.chrome.vk.Model.prototype.hasTransforms = function() {
   var parsedLayout = this.layouts_[this.activeLayout_];
   return !!parsedLayout && !!parsedLayout.transforms;
 };
@@ -300,7 +300,7 @@ goog.ime.chrome.vk.Model.prototype.hasTransforms = function() {
  * @param {string} charsBeforeCaret The chars before the caret in the active
  *     input box. This will be used to compare with the history states.
  */
-goog.ime.chrome.vk.Model.prototype.processBackspace = function(
+i18n.input.chrome.vk.Model.prototype.processBackspace = function(
     charsBeforeCaret) {
   this.matchHistory_(charsBeforeCaret);
 
@@ -340,8 +340,8 @@ goog.ime.chrome.vk.Model.prototype.processBackspace = function(
  *     callback.
  * @private
  */
-goog.ime.chrome.vk.Model.prototype.onLayoutLoaded_ = function(layout) {
-  var parsedLayout = new goog.ime.chrome.vk.ParsedLayout(layout);
+i18n.input.chrome.vk.Model.prototype.onLayoutLoaded_ = function(layout) {
+  var parsedLayout = new i18n.input.chrome.vk.ParsedLayout(layout);
   if (parsedLayout.id) {
     this.layouts_[parsedLayout.id] = parsedLayout;
   }
@@ -349,8 +349,8 @@ goog.ime.chrome.vk.Model.prototype.onLayoutLoaded_ = function(layout) {
     this.activateLayout(this.delayActiveLayout_);
     this.delayActiveLayout_ = '';
   }
-  this.dispatchEvent(new goog.ime.chrome.vk.LayoutEvent(
-      goog.ime.chrome.vk.EventType.LAYOUT_LOADED, parsedLayout));
+  this.dispatchEvent(new i18n.input.chrome.vk.LayoutEvent(
+      i18n.input.chrome.vk.EventType.LAYOUT_LOADED, parsedLayout));
 };
 
 
@@ -361,7 +361,7 @@ goog.ime.chrome.vk.Model.prototype.onLayoutLoaded_ = function(layout) {
  * @param {string} text The text to be matched.
  * @private
  */
-goog.ime.chrome.vk.Model.prototype.matchHistory_ = function(text) {
+i18n.input.chrome.vk.Model.prototype.matchHistory_ = function(text) {
   var hisText = this.historyState_.current.text;
   if (!hisText || !text || !(goog.string.endsWith(text, hisText) ||
       goog.string.endsWith(hisText, text))) {
@@ -373,7 +373,7 @@ goog.ime.chrome.vk.Model.prototype.matchHistory_ = function(text) {
 /**
  * Clears the history state.
  */
-goog.ime.chrome.vk.Model.prototype.clearHistory = function() {
+i18n.input.chrome.vk.Model.prototype.clearHistory = function() {
   this.historyState_.ambi = '';
   this.historyState_.previous = {text: '', transat: -1};
   this.historyState_.current = goog.object.clone(this.historyState_.previous);
@@ -385,7 +385,7 @@ goog.ime.chrome.vk.Model.prototype.clearHistory = function() {
  *
  * @param {number} count The count of chars to be removed.
  */
-goog.ime.chrome.vk.Model.prototype.pruneHistory = function(count) {
+i18n.input.chrome.vk.Model.prototype.pruneHistory = function(count) {
   var pruneFunc = function(his) {
     his.text = his.text.slice(count);
     if (his.transat > 0) {
@@ -406,6 +406,6 @@ goog.ime.chrome.vk.Model.prototype.pruneHistory = function(count) {
  * @param {string} layoutCode The layout code.
  * @private
  */
-goog.ime.chrome.vk.Model.loadLayoutScript_ = function(layoutCode) {
+i18n.input.chrome.vk.Model.loadLayoutScript_ = function(layoutCode) {
   goog.net.jsloader.load('layouts/' + layoutCode + '.js');
 };

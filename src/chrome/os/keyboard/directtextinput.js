@@ -16,10 +16,10 @@
  * @fileoverview Definition of direct text input.
  */
 
-goog.provide('goog.ime.chrome.vk.DirectTextInput');
+goog.provide('i18n.input.chrome.vk.DirectTextInput');
 
-goog.require('goog.ime.chrome.vk.DeferredApi');
-goog.require('goog.ime.chrome.vk.TextInput');
+goog.require('i18n.input.chrome.vk.DeferredApi');
+goog.require('i18n.input.chrome.vk.TextInput');
 
 
 
@@ -29,16 +29,18 @@ goog.require('goog.ime.chrome.vk.TextInput');
  *
  * @param {InputContext} context The input box context.
  * @constructor
- * @extends {goog.ime.chrome.vk.TextInput}
+ * @extends {i18n.input.chrome.vk.TextInput}
  */
-goog.ime.chrome.vk.DirectTextInput = function(context) {
+i18n.input.chrome.vk.DirectTextInput = function(context) {
   goog.base(this, context);
 };
-goog.inherits(goog.ime.chrome.vk.DirectTextInput, goog.ime.chrome.vk.TextInput);
+goog.inherits(i18n.input.chrome.vk.DirectTextInput,
+              i18n.input.chrome.vk.TextInput);
 
 
 /** @override */
-goog.ime.chrome.vk.DirectTextInput.prototype.commitText = function(text, back) {
+i18n.input.chrome.vk.DirectTextInput.prototype.commitText = function(
+    text, back) {
   if (back == 1 && text == '') {
     // Returns false to take default action which will trigger
     // surroundingTextChanged event. So doesn't need to update
@@ -46,10 +48,10 @@ goog.ime.chrome.vk.DirectTextInput.prototype.commitText = function(text, back) {
     return false;
   }
   if (back > 0) {
-    goog.ime.chrome.vk.DeferredApi.deleteSurroundingText(
+    i18n.input.chrome.vk.DeferredApi.deleteSurroundingText(
         this.engineID, this.context.contextID, back, text);
   } else {
-    goog.ime.chrome.vk.DeferredApi.commitText(this.context.contextID, text);
+    i18n.input.chrome.vk.DeferredApi.commitText(this.context.contextID, text);
   }
   // Sometimes ChromeOS API won't trigger surroundingTextChanged event.
   // So make sure the recorded surrounding text is update to date after the
