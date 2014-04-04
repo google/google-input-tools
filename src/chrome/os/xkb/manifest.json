@@ -1,6 +1,6 @@
 {
   "name": "Chrome OS XKB",
-  "version": "1.0.0.0",
+  "version": "1.0.1.0",
   "description": "Chrome OS XKB",
   "default_locale": "en",
   "permissions": [],
@@ -11,35 +11,35 @@
       "type": "ime",
       "id": "xkb:us::eng",
       "description": "",
-      "language": ["en-US", "en-AU", "id", "fil", "ms"],
+      "language": ["en", "en-US", "en-AU", "en-NZ", "id", "fil", "ms"],
       "layouts": ["us"]
     },{
       "name": "__MSG_us_international_keyboard__",
       "type": "ime",
       "id": "xkb:us:intl:eng",
       "description": "",
-      "language": ["en-US", "nl", "pt-BR"],
+      "language": ["en", "en-US", "nl", "pt-BR"],
       "layouts": ["us(intl)"]
     },{
       "name": "__MSG_us_extended_keyboard__",
       "type": "ime",
       "id": "xkb:us:altgr-intl:eng",
       "description": "",
-      "language": ["en-US"],
+      "language": ["en", "en-US"],
       "layouts": ["us(altgr-intl)"]
     },{
       "name": "__MSG_us_dvorak_keyboard__",
       "type": "ime",
       "id": "xkb:us:dvorak:eng",
       "description": "",
-      "language": ["en-US"],
+      "language": ["en", "en-US"],
       "layouts": ["us(dvorak)"]
     },{
       "name": "__MSG_us_colemak_keyboard__",
       "type": "ime",
       "id": "xkb:us:colemak:eng",
       "description": "",
-      "language": ["en-US"],
+      "language": ["en", "en-US"],
       "layouts": ["us(colemak)"]
     },{
       "name": "__MSG_belgian_keyboard__",
@@ -53,7 +53,7 @@
       "type": "ime",
       "id": "xkb:fr::fra",
       "description": "",
-      "language": ["fr"],
+      "language": ["fr", "fr-FR"],
       "layouts": ["fr"]
     },{
       "name": "__MSG_belgian_keyboard__",
@@ -67,35 +67,35 @@
       "type": "ime",
       "id": "xkb:ca::fra",
       "description": "",
-      "language": ["fr"],
+      "language": ["fr", "fr-CA"],
       "layouts": ["ca"]
     },{
       "name": "__MSG_swiss_french_keyboard__",
       "type": "ime",
       "id": "xkb:ch:fr:fra",
       "description": "",
-      "language": ["fr"],
+      "language": ["fr", "fr-CH"],
       "layouts": ["ch(fr)"]
     },{
       "name": "__MSG_canadian_multilingual_keyboard__",
       "type": "ime",
       "id": "xkb:ca:multix:fra",
       "description": "",
-      "language": ["fr"],
+      "language": ["fr", "fr-CA"],
       "layouts": ["ca(multix)"]
     },{
       "name": "__MSG_german_keyboard__",
       "type": "ime",
       "id": "xkb:de::ger",
       "description": "",
-      "language": ["de"],
+      "language": ["de", "de-DE"],
       "layouts": ["de"]
     },{
       "name": "__MSG_german_neo_2_keyboard__",
       "type": "ime",
       "id": "xkb:de:neo:ger",
       "description": "",
-      "language": ["de"],
+      "language": ["de", "de-DE"],
       "layouts": ["de(neo)"]
     },{
       "name": "__MSG_belgian_keyboard__",
@@ -109,7 +109,7 @@
       "type": "ime",
       "id": "xkb:ch::ger",
       "description": "",
-      "language": ["de"],
+      "language": ["de", "de-CH"],
       "layouts": ["ch"]
     },{
       "name": "__MSG_japanese_keyboard__",
@@ -137,7 +137,7 @@
       "type": "ime",
       "id": "xkb:br::por",
       "description": "",
-      "language": ["pt-BR"],
+      "language": ["pt-BR", "pt"],
       "layouts": ["br"]
     },{
       "name": "__MSG_bulgarian_keyboard__",
@@ -158,7 +158,7 @@
       "type": "ime",
       "id": "xkb:ca:eng:eng",
       "description": "",
-      "language": ["en-CA"],
+      "language": ["en", "en-CA"],
       "layouts": ["ca(eng)"]
     },{
       "name": "__MSG_czech_keyboard__",
@@ -249,14 +249,14 @@
       "type": "ime",
       "id": "xkb:gb:extd:eng",
       "description": "",
-      "language": ["en-GB"],
+      "language": ["en", "en-GB"],
       "layouts": ["gb(extd)"]
     },{
       "name": "__MSG_uk_dvorak_keyboard__",
       "type": "ime",
       "id": "xkb:gb:dvorak:eng",
       "description": "",
-      "language": ["en-GB"],
+      "language": ["en", "en-GB"],
       "layouts": ["gb(dvorak)"]
     },{
       "name": "__MSG_finnish_keyboard__",
@@ -277,7 +277,7 @@
       "type": "ime",
       "id": "xkb:it::ita",
       "description": "",
-      "language": ["it"],
+      "language": ["it", "it-IT"],
       "layouts": ["it"]
     },{
       "name": "__MSG_icelandic_keyboard__",
@@ -305,7 +305,7 @@
       "type": "ime",
       "id": "xkb:pt::por",
       "description": "",
-      "language": ["pt-PT"],
+      "language": ["pt-PT", "pt"],
       "layouts": ["pt"]
     },{
       "name": "__MSG_romanian_keyboard__",
