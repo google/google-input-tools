@@ -1,0 +1,4 @@
+// -*- mode: C++ -*-
+// Provides a redirection from #include <hash_set> to #include <ext/hash_set> on
+// Mac OSX so that google3 codes can be built.
+#include <ext/hash_set>

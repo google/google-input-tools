@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+if ! svk info &> /dev/null; then
+  echo "Not a working directory."
+  exit 1
+fi
+
+while svk info &> /dev/null;
+do
+  topdir=`pwd`
+  cd ..
+done
+cd $topdir
+
+if [ -f .svkcommit ]; then
+  . .svkcommit
+fi
+
+if [ "$extensions" = "" ]; then
+  extensions="
+    c
+    cc
+    cmake
+    cpp
+    cxx
+    def
+    h
+    hh
+    hpp
+    htm
+    html
+    hxx
+    js
+    sh
+    txt
+    xml
+    "
+fi
+
+pattern=""
+for item in $extensions
+do
+    pattern="$pattern\|\.$item\$"
+done
+pattern=`echo "$pattern" | sed 's/^..//'`
+
+for file in $(svk st | \
+              grep '^?' | \
+              grep -v 'swp$' | \
+              sed 's/^?[ \t]*//' | \
+              grep -v '^\.')
+do
+  if [ -e $file ]; then
+    shouldadd="no"
+    if [ ! -f .svkignore ]; then
+      shouldadd="yes"
+    else
+      if ! grep -q $file .svkignore; then
+        shouldadd="yes"
+      fi
+    fi
+    if [ "$shouldadd" = "yes" ]; then
+      echo "File $file is not under the version control, add it now?"
+      isok="no"
+      while [ "$isok" = "no" ];
+      do
+        echo "(a)dd it, (n)ot yet, ne(v)er add, (d)elete it"
+        read  choice
+        isok="yes"
+        case $choice in
+        A | a )
+          svk add $file
+          ;;
+        N | n )
+          ;;
+        V | v )
+          echo $file >> .svkignore
+          ;;
+        D | d )
+          rm -rf $file
+          ;;
+        * )
+          isok="no"
+          ;;
+        esac
+      done
+    fi
+  fi
+done
+
+for file in $(svk st | \
+              grep -v '^?' | \
+              grep "$pattern" | \
+              sed 's/^?[ \t]*//')
+do
+  if [ -f $file ]; then
+    dos2unix "$file"
+    sed -e 's/^[ \t]\{,\}$//' -i "$file"
+  fi
+done
+
+svk ci

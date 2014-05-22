@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_NAME>Navigateur de Gadgets</GADGET_NAME>
+  <GADGET_DESCRIPTION>Navigateur de Gadgets</GADGET_DESCRIPTION>
+  <GADGET_ABOUT_TEXT>Navigateur de Gadgets</GADGET_ABOUT_TEXT>
+
+  <SHOW_ONLY_LABEL>Montrer uniquement:</SHOW_ONLY_LABEL>
+  <PAGE_LABEL>{{PAGE}} de {{TOTAL}}</PAGE_LABEL>
+  <ADD_BUTTON_LABEL>Ajouter</ADD_BUTTON_LABEL>
+  <STATUS_ADDING>Ajout en cours...</STATUS_ADDING>
+  <STATUS_ADDED>Ajouté</STATUS_ADDED>
+  <STATUS_ERROR_ADDING>Erreur</STATUS_ERROR_ADDING>
+  <UPDATE_BUTTON_LABEL>Mettre à jour</UPDATE_BUTTON_LABEL>
+  <STATUS_UPDATING>Mise à jour en cours...</STATUS_UPDATING>
+  <STATUS_UPDATED>Mis à jour</STATUS_UPDATED>
+  <STATUS_ERROR_UPDATING>Erreur</STATUS_ERROR_UPDATING>
+  <SEARCH_GADGETS>Chercher des gadgets</SEARCH_GADGETS>
+
+  <PLUGIN_DATA_BULLET>&#187;&#160;</PLUGIN_DATA_BULLET>
+  <PLUGIN_DATA_SEPARATOR>&#160;/&#160;</PLUGIN_DATA_SEPARATOR>
+  <PLUGIN_VERSION>Version&#160;</PLUGIN_VERSION>
+  <PLUGIN_KILOBYTES>&#160;KB</PLUGIN_KILOBYTES>
+
+  <LANGUAGE_ALL>Toutes les langues</LANGUAGE_ALL>
+  <LANGUAGE_BG>Bulgare</LANGUAGE_BG>
+  <LANGUAGE_CA>Catalan</LANGUAGE_CA>
+  <LANGUAGE_CS>Tchèque</LANGUAGE_CS>
+  <LANGUAGE_DA>Danois</LANGUAGE_DA>
+  <LANGUAGE_DE>Allemand</LANGUAGE_DE>
+  <LANGUAGE_EL>Grec</LANGUAGE_EL>
+  <LANGUAGE_EN>Anglais (US)</LANGUAGE_EN>
+  <LANGUAGE_EN_GB>Anglais (UK)</LANGUAGE_EN_GB>
+  <LANGUAGE_ES>Espagnol</LANGUAGE_ES>
+  <LANGUAGE_FI>Finlandais</LANGUAGE_FI>
+  <LANGUAGE_FR>Français</LANGUAGE_FR>
+  <LANGUAGE_HI>Hindi</LANGUAGE_HI>
+  <LANGUAGE_HR>Croate</LANGUAGE_HR>
+  <LANGUAGE_HU>Hongrois</LANGUAGE_HU>
+  <LANGUAGE_ID>Indonésien</LANGUAGE_ID>
+  <LANGUAGE_IT>Italien</LANGUAGE_IT>
+  <LANGUAGE_JA>Japonais</LANGUAGE_JA>
+  <LANGUAGE_KO>Coréen</LANGUAGE_KO>
+  <LANGUAGE_NL>Hollandais</LANGUAGE_NL>
+  <LANGUAGE_NO>Norvégien</LANGUAGE_NO>
+  <LANGUAGE_PL>Polonais</LANGUAGE_PL>
+  <LANGUAGE_PT_BR>Portuguais (Brésil)</LANGUAGE_PT_BR>
+  <LANGUAGE_PT_PT>Portuguais (Portugal)</LANGUAGE_PT_PT>
+  <LANGUAGE_RO>Roumain</LANGUAGE_RO>
+  <LANGUAGE_RU>Russe</LANGUAGE_RU>
+  <LANGUAGE_SK>Slovaque</LANGUAGE_SK>
+  <LANGUAGE_SL>Slovène</LANGUAGE_SL>
+  <LANGUAGE_SV>Suédois</LANGUAGE_SV>
+  <LANGUAGE_TH>Thai</LANGUAGE_TH>
+  <LANGUAGE_TR>Turc</LANGUAGE_TR>
+  <LANGUAGE_ZH_CN>Chinois (Simplifié)</LANGUAGE_ZH_CN>
+  <LANGUAGE_ZH_TW>Chinois (Traditionnel)</LANGUAGE_ZH_TW>
+
+  <CATEGORY_ALL>Tout</CATEGORY_ALL>
+  <CATEGORY_NEW>Nouveautés</CATEGORY_NEW>
+  <CATEGORY_RECOMMENDATIONS>Recommandations</CATEGORY_RECOMMENDATIONS>
+  <CATEGORY_GOOGLE>Crées par Google</CATEGORY_GOOGLE>
+  <CATEGORY_RECENTLY_USED>Utilisés Récemment</CATEGORY_RECENTLY_USED>
+  <CATEGORY_UPDATES>Mis à jour</CATEGORY_UPDATES>
+  <CATEGORY_NEWS>Actualités</CATEGORY_NEWS>
+  <CATEGORY_SPORTS>Sports</CATEGORY_SPORTS>
+  <CATEGORY_LIFESTYLE>Mode de vie</CATEGORY_LIFESTYLE>
+  <CATEGORY_FINANCE>Finance</CATEGORY_FINANCE>
+  <CATEGORY_TOOLS>Outils</CATEGORY_TOOLS>
+  <CATEGORY_FUN_GAMES>Jeux et divertissement</CATEGORY_FUN_GAMES>
+  <CATEGORY_TECHNOLOGY>Technologie</CATEGORY_TECHNOLOGY>
+  <CATEGORY_COMMUNICATION>Communication</CATEGORY_COMMUNICATION>
+  <CATEGORY_HOLIDAY>Fêtes et vacances</CATEGORY_HOLIDAY>
+</strings>
+

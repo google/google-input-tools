@@ -1,0 +1,41 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_NAME>Photos</GADGET_NAME>
+  <GADGET_DESCRIPTION>View photos from your desktop and web albums.</GADGET_DESCRIPTION>
+  <GADGET_ABOUT_TEXT>Photos
+Copyright 2008 Google Inc. All Rights Reserved.
+Display a slideshow of your favorite photos right on your desktop.</GADGET_ABOUT_TEXT>
+  <OPTIONS_INVALIDURL>The location "%s" is not a valid location. Please enter the location of a webpage or an RSS/Atom feed.</OPTIONS_INVALIDURL>
+
+  <MENU_LANDSCAPE>Landscape</MENU_LANDSCAPE>
+  <MENU_PORTRAIT>Portrait</MENU_PORTRAIT>
+  <MENU_NO_CROP>No crop</MENU_NO_CROP>
+  <OPTIONS_ADD_FOLDER>Add Folder...</OPTIONS_ADD_FOLDER>
+  <OPTIONS_REMOVE>Remove</OPTIONS_REMOVE>
+  <OPTIONS_ADD_URL>Add URL</OPTIONS_ADD_URL>
+
+  <OPTIONS_MESSAGE_ADD>Google Desktop can display photos from your disk or online sources (either RSS or Atom feeds or regular URLs.) as a slideshow. Please select the folders or add URLs you would like to see photos from.</OPTIONS_MESSAGE_ADD>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>Display each photo for</OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>seconds</OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>
+  <OPTIONS_BROWSE_IMAGE_FILES>Image Files</OPTIONS_BROWSE_IMAGE_FILES>
+  <OPTIONS_BROWSE_ALL_FILES>All Files</OPTIONS_BROWSE_ALL_FILES>
+
+  <MSG_DRAG_FEED_ACCEPTS>%d feed(s) added</MSG_DRAG_FEED_ACCEPTS>
+  <MSG_DRAG_FEED_INVALID>invalid feed(s)</MSG_DRAG_FEED_INVALID>
+</strings>

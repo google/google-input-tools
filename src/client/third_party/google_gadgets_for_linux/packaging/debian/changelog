@@ -1,0 +1,19 @@
+google-gadgets (0.10.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Made copyright file much more in-depth
+  
+ -- Jack Coulter <jscinoz@gmail.com>  Sat, 08 Nov 2008 09:22:06 +1100
+
+google-gadgets (0.10.2-1) unstable; urgency=low
+
+  * Upgraded to 0.10.2
+  * Merged libggadget-xdg into libggadget (and respective -dev packages)
+
+ -- Jack Coulter <jscinoz@gmail.com>  Sun, 14 Sep 2008 11:14:09 +1000
+
+google-gadgets (0.10.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #484867)
+
+ -- Jack Coulter <jscinoz@gmail.com>  Sat, 14 Jun 2008 17:53:53 +1000

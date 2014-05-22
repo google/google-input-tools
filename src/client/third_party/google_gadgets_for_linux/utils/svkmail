@@ -1,0 +1,388 @@
+#!/usr/bin/env bash
+
+showhelp() {
+cat<<EOF
+Usage: svkmail [option ...] -m recipient[,...] [-cc recipient[,...]]
+
+Options:
+
+    -from address       The "From" field in the message header.
+
+    -r {N|M:N}          Revision or revision range (M:N).
+
+    -d depot            SVK depot location.
+
+    -usewebsvn          Use WebSVN for code review.
+
+    -nousewebsvn        Don't use WebSVN for code review.
+
+    -url urltemplate    If using WebSVN, this parameter will be the URL
+                        template. A sample urltemplate:
+                        http://%hostname%/websvn/listing.php?rev=%rev%&sc=1
+
+    -sendmail command   The command for sending mail.
+
+    -sign command       The command for signing the mail.
+
+    -genpatch command   The command for generating patch for reviewing. The
+                        default genpatch command is:
+                        "svk diff %depot% -r %oldrev%:%newrev%"
+
+    -stat command       The command for getting file modification time. The
+                        default stat command for Linux is:
+                        "stat -c %y"
+
+    --help, -h          Show this message.
+EOF
+}
+
+# Avoid localized messages.
+LANG=C
+LANGUAGE=C
+LC_CTYPE="C"
+LC_NUMERIC="C"
+LC_TIME="C"
+LC_COLLATE="C"
+LC_MONETARY="C"
+LC_MESSAGES="C"
+LC_PAPER="C"
+LC_NAME="C"
+LC_ADDRESS="C"
+LC_TELEPHONE="C"
+LC_MEASUREMENT="C"
+LC_IDENTIFICATION="C"
+LC_ALL=
+
+usewebsvn="no"
+
+target_dir=`pwd`
+while [[ ! -f "$target_dir/.svkmail" && "$target_dir" != "/" ]];
+do
+  target_dir=`dirname "$target_dir"`
+done
+
+if [ -f "$target_dir/.svkmail" ]; then
+  . "$target_dir/.svkmail"
+fi
+
+# Parse the command line.
+state=0
+for i in "$@"
+do
+  case $state in
+  0 )
+    case "$i" in
+    -cc )
+      state=1
+      ;;
+    -m )
+      state=2
+      ;;
+    -d )
+      state=3
+      ;;
+    -r )
+      state=4
+      ;;
+    -url )
+      state=5
+      ;;
+    -from )
+      state=6
+      ;;
+    -sendmail )
+      state=7
+      ;;
+    -sign )
+      state=8
+      ;;
+    -genpatch )
+      state=9
+      ;;
+    -stat )
+      state=10
+      ;;
+    -usewebsvn )
+      usewebsvn="yes"
+      ;;
+    -nousewebsvn )
+      usewebsvn="no"
+      ;;
+    --help | -h )
+      showhelp
+      exit 0
+      ;;
+    esac
+    ;;
+  1 )
+    if [ "$cc" = "" ]; then
+      cc="$i"
+    else
+      cc="$cc,$i"
+    fi
+    state=0
+    ;;
+  2 )
+    if [ "$m" = "" ]; then
+      m="$i"
+    else
+      m="$m,$i"
+    fi
+    state=0
+    ;;
+  3 )
+    depot="$i"
+    state=0
+    ;;
+  4 )
+    rev="$i"
+    state=0
+    ;;
+  5 )
+    urltempl="$i"
+    state=0
+    ;;
+  6 )
+    from="$i"
+    state=0
+    ;;
+  7 )
+    sendmail="$i"
+    state=0
+    ;;
+  8 )
+    sign="$i"
+    state=0
+    ;;
+  9 )
+    genpatch="$i"
+    state=0
+    ;;
+  10 )
+    stat="$i"
+    state=0
+    ;;
+  esac
+done
+
+target_dir=`pwd`
+if ! svk info $depot &> /dev/null; then
+  echo "Not a working directory."
+  exit 1
+fi
+
+if [ "$depot" = "" ]; then
+  while svk info &> /dev/null;
+  do
+    target_dir=`pwd`
+    cd ..
+  done
+  cd $target_dir
+fi
+
+while [ "$m" = "" ];
+do
+  read -p "Please enter the reviewer's id: " m
+done
+
+if [ "$depot" = "" ]; then
+  depot=`svk info $target_dir | \
+      grep '^Depot Path:' | \
+      sed -e 's/^Depot Path: *//g'`
+
+  if [ "$rev" = "" ]; then
+    rev=`svk info $target_dir | \
+        grep '^Revision:' | \
+        sed -e 's/^Revision: *//g'`
+  fi
+else
+  if [ "$rev" = "" ]; then
+    rev=`svk info $depot | \
+        grep '^Revision:' | \
+        sed -e 's/^Revision: *//g'`
+  fi
+fi
+
+# Deletes leading and trailing spaces.
+rev=`echo $rev | sed -e 's/^[ \t]*//g' -e 's/[ \t]*$//g'`
+
+if ( echo $rev | grep -q '^\([0-9]\{1,\}\)\{1\}\(:[0-9]\{1,\}\)\{0,1\}$' ); then
+  oldrev=`echo $rev | sed 's/^\(\([0-9]\{1,\}\):\)\{0,1\}\([0-9]\{1,\}\)$/\2/g'`
+  rev=`echo $rev | sed 's/^\(\([0-9]\{1,\}\):\)\{0,1\}\([0-9]\{1,\}\)$/\3/g'`
+else
+  rev=""
+fi
+
+while [ "$rev" = "" ];
+do
+  read -p "Please enter the revision or revision range (N or M:N): " rev
+  rev=`echo $rev | sed -e 's/^[ \t]*//g' -e 's/[ \t]*$//g'`
+
+  if ( echo $rev | grep -q '^\([0-9]\{1,\}\)\{1\}\(:[0-9]\{1,\}\)\{0,1\}$' ); then
+    oldrev=`echo $rev | sed 's/^\(\([0-9]\{1,\}\):\)\{0,1\}\([0-9]\{1,\}\)$/\2/g'`
+    rev=`echo $rev | sed 's/^\(\([0-9]\{1,\}\):\)\{0,1\}\([0-9]\{1,\}\)$/\3/g'`
+  else
+    rev=""
+  fi
+done
+
+if [ "$oldrev" = "" ]; then
+  oldrev=$rev
+fi
+
+if [ "$usewebsvn" = "yes" ]; then
+  while [ "$urltempl" = "" ];
+  do
+    read -p "Please enter the URL template: " urltempl
+  done
+fi
+
+if [ "$sendmail" = "" ]; then
+  sendmail="sendmail -t"
+fi
+
+if [ "$from" = "" ]; then
+  from=$USER
+fi
+
+if [ "$genpatch" = "" ]; then
+  genpatch="svk diff %depot% -r %oldrev%:%newrev%"
+fi
+
+url=`echo $urltempl | \
+    sed -e "s/%hostname%/$(hostname)/g" \
+    -e "s/%user%/$USER/g"`
+
+if [ "$VISUAL" != "" ]; then
+  editor="$VISUAL"
+elif [ "$EDITOR" != "" ]; then
+  editor="$EDITOR"
+else
+  editor=vi
+fi
+
+patchcmd=`echo $genpatch | \
+    sed -e "s#%depot%#$depot#g" \
+    -e "s/%oldrev%/$(expr $oldrev - 1)/g" \
+    -e "s/%newrev%/$rev/g"`
+delta=$($patchcmd | \
+    grep '\(^-\|^+\)[^-+]' | \
+    wc -l)
+
+if [ "$stat" = "" ]; then
+  stat="stat -c \"%y\""
+fi
+
+size="A lice-sized"
+if [ "$delta" -gt 50 ]; then
+  size="A cockroach-sized"
+fi
+if [ "$delta" -gt 100 ]; then
+  size="A rat-sized"
+fi
+if [ "$delta" -gt 150 ]; then
+  size="A snake-sized"
+fi
+if [ "$delta" -gt 250 ]; then
+  size="A hog-sized"
+fi
+if [ "$delta" -gt 400 ]; then
+  size="A kangaroo-sized"
+fi
+if [ "$delta" -gt 650 ]; then
+  size="An elephant-sized"
+fi
+if [ "$delta" -gt 1050 ]; then
+  size="A whale-sized"
+fi
+if [ "$delta" -gt 1700 ]; then
+  size="An unknown-size"
+fi
+
+subject="$size code review ($USER localrev $rev)"
+
+# Generate the mail.
+tempfile=`mktemp /tmp/svkmail.XXXXXXX`
+cat<<EOF > "$tempfile"
+From: $from
+To: $m
+Cc: $cc
+Bcc: $from
+Subject: $subject
+
+Hello `echo $m | sed -e 's/@[^,]*//g' -e 's/,/, /g'`,
+
+EOF
+
+if [ "$usewebsvn" = "yes" ]; then
+cat<<EOF >> "$tempfile"
+I'd like you to do a code review. Please point your web browser to
+
+$(for revision in $(svk log $depot -r $oldrev:$rev | \
+    grep '^r[0-9]\{1,\}:' | \
+    sed 's/r\([0-9]\{1,\}\):.*/\1/g')
+  do
+    echo $url | sed "s/%rev%/$revision/g"
+  done
+)
+
+Or just review the following patch:
+
+EOF
+else
+cat<<EOF >> "$tempfile"
+I'd like you to do a code review. Please review the following patch:
+
+EOF
+fi
+
+svk log $depot -r $oldrev:$rev >> "$tempfile"
+echo >> "$tempfile"
+$patchcmd >> "$tempfile"
+
+cat<<EOF >> "$tempfile"
+
+This is a semiautomated message from "svkmail".  Complaints or suggestions?
+Mail edyfox@gmail.com.
+EOF
+
+cont="yes"
+while [ "$cont" = "yes" ];
+do
+  oldtime=`$stat $tempfile`
+  $editor $tempfile
+  newtime=`$stat $tempfile`
+  if [ "$oldtime" = "$newtime" ]; then
+cat <<EOF
+Log message unchanged or not specified"
+a)bort, c)ontinue, e)dit
+EOF
+    read choice
+    case $choice in
+    a )
+      cont="no"
+      rm -f $tempfile
+      exit 1
+      ;;
+    c )
+      cont="no"
+      ;;
+    * )
+      cont="yes"
+      ;;
+    esac
+  else
+    cont="no"
+  fi
+done
+
+if [ "$sign" != "" ]; then
+  sed '/^$/,$d' < $tempfile > $tempfile.signed
+  echo >> $tempfile.signed
+  sed '0,/^$/d' < $tempfile | $sign >> $tempfile.signed
+  $sendmail < $tempfile.signed
+  rm $tempfile.signed
+else
+  $sendmail < $tempfile
+fi
+rm -f $tempfile

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2007 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<gadget minimumGoogleDesktopVersion="5.7.0.0">
+  <about>
+    <id>F4C39E45-982B-4E2F-A43B-2DE80B567455</id>
+    <version>1.0.0.0</version>
+    <author>Google Inc.</author>
+    <authorEmail>google-gadgets-for-linux-dev@googlegroups.com</authorEmail>
+    <authorWebsite>http://code.google.com/p/google-gadgets-for-linux</authorWebsite>
+    <name>&GADGET_NAME;</name>
+    <!-- No copyright, description and aboutText because we need to display
+         information of the real rss gadget. -->
+    <smallIcon>small_rss_icon.png</smallIcon>
+    <icon>large_rss_icon.png</icon>
+  </about>
+  <permissions>
+    <network/>
+  </permissions>
+</gadget>

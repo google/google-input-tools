@@ -1,0 +1,129 @@
+Source: google-gadgets
+Section: misc
+Priority: extra
+Maintainer: Jack Coulter <jscinoz@gmail.com>
+Build-Depends: debhelper (>= 5), zlib1g-dev, libgtk2.0-dev, zip, chrpath,
+ libxml2-dev, libdbus-1-dev, librsvg2-dev, libqt4-dev, libltdl3-dev,
+ libcurl4-gnutls-dev | libcurl4-openssl-dev, libgstreamer-plugins-base0.10-dev, 
+ xulrunner-dev | xulrunner-1.9-dev, network-manager-dev, 
+ libstartup-notification0-dev
+Standards-Version: 3.8.0
+Vcs-Svn: http://google-gadgets-for-linux.googlecode.com/svn/trunk/packaging/debian
+Vcs-Browser: http://code.google.com/p/google-gadgets-for-linux/source/browse/#svn/trunk/packaging/debian
+Homepage: http://code.google.com/p/google-gadgets-for-linux/
+
+Package: libggadget-1.0-0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Google Gadgets main library
+ This package contains the main Google Gadgets library, it is required by both
+ the GTK+ and QT versions of Google Gadgets.
+
+Package: libggadget-1.0-dev
+Section: libdevel
+Architecture: any
+Depends: libggadget-1.0-0 (= ${binary:Version})
+Description: Google Gadgets main development files
+ This package contains the development files assoicated with libggadget, it is
+ needed to write programs that utilise libggadget. 
+
+Package: libggadget-gtk-1.0-0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Google Gadgets GTK+ library
+ This package contains the GTK+ Google Gadgets library, it is required to run
+ the GTK+ version of Google Gadgets.
+
+Package: libggadget-gtk-1.0-dev
+Section: libdevel
+Architecture: any
+Depends: libggadget-gtk-1.0-0 (= ${binary:Version})
+Description: Google Gadgets GTK+ development files
+ This package contains the development files assoicated with libggadget-gtk,
+ it is needed to write GTK+ programs that utilise libggadget.
+
+Package: libggadget-qt-1.0-0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Google Gadgets QT library
+ This package contains the QT Google Gadgets library, it is required to run
+ the QT version of Google Gadgets.
+
+Package: libggadget-qt-1.0-dev
+Section: libdevel
+Architecture: any
+Depends: libggadget-qt-1.0-0 (= ${binary:Version})
+Description: Google Gadgets QT development files
+ This package contains the development files assoicated with libggadget-qt,
+ it is needed to write QT programs that utilise libggadget.
+
+Package: google-gadgets-common
+Section: misc
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Common files for QT and GTK+ versions of google-gadgets
+ Google Gadgets for Linux provides a platform for running desktop gadgets under
+ Linux, catering to the unique needs of Linux users. It's compatible with the
+ gadgets written for Google Desktop for Windows as well as the Universal
+ Gadgets on iGoogle. Following Linux norms, this project is open-sourced,
+ under the Apache License. 
+ .
+ This package includes files common to both GTK+ and QT versions.
+
+Package: google-gadgets-gtk
+Section: gnome
+Architecture: any
+Depends: google-gadgets-common (= ${binary:Version}),
+ google-gadgets-gst (= ${binary:Version}),
+ google-gadgets-xul (= ${binary:Version}), ${shlibs:Depends}
+Description: GTK+ Version of Google Gadgets
+ Google Gadgets for Linux provides a platform for running desktop gadgets under
+ Linux, catering to the unique needs of Linux users. It's compatible with the
+ gadgets written for Google Desktop for Windows aso well as the Universal
+ Gadgets on iGoogle. Following Linux norms, this project is open-sourced,
+ under the Apache License. 
+ .
+ This package includes the GTK+ version.
+
+Package: google-gadgets-qt
+Section: kde
+Architecture: any
+Depends: google-gadgets-common (= ${binary:Version}),
+ google-gadgets-gst (= ${binary:Version}), ${shlibs:Depends}
+Description: QT4 version of Google Gadgets
+ Google Gadgets for Linux provides a platform for running desktop gadgets under
+ Linux, catering to the unique needs of Linux users. It's compatible with the
+ gadgets written for Google Desktop for Windows as well as the Universal
+ Gadgets on iGoogle. Following Linux norms, this project is open-sourced,
+ under the Apache License. 
+ .
+ This package includes the QT version.
+
+Package: google-gadgets-gst
+Section: misc
+Architecture: any
+Depends: google-gadgets-common (= ${binary:Version}), ${shlibs:Depends}
+Description: GStreamer Module for Google Gadgets
+ Google Gadgets for Linux provides a platform for running desktop gadgets under
+ Linux, catering to the unique needs of Linux users. It's compatible with the
+ gadgets written for Google Desktop for Windows as well as the Universal
+ Gadgets on iGoogle. Following Linux norms, this project is open-sourced,
+ under the Apache License. 
+ .
+ This package includes the GStreamer modules
+
+Package: google-gadgets-xul
+Section: misc
+Architecture: any
+Depends: google-gadgets-common (= ${binary:Version}), ${shlibs:Depends}
+Description: XULRunner module for Google Gadgets
+ Google Gadgets for Linux provides a platform for running desktop gadgets under
+ Linux, catering to the unique needs of Linux users. It's compatible with the
+ gadgets written for Google Desktop for Windows as well as the Universal
+ Gadgets on iGoogle. Following Linux norms, this project is open-sourced,
+ under the Apache License. 
+ .
+ This package includes the XULRunner Modules

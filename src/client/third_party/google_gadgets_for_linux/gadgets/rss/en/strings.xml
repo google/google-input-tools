@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GADGET_NAME>Web Clips</GADGET_NAME>
+<GADGET_DESC>View news from RSS/Atom feeds.</GADGET_DESC>
+<GADGET_COPYRIGHT>Copyright 2008 Google Inc.</GADGET_COPYRIGHT>
+<GADGET_ABOUT>Google Gadgets for Linux</GADGET_ABOUT>
+<GADGET_URL>Feed URL</GADGET_URL>
+<GADGET_REFRESH>Refresh</GADGET_REFRESH>
+<GADGET_LOADING>Loading...</GADGET_LOADING>
+<GADGET_ERROR>Error reading feed</GADGET_ERROR>
+<GADGET_UNKNOWN>Unknown feed format</GADGET_UNKNOWN>
+<GADGET_OPTIONS>Web Clips Options</GADGET_OPTIONS>
+<GADGET_ADDLABEL>Add a clip by entering its Atom or RSS URL</GADGET_ADDLABEL>
+<GADGET_ADD>Add</GADGET_ADD>
+<GADGET_REMOVE>Remove</GADGET_REMOVE>
+<GADGET_MAXSHOW>Maximum number of entries to show for a clip:</GADGET_MAXSHOW>
+<GADGET_DEFAULTURL>http://news.google.com/?output=rss</GADGET_DEFAULTURL>
+<GADGET_UNTITLED>&lt;untitled&gt;</GADGET_UNTITLED>
+</strings>

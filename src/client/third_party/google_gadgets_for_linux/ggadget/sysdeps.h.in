@@ -1,0 +1,42 @@
+/*
+  Copyright 2007 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+#ifndef GGADGET_SYSDEPS_H__
+#define GGADGET_SYSDEPS_H__
+
+#define GGL_SIZEOF_CHAR @GGL_SIZEOF_CHAR@
+#define GGL_SIZEOF_SHORT @GGL_SIZEOF_SHORT_INT@
+#define GGL_SIZEOF_INT @GGL_SIZEOF_INT@
+#define GGL_SIZEOF_LONG_INT @GGL_SIZEOF_LONG_INT@
+#define GGL_SIZEOF_SIZE_T @GGL_SIZEOF_SIZE_T@
+#define GGL_SIZEOF_DOUBLE @GGL_SIZEOF_DOUBLE@
+#define GGL_SIZEOF_WCHAR_T @GGL_SIZEOF_WCHAR_T@
+
+#define GGL_PLATFORM_SHORT @GGL_PLATFORM_SHORT@
+#define GGL_PLATFORM @GGL_PLATFORM@
+
+#define LIBGGADGET_BINARY_VERSION @LIBGGADGET_BINARY_VERSION@
+#define GGL_VERSION @GGL_VERSION@
+#define GGL_MAJOR_VERSION @GGL_MAJOR_VERSION@
+#define GGL_MINOR_VERSION @GGL_MINOR_VERSION@
+#define GGL_MICRO_VERSION @GGL_MICRO_VERSION@
+#define GGL_VERSION_TIMESTAMP @GGL_VERSION_TIMESTAMP@
+
+#define GGL_API_MAJOR_VERSION @GGL_API_MAJOR_VERSION@
+#define GGL_API_MINOR_VERSION @GGL_API_MINOR_VERSION@
+#define GGL_API_VERSION @GGL_API_VERSION@
+
+#endif // GGADGET_SYSDEPS_H__

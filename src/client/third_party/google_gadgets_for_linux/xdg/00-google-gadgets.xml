@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/x-google-gadget">
+    <comment>Google Gadgets</comment>
+    <alias type="app/gg"/>
+    <glob pattern="*.gg"/>
+    <glob pattern="gadget.gmanifest"/>
+  </mime-type>
+</mime-info>

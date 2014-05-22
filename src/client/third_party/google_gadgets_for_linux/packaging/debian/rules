@@ -1,0 +1,117 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+VERSION:=$(shell dpkg-parsechangelog | grep Version | cut -d" " -f2|cut -d"-" -f1)
+
+get-orig-source:
+	# rename to what debian wants, repack to tgz rather than tbz2
+	uscan --force-download --rename --repack
+
+config.status: configure
+	dh_testdir
+	mkdir -p build
+	(cd build; ../configure --host=$(DEB_HOST_GNU_TYPE) \
+	--build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr \
+	--mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
+	--with-browser-plugins-dir=\$${prefix}/lib/xulrunner-addons/plugins \
+	--disable-werror)
+
+
+#Architecture 
+build: build-arch build-indep
+
+build-arch: build-arch-stamp
+build-arch-stamp:  config.status
+
+	# Add here commands to compile the arch part of the package.
+	#$(MAKE) 
+	touch $@
+
+build-indep: build-indep-stamp
+build-indep-stamp: config.status
+
+	# Add here commands to compile the indep part of the package.
+	#$(MAKE) doc
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	
+	rm -f build-arch-stamp build-indep-stamp 
+
+	rm -rf build debian/google-gadgets
+
+
+	dh_clean 
+
+install: install-indep install-arch
+install-indep:
+	dh_testdir
+	dh_testroot
+	dh_clean -k -i 
+	dh_installdirs -i
+	dh_install -i
+
+install-arch:
+	dh_testdir
+	dh_testroot
+	dh_clean -k -s 
+	dh_installdirs -s
+	
+	(cd build; $(MAKE) DESTDIR=$(CURDIR)/debian/google-gadgets install)
+
+	chrpath -d $(CURDIR)/debian/google-gadgets/usr/bin/ggl-*
+	chrpath -d $(CURDIR)/debian/google-gadgets/usr/lib/google-gadgets/gtkmoz-browser-child
+	chrpath -d $(CURDIR)/debian/google-gadgets/usr/lib/google-gadgets/modules/smjs-script-runtime.so
+
+	dh_install -s
+	dh_desktop -pgoogle-gadgets-gtk debian/google-gadgets/usr/share/applications/ggl-gtk.desktop
+	dh_installman -pgoogle-gadgets-gtk debian/ggl-gtk.7
+	
+	dh_desktop -pgoogle-gadgets-qt debian/google-gadgets/usr/share/applications/ggl-qt.desktop
+	dh_installman -pgoogle-gadgets-qt debian/ggl-qt.7
+	
+	
+  
+# Must not depend on anything. This is to be called by
+# binary-arch/binary-indep
+# in another 'make' thread.
+binary-common:
+	dh_testdir
+	dh_testroot
+	dh_makeshlibs -V -Ngoogle-gadgets-common -Ngoogle-gadgets-gtk \
+	-Ngoogle-gadgets-qt -Ngoogle-gadgets-gst -Ngoogle-gadgets-xul
+	dh_shlibdeps
+	dh_installchangelogs ChangeLog
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+	dh_link
+	dh_strip
+	dh_compress 
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+	
+# Build architecture independant packages using the common target.
+binary-indep: build-indep install-indep
+	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
+
+# Build architecture dependant packages using the common target.
+binary-arch: build-arch install-arch
+	$(MAKE) -f debian/rules DH_OPTIONS=-s binary-common
+
+binary: binary-arch binary-indep
+.PHONY: build clean binary-indep binary-arch binary install install-indep install-arch 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view height="155" width="300" oncancel="_onCancel()" onok="_onOk()"
+      onopen="_onOpen()">
+  <div name="oWorldOptions" height="155" width="300" x="0" y="-105">
+    <label name="oString6" width="100" size="8" x="10" y="115" bold="true"></label>
+    <label name="oString5" width="55" size="8" x="13" y="135" align="right"></label>
+    <div height="19" width="180" x="68" y="133" background="#777777">
+      <edit name="oCityName" height="17" width="178" x="1" y="1"/>
+    </div>
+  </div>
+  <checkbox name="oCheckbox1" x="12" y="57" onchange="_alarmChk()" image="images\checkbox.png" checkedImage="images\checkbox_chk.png"/>
+  <label name="oString1" width="200" size="8" x="27" y="57" bold="true"></label>
+  <div name="oAlarmOptions" height="155" width="300" x="0" y="42">
+    <div height="18" width="25" x="25" y="39" background="#777777">
+      <edit name="oHours" height="16" width="23" x="1" y="1"
+            onkeydown="_keyPress('h')" onchange="_valueChange('h')"/>
+    </div>
+    <label x="49" y="39" size="8" bold="true">:</label>
+    <div height="18" width="25" x="56" y="39" background="#777777">
+      <edit name="oMinutes" height="16" width="23" x="1" y="1"
+            onkeydown="_keyPress('m')" onchange="_valueChange('m')"/>
+    </div>
+    <div name="oAMPM" x="85" y="38" width="150" height="25">
+      <img name="oAM" x="1" y="3" onmousedown="_amChk()" enabled="true"/>
+      <label name="oStringAM" x="15" y="2" size="8"></label>
+      <img name="oPM" x="51" y="3" onmousedown="_pmChk()" enabled="true"/>
+      <label name="oStringPM" x="65" y="2" size="8"></label>
+    </div>
+    <img name="oCheckbox2" x="24" y="66" onmousedown="_defaultAlarmChk()" enabled="true"/>
+    <label name="oString2" width="120" size="8" x="38" y="65"></label>
+    <img name="oCheckbox3" x="161" y="66" onmousedown="_useFileChk()" enabled="true"/>
+    <label name="oString3" width="75" size="8" x="175" y="65"></label>
+    <div name="oFileOptions" height="155" width="300" x="0" y="0">
+      <div height="19" width="188" x="25" y="90" background="#777777">
+        <edit name="oFilePath" height="17" width="186" x="1" y="1"
+              onkeydown="_pathKeyDown()" onchange="_pathChange()"/>
+      </div>
+      <button name="browse" x="215" y="89" width="70" image="images\browse.png"
+              downImage="images\browse_d.png" onclick="_doBrowse()"/>
+      <label name="oString7" size="8" x="215" y="92" width="70" align="center"></label>
+    </div>
+  </div>
+  <script src="setup.js" />
+  <script src="options.js" />
+</view>

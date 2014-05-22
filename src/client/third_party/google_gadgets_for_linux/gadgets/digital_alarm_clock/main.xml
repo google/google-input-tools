@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="148" height="100" onopen="_onOpen()" onmouseover="_onMouseOver()" onmouseout="_onMouseOut()" onminimize="_onMinimize()" onrestore="_onRestore()">
+  <div width="100%" height="100%" opacity="255">
+  <img name="eBaseLeft" x="0" y="0" src="images\base_brown-left.png"/>
+  <div name="eBaseMiddle" x="32" y="0" width="84" height="100" background="images\base_brown-middle.png"/>  
+  <img name="eBaseRight" x="116" y="0" src="images\base_brown-right.png"/>
+  <div name="eDateTime" x="19" y="24" width="113" height="60">
+    <img x="53" y="14" src="images\digits_dots.png" opacity="77"/>
+    <img name="eBell" x="28" y="46" opacity="102" src="images\bell.png" visible="false"/>
+  </div>
+  <div name="eWorldMap" x="14" y="14" width="120" height="72">
+    <img name="eMap1" x="0" y="0" src="images\map.png"/>
+    <img name="eMap2" x="120" y="0" src="images\map.png"/>
+    <img name="eLight1" x="0" y="0" src="images\map_daylight.png" opacity="50"/>
+    <img name="eLight2" x="120" y="0" src="images\map_daylight.png" opacity="50"/>
+    <img x="53" y="0" src="images\map_pointers.png"/>
+    <div x="0" y="45" width="120" height="18" background="#000000" opacity="100"/>
+    <label name="eCity" x="3" y="47" color="#FFFFFF" size="8" width="74" trimming="character-ellipsis"></label>
+    <label name="eMapTime" x="0" y="47" color="#FFFFFF" size="8" width="117" align="center"></label>
+  </div>
+  <div name="eButtons" x="11" y="17" width="124" height="70" visible="false">
+    <button x="6" y="0" image="images\button_default.png" overImage="images\button_hover.png" downImage="images\button_down.png" onclick="_alarmOff()"/>
+    <button x="6" y="28" image="images\button_default.png" overImage="images\button_hover.png" downImage="images\button_down.png" onclick="_alarmSnooze()"/>
+    <label name="eAlarmOff" x="0" y="0" width="124" height="30" align="center" vAlign="middle" color="#ffffff" size="8"></label>
+    <label name="eAlarmSnooze" x="0" y="28" width="124" height="30" align="center" vAlign="middle" color="#ffffff" size="8"></label>
+  </div>
+  <img name="eLights" x="12" y="12" src="images\flashing_lights.png" visible="false"/>
+  </div>
+  <script src="setup.js" />
+  <script src="time_display.js" />
+  <script src="main.js" />
+</view>

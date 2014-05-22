@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3714545C-C447-D48D-CC5E-5691DE3A67EE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>base</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Locals">
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+  <ImportGroup Label="ExtensionSettings"/>
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros"/>
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\.\bin\;$(MSBuildProjectDirectory)\.\bin\</ExecutablePath>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)lib\$(ProjectName)$(TargetExt)</TargetPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;..\build\msvc_precompile;..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\google3\third_party\gtest\include;..\..\..\..\google3\third_party\zlib\v1_2_8;..;..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/J</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DisableSpecificWarnings>4018;4100;4125;4127;4244;4267;4288;4389;4800;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib\$(ProjectName)$(TargetExt)</OutputFile>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>advapi32.lib;crypt32.lib;dbghelp.lib;kernel32.lib;iphlpapi.lib;psapi.lib;shell32.lib;shlwapi.lib;urlmon.lib;user32.lib;wininet.lib;msxml2.lib;ole32.lib;oleaut32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../external/thelibrary/lib/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>..;..\build\msvc_precompile;..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\google3\third_party\gtest\include;..\..\..\..\google3\third_party\zlib\v1_2_8;..;..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..;..\build\msvc_precompile;..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\google3\third_party\gtest\include;..\..\..\..\google3\third_party\zlib\v1_2_8;..;..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/J</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DisableSpecificWarnings>4018;4100;4125;4127;4244;4267;4288;4389;4800;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>precompile.h</ForcedIncludeFiles>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>precompile.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib\$(ProjectName)$(TargetExt)</OutputFile>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>advapi32.lib;crypt32.lib;dbghelp.lib;kernel32.lib;iphlpapi.lib;psapi.lib;shell32.lib;shlwapi.lib;urlmon.lib;user32.lib;wininet.lib;msxml2.lib;ole32.lib;oleaut32.lib</AdditionalDependencies>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>..;..\build\msvc_precompile;..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\google3\third_party\gtest\include;..\..\..\..\google3\third_party\zlib\v1_2_8;..;..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="base.gyp"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="time.cc"/>
+    <ClCompile Include="at_exit.cc"/>
+    <ClCompile Include="string_utils_win.cc"/>
+    <ClCompile Include="logging.cc"/>
+    <ClCompile Include="commandlineflags_reporting.cc"/>
+    <ClCompile Include="mutex.cc"/>
+    <ClCompile Include="security_utils_win.cc"/>
+    <ClCompile Include="stringprintf.cc"/>
+    <ClCompile Include="time_win.cc"/>
+    <ClCompile Include="sysinfo.cc"/>
+    <ClCompile Include="mutex-internal-win.cc"/>
+    <ClCompile Include="vlog_is_on.cc"/>
+    <ClCompile Include="cpu.cc"/>
+    <ClCompile Include="commandlineflags.cc"/>
+    <ClCompile Include="win\shellutils.cc"/>
+    <ClCompile Include="win\security_util_win.cc"/>
+    <ClCompile Include="win\windows_version.cc"/>
+    <ClCompile Include="synchronization\waitable_event_win.cc"/>
+    <ClCompile Include="synchronization\lock_impl_win.cc"/>
+    <ClCompile Include="synchronization\cancellation_flag.cc"/>
+    <ClCompile Include="synchronization\lock.cc"/>
+    <ClCompile Include="posix\unistd.cc"/>
+    <ClCompile Include="posix\sys\mman.cc"/>
+    <ClCompile Include="file\path_service.cc"/>
+    <ClCompile Include="file\file_util_win.cc"/>
+    <ClCompile Include="file\file_path.cc"/>
+    <ClCompile Include="file\base_paths.cc"/>
+    <ClCompile Include="file\base_paths_win.cc"/>
+    <ClCompile Include="threading\platform_thread_win.cc"/>
+    <ClCompile Include="threading\thread_collision_warner.cc"/>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+  <ImportGroup Label="ExtensionTargets"/>
+</Project>

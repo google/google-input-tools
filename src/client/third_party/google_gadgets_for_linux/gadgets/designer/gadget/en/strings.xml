@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_DESCRIPTION>Gadget Designer</GADGET_DESCRIPTION>
+  <GADGET_TITLE>Gadget Designer</GADGET_TITLE>
+  <ABOUT_TEXT>Gadget Designer</ABOUT_TEXT>
+  <TITLE_NEW_GADGET>New Gadget</TITLE_NEW_GADGET>
+  <MENU_UNDO>Undo</MENU_UNDO>
+  <MENU_REDO>Redo</MENU_REDO>
+  <MENU_NEW_GADGET>New Gadget</MENU_NEW_GADGET>
+  <MENU_OPEN_GADGET>Open Gadget...</MENU_OPEN_GADGET>
+  <MENU_SAVE_GADGET_AS>Save Gadget As...</MENU_SAVE_GADGET_AS>
+  <MENU_CLOSE_GADGET>Close Gadget</MENU_CLOSE_GADGET>
+  <MENU_RUN_GADGET>Run Gadget</MENU_RUN_GADGET>
+  <MENU_SAVE_CURRENT_FILE>Save Current File</MENU_SAVE_CURRENT_FILE>
+  <MENU_ADD>Add</MENU_ADD>
+  <MENU_ADD_FILES>Files...</MENU_ADD_FILES>
+  <MENU_ADD_OPTIONS_VIEW>Options View</MENU_ADD_OPTIONS_VIEW>
+  <MENU_ADD_NEW_VIEW>New View...</MENU_ADD_NEW_VIEW>
+  <MENU_ADD_NEW_FILE>New File...</MENU_ADD_NEW_FILE>
+  <MENU_EDIT_SOURCE>Edit Source</MENU_EDIT_SOURCE>
+  <MENU_REFRESH>Refresh</MENU_REFRESH>
+  <MENU_REMOVE_FILE>Remove...</MENU_REMOVE_FILE>
+  <MENU_RENAME_MOVE_FILE>Rename/Move...</MENU_RENAME_MOVE_FILE>
+  <MENU_REMOVE_ELEMENT>Remove</MENU_REMOVE_ELEMENT>
+  <MENU_RENAME_ELEMENT>Rename</MENU_RENAME_ELEMENT>
+  <MENU_MOVE_BACK>Move Back</MENU_MOVE_BACK>
+  <MENU_MOVE_FRONT>Bring Front</MENU_MOVE_FRONT>
+  <MENU_MOVE_BOTTOM>Move to Bottom</MENU_MOVE_BOTTOM>
+  <MENU_MOVE_TOP>Bring to Top</MENU_MOVE_TOP>
+  <MENU_MOVE_UP_LEVEL>Move Up One Level</MENU_MOVE_UP_LEVEL>
+  <MENU_MOVE_DOWN_LEVEL>Move Down One Level</MENU_MOVE_DOWN_LEVEL>
+  <MENU_APPEND_STRING>Append String...</MENU_APPEND_STRING>
+  <TYPE_ALL_GADGET>All Gadget Files</TYPE_ALL_GADGET>
+  <TYPE_GG>Gadget Package Files</TYPE_GG>
+  <TYPE_GMANIFEST>Gadget Manifest Files</TYPE_GMANIFEST>
+  <TOOL_DIV>Div</TOOL_DIV>
+  <TOOL_IMG>Image</TOOL_IMG>
+  <TOOL_BUTTON>Button</TOOL_BUTTON>
+  <TOOL_EDIT>Edit</TOOL_EDIT>
+  <TOOL_CHECKBOX>Check</TOOL_CHECKBOX>
+  <TOOL_RADIO>Radio</TOOL_RADIO>
+  <TOOL_A>Link</TOOL_A>
+  <TOOL_LABEL>Label</TOOL_LABEL>
+  <TOOL_CONTENTAREA>Content</TOOL_CONTENTAREA>
+  <TOOL_LISTBOX>List</TOOL_LISTBOX>
+  <TOOL_COMBOBOX>Combo</TOOL_COMBOBOX>
+  <TOOL_PROGRESSBAR>Progress</TOOL_PROGRESSBAR>
+  <TOOL_SCROLLBAR>Scroll</TOOL_SCROLLBAR>
+  <PROPERTIES>Properties</PROPERTIES>
+  <EVENTS>Events</EVENTS>
+  <ELEMENTS>Elements</ELEMENTS>
+  <TITLE_SAVE_GADGET_AS>Save Gadget As</TITLE_SAVE_GADGET_AS>
+  <CONFIRM_SAVE_GADGET>Your new gadget has not been saved.&#10;&#10;Do you want to save it?</CONFIRM_SAVE_GADGET>
+  <CONFIRM_SAVE_FILE>Your file '{{FILENAME}}' has not been saved.&#10;&#10;Do you want to save it?</CONFIRM_SAVE_FILE>
+  <CONFIRM_CHANGED>The file '{{FILENAME}}' has been changed on the file system.&#10;&#10;Do you want to refresh it?</CONFIRM_CHANGED>
+  <CONFIRM_OVERWRITE>The file '{{FILENAME}}' already exists in gadget.&#10;&#10;Do you want to overwrite it?</CONFIRM_OVERWRITE>
+  <CONFIRM_REMOVE_FILE>Do you want to remove file '{{FILENAME}}' from gadget?</CONFIRM_REMOVE_FILE>
+  <PROMPT_ADD_FILE_PREFIX>Location (path ending with '/') and/or prefix to be added to the file(s):&#10;(Leave blank to add the file(s) to the root of the gadget.)</PROMPT_ADD_FILE_PREFIX>
+  <PROMPT_APPEND_STRING>Append string:</PROMPT_APPEND_STRING>
+  <PROMPT_NEW_VIEW_NAME>Name of the new view file:</PROMPT_NEW_VIEW_NAME>
+  <PROMPT_NEW_FILE_NAME>Name of the new file:</PROMPT_NEW_FILE_NAME>
+  <PROMPT_RENAME_MOVE_FILE>Rename or move file to:</PROMPT_RENAME_MOVE_FILE>
+  <ALERT_FAIL_OPEN_GADGET>Failed to open gadget '{{FILENAME}}'.</ALERT_FAIL_OPEN_GADGET>
+  <ALERT_FAIL_OPEN_FILE>Failed to open file '{{FILENAME}}' from gadget.</ALERT_FAIL_OPEN_FILE>
+  <ALERT_FAIL_SAVE_FILE>Failed to save file '{{FILENAME}}' into gadget.</ALERT_FAIL_SAVE_FILE>
+  <ALERT_FAIL_ADD_FILE>Failed to add file '{{FILENAME}}' into gadget.</ALERT_FAIL_ADD_FILE>
+  <ALERT_FAIL_REMOVE_FILE>Failed to remove file '{{FILENAME}}' from gadget.</ALERT_FAIL_REMOVE_FILE>
+  <ALERT_FAIL_SAVE_GADGET_AS>Failed to save current gadget as '{{FILENAME}}'.</ALERT_FAIL_SAVE_GADGET_AS>
+  <ALERT_FAIL_RENAME_MOVE_FILE>Failed to rename/move file '{{FILENAME}}' to '{{NEWFILENAME}}'.</ALERT_FAIL_RENAME_MOVE_FILE>
+  <ALERT_FILE_EXISTS>File '{{FILENAME}}' already exists in gadget.</ALERT_FILE_EXISTS>
+
+  <CAPTION_COLOR_IMAGE>Choose Color/Image</CAPTION_COLOR_IMAGE>
+  <TAB_TITLE_COLOR>Color</TAB_TITLE_COLOR>
+  <TAB_TITLE_IMAGE>Image</TAB_TITLE_IMAGE>
+  <LABEL_COLOR>Color:</LABEL_COLOR>
+  <LABEL_OPACITY>Opacity:</LABEL_OPACITY>
+  <LABEL_RED>Red:</LABEL_RED>
+  <LABEL_GREEN>Green:</LABEL_GREEN>
+  <LABEL_BLUE>Blue:</LABEL_BLUE>
+  <INVALID_COLOR_STRING>Invalid color string!</INVALID_COLOR_STRING>
+  <LABEL_IMAGES>Images:</LABEL_IMAGES>
+  <NO_IMAGE>There is no image in the gadget.</NO_IMAGE>
+</strings>

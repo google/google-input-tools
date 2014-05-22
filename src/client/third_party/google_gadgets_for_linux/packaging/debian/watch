@@ -1,0 +1,3 @@
+version=3
+http://code.google.com/p/google-gadgets-for-linux/downloads/list \
+	http://google-gadgets-for-linux.googlecode.com/files/google-gadgets-for-linux-(.*?)\.tar\.bz2

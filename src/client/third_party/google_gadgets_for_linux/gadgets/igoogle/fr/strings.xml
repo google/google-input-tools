@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GADGET_NAME>Gadget iGoogle</GADGET_NAME>
+<GADGET_DESC>Executez des Gadgets iGoogle sur votre bureau.</GADGET_DESC>
+<GADGET_REQUIRED>Désolé! Le gadget ne peut pas être affiché jusqu'à ce que tous les paramètres requis soient fournis.</GADGET_REQUIRED>
+<GADGET_SHOWOPTIONS>Options...</GADGET_SHOWOPTIONS>
+<GADGET_REFRESH>Rafraîchir</GADGET_REFRESH>
+<GADGET_LOADING>Chargement en cours...</GADGET_LOADING>
+<GADGET_ERROR>Erreur lors du chargement du gadget.</GADGET_ERROR>
+<GADGET_NOTLOADED>Options en cours de chargement...</GADGET_NOTLOADED>
+<NO_OPTIONS>Ce gadget n'a aucune option paramétrable.</NO_OPTIONS>
+<GADGET_DIRECTORY_URL>http://www.google.com/ig/directory</GADGET_DIRECTORY_URL>
+<GADGET_URL_HINT>Trouvez un Gadget iGoogle favori dans le répertoire de Gadgets et collez le lien dans la boîte de saisie ci-dessous, ou entrer l'URL du gadget. Ensuite, cliquez sur le bouton &quot;Charger un Gadget&quot;.</GADGET_URL_HINT>
+<LOAD_GADGET>Charger un Gadget</LOAD_GADGET>
+<INVALID_URL>URL de Gadget Invalide.</INVALID_URL>
+<GADGET_UNLOAD>Décharger</GADGET_UNLOAD>
+</strings>
+

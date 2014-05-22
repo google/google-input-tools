@@ -1,0 +1,3 @@
+?package(google-gadgets-qt):needs="X11" section="Games/Toys"\
+  icon="/usr/share/pixmaps/ggl-qt.xpm" \
+  title="Google Gadgets (QT)" command="/usr/bin/ggl-qt"

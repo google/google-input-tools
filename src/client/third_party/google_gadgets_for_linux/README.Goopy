@@ -1,0 +1,18 @@
+Name: Google Gadgets For Linux
+Short Name: google_gadgets_for_linux
+URL: http://google-gadgets-for-linux.googlecode.com/svn/trunk
+Version: 1292
+Date: 2011-07-18
+License: Apache License 2.0
+
+Description:
+Google Gadgets for Linux provides a platform for running desktop gadgets under
+Linux, catering to the unique needs of Linux users. It's compatible with the
+gadgets written for Google Desktop for Windows as well as the Universal Gadgets
+on iGoogle. Following Linux norms, this project is open-sourced under the Apache
+License.
+Please visit http://code.google.com/p/google-gadgets-for-linux/ for more
+details.
+
+Local Modifications:
+Port google_gadgets_for_linux to windows and use it as goopy skin solution.

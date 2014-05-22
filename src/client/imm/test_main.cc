@@ -1,0 +1,60 @@
+/*
+  Copyright 2014 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+#include "imm/test_main.h"
+#include <gtest/gunit.h>
+
+namespace ime_goopy {
+namespace imm {
+HIMCTest::HIMCTest() : hwnd_(NULL), himc_(NULL) {
+}
+
+HIMCTest::~HIMCTest() {
+}
+
+void HIMCTest::SetUp() {
+  // Create a dummy window to get a input context.
+  hwnd_ = CreateWindowEx(
+      0,
+      L"EDIT",
+      L"DUMMY",
+      WS_POPUP | WS_DISABLED,
+      100,
+      100,
+      100,
+      30,
+      NULL,
+      NULL,
+      NULL,
+      NULL);
+  ASSERT_TRUE(hwnd_);
+  himc_ = ImmCreateContext();
+  ASSERT_TRUE(himc_);
+  ImmAssociateContext(hwnd_, himc_);
+}
+
+void HIMCTest::TearDown() {
+  ImmAssociateContextEx(hwnd_, NULL, IACE_DEFAULT);
+  ImmDestroyContext(himc_);
+  DestroyWindow(hwnd_);
+}
+}  // namespace imm
+}  // namespace ime_goopy
+
+int main(int argc, char *argv[]) {
+  testing::ParseGUnitFlags(&argc, argv);
+  return RUN_ALL_TESTS();
+}

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=HOST_QT_DESKTOP_NAME
+_Comment=HOST_QT_DESKTOP_COMMENT
+TryExec=@bindir@/ggl-qt
+Exec=@bindir@/ggl-qt %F
+Icon=google-gadgets
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=KDE;Qt;Network;News;
+MimeType=application/x-google-gadget;app/gg;
+OnlyShowIn=KDE;

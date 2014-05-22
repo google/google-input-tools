@@ -1,0 +1,199 @@
+/*
+  Copyright 2014 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+#include "imm/debug.h"
+#include "imm/immdev.h"
+
+#define APPEND_STRING_IF_BIT_SET(text, flag, test_bit) \
+  if ((flag & test_bit) == test_bit) { \
+    text.append(L#test_bit); \
+    text.append(L" | "); \
+  }
+
+#define CASE_RETURN_STRING(test_value) \
+  case test_value: return L#test_value;
+
+namespace ime_shared {
+namespace imm {
+static const wchar_t kUnknownFlag[] = L"UNKNOWN_FLAG: %x!";
+static const wchar_t kNullFlag[] = L"NULL";
+
+wstring Debug::GCS_String(DWORD value) {
+  wstring result;
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPREADSTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPREADATTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPREADCLAUSE);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPSTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPATTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_COMPCLAUSE);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_CURSORPOS);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_DELTASTART);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_RESULTREADSTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_RESULTREADCLAUSE);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_RESULTSTR);
+  APPEND_STRING_IF_BIT_SET(result, value, GCS_RESULTCLAUSE);
+  APPEND_STRING_IF_BIT_SET(result, value, CS_INSERTCHAR);
+  APPEND_STRING_IF_BIT_SET(result, value, CS_NOMOVECARET);
+  if (!result.size()) return kNullFlag;
+  return result;
+}
+
+wstring Debug::IMN_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(IMN_CLOSESTATUSWINDOW)
+    CASE_RETURN_STRING(IMN_OPENSTATUSWINDOW)
+    CASE_RETURN_STRING(IMN_CHANGECANDIDATE)
+    CASE_RETURN_STRING(IMN_CLOSECANDIDATE)
+    CASE_RETURN_STRING(IMN_OPENCANDIDATE)
+    CASE_RETURN_STRING(IMN_SETCONVERSIONMODE)
+    CASE_RETURN_STRING(IMN_SETSENTENCEMODE)
+    CASE_RETURN_STRING(IMN_SETOPENSTATUS)
+    CASE_RETURN_STRING(IMN_SETCANDIDATEPOS)
+    CASE_RETURN_STRING(IMN_SETCOMPOSITIONFONT)
+    CASE_RETURN_STRING(IMN_SETCOMPOSITIONWINDOW)
+    CASE_RETURN_STRING(IMN_SETSTATUSWINDOWPOS)
+    CASE_RETURN_STRING(IMN_GUIDELINE)
+    CASE_RETURN_STRING(IMN_PRIVATE)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::ISC_String(DWORD value) {
+  wstring result;
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUIALL)
+  if (result.size()) return result;
+
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUICOMPOSITIONWINDOW)
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUIGUIDELINE)
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUICANDIDATEWINDOW)
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUICANDIDATEWINDOW << 1)
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUICANDIDATEWINDOW << 2)
+  APPEND_STRING_IF_BIT_SET(result, value, ISC_SHOWUICANDIDATEWINDOW << 3)
+
+  if (!result.size()) return kNullFlag;
+  return result;
+}
+
+wstring Debug::IMC_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(IMC_SETCONVERSIONMODE)
+    CASE_RETURN_STRING(IMC_SETSENTENCEMODE)
+    CASE_RETURN_STRING(IMC_SETOPENSTATUS)
+
+    CASE_RETURN_STRING(IMC_GETSOFTKBDFONT)
+    CASE_RETURN_STRING(IMC_SETSOFTKBDFONT)
+    CASE_RETURN_STRING(IMC_GETSOFTKBDPOS)
+    CASE_RETURN_STRING(IMC_SETSOFTKBDPOS)
+    CASE_RETURN_STRING(IMC_GETSOFTKBDSUBTYPE)
+    CASE_RETURN_STRING(IMC_SETSOFTKBDSUBTYPE)
+    CASE_RETURN_STRING(IMC_SETSOFTKBDDATA)
+
+    CASE_RETURN_STRING(IMC_GETCANDIDATEPOS)
+    CASE_RETURN_STRING(IMC_SETCANDIDATEPOS)
+    CASE_RETURN_STRING(IMC_GETCOMPOSITIONFONT)
+    CASE_RETURN_STRING(IMC_SETCOMPOSITIONFONT)
+    CASE_RETURN_STRING(IMC_GETCOMPOSITIONWINDOW)
+    CASE_RETURN_STRING(IMC_SETCOMPOSITIONWINDOW)
+    CASE_RETURN_STRING(IMC_GETSTATUSWINDOWPOS)
+    CASE_RETURN_STRING(IMC_SETSTATUSWINDOWPOS)
+    CASE_RETURN_STRING(IMC_CLOSESTATUSWINDOW)
+    CASE_RETURN_STRING(IMC_OPENSTATUSWINDOW)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::IME_SYSINFO_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(IME_SYSINFO_WINLOGON)
+    CASE_RETURN_STRING(IME_SYSINFO_WOW16)
+    CASE_RETURN_STRING(NULL)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::IME_CONFIG_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(IME_CONFIG_GENERAL)
+    CASE_RETURN_STRING(IME_CONFIG_REGISTERWORD)
+    CASE_RETURN_STRING(IME_CONFIG_SELECTDICTIONARY)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::NI_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(NI_CONTEXTUPDATED)
+
+    CASE_RETURN_STRING(NI_OPENCANDIDATE)
+    CASE_RETURN_STRING(NI_CLOSECANDIDATE)
+    CASE_RETURN_STRING(NI_SELECTCANDIDATESTR)
+    CASE_RETURN_STRING(NI_CHANGECANDIDATELIST)
+    CASE_RETURN_STRING(NI_FINALIZECONVERSIONRESULT)
+    CASE_RETURN_STRING(NI_COMPOSITIONSTR)
+    CASE_RETURN_STRING(NI_SETCANDIDATE_PAGESTART)
+    CASE_RETURN_STRING(NI_SETCANDIDATE_PAGESIZE)
+    CASE_RETURN_STRING(NI_IMEMENUSELECTED)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::CPS_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(CPS_COMPLETE)
+    CASE_RETURN_STRING(CPS_CONVERT)
+    CASE_RETURN_STRING(CPS_REVERT)
+    CASE_RETURN_STRING(CPS_CANCEL)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+wstring Debug::IME_ESC_String(DWORD value) {
+  switch (value) {
+    CASE_RETURN_STRING(IME_ESC_QUERY_SUPPORT)
+    CASE_RETURN_STRING(IME_ESC_RESERVED_FIRST)
+    CASE_RETURN_STRING(IME_ESC_RESERVED_LAST)
+    CASE_RETURN_STRING(IME_ESC_PRIVATE_FIRST)
+    CASE_RETURN_STRING(IME_ESC_PRIVATE_LAST)
+    CASE_RETURN_STRING(IME_ESC_SEQUENCE_TO_INTERNAL)
+    CASE_RETURN_STRING(IME_ESC_GET_EUDC_DICTIONARY)
+    CASE_RETURN_STRING(IME_ESC_SET_EUDC_DICTIONARY)
+    CASE_RETURN_STRING(IME_ESC_MAX_KEY)
+    CASE_RETURN_STRING(IME_ESC_IME_NAME)
+    CASE_RETURN_STRING(IME_ESC_SYNC_HOTKEY)
+    CASE_RETURN_STRING(IME_ESC_HANJA_MODE)
+    CASE_RETURN_STRING(IME_ESC_AUTOMATA)
+    CASE_RETURN_STRING(IME_ESC_PRIVATE_HOTKEY)
+    CASE_RETURN_STRING(IME_ESC_GETHELPFILENAME)
+  }
+  wchar_t buf[100];
+  swprintf(buf, 100, kUnknownFlag, value);
+  return buf;
+}
+
+}  // namespace imm
+}  // namespace ime_shared

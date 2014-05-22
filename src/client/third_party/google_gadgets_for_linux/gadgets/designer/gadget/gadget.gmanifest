@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<gadget minimumGoogleDesktopVersion="5.8.0.0">
+  <about>
+    <id>d1d627bc-ed53-45f1-b1b7-6c060c9a1de8</id>
+    <version>1.0.0.0</version>
+    <author>Google</author>
+    <authorEmail></authorEmail>
+    <authorWebsite>http://code.google.com/p/google-gadgets-for-linux</authorWebsite>
+    <copyright>Copyright 2008 Google Inc. All Rights Reserved.</copyright>
+    <description>&GADGET_DESCRIPTION;</description>
+    <name>&GADGET_TITLE;</name>
+    <aboutText>&ABOUT_TEXT;</aboutText>
+    <smallIcon>icon.png</smallIcon>
+    <icon>icon.png</icon>
+  </about>
+  <install>
+    <object name="designer-script-utils" src="designer-script-utils.so"/>
+  </install>
+  <permissions>
+    <allaccess/>
+  </permissions>
+</gadget>

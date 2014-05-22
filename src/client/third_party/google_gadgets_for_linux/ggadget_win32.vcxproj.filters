@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ggadget">
+      <UniqueIdentifier>{E0509FCA-A906-77C6-1886-BD3F493C5F7D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ggadget\win32">
+      <UniqueIdentifier>{789FEF16-EFE7-512E-F91B-DF7E0D72FB79}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ggadget.gyp"/>
+    <ClCompile Include="ggadget\win32\key_convert.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\xml_parser.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\gdiplus_font.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\private_font_database.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\utilities.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\menu_builder.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\gadget_window.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\main_loop.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\main_loop.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\gdiplus_canvas.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\text_renderer.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\xml_parser_int.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\private_font_database.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\gdiplus_font.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\sysdeps.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\gdiplus_image.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\gdiplus_canvas.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\key_convert.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\single_view_host.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\xml_parser.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\font_fallback.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\xml_parser_int.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ggadget\win32\gdiplus_graphics.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\gdiplus_graphics.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\text_renderer.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\utilities.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <None Include="ggadget\win32\tests">
+      <Filter>ggadget\win32</Filter>
+    </None>
+    <ClInclude Include="ggadget\win32\thread_local_singleton_holder.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\menu_builder.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\port.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+    <ClCompile Include="ggadget\win32\single_view_host.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ggadget\win32\gadget_window.cc">
+      <Filter>ggadget\win32</Filter>
+    </ClCompile>
+    <ClInclude Include="ggadget\win32\gdiplus_image.h">
+      <Filter>ggadget\win32</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

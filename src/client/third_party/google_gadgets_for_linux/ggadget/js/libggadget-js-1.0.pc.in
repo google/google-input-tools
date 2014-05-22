@@ -1,0 +1,22 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+
+ggl_module_dir=@GGL_MODULE_DIR@
+ggl_resource_dir=@GGL_RESOURCE_DIR@
+ggl_include_dir=@GGL_INCLUDE_DIR@
+ggl_sysdeps_include_dir=@GGL_SYSDEPS_INCLUDE_DIR@
+ggl_libexec_dir=@GGL_LIBEXEC_DIR@
+
+binary_version=@LIBGGADGET_BINARY_VERSION_UNQUOTED@
+
+Name: libggadget-js
+Description: Google Gadgets Runtime JavaScript utilities
+Version: @GGL_VERSION_UNQUOTED@
+Requires: libggadget@GGL_EPOCH@
+Libs: -L${libdir} -lggadget-js@GGL_EPOCH@
+Cflags: -I${ggl_include_dir}

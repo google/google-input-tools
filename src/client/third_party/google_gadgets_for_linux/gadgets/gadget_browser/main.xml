@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="700" height="585" resizable="true" onopen="view_onopen()"
+  onclose="view_onclose()" oncontextmenu="view_oncontextmenu()"
+  onsizing="view_onsizing()" onsize="view_onsize()">
+  <edit name="category_item_ruler" visible="false" multiline="false"
+    wordWrap="false" readonly="true" size="10"/>
+
+  <img name="bg_top_left" src="images/bg_top_left.png"/>
+  <div name="bg_top_middle" background="images/bg_top_middle.png"
+    x="12" width="702" height="82"/>
+  <img name="bg_top_right" src="images/bg_top_right.png" pinX="100%" x="100%"/>
+
+  <div name="bg_middle_left" background="images/bg_middle_left.png"
+    y="82" width="6" height="383"/>
+  <div name="bg_middle_middle" background="#333333"
+    x="6" y="82" width="714" height="383"/>
+  <div name="bg_middle_right" background="images/bg_middle_right.png"
+    pinX="100%" x="100%" y="82" width="6" height="383"/>
+
+  <img name="bg_bottom_left" src="images/bg_bottom_left.png"
+    pinY="100%" y="100%"/>
+  <div name="bg_bottom_middle" background="images/bg_bottom_middle.png"
+    pinY="100%" y="100%" x="12" width="676" height="120"/>
+  <img name="bg_bottom_right" src="images/bg_bottom_right.png"
+    pinX="100%" x="100%" pinY="100%" y="100%"/>
+
+  <div name="window_body" x="6" y="24" width="688" height="555"
+    onsize="window_onsize()">
+    <label name="language_label" x="10" y="19" size="10" color="#FFFFFF"
+      vAlign="middle" onsize="language_label_onsize()">
+      &SHOW_ONLY_LABEL;
+    </label>
+    <div name="language_box_div" width="166" height="23" x="82" y="17">
+      <img width="100%" height="100%" src="images/control_border.png"
+        stretchMiddle="true"/>
+      <combobox name="language_box" width="160" height="440" x="3" y="2"
+        type="droplist" background="#FFFFFF" itemWidth="100%" itemHeight="19"
+        maxDroplistItems="30" onchange="language_box_onchange()"/>
+    </div>
+    <div name="search_div" width="215" height="50" x="100%" pinX="100%">
+      <div width="166" height="23" y="17">
+        <img width="100%" height="100%" src="images/control_border.png"
+          stretchMiddle="true"/>
+        <edit name="search_box" width="160" height="19" x="3" y="2"
+          value="&SEARCH_GADGETS;" color="#808080" size="10"
+          onchange="search_box_onchange()" onfocusin="search_box_onfocusin()"
+          onfocusout="search_box_onfocusout()"/>
+      </div>
+      <button name="search_button" x="164" y="8"
+         image="images/search_lens_default.png"
+        downImage="images/search_lens_down.png"
+        overImage="images/search_lens_hover.png"
+        onclick="DoSearch()"/>
+    </div>
+    <div name="categories_div" width="120" height="400" x="6" y="83"
+      autoscroll="true" scrollbar.lineStep="23"
+      scrollbar.leftImage="x" scrollbar.rightImage="x"
+      scrollbar.background="images/scrollbar_track.png"
+      scrollbar.thumbImage="images/scrollbar_thumb.png"
+      scrollbar.thumbOverImage="images/scrollbar_thumb.png"
+      scrollbar.thumbDownImage="images/scrollbar_thumb.png">
+      <img name="category_hover_img" opacity="55" width="100%" height="23"
+        visible="false" src="images/category_hover.png" stretchMiddle="true"/>
+      <img name="category_active_img" height="23" width="100%" visible="false"
+        src="images/category_active.png" stretchMiddle="true"/>
+    </div>
+    <div name="plugins_div" width="536" height="372" x="136" y="62"/>
+    <div name="plugin_info_div" width="536" height="113" x="136"
+      y="100%" pinY="100%">
+      <label name="plugin_title" width="100%" color="#FFFFFF" size="9"
+        trimming="character-ellipsis"/>
+      <label name="plugin_description" width="100%" y="16" color="#FFFFFF"
+        size="9" trimming="character-ellipsis" wordwrap="true"
+        onsize="plugin_description_onsize()"/>
+      <label name="plugin_other_data" width="100%" y="48" color="#FFFFFF"
+        size="8" trimming="character-ellipsis"/>
+    </div>
+    <div name="navigation_div" width="350" height="44" x="100%" pinX="100%"
+      y="100%" pinY="100%">
+      <button name="previous_button" pinX="100%" x="240"
+        image="images/previous_default.png"
+        downImage="images/previous_down.png"
+        overImage="images/previous_hover.png"
+         onclick="previous_button_onclick()"/>
+      <label name="page_label" enabled="true" height="39" x="260"
+        align="center" color="#FFFFFF" size="10" vAlign="middle"
+        onsize="page_label_onsize()"/>
+      <button name="next_button" x="280" image="images/next_default.png"
+        downImage="images/next_down.png" overImage="images/next_hover.png"
+        onclick="next_button_onclick()"/>
+    </div>
+  </div>
+  <label color="#ffffff" size="10" wordWrap="false" vAlign="middle" bold="true"
+    pinX="50%" x="50%" height="24">&GADGET_NAME;</label>
+  <div height="22" width="100%" hitTest="htcaption"/>
+  <button name="close_button" pinX="24" pinY="0" x="100%" y="0"
+    image="images/close_button_up.png"
+    overImage="images/close_button_over.png"
+    downImage="images/close_button_down.png"
+    onclick="plugin.RemoveMe(true)" enabled="true"/>
+  <img name="resize_corner" src="images/resize_corner.png"
+    hitTest="htbottomright" cursor="sizenwse" opacity="160"
+    pinX="20" pinY="20" x="100%" y="100%"/>
+  <script src="main.js"/>
+  <script src="thumbnail.js"/>
+  <script src="plugins.js"/>
+</view>

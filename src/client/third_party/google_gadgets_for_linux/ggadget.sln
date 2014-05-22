@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(google_gadgets_for_linux)", "..\..\google_gadgets_for_linux", "{213676FB-D363-A980-3A58-AEA0BA289355}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggadget", "ggadget.vcxproj", "{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB} = {4AF49412-DC55-77B9-214B-DD0C93B4DCAB}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggadget_sysdeps_header", "ggadget_sysdeps_header.vcxproj", "{37CEC586-4152-39F1-6215-75DCD8CAEBE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggadget_win32", "ggadget_win32.vcxproj", "{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unzip", "unzip.vcxproj", "{FC68260A-ED06-32C2-6C72-8604940DDAA5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "..\zlib\zlib.vcxproj", "{981011A5-7D60-A9BB-1EB2-FE3DF4C1DE6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37CEC586-4152-39F1-6215-75DCD8CAEBE1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{37CEC586-4152-39F1-6215-75DCD8CAEBE1}.Debug|Win32.Build.0 = Debug|Win32
+		{37CEC586-4152-39F1-6215-75DCD8CAEBE1}.Release|Win32.ActiveCfg = Release|Win32
+		{37CEC586-4152-39F1-6215-75DCD8CAEBE1}.Release|Win32.Build.0 = Release|Win32
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}.Debug|Win32.Build.0 = Debug|Win32
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}.Release|Win32.ActiveCfg = Release|Win32
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}.Release|Win32.Build.0 = Release|Win32
+		{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}.Debug|Win32.Build.0 = Debug|Win32
+		{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}.Release|Win32.ActiveCfg = Release|Win32
+		{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}.Release|Win32.Build.0 = Release|Win32
+		{981011A5-7D60-A9BB-1EB2-FE3DF4C1DE6A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{981011A5-7D60-A9BB-1EB2-FE3DF4C1DE6A}.Debug|Win32.Build.0 = Debug|Win32
+		{981011A5-7D60-A9BB-1EB2-FE3DF4C1DE6A}.Release|Win32.ActiveCfg = Release|Win32
+		{981011A5-7D60-A9BB-1EB2-FE3DF4C1DE6A}.Release|Win32.Build.0 = Release|Win32
+		{FC68260A-ED06-32C2-6C72-8604940DDAA5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FC68260A-ED06-32C2-6C72-8604940DDAA5}.Debug|Win32.Build.0 = Debug|Win32
+		{FC68260A-ED06-32C2-6C72-8604940DDAA5}.Release|Win32.ActiveCfg = Release|Win32
+		{FC68260A-ED06-32C2-6C72-8604940DDAA5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE} = {213676FB-D363-A980-3A58-AEA0BA289355}
+		{37CEC586-4152-39F1-6215-75DCD8CAEBE1} = {213676FB-D363-A980-3A58-AEA0BA289355}
+		{4AF49412-DC55-77B9-214B-DD0C93B4DCAB} = {213676FB-D363-A980-3A58-AEA0BA289355}
+		{FC68260A-ED06-32C2-6C72-8604940DDAA5} = {213676FB-D363-A980-3A58-AEA0BA289355}
+	EndGlobalSection
+EndGlobal

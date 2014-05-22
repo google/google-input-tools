@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4BDBA686-1B79-AECA-AC99-A7CC1CD9CEDE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ggadget</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Locals">
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+  <ImportGroup Label="ExtensionSettings"/>
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros"/>
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\.\bin\;$(MSBuildProjectDirectory)\.\bin\</ExecutablePath>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)lib\$(ProjectName)$(TargetExt)</TargetPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;$(OutDir)obj\global_intermediate\third_party\google_gadgets_for_linux;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\build\msvc_precompile;..\..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\..\google3\third_party\gtest\include;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/J</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DisableSpecificWarnings>4018;4100;4125;4127;4244;4267;4288;4389;4800;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>../../build/min_max.h</ForcedIncludeFiles>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile></PrecompiledHeaderFile>
+      <PreprocessorDefinitions>GGL_FOR_GOOPY;ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib\$(ProjectName)$(TargetExt)</OutputFile>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>advapi32.lib;crypt32.lib;dbghelp.lib;kernel32.lib;iphlpapi.lib;psapi.lib;shell32.lib;shlwapi.lib;urlmon.lib;user32.lib;wininet.lib;msxml2.lib;ole32.lib;oleaut32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../external/thelibrary/lib/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>.;$(OutDir)obj\global_intermediate\third_party\google_gadgets_for_linux;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\build\msvc_precompile;..\..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\..\google3\third_party\gtest\include;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GGL_FOR_GOOPY;ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.;$(OutDir)obj\global_intermediate\third_party\google_gadgets_for_linux;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\build\msvc_precompile;..\..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\..\google3\third_party\gtest\include;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/J</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DisableSpecificWarnings>4018;4100;4125;4127;4244;4267;4288;4389;4800;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ForcedIncludeFiles>../../build/min_max.h</ForcedIncludeFiles>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile></PrecompiledHeaderFile>
+      <PreprocessorDefinitions>GGL_FOR_GOOPY;ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)lib\$(ProjectName)$(TargetExt)</OutputFile>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>advapi32.lib;crypt32.lib;dbghelp.lib;kernel32.lib;iphlpapi.lib;psapi.lib;shell32.lib;shlwapi.lib;urlmon.lib;user32.lib;wininet.lib;msxml2.lib;ole32.lib;oleaut32.lib</AdditionalDependencies>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>.;$(OutDir)obj\global_intermediate\third_party\google_gadgets_for_linux;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\build\msvc_precompile;..\..\..\..\..\googleclient\third_party\protobuf\files\src;..\..\..\..\..\google3\third_party\gtest\include;..\..\..\..\..\google3\third_party\zlib\v1_2_8;..\..;..\..\..\..\..\googleclient\ime\goopy\base\posix;..\..\..\..\..\googleclient\third_party\wtl_80\files\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GGL_FOR_GOOPY;ARCH_PIII;GUNIT_NO_GOOGLE3;ARCH_CPU_X86_FAMILY;ARCH_CPU_64_BITS;COMPILER_MSVC;_ATL_ALLOW_CHAR_UNSIGNED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;STL_MSVC;STRSAFE_NO_DEPRECATE;UNICODE;_UNICODE;_WIN32_WINNT=0x0501;_WIN32_IE=0x0500;_WINDOWS;WINVER=0x0501;_WTL_NO_CSTRING;OS_WIN;OS_WINDOWS;NOMINMAX;_SCL_SECURE_NO_WARNINGS;_VARIADIC_MAX=10;__windows__;NO_SHLWAPI_ISOS;_USING_V110_SDK71_;DEBUG;_DEBUG;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ggadget.gyp"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ggadget\scoped_ptr.h"/>
+    <ClInclude Include="ggadget\file_manager_interface.h"/>
+    <ClInclude Include="ggadget\image_interface.h"/>
+    <ClInclude Include="ggadget\canvas_utils.h"/>
+    <ClInclude Include="ggadget\scriptable_binary_data.h"/>
+    <ClInclude Include="ggadget\scrollbar_element.h"/>
+    <ClInclude Include="ggadget\xml_parser_interface.h"/>
+    <ClInclude Include="ggadget\variant.h"/>
+    <ClInclude Include="ggadget\text_frame.h"/>
+    <ClInclude Include="ggadget\locales.h"/>
+    <ClInclude Include="ggadget\button_element.h"/>
+    <ClInclude Include="ggadget\font_interface.h"/>
+    <ClInclude Include="ggadget\common.h"/>
+    <ClInclude Include="ggadget\system_utils.h"/>
+    <ClInclude Include="ggadget\linear_element.h"/>
+    <ClInclude Include="ggadget\messages.h"/>
+    <ClInclude Include="ggadget\localized_file_manager.h"/>
+    <ClInclude Include="ggadget\file_system_interface.h"/>
+    <ClInclude Include="ggadget\scriptable_holder.h"/>
+    <ClInclude Include="ggadget\canvas_interface.h"/>
+    <ClInclude Include="ggadget\scriptable_function.h"/>
+    <ClInclude Include="ggadget\dir_file_manager.h"/>
+    <ClInclude Include="ggadget\view_interface.h"/>
+    <ClInclude Include="ggadget\math_utils.h"/>
+    <ClInclude Include="ggadget\text_formats.h"/>
+    <ClInclude Include="ggadget\gadget_base.h"/>
+    <ClInclude Include="ggadget\image_cache.h"/>
+    <ClInclude Include="ggadget\file_manager_wrapper.h"/>
+    <ClInclude Include="ggadget\scriptable_event.h"/>
+    <ClInclude Include="ggadget\scriptable_interface.h"/>
+    <ClInclude Include="ggadget\text_formats_decl.h"/>
+    <ClInclude Include="ggadget\scriptable_map.h"/>
+    <ClInclude Include="ggadget\scriptable_image.h"/>
+    <ClInclude Include="ggadget\permissions.h"/>
+    <ClInclude Include="ggadget\host_utils.h"/>
+    <ClInclude Include="ggadget\memory_options.h"/>
+    <ClInclude Include="ggadget\texture.h"/>
+    <ClInclude Include="ggadget\xml_dom_interface.h"/>
+    <ClInclude Include="ggadget\script_runtime_interface.h"/>
+    <ClInclude Include="ggadget\element_factory.h"/>
+    <ClInclude Include="ggadget\gadget_interface.h"/>
+    <ClInclude Include="ggadget\clip_region.h"/>
+    <ClInclude Include="ggadget\script_runtime_manager.h"/>
+    <ClInclude Include="ggadget\scriptable_array.h"/>
+    <ClInclude Include="ggadget\scriptable_menu.h"/>
+    <ClInclude Include="ggadget\scriptable_helper.h"/>
+    <ClInclude Include="ggadget\gadget_consts.h"/>
+    <ClInclude Include="ggadget\file_manager_factory.h"/>
+    <ClInclude Include="ggadget\copy_element.h"/>
+    <ClInclude Include="ggadget\div_element.h"/>
+    <ClInclude Include="ggadget\zip_file_manager.h"/>
+    <ClInclude Include="ggadget\main_loop_interface.h"/>
+    <ClInclude Include="ggadget\host_interface.h"/>
+    <ClInclude Include="ggadget\anchor_element.h"/>
+    <ClInclude Include="ggadget\string_utils.h"/>
+    <ClInclude Include="ggadget\xml_dom.h"/>
+    <ClInclude Include="ggadget\light_map.h"/>
+    <ClInclude Include="ggadget\options_interface.h"/>
+    <ClInclude Include="ggadget\unicode_utils.h"/>
+    <ClInclude Include="ggadget\event.h"/>
+    <ClInclude Include="ggadget\build_config.h"/>
+    <ClInclude Include="ggadget\system_file_functions.h"/>
+    <ClInclude Include="ggadget\view.h"/>
+    <ClInclude Include="ggadget\label_element.h"/>
+    <ClInclude Include="ggadget\color.h"/>
+    <ClInclude Include="ggadget\logger.h"/>
+    <ClInclude Include="ggadget\elements.h"/>
+    <ClInclude Include="ggadget\text_renderer_interface.h"/>
+    <ClInclude Include="ggadget\registerable_interface.h"/>
+    <ClInclude Include="ggadget\basic_element.h"/>
+    <ClInclude Include="ggadget\scrolling_element.h"/>
+    <ClInclude Include="ggadget\img_element.h"/>
+    <ClInclude Include="ggadget\scriptable_view.h"/>
+    <ClInclude Include="ggadget\script_context_interface.h"/>
+    <ClInclude Include="ggadget\scriptable_enumerator.h"/>
+    <ClInclude Include="ggadget\xml_utils.h"/>
+    <ClInclude Include="ggadget\view_host_interface.h"/>
+    <ClInclude Include="ggadget\slot.h"/>
+    <ClInclude Include="ggadget\xml_http_request_interface.h"/>
+    <ClInclude Include="ggadget\format_macros.h"/>
+    <ClInclude Include="ggadget\signals.h"/>
+    <ClInclude Include="ggadget\menu_interface.h"/>
+    <ClInclude Include="ggadget\graphics_interface.h"/>
+    <ClInclude Include="ggadget\scriptable_options.h"/>
+    <ClInclude Include="ggadget\framework_interface.h"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ggadget\scriptable_array.cc"/>
+    <ClCompile Include="ggadget\text_frame.cc"/>
+    <ClCompile Include="ggadget\locales.cc"/>
+    <ClCompile Include="ggadget\copy_element.cc"/>
+    <ClCompile Include="ggadget\texture.cc"/>
+    <ClCompile Include="ggadget\scrolling_element.cc"/>
+    <ClCompile Include="ggadget\xml_utils.cc"/>
+    <ClCompile Include="ggadget\color.cc"/>
+    <ClCompile Include="ggadget\signals.cc"/>
+    <ClCompile Include="ggadget\memory_options.cc"/>
+    <ClCompile Include="ggadget\image_cache.cc"/>
+    <ClCompile Include="ggadget\main_loop.cc"/>
+    <ClCompile Include="ggadget\localized_file_manager.cc"/>
+    <ClCompile Include="ggadget\scriptable_helper.cc"/>
+    <ClCompile Include="ggadget\script_runtime_manager.cc"/>
+    <ClCompile Include="ggadget\scriptable_image.cc"/>
+    <ClCompile Include="ggadget\math_utils.cc"/>
+    <ClCompile Include="ggadget\element_factory.cc"/>
+    <ClCompile Include="ggadget\canvas_utils.cc"/>
+    <ClCompile Include="ggadget\xml_dom.cc"/>
+    <ClCompile Include="ggadget\clip_region.cc"/>
+    <ClCompile Include="ggadget\img_element.cc"/>
+    <ClCompile Include="ggadget\scriptable_options.cc"/>
+    <ClCompile Include="ggadget\host_utils.cc"/>
+    <ClCompile Include="ggadget\scrollbar_element.cc"/>
+    <ClCompile Include="ggadget\slot.cc"/>
+    <ClCompile Include="ggadget\system_file_functions_win32.cc"/>
+    <ClCompile Include="ggadget\xml_http_request_factory.cc"/>
+    <ClCompile Include="ggadget\string_utils.cc"/>
+    <ClCompile Include="ggadget\logger.cc"/>
+    <ClCompile Include="ggadget\linear_element.cc"/>
+    <ClCompile Include="ggadget\options_factory.cc"/>
+    <ClCompile Include="ggadget\zip_file_manager.cc"/>
+    <ClCompile Include="ggadget\scriptable_event.cc"/>
+    <ClCompile Include="ggadget\gadget_base.cc"/>
+    <ClCompile Include="ggadget\view.cc"/>
+    <ClCompile Include="ggadget\anchor_element.cc"/>
+    <ClCompile Include="ggadget\scriptable_view.cc"/>
+    <ClCompile Include="ggadget\scriptable_menu.cc"/>
+    <ClCompile Include="ggadget\permissions.cc"/>
+    <ClCompile Include="ggadget\basic_element.cc"/>
+    <ClCompile Include="ggadget\elements.cc"/>
+    <ClCompile Include="ggadget\variant.cc"/>
+    <ClCompile Include="ggadget\messages.cc"/>
+    <ClCompile Include="ggadget\system_utils.cc"/>
+    <ClCompile Include="ggadget\button_element.cc"/>
+    <ClCompile Include="ggadget\unicode_utils.cc"/>
+    <ClCompile Include="ggadget\xml_parser.cc"/>
+    <ClCompile Include="ggadget\file_manager_wrapper.cc"/>
+    <ClCompile Include="ggadget\dir_file_manager.cc"/>
+    <ClCompile Include="ggadget\div_element.cc"/>
+    <ClCompile Include="ggadget\text_formats.cc"/>
+    <ClCompile Include="ggadget\file_manager_factory.cc"/>
+    <ClCompile Include="ggadget\label_element.cc"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="ggadget_win32.vcxproj">
+      <Project>{4AF49412-DC55-77B9-214B-DD0C93B4DCAB}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+  <ImportGroup Label="ExtensionTargets"/>
+</Project>

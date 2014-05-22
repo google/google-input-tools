@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_DESCRIPTION>Concepteur de gadgets</GADGET_DESCRIPTION>
+  <GADGET_TITLE>Concepteur de gadgets</GADGET_TITLE>
+  <ABOUT_TEXT>Concepteur de gadgets</ABOUT_TEXT>
+  <TITLE_NEW_GADGET>Nouveau Gadget</TITLE_NEW_GADGET>
+  <MENU_UNDO>Annuler</MENU_UNDO>
+  <MENU_REDO>Refaire</MENU_REDO>
+  <MENU_NEW_GADGET>Nouveau Gadget</MENU_NEW_GADGET>
+  <MENU_OPEN_GADGET>Ouvrir un Gadget...</MENU_OPEN_GADGET>
+  <MENU_SAVE_GADGET_AS>Sauvegarder le Gadget Sous...</MENU_SAVE_GADGET_AS>
+  <MENU_CLOSE_GADGET>Fermer le Gadget</MENU_CLOSE_GADGET>
+  <MENU_RUN_GADGET>Lancer le Gadget</MENU_RUN_GADGET>
+  <MENU_SAVE_CURRENT_FILE>Sauvegarder le Fichier Actuel</MENU_SAVE_CURRENT_FILE>
+  <MENU_ADD>Ajouter</MENU_ADD>
+  <MENU_ADD_FILES>Fichiers...</MENU_ADD_FILES>
+  <MENU_ADD_OPTIONS_VIEW>Visualisation des Options</MENU_ADD_OPTIONS_VIEW>
+  <MENU_ADD_NEW_VIEW>Nouvelle Vue...</MENU_ADD_NEW_VIEW>
+  <MENU_ADD_NEW_FILE>Nouveau Fichier...</MENU_ADD_NEW_FILE>
+  <MENU_EDIT_SOURCE>Modifier le Code Source</MENU_EDIT_SOURCE>
+  <MENU_REFRESH>Rafraîchir</MENU_REFRESH>
+  <MENU_REMOVE_FILE>Enlever...</MENU_REMOVE_FILE>
+  <MENU_RENAME_MOVE_FILE>Renommer/Déplacer...</MENU_RENAME_MOVE_FILE>
+  <MENU_REMOVE_ELEMENT>Enlever</MENU_REMOVE_ELEMENT>
+  <MENU_RENAME_ELEMENT>Renommer</MENU_RENAME_ELEMENT>
+  <MENU_MOVE_BACK>Placer en arrière-plan</MENU_MOVE_BACK>
+  <MENU_MOVE_FRONT>Placer au premier plan</MENU_MOVE_FRONT>
+  <MENU_MOVE_BOTTOM>Placer en bas</MENU_MOVE_BOTTOM>
+  <MENU_MOVE_TOP>Placer en haut</MENU_MOVE_TOP>
+  <MENU_MOVE_UP_LEVEL>Monter d'un Plan</MENU_MOVE_UP_LEVEL>
+  <MENU_MOVE_DOWN_LEVEL>Descendre d'un Plan</MENU_MOVE_DOWN_LEVEL>
+  <MENU_APPEND_STRING>Ajouter une Chaîne...</MENU_APPEND_STRING>
+  <TYPE_ALL_GADGET>Tous les fichiers Gadget</TYPE_ALL_GADGET>
+  <TYPE_GG>Fichiers de Paquet de Gadget</TYPE_GG>
+  <TYPE_GMANIFEST>Fichiers de Manifeste pour Gadget</TYPE_GMANIFEST>
+  <TOOL_DIV>Div</TOOL_DIV>
+  <TOOL_IMG>Image</TOOL_IMG>
+  <TOOL_BUTTON>Bouton</TOOL_BUTTON>
+  <TOOL_EDIT>Modifier</TOOL_EDIT>
+  <TOOL_CHECKBOX>Check</TOOL_CHECKBOX>
+  <TOOL_RADIO>Radio</TOOL_RADIO>
+  <TOOL_A>Lien</TOOL_A>
+  <TOOL_LABEL>Etiquette</TOOL_LABEL>
+  <TOOL_CONTENTAREA>Contenu</TOOL_CONTENTAREA>
+  <TOOL_LISTBOX>Liste</TOOL_LISTBOX>
+  <TOOL_COMBOBOX>Combo</TOOL_COMBOBOX>
+  <TOOL_PROGRESSBAR>Progress</TOOL_PROGRESSBAR>
+  <TOOL_SCROLLBAR>Scroll</TOOL_SCROLLBAR>
+  <PROPERTIES>Propriétés</PROPERTIES>
+  <EVENTS>Evènements</EVENTS>
+  <ELEMENTS>Eléments</ELEMENTS>
+  <TITLE_SAVE_GADGET_AS>Sauvegarder le Gadget Sous</TITLE_SAVE_GADGET_AS>
+  <CONFIRM_SAVE_GADGET>Votre nouveau gadget n'a pas été sauvegardé.&#10;&#10;Voulez-vous le sauvegarder?</CONFIRM_SAVE_GADGET>
+  <CONFIRM_SAVE_FILE>Votre fichier '{{FILENAME}}' n'a pas été sauvegardé.&#10;&#10;Voulez-vous le sauvegarder?</CONFIRM_SAVE_FILE>
+  <CONFIRM_CHANGED>Le fichier '{{FILENAME}}' a été changé sur le système de fichiers.&#10;&#10;Voulez-vous le rafraîchir?</CONFIRM_CHANGED>
+  <CONFIRM_OVERWRITE>Le fichier '{{FILENAME}}' existe déjà dans le gadget.&#10;&#10;Souhaitez-vous l'écraser?</CONFIRM_OVERWRITE>
+  <CONFIRM_REMOVE_FILE>Souhaitez-vous enlever le fichier '{{FILENAME}}' du gadget?</CONFIRM_REMOVE_FILE>
+  <PROMPT_ADD_FILE_PREFIX>Emplacement (chemin se terminant par '/') et/ou préfixe à ajouter au(x) fichier(s):&#10;(Laisser blanc pour ajouter le(s) fichier(s) à la racine du gadget.)</PROMPT_ADD_FILE_PREFIX>
+  <PROMPT_APPEND_STRING>Ajouter une chaîne:</PROMPT_APPEND_STRING>
+  <PROMPT_NEW_VIEW_NAME>Nom du nouveau fichier de vue:</PROMPT_NEW_VIEW_NAME>
+  <PROMPT_NEW_FILE_NAME>Nom du nouveau fichier:</PROMPT_NEW_FILE_NAME>
+  <PROMPT_RENAME_MOVE_FILE>Renommer ou déplacer le fichier vers:</PROMPT_RENAME_MOVE_FILE>
+  <ALERT_FAIL_OPEN_GADGET>Le gadget '{{FILENAME}}' n'a pas pu être ouvert.</ALERT_FAIL_OPEN_GADGET>
+  <ALERT_FAIL_OPEN_FILE>Le fichier '{{FILENAME}}' n'a pas pu être ouvert à partir du gadget.</ALERT_FAIL_OPEN_FILE>
+  <ALERT_FAIL_SAVE_FILE>Le fichier '{{FILENAME}}' n'a pas pu être sauvegardé dans le gadget.</ALERT_FAIL_SAVE_FILE>
+  <ALERT_FAIL_ADD_FILE>Le fichier '{{FILENAME}}' n'a pas pu être ajouté dans le gadget.</ALERT_FAIL_ADD_FILE>
+  <ALERT_FAIL_REMOVE_FILE>Le fichier '{{FILENAME}}' n'a pas pu être enlevé du gadget.</ALERT_FAIL_REMOVE_FILE>
+  <ALERT_FAIL_SAVE_GADGET_AS>Le gadget actuel n'a pas pu être sauvegardé en tant que '{{FILENAME}}'.</ALERT_FAIL_SAVE_GADGET_AS>
+  <ALERT_FAIL_RENAME_MOVE_FILE>Le fichier '{{FILENAME}}' n'a pas pu être renommé en/déplacé vers '{{NEWFILENAME}}'.</ALERT_FAIL_RENAME_MOVE_FILE>
+  <ALERT_FILE_EXISTS>Le fichier '{{FILENAME}}' existe déjà dans le gadget.</ALERT_FILE_EXISTS>
+
+  <CAPTION_COLOR_IMAGE>Choisir la Couleur/Image</CAPTION_COLOR_IMAGE>
+  <TAB_TITLE_COLOR>Couleur</TAB_TITLE_COLOR>
+  <TAB_TITLE_IMAGE>Image</TAB_TITLE_IMAGE>
+  <LABEL_COLOR>Couleur:</LABEL_COLOR>
+  <LABEL_OPACITY>Opacité:</LABEL_OPACITY>
+  <LABEL_RED>Rouge:</LABEL_RED>
+  <LABEL_GREEN>Vert:</LABEL_GREEN>
+  <LABEL_BLUE>Bleu:</LABEL_BLUE>
+  <INVALID_COLOR_STRING>Chaîne couleur invalide!</INVALID_COLOR_STRING>
+  <LABEL_IMAGES>Images:</LABEL_IMAGES>
+  <NO_IMAGE>Il n'y a pas d'image dans le gadget.</NO_IMAGE>
+</strings>

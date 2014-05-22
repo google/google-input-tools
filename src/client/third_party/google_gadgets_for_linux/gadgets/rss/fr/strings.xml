@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GADGET_NAME>Clips Web</GADGET_NAME>
+<GADGET_DESC>Voir des informations provenant de flux RSS/Atom.</GADGET_DESC>
+<GADGET_COPYRIGHT>Copyright 2008 Google Inc.</GADGET_COPYRIGHT>
+<GADGET_ABOUT>Google Gadgets pour Linux</GADGET_ABOUT>
+<GADGET_URL>URL du Flux</GADGET_URL>
+<GADGET_REFRESH>Rafraîchir</GADGET_REFRESH>
+<GADGET_LOADING>Chargement en cours...</GADGET_LOADING>
+<GADGET_ERROR>Erreur lors de la lecture du flux</GADGET_ERROR>
+<GADGET_UNKNOWN>Format de flux inconnu</GADGET_UNKNOWN>
+<GADGET_OPTIONS>Options des Clips Web</GADGET_OPTIONS>
+<GADGET_ADDLABEL>Ajoutez un clip en entrant son URL de flux Atom ou RSS</GADGET_ADDLABEL>
+<GADGET_ADD>Ajouter</GADGET_ADD>
+<GADGET_REMOVE>Enlever</GADGET_REMOVE>
+<GADGET_MAXSHOW>Nombre maximum d'éléments à afficher pour un clip:</GADGET_MAXSHOW>
+<GADGET_DEFAULTURL>http://news.google.fr/?output=rss</GADGET_DEFAULTURL>
+<GADGET_UNTITLED>&lt;sans titre&gt;</GADGET_UNTITLED>
+</strings>
+

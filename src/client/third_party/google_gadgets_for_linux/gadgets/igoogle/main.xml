@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="200" height="200" resizable="true" showCaptionAlways="true"
+      caption="&GADGET_NAME;" onsizing="ViewOnSizing()" onsize="ViewOnSize()"
+      resizeBorder="6 0 8 8" onOptionChanged="OnOptionChanged()"
+      onopen="ViewOnOpen()">
+  <!-- a background acts as input shape mask. -->
+  <img width="100%" height="100%" src="bkgnd.png" stretchMiddle="true"/>
+  <div name="addGadgetUI" x="6" y="11" width="188" height="183" visible="false">
+    <a name="urlHint" x="2" y="2" width="184" height="112" align="left"
+      underline="false" color="#000000" overColor="#0000ff"
+      vAlign="bottom" wordWrap="true" href="&GADGET_DIRECTORY_URL;"
+      dropTarget="true" ondragdrop="OnDragDrop()" ondragover="OnDragOver()">
+      &GADGET_URL_HINT;
+    </a>
+    <div name="urlBox" x="2" y="100%" pinY="64" width="184" height="22"
+      background="#000000">
+      <edit name="urlEntry" x="1" y="1" width="182" height="20" size="10"
+        dropTarget="true" ondragdrop="OnDragDrop()" ondragover="OnDragOver()"
+        onfocusin="urlEntry.selectAll()" onclick="urlEntry.selectAll()"/>
+    </div>
+    <button name="loadButton" x="50%" y="100%" pinX="50%" pinY="36" size="12"
+      caption="&LOAD_GADGET;" defaultRendering="true" onclick="OnLoadGadget()"/>
+  </div>
+  <_browser name="browser" x="6" y="11" width="188" height="183"
+    alwaysOpenNewWindow="false"/>
+  <script src="shared.js"/>
+  <script src="main.js"/>
+</view>

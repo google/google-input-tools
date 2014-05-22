@@ -1,0 +1,5 @@
+debian/google-gadgets/usr/bin/ggl-gtk usr/bin
+debian/google-gadgets/usr/share/applications/ggl-gtk.desktop usr/share/applications
+debian/google-gadgets/usr/share/applications/ggl-designer.desktop usr/share/applications
+debian/google-gadgets/usr/lib/google-gadgets/modules/gtk-*.so usr/lib/google-gadgets/modules
+debian/ggl-gtk.xpm usr/share/pixmaps

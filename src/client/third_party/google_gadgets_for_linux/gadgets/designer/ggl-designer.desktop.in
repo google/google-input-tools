@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=GADGET_DESIGNER_NAME
+_Comment=GADGET_DESIGNER_COMMENT
+TryExec=@bindir@/ggl-gtk
+Exec=@bindir@/ggl-gtk -sa -nd -gp @datadir@/google-gadgets/designer.gg
+Icon=google-gadgets
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=GNOME;GTK;Development;GUIDesigner;

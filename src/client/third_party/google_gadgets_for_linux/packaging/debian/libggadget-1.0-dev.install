@@ -1,0 +1,5 @@
+debian/google-gadgets/usr/include/google-gadgets/ggadget/*.h usr/include/google-gadgets/ggadget
+debian/google-gadgets/usr/lib/libggadget{,-dbus,-js,-xdg,-npapi}-1.0.{so,la,a} usr/lib
+debian/google-gadgets/usr/lib/pkgconfig/libggadget{,-dbus,-js,-xdg,-npapi}-1.0.pc usr/lib/pkgconfig
+debian/google-gadgets/usr/include/google-gadgets/ggadget/{dbus,js,xdg,npapi} usr/include/google-gadgets/ggadget
+debian/google-gadgets/usr/lib/google-gadgets/include/ggadget/sysdeps.h usr/lib/google-gadgets/include/ggadget

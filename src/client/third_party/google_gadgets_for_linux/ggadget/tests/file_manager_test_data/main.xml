@@ -1,0 +1,4 @@
+<root root-attr1="root-value1" root-attr2="&root-attr2;" root-attr3="&lt;&amp;&gt;xyz ">
+<second>&second-value;</second>
+<third>&blank-value;&non-existence;</third>
+</root>

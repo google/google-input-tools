@@ -1,0 +1,4 @@
+debian/google-gadgets/usr/bin/ggl-qt usr/bin
+debian/google-gadgets/usr/share/applications/ggl-qt.desktop usr/share/applications
+debian/google-gadgets/usr/lib/google-gadgets/modules/qt*.so usr/lib/google-gadgets/modules
+debian/ggl-qt.xpm usr/share/pixmaps

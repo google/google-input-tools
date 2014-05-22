@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GOOGLE_GADGETS>Google Gadgets</GOOGLE_GADGETS>
+<API_VERSION>(API Version: %s)</API_VERSION>
+<GGL_COPYRIGHT>Copyright &#169; 2009 Google Inc. All Rights Reserved.&#10;Licensed under the Apache License, Version 2.0:</GGL_COPYRIGHT>
+<GGL_DESCRIPTION>For more information please visit our project site:</GGL_DESCRIPTION>
+
+<!-- Short absolute time format (strftime() format) like '10:24am'.
+  For some locales (such as zh-CN), 24-clock should be used, because times
+  like 12:30am are confusing in these locales. -->
+<TIME_FORMAT_SHORT>%I:%M%P</TIME_FORMAT_SHORT>
+<!-- Short absolute date format (strftime() format) like 'Mar 20'. -->
+<DATE_FORMAT_SHORT>%b %d</DATE_FORMAT_SHORT>
+<!-- 1 day ago, short format. -->
+<DAY_AGO_SHORT>%dd ago</DAY_AGO_SHORT>
+<!-- More than 1 days ago, short format. -->
+<DAYS_AGO_SHORT>%dd ago</DAYS_AGO_SHORT>
+<!-- 1 day ago, long format. -->
+<DAY_AGO_LONG>%d day ago</DAY_AGO_LONG>
+<!-- More than 1 days ago, long format. -->
+<DAYS_AGO_LONG>%d days ago</DAYS_AGO_LONG>
+<!-- 1 hour ago, short format. -->
+<HOUR_AGO_SHORT>%dh ago</HOUR_AGO_SHORT>
+<!-- More than 1 hours ago, short format. -->
+<HOURS_AGO_SHORT>%dh ago</HOURS_AGO_SHORT>
+<!-- 1 hour ago, long format. -->
+<HOUR_AGO_LONG>%d hr ago</HOUR_AGO_LONG>
+<!-- More than 1 hours ago, long format. -->
+<HOURS_AGO_LONG>%d hrs ago</HOURS_AGO_LONG>
+<!-- 1 minute ago, short format. -->
+<MINUTE_AGO_SHORT>%dm ago</MINUTE_AGO_SHORT>
+<!-- More than 1 minutes ago, short format. -->
+<MINUTES_AGO_SHORT>%dm ago</MINUTES_AGO_SHORT>
+<!-- 1 minute ago, long format. -->
+<MINUTE_AGO_LONG>%d min ago</MINUTE_AGO_LONG>
+<!-- More than 1 minutes ago, long format. -->
+<MINUTES_AGO_LONG>%d mins ago</MINUTES_AGO_LONG>
+<!-- Text for a button or a menu item for opening an item. -->
+<OPEN_CONTENT_ITEM>Open</OPEN_CONTENT_ITEM>
+<!-- Text for a button or a menu item for removing an item. -->
+<REMOVE_CONTENT_ITEM>Remove</REMOVE_CONTENT_ITEM>
+<!-- String for the negative feedback in details view. Needs to be quite short. -->
+<DONT_SHOW_CONTENT_ITEM>Don't show me items like this</DONT_SHOW_CONTENT_ITEM>
+
+<!-- Decorated View toolbar back button tooltip. -->
+<VD_BACK_BUTTON_TOOLTIP>Previous</VD_BACK_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar forward button tooltip. -->
+<VD_FORWARD_BUTTON_TOOLTIP>Next</VD_FORWARD_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar toggle expanded view button tooltip. -->
+<VD_POP_IN_OUT_BUTTON_TOOLTIP>Toggle Expanded View</VD_POP_IN_OUT_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar menu button tooltip. -->
+<VD_MENU_BUTTON_TOOLTIP>Menu</VD_MENU_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar remove gadget button tooltip. -->
+<VD_CLOSE_BUTTON_TOOLTIP>Remove</VD_CLOSE_BUTTON_TOOLTIP>
+
+<!-- Tooltip text shown for the add gadgets button -->
+<SIDEBAR_ADD_GADGETS_TOOLTIP>Add gadgets</SIDEBAR_ADD_GADGETS_TOOLTIP>
+<SIDEBAR_MENU_BUTTON_TOOLTIP>Menu</SIDEBAR_MENU_BUTTON_TOOLTIP>
+<SIDEBAR_MINIMIZE_BUTTON_TOOLTIP>Minimize</SIDEBAR_MINIMIZE_BUTTON_TOOLTIP>
+
+<LOAD_EXTENSIONS_FAIL>Program can't start because it failed to load the following module(s):</LOAD_EXTENSIONS_FAIL>
+
+<!-- Menu item text. The & character(&amp;) will not be visible. It is put in
+front of the character that should be used as a shortcut for this menu item,
+in this case C. You may move it so that it is in front of a different character,
+even in the middle of a word. -->
+<MENU_ITEM_ABOUT>&amp;About...</MENU_ITEM_ABOUT>
+<MENU_ITEM_ADD_GADGETS>Add &amp;Gadgets...</MENU_ITEM_ADD_GADGETS>
+<MENU_ITEM_ADD_IGOOGLE_GADGET>Add an &amp;iGoogle Gadget</MENU_ITEM_ADD_IGOOGLE_GADGET>
+<MENU_ITEM_ALWAYS_ON_TOP>Always on &amp;Top</MENU_ITEM_ALWAYS_ON_TOP>
+<MENU_ITEM_AUTO_FIT>Auto &amp;Fit</MENU_ITEM_AUTO_FIT>
+<MENU_ITEM_AUTO_HIDE>A&amp;uto Hide</MENU_ITEM_AUTO_HIDE>
+<MENU_ITEM_COLLAPSE>&amp;Collapse</MENU_ITEM_COLLAPSE>
+<MENU_ITEM_DOCK_TO_SIDEBAR>&amp;Dock to Sidebar</MENU_ITEM_DOCK_TO_SIDEBAR>
+<MENU_ITEM_DOCK_SIDEBAR>Doc&amp;k Sidebar</MENU_ITEM_DOCK_SIDEBAR>
+<MENU_ITEM_EXIT>E&amp;xit</MENU_ITEM_EXIT>
+<MENU_ITEM_EXPAND>Ex&amp;pand</MENU_ITEM_EXPAND>
+<MENU_ITEM_FONT_SIZE>&amp;Font Size</MENU_ITEM_FONT_SIZE>
+<MENU_ITEM_FONT_SIZE_DEFAULT>&amp;Default</MENU_ITEM_FONT_SIZE_DEFAULT>
+<MENU_ITEM_FONT_SIZE_LARGER>&amp;Larger</MENU_ITEM_FONT_SIZE_LARGER>
+<MENU_ITEM_FONT_SIZE_SMALLER>&amp;Smaller</MENU_ITEM_FONT_SIZE_SMALLER>
+<MENU_ITEM_HIDE_ALL>Hide A&amp;ll</MENU_ITEM_HIDE_ALL>
+<MENU_ITEM_LEFT>&amp;Left</MENU_ITEM_LEFT>
+<MENU_ITEM_OPTIONS>&amp;Options...</MENU_ITEM_OPTIONS>
+<MENU_ITEM_REMOVE>R&amp;emove</MENU_ITEM_REMOVE>
+<MENU_ITEM_RIGHT>&amp;Right</MENU_ITEM_RIGHT>
+<MENU_ITEM_SHOW_ALL>Show A&amp;ll</MENU_ITEM_SHOW_ALL>
+<MENU_ITEM_UNDOCK_FROM_SIDEBAR>&amp;Undock from Sidebar</MENU_ITEM_UNDOCK_FROM_SIDEBAR>
+<MENU_ITEM_ZOOM>&amp;Zoom</MENU_ITEM_ZOOM>
+<MENU_ITEM_100P>100%</MENU_ITEM_100P>
+<MENU_ITEM_125P>125%</MENU_ITEM_125P>
+<MENU_ITEM_150P>150%</MENU_ITEM_150P>
+<MENU_ITEM_175P>175%</MENU_ITEM_175P>
+<MENU_ITEM_200P>200%</MENU_ITEM_200P>
+<MENU_ITEM_50P>50%</MENU_ITEM_50P>
+<MENU_ITEM_75P>75%</MENU_ITEM_75P>
+<MENU_ITEM_CHANGE_HOTKEY>Change &amp;Hotkey...</MENU_ITEM_CHANGE_HOTKEY>
+<MENU_ITEM_DEBUG_CONSOLE>De&amp;bug Console</MENU_ITEM_DEBUG_CONSOLE>
+<MENU_ITEM_SIDEBAR>&amp;Sidebar</MENU_ITEM_SIDEBAR>
+<MENU_ITEM_FEEDBACK>Feedback...</MENU_ITEM_FEEDBACK>
+
+<!-- Title of the confirm dialog of third party gadget installation. -->
+<GADGET_CONFIRM_TITLE>Third Party Gadget Installation</GADGET_CONFIRM_TITLE>
+<!-- The first sentence in the confirm dialog of third party gadget installation. -->
+<GADGET_CONFIRM_MESSAGE>Google has not tested or verified the features or security of this third party Gadget. Please confirm that you want to install:</GADGET_CONFIRM_MESSAGE>
+<!-- The label displayed before the gadget description. -->
+<GADGET_DESCRIPTION>Description: </GADGET_DESCRIPTION>
+<!-- The label displayed before the gadget's required permissions. -->
+<GADGET_REQUIRED_PERMISSIONS>Required permissions: </GADGET_REQUIRED_PERMISSIONS>
+
+<!-- The message displayed in a confirm dialog to the user when some script
+  runs too long and may blocks UI. The first %s parameter is the filename,
+  the second %d parameteris the current line number. -->
+<SCRIPT_BLOCKED_MESSAGE>A script (%s:%d) on this gadget may be busy or have stopped responding. Do you want to stop it?</SCRIPT_BLOCKED_MESSAGE>
+
+<!-- The default title for change hotkey dialog. -->
+<DEFAULT_HOTKEY_DIALOG_TITLE>Change Hotkey</DEFAULT_HOTKEY_DIALOG_TITLE>
+
+<!-- The default prompt displayed in change hotkey dialog. -->
+<DEFAULT_HOTKEY_DIALOG_PROMPT>Click to input the new hotkey:</DEFAULT_HOTKEY_DIALOG_PROMPT>
+
+<!-- The message displayed inside the hotkey entry when capturing hotkey. -->
+<HOTKEY_ENTRY_PROMPT>Press new hotkey</HOTKEY_ENTRY_PROMPT>
+
+<!-- Text of the clear hotkey button in the change hotkey dialog. -->
+<CLEAR_HOTKEY>Clear</CLEAR_HOTKEY>
+
+<!-- The message displayed inside the hotkey entry when there is no hotkey. -->
+<HOTKEY_DISABLED>Disabled</HOTKEY_DISABLED>
+
+<!-- Tooltip text for the status icon. The %s parameter is the hotkey string. -->
+<STATUS_ICON_TOOLTIP>Google Gadgets</STATUS_ICON_TOOLTIP>
+<STATUS_ICON_TOOLTIP_WITH_HOTKEY>Google Gadgets, press %s to show or hide gadgets.</STATUS_ICON_TOOLTIP_WITH_HOTKEY>
+
+<!-- Messages for debug console. -->
+<DEBUG_CLEAR>Clear</DEBUG_CLEAR>
+<DEBUG_TRACE>Trace</DEBUG_TRACE>
+<DEBUG_INFO>Info</DEBUG_INFO>
+<DEBUG_WARNING>Warning</DEBUG_WARNING>
+<DEBUG_ERROR>Error</DEBUG_ERROR>
+<DEBUG_LOCK_SCROLL>Lock scroll</DEBUG_LOCK_SCROLL>
+
+<!-- Names used in *.desktop files. -->
+<HOST_GTK_DESKTOP_NAME>Google Gadgets (GTK)</HOST_GTK_DESKTOP_NAME>
+<HOST_QT_DESKTOP_NAME>Google Gadgets (Qt)</HOST_QT_DESKTOP_NAME>
+<GADGET_DESIGNER_NAME>Google Gadget Designer</GADGET_DESIGNER_NAME>
+
+<!-- Comments used in *.desktop files. -->
+<HOST_GTK_DESKTOP_COMMENT>Run Google Gadgets in GNOME/GTK environment</HOST_GTK_DESKTOP_COMMENT>
+<HOST_QT_DESKTOP_COMMENT>Run Google Gadgets in KDE/Qt environment</HOST_QT_DESKTOP_COMMENT>
+<GADGET_DESIGNER_COMMENT>Google Gadget Designer</GADGET_DESIGNER_COMMENT>
+
+<!-- Descriptions of Gadget API permissions. TODO: to be reviewed -->
+<PERMISSION_FILEREAD>Reads content of local files and directories</PERMISSION_FILEREAD>
+<PERMISSION_FILEWRITE>Creates or modifies local files and directories</PERMISSION_FILEWRITE>
+<PERMISSION_DEVICESTATUS>Queries or modifies the status of hardware devices</PERMISSION_DEVICESTATUS>
+<PERMISSION_NETWORK>Accesses network</PERMISSION_NETWORK>
+<PERMISSION_PERSONALDATA>Accesses personalization data</PERMISSION_PERSONALDATA>
+<PERMISSION_ALLACCESS>Executes native code and local applications</PERMISSION_ALLACCESS>
+
+<GADGET_LOAD_FAILURE>The gadget could not be loaded:&#10;&#10;%s</GADGET_LOAD_FAILURE>
+<!-- TODO: The following "Linux"s should be changed if we support platforms other than Linux. -->
+<GADGET_REQUIRE_API_VERSION>The gadget requires Google Gadgets supporting API at least version %s:&#10;&#10;%s</GADGET_REQUIRE_API_VERSION>
+<GADGET_REQUIRE_HOST_VERSION>The gadget requires Google Gadgets for Linux at least version %s:&#10;&#10;%s</GADGET_REQUIRE_HOST_VERSION>
+<GADGET_PLATFORM_NOT_SUPPORTED>The gadget doesn't work on Linux platform:%&#10;&#10;%s</GADGET_PLATFORM_NOT_SUPPORTED>
+
+<GOOGLE_HOMEPAGE_URL>http://www.google.com</GOOGLE_HOMEPAGE_URL>
+</strings>

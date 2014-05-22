@@ -1,0 +1,41 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_NAME>Photos</GADGET_NAME>
+  <GADGET_DESCRIPTION>Voir des photos provenant de votre ordinateur et d'albums internet.</GADGET_DESCRIPTION>
+  <GADGET_ABOUT_TEXT>Photos
+Copyright 2008 Google Inc. Tout droits réservés.
+Affiche un diaporama de vos photos favorites sur votre bureau.</GADGET_ABOUT_TEXT>
+  <OPTIONS_INVALIDURL>L'emplacement "%s" n'est pas un emplacement valide. Veuillez entrer l'emplacement d'une page internet ou d'un flux RSS/Atom.</OPTIONS_INVALIDURL>
+
+  <MENU_LANDSCAPE>Paysage</MENU_LANDSCAPE>
+  <MENU_PORTRAIT>Portrait</MENU_PORTRAIT>
+  <MENU_NO_CROP>Pas de recadrage</MENU_NO_CROP>
+  <OPTIONS_ADD_FOLDER>Ajouter un Dossier...</OPTIONS_ADD_FOLDER>
+  <OPTIONS_REMOVE>Enlever</OPTIONS_REMOVE>
+  <OPTIONS_ADD_URL>Ajouter une URL</OPTIONS_ADD_URL>
+
+  <OPTIONS_MESSAGE_ADD>Google Desktop peut afficher en diaporama des photos situées sur votre disque ou sur des ressources en ligne (soit des flux RSS ou Atom ou des URLs normales). Veuillez sélectionner les dossiers ou ajouter les URLs dont vous voulez voir les photos.</OPTIONS_MESSAGE_ADD>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>Afficher chaque photo pendant</OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>secondes</OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>
+  <OPTIONS_BROWSE_IMAGE_FILES>Fichiers Image</OPTIONS_BROWSE_IMAGE_FILES>
+  <OPTIONS_BROWSE_ALL_FILES>Tous les Fichiers</OPTIONS_BROWSE_ALL_FILES>
+
+  <MSG_DRAG_FEED_ACCEPTS>%d flux ajouté(s)</MSG_DRAG_FEED_ACCEPTS>
+  <MSG_DRAG_FEED_INVALID>flux invalide(s)</MSG_DRAG_FEED_INVALID>
+</strings>

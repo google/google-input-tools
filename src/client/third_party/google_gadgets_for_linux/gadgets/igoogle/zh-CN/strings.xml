@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GADGET_NAME>iGoogle Gadget</GADGET_NAME>
+<GADGET_DESC>在您的桌面上运行 iGoogle 小工具。</GADGET_DESC>
+<GADGET_REQUIRED>很抱歉！在您提供所有需要的设置之前无法显示小工具。</GADGET_REQUIRED>
+<GADGET_SHOWOPTIONS>选项...</GADGET_SHOWOPTIONS>
+<GADGET_REFRESH>刷新</GADGET_REFRESH>
+<GADGET_LOADING>正在加载...</GADGET_LOADING>
+<GADGET_ERROR>加载小工具时出错。</GADGET_ERROR>
+<GADGET_NOTLOADED>正在加载选项...</GADGET_NOTLOADED>
+<NO_OPTIONS>该小工具没有可配置的选项。</NO_OPTIONS>
+<GADGET_DIRECTORY_URL>http://www.google.com/ig/directory</GADGET_DIRECTORY_URL>
+<GADGET_URL_HINT>在 iGoogle 小工具目录中选一个你喜爱的小工具，将小工具的链接拖拽到下面的输入框中，或输入小工具的URL。然后点击“加载小工具”按钮。</GADGET_URL_HINT>
+<LOAD_GADGET>加载小工具</LOAD_GADGET>
+<INVALID_URL>无效的小工具URL.</INVALID_URL>
+<GADGET_UNLOAD>卸载</GADGET_UNLOAD>
+</strings>

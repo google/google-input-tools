@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="330" height="370" caption="&CAPTION_COLOR_IMAGE;"
+  onopen="view_onopen()" onok="view_onok()">
+  <img src="images/tab_background.png" stretchMiddle="true" x="5" y="29"
+    width="320" height="332"/>
+  <div name="e_color_tab" x="5" y="7" width="80" height="23" enabled="true"
+    onclick="color_tab_onclick()">
+    <img src="images/tab_active.png" stretchMiddle="true" width="100%"
+      height="100%"/>
+    <label width="100%" height="100%" align="center" vAlign="middle" size="9">
+      &TAB_TITLE_COLOR;
+    </label>
+  </div>
+  <div name="e_image_tab" x="85" y="9" width="80" height="20" enabled="true"
+    onclick="image_tab_onclick()">
+    <img src="images/tab_inactive.png" stretchMiddle="true" width="100%"
+      height="100%"/>
+    <label width="100%" height="100%" align="center" vAlign="middle" size="9">
+      &TAB_TITLE_IMAGE;
+    </label>
+  </div>
+  <div name="e_color_div" x="10" y="40" height="310" width="325"
+    visible="false">
+    <label x="65" pinX="100%" y="4">&LABEL_COLOR;</label>
+    <div x="69" y="2" width="92" height="21" background="#808080"/>
+    <edit name="e_color_edit" x="70" y="3" width="90" height="19" size="9"
+      onchange="color_edit_onchange()"/>
+    <label name="e_invalid_color" visible="false" x="165" y="2" color="red"
+      size="9">
+      &INVALID_COLOR_STRING;
+    </label>
+    <div x="180" y="20" width="104" height="104"
+      background="images/view_background.png">
+      <div name="e_color_display" x="1" y="1" width="102" height="102"/>
+    </div>
+
+    <label x="65" pinX="100%" y="35" size="9">&LABEL_OPACITY;</label>
+    <div x="69" y="33" width="32" height="21" background="#808080"/>
+    <edit name="e_opacity_edit" x="70" y="34" width="30" height="19" size="9"
+      onchange="rgba_edit_onchange()"/>
+    <label x="65" pinX="100%" y="61" size="9">&LABEL_RED;</label>
+    <div x="69" y="59" width="32" height="21" background="#808080"/>
+    <edit name="e_red_edit" x="70" y="60" width="30" height="19" size="9"
+      onchange="rgba_edit_onchange()"/>
+    <label x="65" pinX="100%" y="87" size="9">&LABEL_GREEN;</label>
+    <div x="69" y="85" width="32" height="21" background="#808080"/>
+    <edit name="e_green_edit" x="70" y="86" width="30" height="19" size="9"
+      onchange="rgba_edit_onchange()"/>
+    <label x="65" pinX="100%" y="113" size="9">&LABEL_BLUE;</label>
+    <div x="69" y="111" width="32" height="21" background="#999999"/>
+    <edit name="e_blue_edit" x="70" y="112" width="30" height="19" size="9"
+      onchange="rgba_edit_onchange()"/>
+
+    <div name="e_colors" x="35" y="147" width="241" height="161"
+      background="#707070"/>
+  </div>
+  <div name="e_image_div" x="10" y="40" height="310" width="325"
+    visible="false">
+    <label x="65" pinX="100%" y="15" size="9">&LABEL_IMAGES;</label>
+    <div x="69" y="2" width="238" height="142" background="#808080">
+      <listbox name="e_image_list" x="1" y="1" width="236" height="140"
+        autoscroll="true" background="#FFFFFF" itemHeight="20"
+        onchange="image_list_onchange()"/>
+      <label name="e_no_image" visible="false" color="red" align="center"
+        vAlign="middle" width="90%" height="100%" wordWrap="true" size="9">
+        &NO_IMAGE;
+      </label>
+    </div>
+    <div x="5" y="150" width="150" height="160" autoscroll="true">
+      <img name="e_image_display"/>
+    </div>
+    <div x="155" y="150" width="150" height="160" autoscroll="true"
+      background="images/view_background.png">
+      <img name="e_image_display1"/>
+    </div>
+  </div>
+  <script src="choose_color_image.js"/>
+</view>

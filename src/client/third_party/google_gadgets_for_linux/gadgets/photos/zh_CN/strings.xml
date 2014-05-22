@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"  encoding="UTF-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+  <GADGET_NAME>照片</GADGET_NAME>
+  <GADGET_DESCRIPTION>查看来自您的桌面和网络相册的图片。</GADGET_DESCRIPTION>
+  <GADGET_ABOUT_TEXT>照片
+版权所有 2008 Google Inc. 保留所有权利。
+在桌面上以幻灯片效果播放您喜爱的照片。</GADGET_ABOUT_TEXT>
+  <OPTIONS_INVALIDURL>“%s” 无效。请输入网页地址或 RSS/Atom 供稿源。</OPTIONS_INVALIDURL>
+
+  <MENU_LANDSCAPE>风景</MENU_LANDSCAPE>
+  <MENU_PORTRAIT>人像</MENU_PORTRAIT>
+  <MENU_NO_CROP>不裁剪</MENU_NO_CROP>
+  <OPTIONS_ADD_FOLDER>添加文件夹...</OPTIONS_ADD_FOLDER>
+  <OPTIONS_REMOVE>删除</OPTIONS_REMOVE>
+  <OPTIONS_ADD_URL>添加网址</OPTIONS_ADD_URL>
+
+  <OPTIONS_MESSAGE_ADD>Google 桌面以幻灯片形式显示磁盘上或来自在线资源（RSS 或 Atom 供稿源或者常用网址）的照片。请选择照片所在的文件夹或添加网址。
+    </OPTIONS_MESSAGE_ADD>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>每张照片显示</OPTIONS_MESSAGE_SLIDEINTERVAL_BEFORE>
+  <OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>秒</OPTIONS_MESSAGE_SLIDEINTERVAL_AFTER>
+  <OPTIONS_BROWSE_IMAGE_FILES>图像文件</OPTIONS_BROWSE_IMAGE_FILES>
+  <OPTIONS_BROWSE_ALL_FILES>所有文件</OPTIONS_BROWSE_ALL_FILES>
+
+  <MSG_DRAG_FEED_ACCEPTS>已经添加 %d 个供稿源</MSG_DRAG_FEED_ACCEPTS>
+  <MSG_DRAG_FEED_INVALID>无效供稿源</MSG_DRAG_FEED_INVALID>
+</strings>

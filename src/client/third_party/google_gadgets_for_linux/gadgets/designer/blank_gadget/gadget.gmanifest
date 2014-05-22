@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gadget minimumGoogleDesktopVersion="5.8.0.0">
+  <about>
+    <id>{{UUID}}</id>
+    <name>&GADGET_NAME;</name>
+    <description>&GADGET_DESCRIPTION;</description>
+    <aboutText>&GADGET_ABOUT_TEXT;</aboutText>
+    <version>1.0.0.0</version>
+    <smallIcon>icon_small.png</smallIcon>
+    <icon>icon_large.png</icon>
+    <author>{{AUTHOR}}</author>
+    <authorEmail></authorEmail>
+    <authorWebsite></authorWebsite>
+  </about>
+</gadget>

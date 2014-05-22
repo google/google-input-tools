@@ -1,0 +1,21 @@
+debian/google-gadgets/usr/share/google-gadgets/*.gg usr/share/google-gadgets
+debian/google-gadgets/usr/lib/google-gadgets/modules/analytics*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/default*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/linux*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/google-gadget-manager*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/libxml2*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/curl*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/lib/google-gadgets/modules/dbus*.so usr/lib/google-gadgets/modules
+debian/google-gadgets/usr/share/mime/packages/00-google-gadgets.xml usr/share/mime/packages
+debian/google-gadgets/usr/share/pixmaps/google-gadgets.png usr/share/pixmaps
+debian/google-gadgets/usr/share/icons/hicolor/32x32/apps/google-gadgets.png usr/share/icons/hicolor/32x32/apps
+debian/google-gadgets/usr/share/icons/hicolor/32x32/mimetypes/application-x-google-gadget.png usr/share/icons/hicolor/32x32/mimetypes
+debian/google-gadgets/usr/share/icons/hicolor/48x48/apps/google-gadgets.png usr/share/icons/hicolor/48x48/apps
+debian/google-gadgets/usr/share/icons/hicolor/48x48/mimetypes/application-x-google-gadget.png usr/share/icons/hicolor/48x48/mimetypes
+debian/google-gadgets/usr/share/icons/hicolor/64x64/apps/google-gadgets.png usr/share/icons/hicolor/64x64/apps
+debian/google-gadgets/usr/share/icons/hicolor/64x64/mimetypes/application-x-google-gadget.png usr/share/icons/hicolor/64x64/mimetypes
+debian/google-gadgets/usr/share/icons/hicolor/128x128/apps/google-gadgets.png usr/share/icons/hicolor/128x128/apps
+debian/google-gadgets/usr/share/icons/hicolor/128x128/mimetypes/application-x-google-gadget.png usr/share/icons/hicolor/128x128/mimetypes
+debian/google-gadgets/usr/share/icons/hicolor/192x192/apps/google-gadgets.png usr/share/icons/hicolor/192x192/apps
+debian/google-gadgets/usr/share/icons/hicolor/192x192/mimetypes/application-x-google-gadget.png usr/share/icons/hicolor/192x192/mimetypes
+

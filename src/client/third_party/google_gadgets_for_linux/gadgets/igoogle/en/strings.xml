@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GADGET_NAME>iGoogle Gadget</GADGET_NAME>
+<GADGET_DESC>Run iGoogle Gadgets on your desktop.</GADGET_DESC>
+<GADGET_REQUIRED>Sorry! Gadget cannot be displayed until all required settings are provided.</GADGET_REQUIRED>
+<GADGET_SHOWOPTIONS>Options...</GADGET_SHOWOPTIONS>
+<GADGET_REFRESH>Refresh</GADGET_REFRESH>
+<GADGET_LOADING>Loading...</GADGET_LOADING>
+<GADGET_ERROR>Error loading gadget.</GADGET_ERROR>
+<GADGET_NOTLOADED>Options loading...</GADGET_NOTLOADED>
+<NO_OPTIONS>This gadget has no configurable option.</NO_OPTIONS>
+<GADGET_DIRECTORY_URL>http://www.google.com/ig/directory</GADGET_DIRECTORY_URL>
+<GADGET_URL_HINT>Find a favorite iGoogle Gadget in Gadget directory and drag the link into the entry box below, or enter the gadget URL. Then click &quot;Load Gadget&quot; button.</GADGET_URL_HINT>
+<LOAD_GADGET>Load Gadget</LOAD_GADGET>
+<INVALID_URL>Invalid Gadget URL.</INVALID_URL>
+<GADGET_UNLOAD>Unload</GADGET_UNLOAD>
+</strings>

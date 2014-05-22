@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="300" height="225" resizable="true"
+      onmouseover="slide_ui.opacity=255;" onmouseout="slide_ui.opacity=0;"
+      onkeypress="if (event.keyCode == 125) kSlideShower.traceFeeds();"
+      >
+  <div name="popin_wrap" width="100%" height="100%" visible="true"
+      dropTarget="true" ondragover="onDragOver()" ondragdrop="onDragDrop()"
+       >
+    <div name="bkgnd" background="#000000" width="100%" height="100%" x="3" y="3"/>
+    <img name="bkgnd_l" x="0" y="2" height="100%" src="images/bkgnd-l.png" />
+    <img name="bkgnd_r" x="100%" pinX="5" y="2" height="100%" src="images/bkgnd-r.png" />
+    <img name="bkgnd_b" x="2" y="100%" pinY="5" width="100%"  src="images/bkgnd-b.png" />
+    <img name="bkgnd_t" x="2" y="0" width="100%" src="images/bkgnd-t.png" />
+    <div name="showers_wrap" width="100%" height="100%" x="4" y="4">
+      <img width="100%" height="100%" cropMaintainAspect="photo" name="shower0" />
+      <img width="100%" height="100%" cropMaintainAspect="photo" name="shower1" />
+    </div>
+    <div name="slide_ui" width="95" height="19" x="0" y="200">
+      <img src="images/toolbar_bkgnd.png" width="95" height="19" />
+      <img src="images/rect.png" width="15" height="15" x="2" y="2" />
+      <button width="15" height="15"
+              image="images/left_1.png" overImage="images/left_2.png" downImage="images/left_3.png"
+              enabled="true" x="21" y="2" onclick="kSlideShower.showNext(-1, 1)" />
+      <button width="15" height="15"  name="playpause"
+              image="images/pause_1.png" overImage="images/pause_2.png" downImage="images/pause_3.png"
+              enabled="true" x="40" y="2" onclick="kSlideShower.slideToggle()" />
+      <button width="15" height="15"
+              image="images/right_1.png" overImage="images/right_2.png" downImage="images/right_3.png"
+              enabled="true" x="59" y="2" onclick="kSlideShower.showNext(1,1)" />
+      <img src="images/rect.png" width="15" height="15" x="78" y="2" />
+    </div>
+  </div>
+
+  <div name="popout_wrap" width="100%" height="100%" visible="false">
+    <div width="32%" height="32%" x="0">
+      <img name="mwimg0" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="34%">
+      <img name="mwimg1"  width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="68%">
+      <img name="mwimg2" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="0"  y="34%">
+      <img name="mwimg3" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="34%" y="34%">
+      <img name="mwimg4"  width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="68%" y="34%">
+      <img name="mwimg5" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="0" y="68%">
+      <img name="mwimg6" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="34%" y="68%">
+      <img name="mwimg7"  width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+    <div width="32%" height="32%" x="68%" y="68%">
+      <img name="mwimg8" width="100%" height="100%" cropMaintainAspect="photo" />
+    </div>
+  </div>
+
+  <div name="messagerWrap"  height="30" width="289" x="4" y="4"
+    background="#afafaf">
+    <label size="9" name="messager" width="100%" height="100%"
+      align="center" vAlign="middle" color="#ffff00"></label>
+  </div>
+
+  <script src="shared.js" />
+  <script src="xml_selector.js" />
+  <script src="fetchs.js" />
+  <script src="feedalt.js" />
+  <script src="slide_shower.js" />
+  <script src="main.js" />
+</view>

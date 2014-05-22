@@ -1,0 +1,3 @@
+?package(google-gadgets-gtk):needs="X11" section="Games/Toys"\
+  icon="/usr/share/pixmaps/ggl-gtk.xpm" \
+  title="Google Gadgets (GTK+)" command="/usr/bin/ggl-gtk"

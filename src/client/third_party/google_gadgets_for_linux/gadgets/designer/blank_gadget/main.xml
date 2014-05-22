@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view height="150" width="250" onopen="view_onopen()">
+  <script src="main.js"/>
+</view>

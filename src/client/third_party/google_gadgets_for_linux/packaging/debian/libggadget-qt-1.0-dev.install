@@ -1,0 +1,3 @@
+debian/google-gadgets/usr/include/google-gadgets/ggadget/qt usr/include/google-gadgets/ggadget
+debian/google-gadgets/usr/lib/pkgconfig/libggadget-qt-1.0.pc usr/lib/pkgconfig
+debian/google-gadgets/usr/lib/libggadget-qt-1.0.{so,a,la} usr/lib

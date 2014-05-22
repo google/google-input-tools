@@ -1,0 +1,2 @@
+function view_onopen() {
+}

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<strings>
+<GOOGLE_GADGETS>Google Gadgets</GOOGLE_GADGETS>
+<API_VERSION>(Version de l'API: %s)</API_VERSION>
+<GGL_COPYRIGHT>Copyright &#169; 2009 Google Inc. Tous droits réservés.&#10;Distribué sous Licence Apache, Version 2.0:</GGL_COPYRIGHT>
+<GGL_DESCRIPTION>Pour plus d'informations, veuillez consulter le site internet du projet:</GGL_DESCRIPTION>
+
+<!-- Short absolute time format (strftime() format) like '10:24am'.
+  For some locales (such as zh-CN), 24-clock should be used, because times
+  like 12:30am are confusing in these locales. -->
+<TIME_FORMAT_SHORT>%I:%M%P</TIME_FORMAT_SHORT>
+<!-- Short absolute date format (strftime() format) like 'Mar 20'. -->
+<DATE_FORMAT_SHORT>%b %d</DATE_FORMAT_SHORT>
+<!-- 1 day ago, short format. -->
+<DAY_AGO_SHORT>il y a %dd</DAY_AGO_SHORT>
+<!-- More than 1 days ago, short format. -->
+<DAYS_AGO_SHORT>il y a %dd</DAYS_AGO_SHORT>
+<!-- 1 day ago, long format. -->
+<DAY_AGO_LONG>il y a %d jour</DAY_AGO_LONG>
+<!-- More than 1 days ago, long format. -->
+<DAYS_AGO_LONG>il y a %d jours</DAYS_AGO_LONG>
+<!-- 1 hour ago, short format. -->
+<HOUR_AGO_SHORT>il y a %dh</HOUR_AGO_SHORT>
+<!-- More than 1 hours ago, short format. -->
+<HOURS_AGO_SHORT>il y a %dh</HOURS_AGO_SHORT>
+<!-- 1 hour ago, long format. -->
+<HOUR_AGO_LONG>il y a %d hr</HOUR_AGO_LONG>
+<!-- More than 1 hours ago, long format. -->
+<HOURS_AGO_LONG>il y a %d hrs</HOURS_AGO_LONG>
+<!-- 1 minute ago, short format. -->
+<MINUTE_AGO_SHORT>il y a %dm</MINUTE_AGO_SHORT>
+<!-- More than 1 minutes ago, short format. -->
+<MINUTES_AGO_SHORT>il y a %dm</MINUTES_AGO_SHORT>
+<!-- 1 minute ago, long format. -->
+<MINUTE_AGO_LONG>il y a %d min</MINUTE_AGO_LONG>
+<!-- More than 1 minutes ago, long format. -->
+<MINUTES_AGO_LONG>il y a %d mins</MINUTES_AGO_LONG>
+<!-- Text for a button or a menu item for opening an item. -->
+<OPEN_CONTENT_ITEM>Ouvrir</OPEN_CONTENT_ITEM>
+<!-- Text for a button or a menu item for removing an item. -->
+<REMOVE_CONTENT_ITEM>Supprimer</REMOVE_CONTENT_ITEM>
+<!-- String for the negative feedback in details view. Needs to be quite short. -->
+<DONT_SHOW_CONTENT_ITEM>Ne pas me montrer d'éléments semblables</DONT_SHOW_CONTENT_ITEM>
+
+<!-- Decorated View toolbar back button tooltip. -->
+<VD_BACK_BUTTON_TOOLTIP>Précédent</VD_BACK_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar forward button tooltip. -->
+<VD_FORWARD_BUTTON_TOOLTIP>Suivant</VD_FORWARD_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar toggle expanded view button tooltip. -->
+<VD_POP_IN_OUT_BUTTON_TOOLTIP>Permuter la Visualisation Etendue</VD_POP_IN_OUT_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar menu button tooltip. -->
+<VD_MENU_BUTTON_TOOLTIP>Menu</VD_MENU_BUTTON_TOOLTIP>
+<!-- Decorated View toolbar remove gadget button tooltip. -->
+<VD_CLOSE_BUTTON_TOOLTIP>Enlever</VD_CLOSE_BUTTON_TOOLTIP>
+
+<!-- Tooltip text shown for the add gadgets button -->
+<SIDEBAR_ADD_GADGETS_TOOLTIP>Ajouter des gadgets</SIDEBAR_ADD_GADGETS_TOOLTIP>
+<SIDEBAR_MENU_BUTTON_TOOLTIP>Menu</SIDEBAR_MENU_BUTTON_TOOLTIP>
+<SIDEBAR_MINIMIZE_BUTTON_TOOLTIP>Minimiser</SIDEBAR_MINIMIZE_BUTTON_TOOLTIP>
+
+<LOAD_EXTENSIONS_FAIL>Le programme ne peut démarrer parce que le chargement de(s) module(s) suivant(s) n'a pas pu être effectué:</LOAD_EXTENSIONS_FAIL>
+
+<!-- Menu item text. The & character(&amp;) will not be visible. It is put in
+front of the character that should be used as a shortcut for this menu item,
+in this case C. You may move it so that it is in front of a different character,
+even in the middle of a word. -->
+<MENU_ITEM_ABOUT>A Propos...</MENU_ITEM_ABOUT>
+<MENU_ITEM_ADD_GADGETS>Ajouter des Gadgets...</MENU_ITEM_ADD_GADGETS>
+<MENU_ITEM_ADD_IGOOGLE_GADGET>Ajouter un Gadget iGoogle</MENU_ITEM_ADD_IGOOGLE_GADGET>
+<MENU_ITEM_ALWAYS_ON_TOP>Toujours au premier plan</MENU_ITEM_ALWAYS_ON_TOP>
+<MENU_ITEM_AUTO_FIT>Redimensionner automatiquement</MENU_ITEM_AUTO_FIT>
+<MENU_ITEM_AUTO_HIDE>Masquer automatiquement</MENU_ITEM_AUTO_HIDE>
+<MENU_ITEM_COLLAPSE>Réduire</MENU_ITEM_COLLAPSE>
+<MENU_ITEM_DOCK_TO_SIDEBAR>Docker dans la barre latérale</MENU_ITEM_DOCK_TO_SIDEBAR>
+<MENU_ITEM_DOCK_SIDEBAR>Docker la barre latérale</MENU_ITEM_DOCK_SIDEBAR>
+<MENU_ITEM_EXIT>Quitter</MENU_ITEM_EXIT>
+<MENU_ITEM_EXPAND>Etendre</MENU_ITEM_EXPAND>
+<MENU_ITEM_FONT_SIZE>Taille des caractères</MENU_ITEM_FONT_SIZE>
+<MENU_ITEM_FONT_SIZE_DEFAULT>Taille par défaut</MENU_ITEM_FONT_SIZE_DEFAULT>
+<MENU_ITEM_FONT_SIZE_LARGER>Plus grand</MENU_ITEM_FONT_SIZE_LARGER>
+<MENU_ITEM_FONT_SIZE_SMALLER>Plus petit</MENU_ITEM_FONT_SIZE_SMALLER>
+<MENU_ITEM_HIDE_ALL>Tout masquer</MENU_ITEM_HIDE_ALL>
+<MENU_ITEM_LEFT>A gauche</MENU_ITEM_LEFT>
+<MENU_ITEM_OPTIONS>Options...</MENU_ITEM_OPTIONS>
+<MENU_ITEM_REMOVE>Enlever</MENU_ITEM_REMOVE>
+<MENU_ITEM_RIGHT>A droite</MENU_ITEM_RIGHT>
+<MENU_ITEM_SHOW_ALL>Montrer tout</MENU_ITEM_SHOW_ALL>
+<MENU_ITEM_UNDOCK_FROM_SIDEBAR>Dédocker de la barre latérale</MENU_ITEM_UNDOCK_FROM_SIDEBAR>
+<MENU_ITEM_ZOOM>Zoom</MENU_ITEM_ZOOM>
+<MENU_ITEM_100P>100%</MENU_ITEM_100P>
+<MENU_ITEM_125P>125%</MENU_ITEM_125P>
+<MENU_ITEM_150P>150%</MENU_ITEM_150P>
+<MENU_ITEM_175P>175%</MENU_ITEM_175P>
+<MENU_ITEM_200P>200%</MENU_ITEM_200P>
+<MENU_ITEM_50P>50%</MENU_ITEM_50P>
+<MENU_ITEM_75P>75%</MENU_ITEM_75P>
+<MENU_ITEM_CHANGE_HOTKEY>Changer le Raccourci...</MENU_ITEM_CHANGE_HOTKEY>
+<MENU_ITEM_DEBUG_CONSOLE>Console de Débogage</MENU_ITEM_DEBUG_CONSOLE>
+<MENU_ITEM_SIDEBAR>Barre latérale</MENU_ITEM_SIDEBAR>
+<MENU_ITEM_FEEDBACK>Vos commentaires...</MENU_ITEM_FEEDBACK>
+
+<!-- Title of the confirm dialog of third party gadget installation. -->
+<GADGET_CONFIRM_TITLE>Installation d'un gadget crée par une tierce-partie</GADGET_CONFIRM_TITLE>
+<!-- The first sentence in the confirm dialog of third party gadget installation. -->
+<GADGET_CONFIRM_MESSAGE>Google n'a pas testé ou vérifié les fonctionnalités ou la sécurité de ce Gadget crée par un tiers. Veuillez confirmez que vous souhaitez installer:</GADGET_CONFIRM_MESSAGE>
+<!-- The label displayed before the gadget description. -->
+<GADGET_DESCRIPTION>Description: </GADGET_DESCRIPTION>
+<!-- The label displayed before the gadget's required permissions. -->
+<GADGET_REQUIRED_PERMISSIONS>Permissions requises: </GADGET_REQUIRED_PERMISSIONS>
+
+<!-- The message displayed in a confirm dialog to the user when some script
+  runs too long and may blocks UI. The first %s parameter is the filename,
+  the second %d parameteris the current line number. -->
+<SCRIPT_BLOCKED_MESSAGE>Un script (%s:%d) dans ce gadget est peut-être occupé ou a cessé de répondre. Souhaitez-vous l'interrompre?</SCRIPT_BLOCKED_MESSAGE>
+
+<!-- The default title for change hotkey dialog. -->
+<DEFAULT_HOTKEY_DIALOG_TITLE>Modifier le Raccourci</DEFAULT_HOTKEY_DIALOG_TITLE>
+
+<!-- The default prompt displayed in change hotkey dialog. -->
+<DEFAULT_HOTKEY_DIALOG_PROMPT>Cliquez pour choisir le nouveau raccourci:</DEFAULT_HOTKEY_DIALOG_PROMPT>
+
+<!-- The message displayed inside the hotkey entry when capturing hotkey. -->
+<HOTKEY_ENTRY_PROMPT>Pressez la nouvelle touche de raccourci</HOTKEY_ENTRY_PROMPT>
+
+<!-- Text of the clear hotkey button in the change hotkey dialog. -->
+<CLEAR_HOTKEY>Effacer</CLEAR_HOTKEY>
+
+<!-- The message displayed inside the hotkey entry when there is no hotkey. -->
+<HOTKEY_DISABLED>Désactivé</HOTKEY_DISABLED>
+
+<!-- Tooltip text for the status icon. The %s parameter is the hotkey string. -->
+<STATUS_ICON_TOOLTIP>Google Gadgets</STATUS_ICON_TOOLTIP>
+<STATUS_ICON_TOOLTIP_WITH_HOTKEY>Google Gadgets, tapez %s pour montrer ou masquer les gadgets.</STATUS_ICON_TOOLTIP_WITH_HOTKEY>
+
+<!-- Messages for debug console. -->
+<DEBUG_CLEAR>Effacer</DEBUG_CLEAR>
+<DEBUG_TRACE>Trace</DEBUG_TRACE>
+<DEBUG_INFO>Info</DEBUG_INFO>
+<DEBUG_WARNING>Avertissement</DEBUG_WARNING>
+<DEBUG_ERROR>Erreur</DEBUG_ERROR>
+<DEBUG_LOCK_SCROLL>Verrouiller le scroll</DEBUG_LOCK_SCROLL>
+
+<!-- Names used in *.desktop files. -->
+<HOST_GTK_DESKTOP_NAME>Google Gadgets (GTK)</HOST_GTK_DESKTOP_NAME>
+<HOST_QT_DESKTOP_NAME>Google Gadgets (Qt)</HOST_QT_DESKTOP_NAME>
+<GADGET_DESIGNER_NAME>Créateur de Google Gadget</GADGET_DESIGNER_NAME>
+
+<!-- Comments used in *.desktop files. -->
+<HOST_GTK_DESKTOP_COMMENT>Exécuter Google Gadgets dans un environnement GNOME/GTK</HOST_GTK_DESKTOP_COMMENT>
+<HOST_QT_DESKTOP_COMMENT>Exécuter Google Gadgets dans un environnement KDE/Qt</HOST_QT_DESKTOP_COMMENT>
+<GADGET_DESIGNER_COMMENT>Créateur de Google Gadget</GADGET_DESIGNER_COMMENT>
+
+<!-- Descriptions of Gadget API permissions. TODO: to be reviewed -->
+<PERMISSION_FILEREAD>Lit le contenu des fichiers et répertoires locaux</PERMISSION_FILEREAD>
+<PERMISSION_FILEWRITE>Crée ou modifie les fichiers et dossiers locaux</PERMISSION_FILEWRITE>
+<PERMISSION_DEVICESTATUS>Interroge ou modifie le statut de périphériques</PERMISSION_DEVICESTATUS>
+<PERMISSION_NETWORK>Accède au réseau</PERMISSION_NETWORK>
+<PERMISSION_PERSONALDATA>Accède aux données de personnalisation</PERMISSION_PERSONALDATA>
+<PERMISSION_ALLACCESS>Exécute du code natif et des applications locales</PERMISSION_ALLACCESS>
+
+<GADGET_LOAD_FAILURE>Ce gadget n'a pas pu être chargé:&#10;&#10;%s</GADGET_LOAD_FAILURE>
+<!-- TODO: The following "Linux"s should be changed if we support platforms other than Linux. -->
+<GADGET_REQUIRE_API_VERSION>Ce gadget requiert au minimum la version %s de l'API utilisée par Google Gadgets:&#10;&#10;%s</GADGET_REQUIRE_API_VERSION>
+<GADGET_REQUIRE_HOST_VERSION>Ce gadget requiert au minimum la version %s de Google Gadgets pour Linux:&#10;&#10;%s</GADGET_REQUIRE_HOST_VERSION>
+<GADGET_PLATFORM_NOT_SUPPORTED>Ce gadget n'est pas compatible avec Linux:%&#10;&#10;%s</GADGET_PLATFORM_NOT_SUPPORTED>
+
+<GOOGLE_HOMEPAGE_URL>http://www.google.fr</GOOGLE_HOMEPAGE_URL>
+</strings>

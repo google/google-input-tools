@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<view width="250" height="100" resizable="false" onopen="view_onopen()"
+  onsize="view_onsize()">
+  <script>
+<!--
+var g_resize_by_user = false;
+
+function view_onopen() {
+  e_title.innerText = view.caption = optionsViewData.title.replace("\n", " ");
+  e_copyright.innerText = optionsViewData.copyright.replace("\n", " ");
+  if (!e_copyright.innerText) {
+    e_title.y += 10;
+    e_about_div.y -= 20;
+  }
+  e_about.innerText = optionsViewData.about;
+  if (optionsViewData.icon) e_icon.src = optionsViewData.icon;
+  view.setTimeout(function() { g_resize_by_user = true; }, 500);
+}
+
+var kFullWidth = 400;
+var kMaxTitleWidth = kFullWidth - 90;
+var kMaxAboutWidth = kFullWidth - 20;
+var kMinFullWidth = 250;
+var kMinFullHeight = 100;
+var kMaxAboutHeight = 350;
+
+function label_onsize() {
+  if (g_resize_by_user)
+    return;
+
+  var width, height;
+  if (e_title.offsetWidth > kMaxTitleWidth) {
+    e_title.width = kMaxTitleWidth;
+    e_title.wordWrap = true;
+    e_title.height = 2 * e_title.offsetHeight;
+    e_title.y -= 10;
+    width = kFullWidth;
+  } else {
+    width = e_title.offsetWidth + 90;
+  }
+  if (e_copyright.offsetWidth > kMaxTitleWidth) {
+    e_copyright.width = kMaxTitleWidth;
+    e_copyright.wordWrap = true;
+    e_copyright.height = 2 * e_copyright.offsetHeight;
+    e_copyright.y -= 5;
+    width = kFullWidth;
+  } else {
+    width = Math.max(width, e_copyright.offsetWidth + 90);
+  }
+  if (e_about.offsetWidth > kMaxAboutWidth) {
+    e_about.width = "100%";
+    e_about.wordWrap = true;
+    width = kFullWidth;
+  } else {
+    width = Math.max(width, e_about.offsetWidth + 20);
+  }
+  width = Math.max(kMinFullWidth, width);
+  e_about_div.width = width - 20;
+  e_about_div.height = Math.min(kMaxAboutHeight, e_about.offsetHeight + 5);
+  height = Math.max(kMinFullHeight, e_about_div.height + e_about_div.y + 20);
+  view.resizeTo(width, height);
+}
+
+function view_onsize() {
+  if (!g_resize_by_user)
+    return;
+
+  e_title.width = e_copyright.width = view.width - 90;
+  e_about.width = "100%";
+  e_about_div.width = view.width - 20;
+  e_about_div.height = view.height - 20 - e_about_div.y;
+}
+
+-->
+  </script>
+  <img name="e_icon" x="20" y="20" width="32" height="32"
+    src="resource://google-gadgets.png"/>
+  <label name="e_title" size="12" x="80" y="16" vAlign="middle"
+    trimming="character-ellipsis" bold="true" onsize="label_onsize()"/>
+  <label name="e_copyright" size="9" x="80" y="55"
+    trimming="character-ellipsis" onsize="label_onsize()"/>
+  <div name="e_about_div" x="10" y="90" width="380" autoscroll="true">
+    <label name="e_about" size="9" onsize="label_onsize()"/>
+  </div>
+</view>

@@ -1,0 +1,70 @@
+/*
+  Copyright 2008 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+#ifndef GGADGET_FRAMED_VIEW_DECORATOR_BASE_H__
+#define GGADGET_FRAMED_VIEW_DECORATOR_BASE_H__
+
+#include <ggadget/view_decorator_base.h>
+
+namespace ggadget {
+
+/**
+ * @ingroup ViewDecorator
+ *
+ * Base class for all framed view decorator.
+ */
+class FramedViewDecoratorBase : public ViewDecoratorBase {
+ public:
+  FramedViewDecoratorBase(ViewHostInterface *host, const char *option_prefix);
+  virtual ~FramedViewDecoratorBase();
+
+  void SetCaptionClickable(bool clicked);
+  bool IsCaptionClickable() const;
+
+  void SetCaptionWordWrap(bool wrap);
+  bool IsCaptionWordWrap() const;
+
+  void AddActionElement(BasicElement *element);
+  void RemoveActionElements();
+
+  void SetFrameVisible(bool visible);
+  bool IsFrameVisible() const;
+
+ public:
+  virtual bool OnAddContextMenuItems(MenuInterface *menu);
+  virtual void SetResizable(ResizableMode resizable);
+  virtual void SetCaption(const std::string &caption);
+
+ protected:
+  virtual void OnChildViewChanged();
+  virtual void DoLayout();
+  virtual void GetMargins(double *left, double *top,
+                          double *right, double *bottom) const;
+  virtual void GetMinimumClientExtents(double *width, double *height) const;
+
+ protected:
+  virtual void OnCaptionClicked();
+  virtual void OnCloseButtonClicked();
+
+ private:
+  class Impl;
+  Impl *impl_;
+  DISALLOW_EVIL_CONSTRUCTORS(FramedViewDecoratorBase);
+};
+
+} // namespace ggadget
+
+#endif // GGADGET_FRAMED_VIEW_DECORATOR_BASE_H__

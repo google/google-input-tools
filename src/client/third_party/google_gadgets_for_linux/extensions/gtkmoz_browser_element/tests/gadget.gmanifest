@@ -1,0 +1,11 @@
+<gadget minimumGoogleDesktopVersion="5.0.0.0">
+  <about>
+    <id>845bf72c-6748-4f47-a89a-a3580fa8554e</id>
+    <version>1.0.0.0</version>
+    <author>Google</author>
+    <authorEmail></authorEmail>
+    <name>Test HtmlDetailsView</name>
+    <smallIcon>icon_small.png</smallIcon>
+    <icon>icon_small.png</icon>
+  </about>
+</gadget>
