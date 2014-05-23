@@ -1,0 +1,860 @@
+/*
+  Copyright 2014 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+syntax = "proto2";
+
+
+package ipc.proto;
+
+// Note about text encoding:
+// Because of restriction of protobuf, all string properties defined in this
+// protobuf use UTF-8 encoding.
+// But because both Windows and Mac use UTF-16 internally, in order to simplify
+// component development, we use UTf-16 code point as the unit of all character
+// index properties, including |start| and |end| in Attribute and Range.
+
+// Directions for text layout.
+enum TextLayoutDirection {
+  // Left to right.
+  LTR = 0;
+
+  // Right to left.
+  RTL = 1;
+
+  // Only for vertical layout. It's treated the same as RTL for normal layout.
+  TTB_LTR = 2;
+
+  // Only for vertical layout. It's treated the same as LTR for normal layout.
+  TTB_RTL = 3;
+}
+
+// A message to hold a non-premultiplied color value in device RGB color space.
+// The value range of each component is [0, 1.0].
+message Color {
+  required float red = 1;
+  required float green = 2;
+  required float blue = 3;
+  optional float alpha = 4 [default = 1.0];
+}
+
+// A message to represent a rectangle in 2D space.
+message Rect {
+  required float x = 1;
+  required float y = 2;
+  required float width = 3;
+  required float height = 4;
+}
+
+// A Range contains two integer values that represent a numeric range, like the
+// range of characters in a text selection. A range is made of a start and end
+// position; when they are the same, the Range is akin to a caret. Note that
+// |start| can be greater than |end| to respect the directionality of the range.
+message Range {
+  // The start index of the range.
+  required uint32 start = 1;
+
+  // The end index of the range.
+  required uint32 end = 2;
+}
+
+// A message to hold arbitrary binary data in a specific format.
+message Data {
+  required bytes data = 1;
+
+  // Format name of the data. It can be either a message type name or a mime
+  // type name. If it's a message type name, then the data must be encoded in
+  // protobuf's binary format. If the format is not specified, the data must be
+  // plain utf-8 encoded text.
+  optional string format = 2;
+}
+
+// A message to hold a variable with one of supported types.
+message Variable {
+  enum Type {
+    NONE = 0;
+    BOOLEAN = 1;
+    INTEGER = 2;
+    REAL = 3;
+    STRING = 4;
+    TEXT = 5;
+    COLOR = 6;
+    DATA = 7;
+  }
+
+  required Type type = 1;
+  optional bool boolean = 2;
+  optional sint64 integer = 3;
+  optional double real = 4;
+  optional string string = 5;
+  optional Text text = 6;
+  optional Color color = 7;
+  optional Data data = 8;
+}
+
+// A message to hold multiple variables.
+message VariableArray {
+  repeated Variable variable = 1;
+}
+
+// A message to represent an attribute of a piece of text.
+// An attribute usually applies to a range in the text, which is specified by
+// [start, end), not including the character at the end index.
+// Some attribute types, such as CLAUSE_SEGMENT, may only apply to a specific
+// character index, in this case only the |start| index will be used.
+// If the range is not specified, the attribute may be applied to the whole
+// text.
+message Attribute {
+  enum Type {
+    INVALID = 0;
+
+    // Foreground color of specified text range.
+    // Value field: color_value
+    FOREGROUND = 1;
+
+    // Background color of specified text range.
+    // Value field: color_value
+    BACKGROUND = 2;
+
+    // Underline style and/or color of specified text range.
+    // Value field: underline_style, color_value (optional, default is black)
+    UNDERLINE = 3;
+
+    // Strikethrough color of specified text range.
+    // Value field: color_value (optional, default is foreground color or black)
+    STRIKETHROUGH = 4;
+
+    // Font family of specified text range.
+    // Value field: string_value
+    FONT_FAMILY = 5;
+
+    // Font style of specified text range.
+    // Value field: font_style
+    FONT_STYLE = 6;
+
+    // Font weight of specified text range.
+    // Value field: font_weight
+    FONT_WEIGHT = 7;
+
+    // Font size of specified text range, in points.
+    // Value field: float_value
+    FONT_SIZE = 8;
+
+    // Font size scale factor of specified text range.
+    // Value field: float_value
+    FONT_SCALE = 9;
+
+    // Language hint of specified text range.
+    // Value field: string_value (BCP47 language id)
+    LANGUAGE = 10;
+
+    // This attribute only applies to a single index in the text, specified by
+    // |start| field, indicating a clause segment boundary.
+    // No value field
+    CLAUSE_SEGMENT = 11;
+
+    // Text direction hint of specified text range.
+    // Value field: text_direction
+    TEXT_DIRECTION = 12;
+
+    // Composition state hint of specified text range.
+    // Value field: composition_state
+    COMPOSITION_STATE = 13;
+
+    // A url attached to specified text range.
+    // Value field: string_value
+    LINK = 14;
+
+    // Ruby annotation of specified text range. It's most often used to provide
+    // a pronunciation guide to the base text.
+    // Value field: string_value
+    RUBY_TEXT = 15;
+
+    // An arbitrary data attached to specified text range.
+    // Value field: data_value
+    ATTACHMENT = 16;
+  }
+
+  enum FontStyle {
+    FS_NORMAL_STYLE = 0;
+    FS_OBLIQUE = 1;
+    FS_ITALIC = 2;
+  }
+
+  enum FontWeight {
+    FWT_NORMAL_WEIGHT = 0;
+    FWT_BOLD = 1;
+  }
+
+  enum UnderlineStyle {
+    // No underline
+    US_NONE = 0;
+    // A single underline
+    US_SINGLE = 1;
+    // A double or thick underline
+    US_DOUBLE = 2;
+    // An underline indicating an error, such as a possible mispelling
+    US_ERROR = 3;
+  }
+
+  enum CompositionState {
+    CS_UNKNOWN = 0;
+    // Text being entered by the user. The input method has yet to convert it.
+    CS_INPUT = 1;
+    // Text that the input method can not convert.
+    CS_INPUT_ERROR = 2;
+    // Text that has already been converted by the input method and selected by
+    // the user.
+    CS_TARGET_CONVERTED = 3;
+    // Text that has already been converted by the input method.
+    CS_CONVERTED = 4;
+    // Text that has been selected by the user but not converted yet.
+    CS_TARGET_NOT_CONVERTED = 5;
+    // Text that the input method will no longer convert.
+    CS_FIXED_CONVERTED = 6;
+  }
+
+  // Type of the attribute.
+  required Type type = 1;
+
+  // Start index of the text range, in number of UTF-16 code points.
+  optional uint32 start = 2;
+
+  // End index of the text range, in number of UTF-16 code points.
+  // The character at the end index is not included.
+  optional uint32 end = 3;
+
+  optional string string_value = 4;
+  optional float float_value = 5;
+  optional Color color_value = 6;
+  optional Data data_value = 7;
+
+  optional FontStyle font_style = 8;
+  optional FontWeight font_weight = 9;
+  optional UnderlineStyle underline_style = 10;
+  optional TextLayoutDirection text_direction = 11;
+  optional CompositionState composition_state = 12;
+}
+
+// A message to represent a piece of text with optional attributes.
+message Text {
+  // Text content in UTF-8 encoding.
+  required string text = 1;
+
+  // Attributes of the text.
+  repeated Attribute attribute = 2;
+}
+
+// A message to hold a group of icons for a Command.
+message IconGroup {
+  // Normal icon.
+  required Data normal = 1;
+
+  // Icon to be used when the Command is disabled.
+  optional Data disabled = 2;
+
+  // Icon to be used when the Command button is pressed down.
+  optional Data down = 3;
+
+  // Icon to be used when the mouse is over the Command button.
+  optional Data over = 4;
+}
+
+// A message to represent a UI command that can be registered into a UI
+// component, as either a button, a menu item or other reasonable widget style.
+// For example, on Windows, a command can be registered into the system language
+// bar as a button or a menu, if the command has sub commands. On Mac, a command
+// can be registered into the system language menu as a menu item.
+// The only action the user can do for a command is to trigger it, by either
+// mouse click or other means supported by the system. When a command is
+// triggered by the user, a notification will be sent to the corresponding
+// component.
+message Command {
+  // State of the command.
+  enum State {
+
+    // The UI element corresponding to the command should be drawn in a normal
+    // state. Such as a unchecked menu item, or a normal button.
+    NORMAL = 0;
+
+    // The UI element corresponding to the command should be drawn in a checked
+    // state. Such as a menu item with a check mark, or a button in pressed-in
+    // state.
+    CHECKED = 1;
+
+    // The UI element corresponding to the command should be drawn in a "in
+    // between" state. Such as a menu item with a short bar mark.
+    MIXED = 3;
+
+    // The command corresponds to a separator.
+    SEPARATOR = 4;
+  }
+
+  // a unique string id to identify the command in the owner component scope.
+  // We have a set of predefined command ids for well known operations, a
+  // component may consider to use them whenever possible.
+  required string id = 1;
+
+  optional State state = 2 [default = NORMAL];
+
+  optional bool enabled = 3 [default = true];
+
+  optional bool visible = 4 [default = true];
+
+  // A title describing the purpose of this command. It should be same for
+  // different states.
+  optional Text title = 5;
+
+  // A short text describing the current state of this command. It may be
+  // changed when changing the state. Its length should be very short,
+  // such as one or two characters.
+  optional Text state_text = 6;
+
+  // An icon describing the current state of this command. It may be changed
+  // when changing the state. |state_text| and |state_icon| may not be used
+  // together.
+  optional IconGroup state_icon = 7;
+
+  // A well known name describing the meaning or purpose of the current state of
+  // this command. If a predefined stock name is specified, the UI component may
+  // be able to replace the state_{icon|text} by an icon with the same stock
+  // name provided by a UI skin package, to make sure the UI has a unified
+  // visual experience. Typical stock names are: "full_width_punctuation",
+  // "half_width_punctuation", "normal_latin", "wide_latin", "chinese",
+  // "english", etc.
+  optional string state_name = 8;
+
+  // A tooltip of the command.
+  optional Text tooltip = 9;
+
+  // The hotkey for triggering the command. It's only for showing a hint. The
+  // hotkey shall be handled by the component itself.
+  optional KeyEvent hotkey_hint = 10;
+
+  // Sub commands which will be shown as a sub menu attached to the command.
+  // If a command has sub commands, the action of triggering the command will be
+  // popping up the sub menu rather than sending notification to the component.
+  optional CommandList sub_commands = 11;
+}
+
+// A message to represent a list of commands.
+message CommandList {
+  // The id of the component that owns the command list. It should be same as
+  // the one registering the command list.
+  optional uint32 owner = 1 [default = 0];
+  repeated Command command = 2;
+}
+
+// A message to represent a candidate in a candidate window.
+// Candidates are alternative characters for a given input sequence.
+// A candidate in a candidate window may be displayed as:
+// [icon][text][hint]
+//
+// In a horizontal candidate window, the [hint] part may be displayed with a
+// smaller font size.
+// In a vertical candidate window, the [hint] part may be right justified.
+message Candidate {
+  // An image of the candidiate.
+  // It can be a URL to the image file or include the image data directly.
+  optional Data image = 2;
+
+  // Text content of the candidate. Can be empty if there is an image.
+  optional Text text = 3;
+
+  // A short hint text of the candidate, such as a shortcut key, or a concised
+  // meaning of the candidate.
+  optional Text hint = 4;
+
+  // A sub candidate list associated to the candidate. It won't be shown
+  // automatically when the candidate is selected. The input method component is
+  // responsible for asking the UI component to show it.
+  optional CandidateList sub_candidates = 5;
+
+  // An arbitrary annotation of the candidate. It can be anything that supported
+  // by the UI component, such as a piece of text, an image, a URL, etc.
+  // It may not be used together with sub_lookup_table.
+  optional Data annotation = 6;
+
+  // A list of command attached to this candidate. It may be shown in the right
+  // click context menu or by other means supported by the UI component.
+  optional CommandList commands = 7;
+
+  // The actual text content of the candidate that should be committed to the
+  // application. It's only useful if it's different than the content of |text|
+  // property. An empty |actual_content| means this candidate is not commitable.
+  optional Text actual_text = 8;
+
+  // Indicates if this is an insensitive candidate, which cannot be selected by
+  // the user and thus won't be associated to a selection key.
+  optional bool insensitive = 9;
+}
+
+// A message to hold a list of candidates which will be displayed in a candidate
+// window. A CandidateList object can only contain candidiates of the current
+// page. Page flipping actions shall be handled by the input method itself.
+message CandidateList {
+  // Hints that suggest the UI component where to place the candidates table.
+  enum LocationHint {
+    // Place the candidates table above the start of the current text selection.
+    ABOVE = 0;
+    // Place the candidates table below the start of the current text selection.
+    BELOW = 1;
+    // Place the candidates table to the left of the current text selection.
+    LEFT = 2;
+    // Place the candidates table to the right of the current text selection.
+    RIGHT = 3;
+  }
+
+  // A unique integer id to identify the candidate list in the owner component
+  // scope.
+  required uint32 id = 1;
+
+  // Id of the component who owns this candidate list.
+  optional uint32 owner = 2;
+
+  // A list of unicode characters to be displayed as selection keys of each
+  // sensitive candidate in the current page.
+  repeated uint32 selection_key = 3;
+
+  // Candidates of current page.
+  repeated Candidate candidate = 4;
+
+  // An optional title of the candidiate window.
+  optional Text title = 5;
+
+  // An optional footnote of the candidiate window.
+  optional Text footnote = 6;
+
+  // Layout direction when displaying candidates.
+  // - LTR
+  // Candidates will be listed from left to right if page width is larger than
+  // 1, then from top to bottom if page height is larger than 1.
+  //
+  // - RTL
+  // Candidates will be listed from right to left if page width is larger than
+  // 1, then from top to bottom if page height is larger than 1.
+  //
+  // - TTB_LTR
+  // Candidates will be listed from top to bottom if page height is larger
+  // than 1, then from left to right if page width is larger than 1.
+  // Each candidate will be drawn vertically.
+  //
+  // - TTB_RTL
+  // Candidates will be listed from top to bottom if page height is larger
+  // than 1, then from right to left if page width is larger than 1.
+  // Each candidate will be drawn vertically.
+  optional TextLayoutDirection layout_direction = 7 [default = LTR];
+
+  // Hint of the location where the candidates table should be placed.
+  optional LocationHint location_hint = 8 [default = BELOW];
+
+  // The page width of the candidiate window, in number of candidates.
+  optional uint32 page_width = 9 [default = 10];
+
+  // The page height of the candidiate window, in number of candidates.
+  optional uint32 page_height = 10 [default = 1];
+
+  // Index of the candidate inside the current page, which is selected by the
+  // user.
+  optional uint32 selected_candidate = 11;
+
+  // Total number of candidates. It's for drawing scroll bar.
+  optional uint32 total_candidates = 12;
+
+  // Index of the first candidate of current page in the total number
+  // of candidates. It's for drawing scroll bar.
+  optional uint32 page_start = 13;
+
+  // Indicates if a scroll bar should be shown. Only one scroll bar is
+  // supported. Whether it'll be shown vertically or horizontally will be
+  // decided by the UI component.
+  optional bool show_scroll_bar = 14 [default = false];
+
+  // Indicates if buttons for flipping page should be shown.
+  optional bool show_page_flip_buttons = 15 [default = false];
+
+  // Indicates if the page size can be changed, usually shrunk,  when there
+  // is no enough space on the screen to display all candidates.
+  optional bool page_resizable = 16 [default = false];
+
+  // Indicates if the candidate list should be shown by either the application
+  // or a UI component. If this value is false, then the candidate list will not
+  // be shown until it's explicitly requested by its owner input method.
+  optional bool visible = 17 [default = false];
+}
+
+// A message to hold necessary information of a text being composed by the user.
+message Composition {
+  // The text being composed by the user.
+  required Text text = 1;
+
+  // The selection range, which is relative to the text parameter. The end index
+  // is the caret position. Even though content stored in |text| s in UTF-8
+  // encoding, in order to simplify code for Windows and Mac, indexes stored in
+  // |selection| are number of UTF-16 code points
+  optional Range selection = 2;
+}
+
+// A message to represent a keyboard event.
+message KeyEvent {
+  enum Type {
+    DOWN = 0;
+    UP = 1;
+  }
+
+  // System independent virtual keycode.
+  required uint32 keycode = 1;
+
+  optional Type type = 2 [default = DOWN];
+
+  // System keycode. On Linux it's key symbol.
+  optional uint32 system_keycode = 3;
+
+  // Hardware keycode. On Linux it's scancode.
+  optional uint32 hardware_keycode = 4;
+
+  // Bitmasks of modifiers. If the key itself is a modifier key, then the
+  // corresponding modifier bit should be set for both DOWN and UP events.
+  optional uint32 modifiers = 5;
+
+  // Text associated to this key event.
+  optional string text = 6;
+
+  // Text associated to this key event ignoring modifiers, except shift.
+  optional string unmodified_text = 7;
+
+  // Indicates if the key itself is a modifier key.
+  optional bool is_modifier = 8;
+
+  // A buffer to store system's native key event data.
+  optional bytes native_key_event = 9;
+}
+
+// A message to represent a hotkey which corresponds to one or more IPC message.
+message Hotkey {
+  // One or more key events corresponding to this Hotkey. The Hotkey will be
+  // triggered if the incoming key event matches anyone of them.
+  repeated KeyEvent key_event = 1;
+
+  // Messages to be sent when this Hotkey is triggered.
+  repeated Message message = 2;
+}
+
+// A message to hold a list of hotkeys.
+message HotkeyList {
+  // An id to identify the hotkey list. It should be unique in the component
+  // scope.
+  required uint32 id = 1;
+
+  // The id of the component that owns the hotkey list. It should be same as
+  // the one registering the hotkey list.
+  optional uint32 owner = 2;
+
+  // One or more hotkeys.
+  repeated Hotkey hotkey = 3;
+}
+
+// A message to represent a complete data block sending from one component to
+// another.
+message Message {
+  enum ReplyMode {
+    NO_REPLY = 0;
+    NEED_REPLY = 1;
+    IS_REPLY = 2;
+  }
+
+  // Type of the message, defined in src/message_types.h
+  required uint32 type = 1;
+
+  // Indicates if this message needs a reply message or itself is a reply
+  // message.
+  optional ReplyMode reply_mode = 2 [default = NO_REPLY];
+
+  // The id of the component who sends the message. A special value may be used
+  // to indicate IMP hub itself.
+  optional uint32 source = 3 [default = 0];
+
+  // The id of the component who should receive the message. Special code may be
+  // used to indicate IMP hub itself or "broadcast".
+  optional uint32 target = 4 [default = 0];
+
+  // The id of the input context associated to this message. A special value may
+  // be used to indicate the focused input context.
+  optional uint32 icid = 5 [default = 0];
+
+  // A serial number set by the message producer to help match the message and
+  // corresponding reply message. The message consumer should retain it when
+  // replying the message.
+  optional uint32 serial = 6 [default = 0];
+
+  // Payload of the message.
+  optional MessagePayload payload = 7;
+}
+
+// A message to hold all information of a component.
+message ComponentInfo {
+  // A unique string id, such as com.google.mozc.ime
+  optional string string_id = 1;
+
+  // A unique integer id allocated by IMP hub.
+  optional uint32 id = 2 [default = 0];
+
+  // Localized name of the component.
+  optional string name = 3;
+
+  // Localized short description of the component.
+  optional string description = 4;
+
+  // An icon of the component.
+  optional IconGroup icon = 5;
+
+  // A title text for the icon. It may be displayed besides the icon.
+  optional string icon_title = 6;
+
+  // Language ids supported by the component, in BCP-47 format.
+  // For input method components, the first language is treated as the primary
+  // language supported by the component.
+  repeated string language = 7;
+
+  // Message types the component may produce.
+  repeated uint32 produce_message = 8;
+
+  // Message types the component can consume.
+  repeated uint32 consume_message = 9;
+}
+
+// A message to hold information of an input context.
+message InputContextInfo {
+  // A unique integer id allocated by IMP hub.
+  optional uint32 id = 1;
+
+  // Id of the owner component who created this input context.
+  optional uint32 owner = 2;
+
+  // TODO: Add information about input type, language, attached
+  // components, etc.
+}
+
+// A message to hold the information of an input caret.
+message InputCaret {
+  // The rectangle of the caret. The origin is the screen's top left corner.
+  optional Rect rect = 1;
+
+  // The current text input direction of the caret.
+  optional TextLayoutDirection direction = 2;
+
+  // The screen where the caret is currently in. Its format is platform
+  // dependent.
+  optional string screen = 3;
+}
+
+// A message to hold the information of a document.
+message DocumentInfo {
+  // Length of the document, in number of UTF-16 code points.
+  optional uint32 length = 1;
+
+  // Selection range in the document, in UTF-16 code point.
+  optional Range selection = 2;
+}
+
+// A message to hold a piece of content of a document.
+message DocumentContent {
+  // Content of the document piece, in UTF-8 encoding.
+  optional Text content = 1;
+
+  // Range of this document piece in the whole document, in UTF-16 code point.
+  optional Range range = 2;
+}
+
+// A message to hold an error code and corresponding error message.
+message Error {
+  // Standard error codes.
+  enum Code {
+    // Indicates there is no error.
+    NOT_ERROR = 0;
+
+    // The source component is invalid.
+    INVALID_SOURCE = 1;
+
+    // The target component is invalid.
+    INVALID_TARGET = 2;
+
+    // The reply mode is invalid.
+    INVALID_REPLY_MODE = 3;
+
+    // The input context is invalid.
+    INVALID_INPUT_CONTEXT = 4;
+
+    // The message payload is invalid.
+    INVALID_PAYLOAD = 5;
+
+    // The message is invalid.
+    INVALID_MESSAGE = 6;
+
+    // The source component cannot produce the specified message type.
+    SOURCE_CAN_NOT_PRODUCE = 7;
+
+    // The target component cannot consume the specified message type.
+    TARGET_CAN_NOT_CONSUME = 8;
+
+    // Error occurred when sending the message.
+    SEND_FAILURE = 9;
+
+    // There is no active consumer for the specified message type.
+    NO_ACTIVE_CONSUMER = 10;
+
+    // The source component is not attached to the specified input context yet.
+    COMPONENT_NOT_ATTACHED = 11;
+
+    // The specified component id cannot be found.
+    COMPONENT_NOT_FOUND = 12;
+
+    // The specified message type is not implemented yet.
+    NOT_IMPLEMENTED = 13;
+
+    // Any other error.
+    UNDEFINED_ERROR = 127;
+  }
+
+  required Code code = 1 [default = NOT_ERROR];
+  optional string message = 2;
+}
+
+// A message defines the display content on key button when certain modifier
+// key is pressed.
+message VirtualKeyDisplayScript {
+  required Type type = 1;
+  enum Type {
+    TEXT = 0;
+    IMAGE = 1;
+  }
+  repeated uint32 modifiers = 2;
+  optional string text = 3;
+}
+
+// A message defines the UI behavior of a key on a virtual keyboard.
+message VirtualKey {
+  // Id of the key.
+  required string id = 1;
+  optional uint32 virtual_key_code = 2;
+  // Describe the key.
+  optional string desc = 3;
+  // True if pressed.
+  optional bool pressed = 4;
+  // If set to true, then when user clicked the button, the button keeps
+  // pressed.
+  optional bool sticky = 5;
+  // If not zero, then the key is a modifier.
+  optional uint32 modifier_mask = 6;
+  // Display text/image if certain modifier key is pressed.
+  repeated VirtualKeyDisplayScript script_on_key = 7;
+}
+
+// A mesasge defines a virtual keyboard UI.
+message VirtualKeyboard {
+  required string name = 1;
+  required string title = 2;
+  optional string type = 3;
+  optional CommandList settings_button = 4;
+  repeated VirtualKey key = 5;
+  // Languages the virtual keyboard could input.
+  repeated string language = 6;
+}
+
+// A message to hold payload data of a Message object.
+message MessagePayload {
+  repeated bool boolean = 1;
+
+  repeated uint32 uint32 = 2;
+
+  repeated string string = 3;
+
+  repeated Variable variable = 4;
+
+  repeated ComponentInfo component_info = 5;
+
+  repeated CommandList command_list = 6;
+
+  repeated HotkeyList hotkey_list = 7;
+
+  optional KeyEvent key_event = 8;
+
+  optional InputContextInfo input_context_info = 9;
+
+  optional Composition composition = 10;
+
+  optional CandidateList candidate_list = 11;
+
+  optional InputCaret input_caret = 12;
+
+  optional DocumentInfo document_info = 13;
+
+  optional DocumentContent document_content = 14;
+
+  optional Error error = 15;
+
+  optional VirtualKeyboard virtual_keyboard = 16;
+
+  repeated VirtualKey virtual_key = 17;
+
+  extensions 100 to max;
+}
+
+enum MessageBoxButtonSet {
+  MB_BUTTON_SET_OK = 0;
+  MB_BUTTON_SET_OKCANCEL = 1;
+  MB_BUTTON_SET_ABORTRETRYIGNORE = 2;
+  MB_BUTTON_SET_YESNOCANCEL = 3;
+  MB_BUTTON_SET_YESNO = 4;
+  MB_BUTTON_SET_RETRYCANCEL = 5;
+  MB_BUTTON_SET_CANCELTRYCONTINUE = 6;
+}
+
+enum MessageBoxIcon {
+  MB_ICON_NONE = 0;
+  MB_ICON_ERROR = 1;
+  MB_ICON_QUESTION = 2;
+  MB_ICON_WARNING = 3;
+  MB_ICON_INFORMATION = 4;
+}
+
+enum MessageBoxButton {
+  MB_BUTTON_OK = 1;
+  MB_BUTTON_CANCEL = 2;
+  MB_BUTTON_ABORT = 3;
+  MB_BUTTON_RETRY = 4;
+  MB_BUTTON_IGNORE = 5;
+  MB_BUTTON_YES = 6;
+  MB_BUTTON_NO = 7;
+  MB_BUTTON_CLOSE = 8;
+  MB_BUTTON_HELP = 9;
+}
+
+// Infomation about a plugin.
+message PluginInfo {
+  // Path of the plugin file.
+  required string path = 1;
+  // Signature of the plugin file.
+  // It is used to identify whether the plugin file is changed.
+  // TODO: defines the algorithm of signatual.
+  required string signatual = 2;
+  // ComponentInfos of the components.
+  repeated ipc.proto.ComponentInfo component_infos = 3;
+}
+
+message PluginInfoList {
+  // Information of all plugins.
+  repeated PluginInfo plugin_infos = 1;
+}
