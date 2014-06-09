@@ -9,7 +9,7 @@
         '<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',
       ],
       'include_dirs': [
-        '<(GOOGLE3)/third_party/gtest/include',
+        '<(GTEST)/include',
       ],
       'sources': [
         'settings_store_base.cc',

@@ -6,7 +6,7 @@
     'include_dirs': [
       '.',
       '<(SHARED_INTERMEDIATE_DIR)/third_party/google_gadgets_for_linux',
-      '<(GOOGLE3)/third_party/zlib/v1_2_8/',
+      '<(ZLIB)',
     ],
     'conditions' : [
       ['OS=="win"', {

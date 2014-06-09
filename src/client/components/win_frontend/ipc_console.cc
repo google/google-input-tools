@@ -21,6 +21,7 @@
 #include "base/scoped_handle.h"
 #include "base/scoped_ptr.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "base/threading/platform_thread.h"
 #include "common/app_const.h"
 #include "common/app_utils.h"
@@ -141,7 +142,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance,
                      int nCmdShow) {
   DWORD session_id = 0;
   ::ProcessIdToSessionId(::GetCurrentProcessId(), &session_id);
-  std::wstring event_name = WideStringPrintf(
+  std::wstring event_name = ime_goopy::WideStringPrintf(
       L"%s%d", ime_goopy::kIPCConsoleEventNamePrefix, session_id);
 
   ProcessQuitController process_quit_controller(

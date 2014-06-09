@@ -1,9 +1,10 @@
 {
   'variables': {
     'library%': 'static_library',
-    'PROTOBUF' : '<!(echo %PROTOBUF%)',
-    'GTEST' : '<!(echo %GTEST%),
-    'ZLIB' : '<!(echo %ZLIB%),
+    'PROTOBUF' : '<!(echo %PROTOBUF%)/files/src',
+    'GTEST' : '<!(echo %GTEST%)',
+    'ZLIB' : '<!(echo %ZLIB%)',
+	'WTL80' : '<!(echo %WTL80%)',
   },
   'target_defaults': {
     'cflags': ['-fPIC', '-std=c++0x'],
@@ -120,8 +121,8 @@
           '_DEBUG',
         ],
         'include_dirs': [
-          '<(GOOGLECLIENT)/ime/goopy/base/posix/',
-          '<(GOOGLECLIENT)/third_party/wtl_80/files/include',
+          '<(DEPTH)/base/posix/',
+          '<(WTL80)/files/include',
         ],
         'msvs_disabled_warnings': [
           4018,
