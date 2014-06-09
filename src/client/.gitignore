@@ -1,0 +1,13 @@
+*.sln
+*.sdf
+*.suo
+*.opensdf
+*.user
+*.vcxproj
+*.vcxproj.filters
+ipc/protos/protos-cpp.props
+ipc/protos/protos-cpp.targets
+ipc/protos/protos-cpp.xml
+Debug/
+Release/
+ipch/
