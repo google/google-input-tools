@@ -1,0 +1,13 @@
+HKCR
+{
+  NoRemove CLSID
+  {
+    ForceRemove {B35B9698-3701-4C40-9444-4B2AE1B4E591} = s 'Google Input Tools'
+    {
+      InprocServer32 = s '%MODULE%'
+      {
+        val ThreadingModel = s 'Apartment'
+      }
+    }
+  }
+}

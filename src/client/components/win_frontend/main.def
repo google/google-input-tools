@@ -1,0 +1,22 @@
+EXPORTS
+
+ImeInquire
+ImeConfigure
+ImeConversionList
+ImeDestroy
+ImeEscape
+ImeProcessKey
+ImeSelect
+ImeSetActiveContext
+ImeToAsciiEx
+NotifyIME
+ImeRegisterWord
+ImeUnregisterWord
+ImeGetRegisterWordStyle
+ImeEnumRegisterWord
+ImeSetCompositionString
+
+DllRegisterServer PRIVATE
+DllUnregisterServer PRIVATE
+DllCanUnloadNow PRIVATE
+DllGetClassObject PRIVATE
