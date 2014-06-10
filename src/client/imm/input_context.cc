@@ -20,11 +20,10 @@
 #include <atlbase.h>
 #include <atlwin.h>
 
-#include "ime/shared/new/base/common_base.h"
 #include "imm/candidate_info.h"
 #include "imm/composition_string.h"
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 static const int kDefaultFontHeight = 16;
 
@@ -298,4 +297,4 @@ int InputContext::GetFontHeight() {
 }
 
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

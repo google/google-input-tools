@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "base/scoped_handle.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "common/security_util_win.h"
 
 static const DWORD kWaitingTime = 100;  // In milliseconds.

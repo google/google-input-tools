@@ -19,10 +19,8 @@
 #include <string>
 
 #include "base/logging.h"
-#include "base/resource_bundle.h"
 #include "base/scoped_ptr.h"
 #include "base/stl_util.h"
-#include "common/string_utils.h"
 #include "components/common/constants.h"
 #include "components/common/file_utils.h"
 #include "components/common/keystroke_util.h"
@@ -58,12 +56,6 @@ using ipc::proto::Message;
 
 
 KeyboardInputComponent::KeyboardInputComponent() {
-  std::string path_prefix =
-      FileUtils::GetDataPathForComponent(kKeyboardInputComponentStringId) +
-      kResourcePackPathPattern;
-  if (!ResourceBundle::HasSharedInstance())
-    ResourceBundle::InitSharedInstanceWithSystemLocale();
-  ResourceBundle::GetSharedInstance().AddDataPackToSharedInstance(path_prefix);
 }
 
 KeyboardInputComponent::~KeyboardInputComponent() {

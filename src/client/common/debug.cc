@@ -15,7 +15,6 @@
 */
 
 #include "common/debug.h"
-#include "common/framework_interface.h"
 
 #define APPEND_STRING_IF_BIT_SET(text, flag, test_bit) \
   if ((flag & test_bit) == test_bit) { \

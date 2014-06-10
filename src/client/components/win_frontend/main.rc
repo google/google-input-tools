@@ -54,7 +54,7 @@ END
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
-IDI_ICON ICON    "..\\..\\res\\google_input_tools.ico"
+IDI_ICON ICON    "..\\..\\resources\\google_input_tools.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -69,7 +69,7 @@ IDR_TSF                 REGISTRY                "text_service.rgs"
 // Generated from the TEXTINCLUDE 3 resource.
 //
 
-#include "ime/goopy/components/win_frontend/version.rc"
+#include "version.rc"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

@@ -33,10 +33,19 @@
         'ipc_ui_manager.h',
         'main.cc',
         'main.rc',
+		'main.def',
         'resource.h',
         'text_styles.cc',
         'text_styles.h',
       ],
+	  'msvs_settings=': {
+        'VCLinkerTool': {
+		  'ModuleDefinitionFile':'main.def',
+		},
+	  },
+	  'variables': {
+          'signing%': 'true',
+      },
     },
   ],
 }

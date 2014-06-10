@@ -20,7 +20,7 @@
 #include <windows.h>  // windows.h must be included before strsafe.h
 #include <strsafe.h>
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 
 void CompositionString::set_composition(const wstring& value) {
@@ -72,4 +72,4 @@ bool CompositionString::Initialize() {
 }
 
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

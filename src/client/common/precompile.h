@@ -56,12 +56,12 @@
 #include "base/scoped_handle.h"
 #include "base/scoped_handle_win.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "common/atl.h"
 #include "common/debug.h"
 #include "common/linked_ptr.h"
 #include "common/mutex.h"
 #include "common/scoped_lock.h"
-#include "common/string_utils.h"
 #include "common/smart_com_ptr.h"
 
 #endif  // GOOPY_COMMON_PRECOMPILE_WIN_H_

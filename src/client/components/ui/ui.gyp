@@ -35,8 +35,10 @@
         }],
 		['OS=="win"', {
 		  'sources': [
-		    'skin_ui_component_win.cc',
-			'skin_ui_component_utils_win.cc'
+            'about_dialog.h',
+            'about_dialog.cc',
+            'skin_ui_component_win.cc',
+            'skin_ui_component_utils_win.cc'
 		  ]
 		}],
       ],

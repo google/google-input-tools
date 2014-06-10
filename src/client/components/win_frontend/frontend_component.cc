@@ -21,6 +21,7 @@
 #include "appsensorapi/common.h"
 #include "base/logging.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/time.h"
 #include "common/app_const.h"
@@ -29,12 +30,9 @@
 #include "common/debug.h"
 #include "common/registry.h"
 #include "common/shellutils.h"
-#include "common/string_utils.h"
 #include "common/ui_utils.h"
-#include "components/logging/logging_client.h"
 #include "components/win_frontend/composition_window.h"
 #include "components/win_frontend/composition_window_layouter.h"
-#include "components/win_frontend/daily_pinger_component.h"
 #include "components/win_frontend/frontend_factory.h"
 #include "frontend/text_styles.h"
 #include "ipc/constants.h"
@@ -198,12 +196,7 @@ FrontendComponent::FrontendComponent(Delegate* delegate)
       delegate_(delegate),
       console_pid_(0),
       switching_input_method_by_toolbar_(false),
-      enable_fake_inline_composition_(false),
-      logging_(new LoggingClient(this)) {
-  // Sub component will be taken over by ComponentBase after created, so no need
-  // to delete it explicitly in deconstructor.
-  DailyPingerComponent* daily_pinger_component = new DailyPingerComponent(this);
-
+      enable_fake_inline_composition_(false) {
   composition_window_list_.reset(CompositionWindowList::CreateInstance());
   composition_window_list_->Initialize();
 }
@@ -450,7 +443,6 @@ void FrontendComponent::FocusInputContext() {
   ::PathStripPath(path);
   wchar_t wndcls[MAX_PATH] = { 0 };
   ::RealGetWindowClass(::GetForegroundWindow(), wndcls, MAX_PATH);
-  logging_->TrackFocusedInputContext(WideToUtf8(path), "", WideToUtf8(wndcls));
 }
 
 void FrontendComponent::BlurInputContext() {
@@ -464,7 +456,6 @@ void FrontendComponent::BlurInputContext() {
     DLOG(ERROR) << "Send error type = MSG_BLUR_INPUT_CONTEXT";
     OnIPCDisconnected();
   }
-  logging_->TrackFocusedInputContext("", "", "");
   EnableCandidateWindow(false);
   EnableCompositionWindow(false);
 }

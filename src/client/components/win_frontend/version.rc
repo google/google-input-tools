@@ -1,10 +1,8 @@
-//#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#endif //_WIN32
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION RC_VERSION
- PRODUCTVERSION RC_VERSION
+ FILEVERSION 1.0.0.0
+ PRODUCTVERSION 1.0.0.0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -21,10 +19,10 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Google Inc."
             VALUE "FileDescription", "Google Input Tools"
-            VALUE "FileVersion", RC_VERSION_STRING
+            VALUE "FileVersion", "1.0.0.0"
             VALUE "LegalCopyright", "Copyright (C) 2012"
             VALUE "ProductName", "Google Input Tools"
-            VALUE "ProductVersion", RC_VERSION_STRING
+            VALUE "ProductVersion", "1.0.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -32,4 +30,4 @@ BEGIN
         VALUE "Translation", 0x9, 1200
     END
 END
-// #endif
+#endif

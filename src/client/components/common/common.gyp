@@ -1,7 +1,7 @@
 {
   'targets': [
     {
-      'target_name': 'common',
+      'target_name': 'component_common',
       'type': '<(library)',
       'dependencies': [
         '<(DEPTH)/base/base.gyp:base',
@@ -32,7 +32,7 @@
       'target_name': 'common_unittests',
       'type': 'executable',
       'dependencies': [
-        'common',
+        'component_common',
         '<(DEPTH)/third_party/gtest/gtest.gyp:gtest',
         '<(DEPTH)/third_party/protobuf/protobuf.gyp:protobuf',
 		'<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',

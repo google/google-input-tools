@@ -20,7 +20,7 @@
 
 #include "imm/candidate_info.h"
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 void CandidateInfo::set_count(int count) {
   list.info.dwCount = count;
@@ -62,4 +62,4 @@ bool CandidateInfo::Initialize() {
 }
 
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

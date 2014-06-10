@@ -88,7 +88,7 @@ class UIWindowT {
       UINT message, WPARAM wparam, LPARAM lparam, BOOL& handled) {
     DVLOG(3) << __SHORT_FUNCTION__
              << L" hwnd: " << hex << hwnd_
-             << L" flag: " << ime_shared::imm::Debug::GCS_String(lparam);
+             << L" flag: " << ime_goopy::imm::Debug::GCS_String(lparam);
     if (context_ && context_->ShouldShow(
         ContextInterface::UI_COMPONENT_COMPOSITION)) {
       ui_manager_->Update(ContextInterface::UI_COMPONENT_COMPOSITION);
@@ -124,7 +124,7 @@ class UIWindowT {
     DVLOG(1) << __SHORT_FUNCTION__
              << L" hwnd: " << hwnd_
              << L" context: " << context
-             << L" flag: " << ime_shared::imm::Debug::IMN_String(wparam)
+             << L" flag: " << ime_goopy::imm::Debug::IMN_String(wparam)
              << L" lparam: " << lparam;
     if (!context) return 0;
 
@@ -239,7 +239,7 @@ class UIWindowT {
     DVLOG(1) << __SHORT_FUNCTION__
              << L" hwnd: " << hwnd_
              << L" context: " << context
-             << L" flag: " << ime_shared::imm::Debug::ISC_String(lparam)
+             << L" flag: " << ime_goopy::imm::Debug::ISC_String(lparam)
              << L" wparam: " << wparam;
 
     context_ = (wparam && context) ? context : NULL;
@@ -265,7 +265,7 @@ class UIWindowT {
       UINT message, WPARAM wparam, LPARAM lparam, BOOL& handled) {
     DVLOG(1) << __SHORT_FUNCTION__
              << L" hwnd: " << hex << hwnd_
-             << L" flag: " << ime_shared::imm::Debug::ISC_String(wparam);
+             << L" flag: " << ime_goopy::imm::Debug::ISC_String(wparam);
     return 0;
   }
 

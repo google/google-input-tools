@@ -20,7 +20,6 @@
 #include <windows.h>
 
 #include "base/logging.h"
-#include "base/resource_bundle.h"
 #include "base/stringprintf.h"
 #pragma push_macro("LOG")
 #pragma push_macro("DLOG")
@@ -133,15 +132,6 @@ Rect<int> SkinUIComponentUtils::GetScreenRectAtPoint(Point<int> pt) {
   } else {
     return Rect<int>(-1, -1, -1, -1);
   }
-}
-
-// Sets the text for the item defined by |dlg_item_id| in dialog |dlg| to
-// the text defined by |text_id|.
-void SkinUIComponentUtils::SetDlgItemText(HWND dlg, int dlg_item_id,
-                                          int text_id) {
-  std::wstring text = ResourceBundle::GetSharedInstance().GetLocalizedString(
-      text_id);
-  ::SetDlgItemText(dlg, dlg_item_id, text.c_str());
 }
 
 }  // namespace components

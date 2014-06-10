@@ -26,7 +26,7 @@
 #define CASE_RETURN_STRING(test_value) \
   case test_value: return L#test_value;
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 static const wchar_t kUnknownFlag[] = L"UNKNOWN_FLAG: %x!";
 static const wchar_t kNullFlag[] = L"NULL";
@@ -196,4 +196,4 @@ wstring Debug::IME_ESC_String(DWORD value) {
 }
 
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

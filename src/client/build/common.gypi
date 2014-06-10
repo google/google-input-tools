@@ -5,6 +5,8 @@
     'GTEST' : '<!(echo %GTEST%)',
     'ZLIB' : '<!(echo %ZLIB%)',
 	'WTL80' : '<!(echo %WTL80%)',
+	'CERT' : '<(DEPTH)/resources/test.pfx',
+	'CERT_PSWD' : '111111',
   },
   'target_defaults': {
     'cflags': ['-fPIC', '-std=c++0x'],
@@ -90,6 +92,9 @@
     },],
     ['OS=="win"', {
       'target_defaults': {
+	    'variables': {
+          'signing%': 'false',
+        },
         'defines': [
           'COMPILER_MSVC',
           '_ATL_ALLOW_CHAR_UNSIGNED',
@@ -125,6 +130,7 @@
           '<(WTL80)/files/include',
         ],
         'msvs_disabled_warnings': [
+		  4005,
           4018,
           4100,
           4125,
@@ -157,11 +163,14 @@
               'dbghelp.lib',
               'kernel32.lib',
               'iphlpapi.lib',
+			  'imm32.lib',
               'psapi.lib',
               'shell32.lib',
               'shlwapi.lib',
               'urlmon.lib',
               'user32.lib',
+			  'usp10.lib',
+			  'version.lib',
               'wininet.lib',
               'msxml2.lib',    # needed by msxml parser
               'ole32.lib',     # needed by "CoInintialize" in msxml parser
@@ -171,8 +180,14 @@
             'LinkIncremental': '1',                # /INCREMENTAL:NO
             'RandomizedBaseAddress': '2',          # /DYNAMICBASE
             'GenerateDebugInformation': 'true',    # /DEBUG
+			'GenerateManifest': 'false',           # /MANIFEST:NO
           },
         },
+		'target_conditions': [
+          ['signing == "true"', {
+		    'msvs_postbuild': 'signtool.exe sign /f <(CERT) /p <(CERT_PSWD) $(TargetPath)'
+	      }],
+        ],
       },
     }],
   ],

@@ -6,6 +6,7 @@
       'dependencies': [
         '<(DEPTH)/base/base.gyp:base',
 		'<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',
+        '<(DEPTH)/text_range/text_range.gyp:text_range',
       ],
       'sources': [
         'candidates.cc',

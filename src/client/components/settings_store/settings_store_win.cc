@@ -20,7 +20,7 @@
 
 #include "base/logging.h"
 #include "base/scoped_ptr.h"
-#include "common/string_utils.h"
+#include "base/string_utils_win.h"
 
 namespace ime_goopy {
 namespace components {

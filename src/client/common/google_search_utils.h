@@ -24,10 +24,9 @@
 namespace ime_goopy {
 class GoogleSearchUtils {
  public:
-  static std::wstring GenerateSearchUrl(const std::wstring& query);
-  static std::wstring GoogleHomepageUrl();
+  static std::string GoogleHomepageUrl();
   // Generates search url for utf8 encoded string.
-  static std::wstring GenerateSearchUrl(const std::string& query);
+  static std::string GenerateSearchUrl(const std::string& query);
   // Opens google search for keyword |query|.
   static void Search(const std::string& query);
 

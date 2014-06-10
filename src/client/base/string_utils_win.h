@@ -51,5 +51,8 @@ extern const int kWideStringPrintfVectorMaxArgs;
 extern wstring WideStringPrintfVector(
     const wchar_t* format, const std::vector<wstring>& v);
 
+// Convert Unix linefeed to Window format.
+wstring ToWindowsCRLF(const wstring& input);
+
 }  // namespace ime_goopy
 #endif  // I18N_INPUT_ENGINE_LIB_PUBLIC_WIN_STRING_UTILS_H_

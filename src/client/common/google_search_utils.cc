@@ -16,42 +16,30 @@
 
 #include "common/google_search_utils.h"
 
-#include "common/search_setting/ie_reg_keys.h"
-#include "common/branding.h"
+#include "base/string_utils_win.h"
 #include "common/charsetutils.h"
 #include "common/shellutils.h"
 
 namespace ime_goopy {
-
-std::wstring GoogleSearchUtils::GenerateSearchUrl(const std::wstring& query) {
-  Branding branding;
-  return search_setting::kIE6SearchAssistantValueDataGoogleCN +
-      CharsetUtils::Unicode2UTF8Escaped(query) +
-      L"&sourceid=ime-win&ie=UTF-8&hl=zh-CN" +
-      L"&brand=" + std::wstring(branding.GetBrandCode()) +
-      L"&rlz=" + std::wstring(branding.GetRlzCode());
-}
+static const char kUrl[] = "http://www.google.com/search?q=";
 
 // |query|: UTF8 encoded string.
-std::wstring GoogleSearchUtils::GenerateSearchUrl(const std::string& query) {
-  Branding branding;
-  return search_setting::kIE6SearchAssistantValueDataGoogleCN +
-      CharsetUtils::UTF8ToWstringEscaped(query.c_str(), query.length()) +
-      L"&sourceid=ime-win&ie=UTF-8&hl=zh-CN" +
-      L"&brand=" + std::wstring(branding.GetBrandCode()) +
-      L"&rlz=" + std::wstring(branding.GetRlzCode());
+std::string GoogleSearchUtils::GenerateSearchUrl(const std::string& query) {
+  return kUrl +
+      WideToUtf8(CharsetUtils::UTF8ToWstringEscaped(query.c_str(), query.length())) +
+      "&sourceid=ime-win&ie=UTF-8&hl=zh-CN";
 }
 
-std::wstring GoogleSearchUtils::GoogleHomepageUrl() {
-  return search_setting::kIEHomepageValueDataGoogleCN;
+std::string GoogleSearchUtils::GoogleHomepageUrl() {
+  return "http://www.google.com/";
 }
 
 void GoogleSearchUtils::Search(const std::string& query) {
   // It's not allowed to open explorer with a system account.
   if (ShellUtils::IsSystemAccount())
     return;
-  std::wstring& url = GoogleSearchUtils::GenerateSearchUrl(query);
-  ::ShellExecute(NULL, NULL, url.c_str(), NULL, NULL, SW_SHOW);
+  std::string& url = GoogleSearchUtils::GenerateSearchUrl(query);
+  ::ShellExecute(NULL, NULL, Utf8ToWide(url).c_str(), NULL, NULL, SW_SHOW);
 }
 
 }  // namespace ime_goopy

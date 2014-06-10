@@ -172,4 +172,16 @@ wstring WideStringPrintfVector(const wchar_t* format, const std::vector<wstring>
                           cstr[30], cstr[31]);
 }
 
+wstring ToWindowsCRLF(const wstring& input) {
+  wstring window_crlf_text;
+  window_crlf_text.reserve(input.length());
+  for (int i = 0; i < input.length(); i++) {
+    if (input[i] == L'\n' && (i == 0 || input[i - 1] != L'\r')) {
+      window_crlf_text.push_back(L'\r');
+    }
+    window_crlf_text.push_back(input[i]);
+  }
+  return window_crlf_text;
+}
+
 }  // namespace ime_goopy

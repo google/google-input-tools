@@ -26,14 +26,26 @@ namespace imm {
 // This class can only be used in administrators account.
 class Registrar {
  public:
-  explicit Registrar(const wstring& base_filename);
+  explicit Registrar(const std::wstring& base_filename);
   // Registered HKL will be returned.
-  HRESULT Register(const wstring& display_name, HKL* hkl);
+  HRESULT Register(const std::wstring& display_name, HKL* hkl);
+  // Register the IME file for a specific language identifier.
+  // Registered HKL will be returned.
+  // See
+  // http://msdn.microsoft.com/en-us/library/windows/desktop/dd318691(v=vs.85).aspx
+  // for the reference of determining language identifiers.
+  HKL Register(DWORD language_id, const std::wstring& display_name);
   HRESULT Unregister();
+  // Unregister the IME of the given |language_id| with given |display_name|.
+  // IMEs register will Register(const std::wstring& display_name, HKL* hkl)
+  // should be Unregister by this method.
+  HRESULT Unregister(DWORD language_id, const std::wstring& display_name);
+  HRESULT Unregister(HKL hkl);
   HKL GetHKL();
+  HKL GetHKL(DWORD language_id, const std::wstring& display_name);
 
  private:
-  wstring base_filename_;
+  std::wstring base_filename_;
 };
 }  // namespace imm
 }  // namespace ime_goopy

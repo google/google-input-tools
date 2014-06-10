@@ -11,3 +11,4 @@ ipc/protos/protos-cpp.xml
 Debug/
 Release/
 ipch/
+third_party/gtest/gtest-1.7.0

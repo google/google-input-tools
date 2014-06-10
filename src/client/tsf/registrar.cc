@@ -63,7 +63,9 @@ HRESULT Registrar::Register(const wstring& base_filename,
     // installer is 32bit. We need to fix this path here.
     DWORD flags = KEY_READ | KEY_WRITE | KEY_WOW64_64KEY;
     CString subkey;
-    subkey.Format(L"%s\\%s", kTextServiceRegistryKey, L"InprocServer32");
+    wchar_t guid[MAX_PATH] = {0};
+    ::StringFromGUID2(clsid_, guid, MAX_PATH);
+    subkey.Format(L"CLSID\\%s\\%s", guid, L"InprocServer32");
     CRegKey registry;
     if (registry.Open(HKEY_CLASSES_ROOT, subkey, flags) == ERROR_SUCCESS) {
       registry.SetStringValue(NULL, icon_path);

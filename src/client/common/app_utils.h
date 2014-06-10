@@ -41,13 +41,7 @@ class AppUtils {
                           vector<wstring>* files,
                           bool (*check)(const wstring&));
   static bool IsInstalledForCurrentUser();
-  // Returns empty if no installed version is found.
-  static wstring GetInstalledVersion(const wstring& pack_name);
-  static void LaunchOptions();
-  static void LaunchSet(bool wait, const wstring &param);
-  static void LaunchSettingWizard(bool wait, bool set_homepage);
   static void LaunchInputManager();
-  static bool GetExperienceSetting();
   // Caller is responsible to delete the created object.
   static RegistryKey* OpenUserRegistry();
   static RegistryKey* OpenSystemRegistry(bool readonly);

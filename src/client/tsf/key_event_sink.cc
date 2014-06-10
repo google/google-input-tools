@@ -16,9 +16,9 @@
 
 #include "tsf/key_event_sink.h"
 
+#include "base/string_utils_win.h"
 #include "common/debug.h"
 #include "common/framework_interface.h"
-#include "common/string_utils.h"
 #include "ipc/constants.h"
 #include "tsf/context_event_sink.h"
 #include "tsf/edit_session.h"

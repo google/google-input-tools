@@ -66,24 +66,6 @@ bool SkinHostWin::OpenURL(const GadgetInterface* gadget, const char* url) {
   return ggadget::win32::OpenURL(gadget, url);
 }
 
-Skin* SkinHostWin::LoadSkin(const wchar_t* base_path,
-                            const wchar_t* options_name,
-                            const char* ui_locale,
-                            int instance_id,
-                            bool is_system_account,
-                            bool vertical_candidate_layout,
-                            bool right_to_left_layout) {
-  // TODO(synch): clean up this method
-  std::string base_path_utf8;
-  std::string options_name_utf8;
-  ConvertStringUTF16ToUTF8(base_path, wcslen(base_path), &base_path_utf8);
-  ConvertStringUTF16ToUTF8(options_name, wcslen(options_name),
-                           &options_name_utf8);
-  return SkinHost::LoadSkin(base_path_utf8.c_str(), options_name_utf8.c_str(),
-                            ui_locale, instance_id, is_system_account,
-                            vertical_candidate_layout, right_to_left_layout);
-}
-
 SkinHost* SkinHost::NewSkinHost() {
   return new SkinHostWin;
 }

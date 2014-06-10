@@ -23,7 +23,7 @@
 #include <shellapi.h>
 
 #include "base/logging.h"
-#include "common/string_utils.h"
+#include "base/string_utils_win.h"
 
 namespace {
 

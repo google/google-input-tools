@@ -26,9 +26,10 @@
 
 #include "base/logging.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "imm/immdev.h"
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 namespace {
 const wchar_t kKeyboardLayoutRegistry[] =
@@ -321,4 +322,4 @@ HKL Registrar::GetHKL(DWORD language_id,
 }
 
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

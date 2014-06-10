@@ -22,7 +22,7 @@
 #include <shlwapi.h>
 
 
-namespace ime_shared {
+namespace ime_goopy {
 namespace imm {
 static const WCHAR* kImeFileName = L"GooglePinyin.ime";
 static const WCHAR* kImeDescription =
@@ -327,4 +327,4 @@ void Order::SetFirstChineseIME(HKL hkl) {
   ChangePreloadSortOrder(ime_key_name, TRUE);
 }
 }  // namespace imm
-}  // namespace ime_shared
+}  // namespace ime_goopy

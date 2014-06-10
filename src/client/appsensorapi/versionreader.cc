@@ -27,6 +27,7 @@
 #include <tchar.h>
 #include "base/logging.h"
 #include "base/stringprintf.h"
+#include "base/string_utils_win.h"
 #include "appsensorapi/common.h"
 
 namespace ime_goopy {
@@ -99,8 +100,8 @@ BOOL VersionReader::GetSubBlockInfo(const TCHAR *file_info,
   DCHECK(sub_block != NULL);
 
   // Construct the file info string from the language information.
-  version_string_name = ::WideStringPrintf(kFileInfoString, lang_info[0],
-                                           lang_info[1], sub_block);
+  version_string_name = WideStringPrintf(kFileInfoString, lang_info[0],
+      lang_info[1], sub_block);
   // Retrieve the block information of specified section
   if (!::VerQueryValue(const_cast<TCHAR *>(file_info),
                        const_cast<LPWSTR>(version_string_name.c_str()),

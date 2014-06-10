@@ -18,37 +18,13 @@
 #include "components/ui/about_dialog.h"
 
 #include "base/logging.h"
-#include "base/resource_bundle.h"
-#include "components/logging/common.h"
 #include "components/ui/skin_ui_component_utils.h"
-#include "components/ui/ui_component.grh"
 #include "resources/about_dialog_resource.h"
 
 namespace ime_goopy {
 namespace components {
 LRESULT AboutDialog::OnInitDialog(UINT msg, WPARAM wparam, LPARAM lparam,
                                   BOOL& handled) {
-  if (ResourceBundle::HasSharedInstance()) {
-    std::wstring title = ResourceBundle::GetSharedInstance().GetLocalizedString(
-        IDS_PRODUCT_NAME);
-    SetWindowText(title.c_str());
-    SkinUIComponentUtils::SetDlgItemText(m_hWnd, IDC_TITLE, IDS_PRODUCT_NAME);
-
-    std::wstring version =
-        ResourceBundle::GetSharedInstance().GetLocalizedString(IDS_VERSION);
-    version.append(L" ");
-    version.append(T13N_VERSION_STRING);
-    ::SetWindowText(GetDlgItem(IDC_VERSION), version.c_str());
-
-    SkinUIComponentUtils::SetDlgItemText(m_hWnd, IDC_COPYRIGHT, IDS_COPYRIGHT);
-    SkinUIComponentUtils::SetDlgItemText(m_hWnd, IDC_CHECK_USER_METRICS,
-                                         IDS_ENABLE_USER_METRICS);
-    bool value = false;
-    settings_->GetBooleanValue(kSettingsKeyShouldCollect, &value);
-    CheckDlgButton(IDC_CHECK_USER_METRICS, value ? BST_CHECKED : BST_UNCHECKED);
-  } else {
-    NOTREACHED() << "Resource Bundle not initialized.";
-  }
   // Reinforce the focus to stay in the popup dialog, as some applications
   // like PaoPaoTang will make the popup to lose focus.
   SetFocus();
@@ -57,7 +33,6 @@ LRESULT AboutDialog::OnInitDialog(UINT msg, WPARAM wparam, LPARAM lparam,
 
 LRESULT AboutDialog::OnClose(WORD nofity, WORD id, HWND hwnd, BOOL& handled) {
   bool checked = IsDlgButtonChecked(IDC_CHECK_USER_METRICS);
-  settings_->SetBooleanValue(kSettingsKeyShouldCollect, checked);
   EndDialog(id);
   return 0;
 }

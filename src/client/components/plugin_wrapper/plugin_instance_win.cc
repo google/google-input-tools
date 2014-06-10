@@ -18,7 +18,7 @@
 
 #include <windows.h>
 #include "base/logging.h"
-#include "common/string_utils.h"
+#include "base/string_utils_win.h"
 #include "components/plugin_wrapper/exports.h"
 
 namespace ime_goopy {

@@ -38,8 +38,7 @@ namespace ime_goopy {
 // class name.
 const wchar_t InputMethod::kUIClassName[] = L"GOOGINPUTTOOLS";
 const wchar_t InputMethod::kDisplayName[] =
-  L"Google Input Tools"
-  T13N_SHORT_VERSION;
+  L"Google Input Tools";
 
 const DWORD InputMethod::kConversionModeMask = IME_CMODE_FULLSHAPE |
                                                IME_CMODE_NATIVE |
@@ -61,20 +60,20 @@ const DWORD InputMethod::kImmProperty =
     // Add IME_PROP_NEED_ALTKEY because virtual keyboard requires ctrl + atl +
     // key.
     IME_PROP_NEED_ALTKEY;
+
 bool InputMethod::ShowConfigureWindow(HWND parent) {
-  if (AppUtils::GetInstalledVersion(kFrameworkPackName).empty()) return false;
-  AppUtils::LaunchOptions();
+  // TODO: implement this.
   return true;
 }
-// {B35B9698-3701-4C40-9444-4B2AE1B4E591}
-const CLSID InputMethod::kTextServiceClsid =
-    {0xb35b9698, 0x3701, 0x4c40,
-     {0x94, 0x44, 0x4b, 0x2a, 0xe1, 0xb4, 0xe5, 0x91}};
+
+// {3C575191-98EC-4FB2-BE2C-54633AC54329}
+const GUID InputMethod::kTextServiceClsid =
+    {0x3c575191, 0x98ec, 0x4fb2, {0xbe, 0x2c, 0x54, 0x63, 0x3a, 0xc5, 0x43, 0x29}};
 
 // {E0FD6A19-23A5-4A3E-BA20-54CD24670664}
 const GUID InputMethod::kInputAttributeGUID =
     {0xe0fd6a19, 0x23a5, 0x4a3e,
-     {0xba, 0x20, 0x54, 0xcd, 0x24, 0x67, 0x6, 0x64}};
+        {0xba, 0x20, 0x54, 0xcd, 0x24, 0x67, 0x6, 0x64}};
 
 const int InputMethod::kRegistrarScriptId = IDR_TSF;
 EngineInterface* InputMethod::CreateEngine(ContextInterface* context) {

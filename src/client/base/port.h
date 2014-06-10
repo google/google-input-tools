@@ -910,7 +910,7 @@ inline void aligned_free(void *aligned_memory) {
 
 // See http://en.wikipedia.org/wiki/IEEE_754 for details of
 // floating point format.
-#if !defined(COMPILER_MSVC) && _MSC_VER < 1700
+#if !defined(COMPILER_MSVC) || _MSC_VER < 1800
 enum {
   FP_NAN,  //  is "Not a Number"
   FP_INFINITE,  //  is either plus or minus infinity.

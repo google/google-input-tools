@@ -20,8 +20,8 @@
 #endif
 #include <gdiplus.h>
 #include "base/logging.h"
+#include "base/string_utils_win.h"
 #include "common/app_utils.h"
-#include "common/string_utils.h"
 #include "skin/skin_consts.h"
 #pragma push_macro("DLOG")
 #pragma push_macro("LOG")

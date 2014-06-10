@@ -27,10 +27,10 @@
 #include "base/file/file_path.h"
 #include "base/file/file_util.h"
 #include "base/scoped_handle_win.h"
+#include "base/string_utils_win.h"
 #include "common/app_const.h"
 #include "common/registry.h"
 #include "common/shellutils.h"
-#include "common/string_utils.h"
 
 namespace ime_goopy {
 static const wchar_t kDumpFolderName[] = L"Crash";
@@ -100,43 +100,6 @@ bool AppUtils::IsInstalledForCurrentUser() {
                        KEY_READ | KEY_WOW64_64KEY) == ERROR_SUCCESS;
 }
 
-std::wstring AppUtils::GetInstalledVersion(const std::wstring& pack_name) {
-  std::wstring pack_list_key = WideStringPrintf(
-      L"%s\\%s\\%s", kInputRegistryKey, kPacksSubKey, pack_name.c_str());
-  REGSAM flags = KEY_READ | KEY_WOW64_64KEY;
-  scoped_ptr<RegistryKey> registry(
-      RegistryKey::OpenKey(HKEY_LOCAL_MACHINE, pack_list_key.c_str(), flags));
-  if (!registry.get())
-    return L"";
-  std::wstring version;
-  if (registry->QueryStringValue(kPackVersionValue, &version) != ERROR_SUCCESS)
-    return L"";
-
-  return version;
-}
-
-void AppUtils::LaunchOptions() {
-  ShellExecute(NULL,
-               NULL,
-               GetBinaryFilePath(kOptionsFilename).c_str(),
-               NULL,
-               NULL,
-               SW_SHOW);
-}
-
-void AppUtils::LaunchSet(bool wait, const wstring &param) {
-  wstring path = GetBinaryFilePath(kSetFilename);
-  ShellUtils::LaunchProcess(path.c_str(), param.c_str(), wait);
-}
-
-void AppUtils::LaunchSettingWizard(bool wait, bool set_homepage) {
-  wstring path = GetBinaryFilePath(kSettingWizardFilename);
-  wstring param;
-  if (set_homepage)
-    param += L" --set_homepage";
-  ShellUtils::LaunchProcess(path.c_str(), param.c_str(), wait);
-}
-
 void AppUtils::LaunchInputManager() {
   wchar_t sysdir[MAX_PATH] = { 0 };
   if (!GetSystemDirectory(sysdir, MAX_PATH))
@@ -151,22 +114,6 @@ void AppUtils::LaunchInputManager() {
                input_dll,
                NULL,
                SW_SHOW);
-}
-
-bool AppUtils::GetExperienceSetting() {
-  DWORD value = 0;
-  scoped_ptr<RegistryKey> user(AppUtils::OpenUserRegistry());
-  if (user.get()) {
-    if (user->QueryDWORDValue(kExperienceName, value) == ERROR_SUCCESS)
-      return value != 0;
-  }
-  scoped_ptr<RegistryKey> system(AppUtils::OpenSystemRegistry(true));
-  if (system.get()) {
-    if (system->QueryDWORDValue(kExperienceName, value) == ERROR_SUCCESS)
-      return value != 0;
-  }
-
-  return false;
 }
 
 // Each login user has a corresponding winlogon.exe, however, winlogon.exe is

@@ -6,6 +6,7 @@
       'dependencies': [
         '<(DEPTH)/base/base.gyp:base',
 		'<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',
+        '<(DEPTH)/third_party/gtest/gtest.gyp:gtest_prod',
       ],
       'sources': [
         'export.cc',

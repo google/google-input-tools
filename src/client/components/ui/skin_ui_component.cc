@@ -17,10 +17,8 @@
 #include "components/ui/skin_ui_component.h"
 
 #include "base/logging.h"
-#include "base/resource_bundle.h"
 #include "common/app_const.h"
 #include "common/google_search_utils.h"
-#include "common/string_utils.h"
 #include "components/common/constants.h"
 #include "components/common/file_utils.h"
 #include "components/ui/composing_window_position.h"
@@ -28,7 +26,6 @@
 #include "components/ui/skin_ui_component_utils.h"
 #include "components/ui/ui_types.h"
 #include "locale/locale_utils.h"
-#include "skin/skin_manager.h"
 
 #pragma push_macro("LOG")
 #pragma push_macro("DLOG")
@@ -176,12 +173,6 @@ SkinUIComponent::SkinUIComponent()
     toolbar_x_(kint16max),
     toolbar_y_(kint16max) {
   settings_ = new ipc::SettingsClient(this, this);
-  std::string path_prefix =
-      FileUtils::GetDataPathForComponent(kComponentStringID) +
-      kResourcePackPathPattern;
-  if (!ResourceBundle::HasSharedInstance())
-    ResourceBundle::InitSharedInstanceWithSystemLocale();
-  ResourceBundle::AddDataPackToSharedInstance(path_prefix);
 }
 
 SkinUIComponent::~SkinUIComponent() {
@@ -605,8 +596,8 @@ void SkinUIComponent::SearchButtonCallback() {
       return;
     }
   }
-  std::wstring url = GoogleSearchUtils::GoogleHomepageUrl();
-  skin_host_->OpenURL(skin_.get(), WideToUtf8(url).c_str());
+  std::string url = GoogleSearchUtils::GoogleHomepageUrl();
+  skin_host_->OpenURL(skin_.get(), url.c_str());
 }
 
 void SkinUIComponent::OnRegistered() {
@@ -615,10 +606,11 @@ void SkinUIComponent::OnRegistered() {
   skin::SkinLibraryInitializer::Initialize();
   skin_host_.reset(new ime_goopy::skin::SkinHostWin);
   bool rtl = LocaleUtils::IsRTLLanguage(LocaleUtils::GetUserUILanguage());
+  std::string skin_path = FileUtils::GetDataPathForComponent(kComponentStringID) +
+      "/default.gskin";
   skin_.reset(skin_host_->LoadSkin(
-      skin::SkinManager::GetSkinFilePath(
-          skin::SkinManager::GetDefaultSkinName()).c_str(),
-      L"",
+      skin_path.c_str(),
+      "",
       NULL,
       0,
       false,

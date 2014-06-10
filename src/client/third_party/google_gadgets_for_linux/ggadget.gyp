@@ -381,6 +381,7 @@
           'type': '<(library)',
           'hard_dependency': 1,
           'sources': [
+            'ggadget/win32/font_fallback.cc',
             'ggadget/win32/font_fallback.h',
             'ggadget/win32/gadget_window.cc',
             'ggadget/win32/gadget_window.h',

@@ -40,8 +40,8 @@ using ime_goopy::imm::Context;
 using ime_goopy::imm::ContextManager;
 using ime_goopy::UIManagerInterface;
 using ime_goopy::imm::UIWindow;
-using ime_shared::imm::Debug;
-using ime_shared::imm::MessageQueue;
+using ime_goopy::imm::Debug;
+using ime_goopy::imm::MessageQueue;
 
 // A guard variable, it should be set to true when the dll is unloading.
 bool _goopy_exiting = false;

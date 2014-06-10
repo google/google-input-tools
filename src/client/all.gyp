@@ -7,18 +7,9 @@
       'target_name': 'All',
       'type': 'none',
       'dependencies': [
-        'base/base.gyp:base',
-		'components/common/common.gyp:common',
-		'components/keyboard_input/keyboard_input.gyp:keyboard_input',
-		'components/plugin_manager/plugin_manager.gyp:plugin_manager',
-		'components/plugin_wrapper/plugin_wrapper.gyp:plugin_wrapper',
-		'components/plugin_wrapper/plugin_wrapper.gyp:plugin_component_stub',
 		'components/win_frontend/ipc_console.gyp:ipc_console',
-		'components/settings_store/settings_store.gyp:settings_store',
-		'tsf/tsf.gyp:tsf',
-		'components/ui/ui.gyp:ui',
-        'ipc/ipc.gyp:ipc',
-		
+        'components/win_frontend/frontend_component.gyp:frontend_component',
+		'installer/installer.gyp:win32_register',
       ],
     },
     {

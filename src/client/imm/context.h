@@ -23,6 +23,7 @@
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
 #include "base/scoped_ptr.h"
+#include "base/string_utils_win.h"
 #include "common/debug.h"
 #include "common/framework_interface.h"
 #include "ipc/constants.h"
@@ -35,13 +36,13 @@
 #include "imm/immdev.h"
 #include "imm/input_context.h"
 
-using ime_shared::imm::CandidateInfo;
-using ime_shared::imm::CompositionString;
-using ime_shared::imm::HIMCLockerT;
-using ime_shared::imm::HIMCCLockerT;
-using ime_shared::imm::InputContext;
-using ime_shared::imm::MessageQueue;
-using ime_shared::imm::WindowsImmLockPolicy;
+using ime_goopy::imm::CandidateInfo;
+using ime_goopy::imm::CompositionString;
+using ime_goopy::imm::HIMCLockerT;
+using ime_goopy::imm::HIMCCLockerT;
+using ime_goopy::imm::InputContext;
+using ime_goopy::imm::MessageQueue;
+using ime_goopy::imm::WindowsImmLockPolicy;
 
 namespace ime_goopy {
 namespace imm {

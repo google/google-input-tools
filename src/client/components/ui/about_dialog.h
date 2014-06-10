@@ -19,7 +19,6 @@
 #include <atlbase.h>
 #include <atlwin.h>
 
-#include "base/resource_bundle.h"
 #include "ipc/settings_client.h"
 #include "resources/about_dialog_resource.h"
 

@@ -24,8 +24,8 @@
 #endif
 #include "base/logging.h"
 #include "base/scoped_handle.h"
+#include "base/string_utils_win.h"
 #include "common/app_utils.h"
-#include "common/string_utils.h"
 
 namespace ime_goopy {
 namespace components {

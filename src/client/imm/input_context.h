@@ -20,7 +20,7 @@
 #include "base/basictypes.h"
 #include "imm/context_locker.h"
 #include "imm/immdev.h"
-#include <gtest/gunit_prod.h>
+#include <gtest/gtest_prod.h>
 
 namespace ime_goopy {
 namespace imm {
@@ -29,10 +29,18 @@ namespace imm {
 struct InputContext : public INPUTCONTEXT {
  public:
   bool Initialize();
-  bool GetCaretRectFromComposition(RECT* caret);
-  bool GetCaretRectFromCandidate(RECT* caret);
+  // Gets top-left corner of the candidate window.
+  bool GetCandidatePos(POINT* point);
+  // Gets top-left corner of the composition window.
+  bool GetCompositionPos(POINT* point);
+  bool GetCompositionBoundary(RECT *rect);
+  bool GetCompositionFont(LOGFONT *font);
   int GetFontHeight();
 
+  // These two functions are for IME that has combined composition and candidate
+  // window.
+  bool GetCaretRectFromComposition(RECT* caret);
+  bool GetCaretRectFromCandidate(RECT* caret);
  private:
   FRIEND_TEST(InputContextTest, Initialize);
   FRIEND_TEST(InputContextTest, GetCaretRectFromComposition);

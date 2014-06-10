@@ -191,8 +191,6 @@ class FrontendComponent : public EngineInterface,
   scoped_ptr<win_frontend::CompositionWindowList> composition_window_list_;
 
   bool enable_fake_inline_composition_;
-
-  LoggingClient* logging_;
   DISALLOW_COPY_AND_ASSIGN(FrontendComponent);
 };
 

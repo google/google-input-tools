@@ -60,24 +60,7 @@ BEGIN
     LTEXT           "Version: 1.0.0.0",IDC_VERSION,58,29,125,8
     LTEXT           "Copyright (c) 2012 Google Inc. All Rights Reserved.",IDC_COPYRIGHT,29,49,168,8
     ICON            IDI_BIG,IDC_STATIC,15,16,21,20,SS_REALSIZEIMAGE
-    CONTROL         "Send anonymous usage statistics to Google Input Tools.",IDC_CHECK_USER_METRICS,
-                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,29,60,227,29
 END
-
-IDD_FIRST_RUN DIALOGEX 0, 0, 311, 134
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Google Input Tools"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,254,113,50,14
-    ICON            IDI_BIG,IDC_STATIC,15,16,21,20,SS_REALSIZEIMAGE
-    LTEXT           "Google Input Tools",IDC_TITLE,58,23,79,8
-    LTEXT           "Do you want to help improve Google Input Tools?",IDC_USERMETRICS_PROMPT,29,47,168,8
-    CONTROL         "Send anonymous usage statistics to Google Input Tools.",IDC_CHECK_USER_METRICS,
-                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,29,62,227,26
-    LTEXT           "See Detail",IDC_DETAIL,29,94,150,15,SS_NOTIFY
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -86,7 +69,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_BIG                 ICON                    "..\\res\\google_input_tools.ico"
+IDI_BIG                 ICON                    "..\\resources\\google_input_tools.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

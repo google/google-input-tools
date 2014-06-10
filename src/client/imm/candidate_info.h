@@ -20,7 +20,7 @@
 #include "base/basictypes.h"
 #include "imm/context_locker.h"
 #include "imm/immdev.h"
-#include <gtest/gunit_prod.h>
+#include <gtest/gtest_prod.h>
 
 namespace ime_goopy {
 namespace imm {

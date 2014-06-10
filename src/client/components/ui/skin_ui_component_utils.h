@@ -94,10 +94,6 @@ class SkinUIComponentUtils {
   static void ExecuteMenuCommand(const ggadget::win32::MenuBuilder* menu,
                                  const std::string& id);
 
-  // Sets the text for the item defined by |dlg_item_id| in dialog |dlg| to
-  // the text defined by |text_id|.
-  static void SetDlgItemText(HWND dlg, int dlg_item_id, int text_id);
-
 #endif // OS_WIN
 
   // Gets cursor position related to the origin of the top-level window of the

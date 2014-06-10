@@ -18,11 +18,10 @@
 
 #include <windows.h>
 
+#include "base/string_utils_win.h"
 #include "common/app_const.h"
 #include "common/shellutils.h"
-#include "common/string_utils.h"
 #include "components/ui/about_dialog.h"
-#include "components/ui/first_run_dialog.h"
 #include "ipc/constants.h"
 #include "ipc/message_types.h"
 #include "third_party/google_gadgets_for_linux/ggadget/math_utils.h"
@@ -42,7 +41,7 @@ void LaunchAboutDialog(const char* menu_text, ipc::SettingsClient* settings) {
 }
 
 void LaunchHelp(const char* menu_text) {
-  ShellUtils::Execute(kT13nHelpPageUrl, NULL, SW_SHOW, FALSE);
+  ::MessageBox(NULL, L"Help", L"Help", MB_OK);
 }
 
 RECT GetViewRect(const ggadget::View* view) {
@@ -68,11 +67,11 @@ void SkinUIComponent::ConstructIMEMenu(ggadget::MenuInterface* menu) {
   // TODO(synch): Add Skin specific menu items.
   menu->AddItem(NULL, 0, NULL, NULL,  // A seperator.
                 ggadget::MenuInterface::MENU_ITEM_PRI_GADGET);
-  std::wstring text = L"HELP";
+  std::wstring text = L"about";
   menu->AddItem(WideToUtf8(text).c_str(), 0, NULL,
                 ggadget::NewSlot(LaunchAboutDialog, settings_),
                 ggadget::MenuInterface::MENU_ITEM_PRI_GADGET);
-  text = L"ABOUT";
+  text = L"help";
   menu->AddItem(WideToUtf8(text).c_str(), 0, NULL,
                 ggadget::NewSlot(LaunchHelp),
                 ggadget::MenuInterface::MENU_ITEM_PRI_GADGET);
@@ -128,8 +127,7 @@ bool SkinUIComponent::OnShowContextMenu(ggadget::MenuInterface* menu) {
 }
 
 void SkinUIComponent::ShowFirstRun() {
-  FirstRunDialog dlg(settings_);
-  dlg.DoModal(::GetForegroundWindow());
+  // TODO: implement this.
 }
 
 }  // namespace components

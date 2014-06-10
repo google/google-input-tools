@@ -16,6 +16,8 @@
         'settings_store_base.h',
         'settings_store_memory.cc',
         'settings_store_memory.h',
+		'settings_store_win.cc',
+		'settings_store_win.h',
       ],
     },
     {

@@ -47,18 +47,6 @@ class SkinHostWin : public SkinHost {
   virtual bool OpenURL(const ggadget::GadgetInterface* gadget,
                        const char* url);
 
-  // Wide char version of LoadSkin.
-  // |ui_locale| is the locale name, which will be used when loading localized
-  // strings and other resources from the skin package. If it's NULL or empty
-  // then the current system locale will be used.
-  Skin* LoadSkin(const wchar_t* base_path,
-                 const wchar_t* options_name,
-                 const char* ui_locale,
-                 int instance_id,
-                 bool is_system_account,
-                 bool vertical_candidate_layout,
-                 bool right_to_left_layout);
-
  private:
   ggadget::win32::PrivateFontDatabase private_font_database_;
   DISALLOW_COPY_AND_ASSIGN(SkinHostWin);

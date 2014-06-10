@@ -17,7 +17,6 @@
 #include <atlbase.h>
 #include <atlstr.h>
 #include "base/logging.h"
-#include "common/exception.h"
 #include "components/win_frontend/ipc_singleton.h"
 #include "tsf/text_service.h"
 
@@ -60,7 +59,6 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE instance,
       }
 #endif
       _goopy_exiting = false;
-      ime_goopy::ExceptionHandler::Init();
       break;
     case DLL_PROCESS_DETACH:
       _goopy_exiting = true;
@@ -68,7 +66,6 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE instance,
       // unintialized CRT before call our DllMain, and logging functions
       // require CRT.
       OutputDebugString(L"DllMain DLL_PROCESS_DETACH\n");
-      ime_goopy::ExceptionHandler::Release();
       break;
   }
   return _AtlModule.DllMain(reason, reserved);

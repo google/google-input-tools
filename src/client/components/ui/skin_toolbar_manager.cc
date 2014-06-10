@@ -25,8 +25,7 @@
 #include <google/protobuf/repeated_field.h>
 
 #include "base/logging.h"
-#include "base/resource_bundle.h"
-#include "common/string_utils.h"
+#include "base/string_utils_win.h"
 #include "components/ui/skin_ui_component_utils.h"
 #include "ipc/protos/ipc.pb.h"
 #include "ipc/settings_client.h"

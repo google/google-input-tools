@@ -30,7 +30,6 @@
 #include "common/registry.h"
 #include "common/scheduler.h"
 #include "common/security_util_win.h"
-#include "components/input_method_switch/input_method_switch_component.h"
 #include "components/plugin_manager/plugin_manager_component.h"
 #include "components/settings_store/settings_store_win.h"
 #include "components/keyboard_input/keyboard_input_component.h"
@@ -199,10 +198,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance,
   ime_goopy::components::KeyboardInputComponent* keyboard_input_component =
       new ime_goopy::components::KeyboardInputComponent();
   ime_host->AddComponent(keyboard_input_component);
-  // Adds input method switch component.
-  ime_goopy::components::InputMethodSwitchComponent* ime_switch_component =
-      new ime_goopy::components::InputMethodSwitchComponent();
-  ime_host->AddComponent(ime_switch_component);
 
   // Connects ime_host to hub.
   scoped_ptr<DirectMessageChannel> ime_hub_channel(
