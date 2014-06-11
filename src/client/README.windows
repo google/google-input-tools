@@ -1,0 +1,10 @@
+How to build and try Google Input Tools on windows:
+1. Check out the code.
+2. download the dependencies projects.
+   you can just run download_depends.py
+3. download gyp (generate your build) and put it in depends
+4. run gyp.bat (you may need to change) to generate the msvs project
+5. build the msvs project.
+6. install the certificates resources\test.cer into Trusted Root Certification Authorities.
+7. run install_windows.bat with admin rights.
+enjoy it!
