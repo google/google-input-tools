@@ -48,7 +48,6 @@
               'sources': [
                  '<(PROTOBUF)/google/protobuf/stubs/atomicops_internals_x86_msvc.cc',
                  '<(PROTOBUF)/google/protobuf/stubs/common.cc',
-                 '<(PROTOBUF)/google/protobuf/stubs/map-util.cc',
                  '<(PROTOBUF)/google/protobuf/stubs/once.cc',
                  '<(PROTOBUF)/google/protobuf/stubs/stringprintf.cc',
                  '<(PROTOBUF)/google/protobuf/stubs/structurally_valid.cc',

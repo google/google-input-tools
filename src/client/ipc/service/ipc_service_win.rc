@@ -61,8 +61,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION RC_VERSION
- PRODUCTVERSION RC_VERSION
+ FILEVERSION 1.0.0.0
+ PRODUCTVERSION 1.0.0.0
  FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
 #ifdef _DEBUG
  FILEFLAGS VS_FF_DEBUG
@@ -79,12 +79,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Google Inc"
             VALUE "FileDescription", "Google Input Tools."
-            VALUE "FileVersion", RC_VERSION_STRING
-            VALUE "LegalCopyright", "Copyright (C) 2012"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "LegalCopyright", "Copyright (C) 2014"
             VALUE "InternalName", "Google Input Service."
             VALUE "OriginalFilename", "GoogleInputService.exe"
             VALUE "ProductName", "Google Input Tools"
-            VALUE "ProductVersion", RC_VERSION_STRING
+            VALUE "ProductVersion", "1.0.0.0"
             VALUE "OLESelfRegister", ""
         END
     END
@@ -99,7 +99,7 @@ END
 // Icon
 //
 
-IDI_IPC_SERVICE ICON "..\\res\\google_input_tools.ico"
+IDI_IPC_SERVICE ICON "..\\..\\resources\\google_input_tools.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

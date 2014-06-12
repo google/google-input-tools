@@ -7,9 +7,10 @@
       'target_name': 'All',
       'type': 'none',
       'dependencies': [
-		'components/win_frontend/ipc_console.gyp:ipc_console',
+        'components/win_frontend/ipc_console.gyp:ipc_console',
         'components/win_frontend/frontend_component.gyp:frontend_component',
-		'installer/installer.gyp:win32_register',
+        'installer/installer.gyp:win32_register',
+        'ipc/service/ipc_service_win.gyp:ipc_service',
       ],
     },
     {

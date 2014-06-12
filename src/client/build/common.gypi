@@ -1,17 +1,17 @@
 {
   'variables': {
     'library%': 'static_library',
-    'PROTOBUF' : '<!(echo %PROTOBUF%)/files/src',
+    'PROTOBUF' : '<!(echo %PROTOBUF%)/src',
     'GTEST' : '<!(echo %GTEST%)',
     'ZLIB' : '<!(echo %ZLIB%)',
-	'WTL80' : '<!(echo %WTL80%)',
-	'CERT' : '<(DEPTH)/resources/test.pfx',
-	'CERT_PSWD' : '111111',
+    'WTL80' : '<!(echo %WTL80%)',
+    'CERT' : '<(DEPTH)/resources/test.pfx',
+    'CERT_PSWD' : '111111',
   },
   'target_defaults': {
     'cflags': ['-fPIC', '-std=c++0x'],
     'defines': ['ARCH_PIII', 'GUNIT_NO_GOOGLE3',
-      'ARCH_CPU_X86_FAMILY', 'ARCH_CPU_64_BITS'],
+    'ARCH_CPU_X86_FAMILY', 'ARCH_CPU_64_BITS'],
     'include_dirs': [
       '<(DEPTH)',
       '<(DEPTH)/build/msvc_precompile/',
@@ -92,7 +92,7 @@
     },],
     ['OS=="win"', {
       'target_defaults': {
-	    'variables': {
+        'variables': {
           'signing%': 'false',
         },
         'defines': [
@@ -127,10 +127,9 @@
         ],
         'include_dirs': [
           '<(DEPTH)/base/posix/',
-          '<(WTL80)/files/include',
+          '<(WTL80)/include',
         ],
         'msvs_disabled_warnings': [
-		  4005,
           4018,
           4100,
           4125,
@@ -163,14 +162,14 @@
               'dbghelp.lib',
               'kernel32.lib',
               'iphlpapi.lib',
-			  'imm32.lib',
+              'imm32.lib',
               'psapi.lib',
               'shell32.lib',
               'shlwapi.lib',
               'urlmon.lib',
               'user32.lib',
-			  'usp10.lib',
-			  'version.lib',
+              'usp10.lib',
+              'version.lib',
               'wininet.lib',
               'msxml2.lib',    # needed by msxml parser
               'ole32.lib',     # needed by "CoInintialize" in msxml parser
@@ -180,13 +179,13 @@
             'LinkIncremental': '1',                # /INCREMENTAL:NO
             'RandomizedBaseAddress': '2',          # /DYNAMICBASE
             'GenerateDebugInformation': 'true',    # /DEBUG
-			'GenerateManifest': 'false',           # /MANIFEST:NO
+            'GenerateManifest': 'false',           # /MANIFEST:NO
           },
         },
-		'target_conditions': [
+        'target_conditions': [
           ['signing == "true"', {
-		    'msvs_postbuild': 'signtool.exe sign /f <(CERT) /p <(CERT_PSWD) $(TargetPath)'
-	      }],
+            'msvs_postbuild': 'signtool.exe sign /f <(CERT) /p <(CERT_PSWD) $(TargetPath)'
+          }],
         ],
       },
     }],
