@@ -8,7 +8,11 @@
 ipc/protos/protos-cpp.props
 ipc/protos/protos-cpp.targets
 ipc/protos/protos-cpp.xml
+ipc/protos/protos-cpp_x64.props
+ipc/protos/protos-cpp_x64.targets
+ipc/protos/protos-cpp_x64.xml
 Debug/
 Release/
 ipch/
 depends/
+out/

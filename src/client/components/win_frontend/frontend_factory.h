@@ -22,7 +22,7 @@
 #include "base/basictypes.h"
 #include "base/singleton.h"
 #include "common/framework_interface.h"
-// TODO(haicsun): Port this file from third_party.
+// TODO: Port this file from third_party.
 #include "third_party/google_gadgets_for_linux/ggadget/win32/thread_local_singleton_holder.h"
 #include "ipc/testing_prod.h"
 

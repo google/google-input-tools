@@ -10,8 +10,7 @@
   },
   'target_defaults': {
     'cflags': ['-fPIC', '-std=c++0x'],
-    'defines': ['ARCH_PIII', 'GUNIT_NO_GOOGLE3',
-    'ARCH_CPU_X86_FAMILY', 'ARCH_CPU_64_BITS'],
+    'defines': ['ARCH_PIII', 'GUNIT_NO_GOOGLE3', 'ARCH_CPU_X86_FAMILY'],
     'include_dirs': [
       '<(DEPTH)',
       '<(DEPTH)/build/msvc_precompile/',
@@ -20,18 +19,16 @@
       '<(ZLIB)',
       '..',
     ],
-    'default_configuration': 'Release',
+    'default_configuration': 'Debug',
     'configurations': {
       'Debug': {
         'defines': [ 'DEBUG', '_DEBUG' ],
         'msvs_settings': {
           'VCCLCompilerTool': {
             'RuntimeLibrary': '1',                 # /MTd
+            'Optimization': 0,                     # / Od
           },
           'VCLinkerTool': {
-            'LinkTimeCodeGeneration': 1,
-            'OptimizeReferences': 2,
-            'EnableCOMDATFolding': 2,
             'LinkIncremental': 1,
             'GenerateDebugInformation': 'true',
             'AdditionalLibraryDirectories': [
@@ -120,10 +117,7 @@
           '_VARIADIC_MAX=10',
           '__windows__',
           'NO_SHLWAPI_ISOS',
-		  '_USING_V110_SDK71_',
-          #debug
-          'DEBUG',
-          '_DEBUG',
+          '_USING_V110_SDK71_',
         ],
         'include_dirs': [
           '<(DEPTH)/base/posix/',
@@ -141,6 +135,10 @@
           4800,
           4996,
         ],  # /wdXXXX
+        'msvs_configuration_attributes': {
+          'OutputDirectory': '<(DEPTH)/out/bin/$(ConfigurationName)',
+          'IntermediateDirectory': '<(DEPTH)/out/obj/$(ProjectName)/$(Configuration)',
+        },
         'msvs_settings': {
           'VCCLCompilerTool': {
             'ExceptionHandling': '1',              # /EHsc
@@ -178,7 +176,6 @@
             'DataExecutionPrevention': '2',        # /NXCOMPAT
             'LinkIncremental': '1',                # /INCREMENTAL:NO
             'RandomizedBaseAddress': '2',          # /DYNAMICBASE
-            'GenerateDebugInformation': 'true',    # /DEBUG
             'GenerateManifest': 'false',           # /MANIFEST:NO
           },
         },
@@ -186,6 +183,13 @@
           ['signing == "true"', {
             'msvs_postbuild': 'signtool.exe sign /f <(CERT) /p <(CERT_PSWD) $(TargetPath)'
           }],
+          ['_target_name.endswith("_x64")', {
+            'msvs_configuration_platform': 'x64',
+            'defines': ['WIN64', 'ARCH_CPU_64_BITS',],
+          }, { #else
+            'msvs_configuration_platform': 'WIN32',
+            'defines': ['WIN32',],
+          },]
         ],
       },
     }],

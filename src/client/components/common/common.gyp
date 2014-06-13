@@ -1,4 +1,36 @@
 {
+  'variables': {
+    'srcs': [
+      'file_utils_win.cc',
+      'hotkey_util.cc',
+      'focus_input_context_manager_sub_component.cc',
+    ],
+  },
+  'conditions': [
+    ['OS=="linux" or OS=="mac"', {
+      'variables': {
+        'srcs': [
+          'file_utils_posix.cc',
+        ],
+      },
+    },],
+    ['OS=="win"', {
+      'targets': [
+        {
+          'target_name': 'component_common_x64',
+          'type': '<(library)',
+          'dependencies': [
+            '<(DEPTH)/base/base.gyp:base_x64',
+            '<(DEPTH)/ipc/ipc.gyp:ipc_x64',
+            '<(DEPTH)/ipc/protos/protos.gyp:protos-cpp_x64',
+          ],
+          'sources': [
+            '<@(srcs)',
+          ],
+        },
+      ],
+    },],
+  ],
   'targets': [
     {
       'target_name': 'component_common',
@@ -9,23 +41,7 @@
         '<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',
       ],
       'sources': [
-        'file_utils_posix.cc',
-        'file_utils_win.cc',
-        'hotkey_util.cc',
-        'focus_input_context_manager_sub_component.cc',
-        'virtual_keyboard_and_character_picker_consts.cc',
-      ],
-      'conditions': [
-        ['OS=="win"', {
-          'sources/': [
-            ['exclude', '_posix\\.cc$'],
-          ]
-        }],
-        ['OS=="linux" or OS=="mac"', {
-          'sources/': [
-            ['exclude', '_win\\.cc$'],
-          ]
-        }],
+        '<@(srcs)',
       ],
     },
     {

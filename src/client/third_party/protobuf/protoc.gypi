@@ -118,9 +118,6 @@
       'process_outputs_as_sources': 1,
     },
   ],
-  'dependencies': [
-    '<(DEPTH)/third_party/protobuf/protobuf.gyp:protobuf',
-  ],
   'include_dirs': [
     '<(SHARED_INTERMEDIATE_DIR)/protoc_out',
     '<(DEPTH)',
@@ -131,10 +128,18 @@
       '<(DEPTH)',
     ],
   },
-  'export_dependent_settings': [
-    '<(DEPTH)/third_party/protobuf/protobuf.gyp:protobuf',
-  ],
   # This target exports a hard dependency because it generates header
   # files.
   'hard_dependency': 1,
+  'target_conditions': [
+    ['_target_name.endswith("_x64")', {
+      'export_dependent_settings': [
+        '<(DEPTH)/third_party/protobuf/protobuf.gyp:protobuf_x64',
+      ],
+    }, { #else
+      'export_dependent_settings': [
+        '<(DEPTH)/third_party/protobuf/protobuf.gyp:protobuf',
+      ],
+    },],
+  ],
 }
