@@ -4,10 +4,10 @@ def getProjects(content):
   result = re.findall(projectRe, content)
   return result
 
-CONFIG = '''
+CONFIGS = '''
 \tGlobalSection(SolutionConfigurationPlatforms) = preSolution
-\t\tDebug|WINALL = Debug|WIN32
-\t\tRelease|WINALL = Release|WIN32
+\t\tDebug|Mixed Platforms = Debug|Mixed Platforms
+\t\tRelease|Mixed Platforms = Release|Mixed Platforms
 \tEndGlobalSection
 '''
 if __name__ == '__main__':
@@ -15,25 +15,25 @@ if __name__ == '__main__':
     content = file.read()
     file.close()
     projects = getProjects(content)
-    config = '\tGlobalSection(ProjectConfigurationPlatforms) = postSolution\t'
+    config = '\tGlobalSection(ProjectConfigurationPlatforms) = postSolution\n'
     for project in projects:
       name = project[0]
       guid = project[1]
       if name.endswith('_x64'):
-        config += '\t\t' + guid + '.Debug|WINALL.ActiveCfg = Debug|x64\n'
-        config += '\t\t' + guid + '.Debug|WINALL.Build.0 = Debug|x64\n'
-        config += '\t\t' + guid + '.Release|WINALL.ActiveCfg = Release|x64\n'
-        config += '\t\t' + guid + '.Release|WINALL.Build.0 = Release|x64\n'
+        config += '\t\t' + guid + '.Debug|Mixed Platforms.ActiveCfg = Debug|x64\n'
+        config += '\t\t' + guid + '.Debug|Mixed Platforms.Build.0 = Debug|x64\n'
+        config += '\t\t' + guid + '.Release|Mixed Platforms.ActiveCfg = Release|x64\n'
+        config += '\t\t' + guid + '.Release|Mixed Platforms.Build.0 = Release|x64\n'
       else:
-        config += '\t\t' + guid + '.Debug|WINALL.ActiveCfg = Debug|WIN32\n'
-        config += '\t\t' + guid + '.Debug|WINALL.Build.0 = Debug|WIN32\n'
-        config += '\t\t' + guid + '.Release|WINALL.ActiveCfg = Release|WIN32\n'
-        config += '\t\t' + guid + '.Release|WINALL.Build.0 = Release|WIN32\n'
+        config += '\t\t' + guid + '.Debug|Mixed Platforms.ActiveCfg = Debug|WIN32\n'
+        config += '\t\t' + guid + '.Debug|Mixed Platforms.Build.0 = Debug|WIN32\n'
+        config += '\t\t' + guid + '.Release|Mixed Platforms.ActiveCfg = Release|WIN32\n'
+        config += '\t\t' + guid + '.Release|Mixed Platforms.Build.0 = Release|WIN32\n'
     config +='\tEndGlobalSection'
     configRE = re.compile(r'\tGlobalSection\(SolutionConfigurationPlatforms\) = preSolution.+?\tEndGlobalSection', re.S)
-    content = configRE.sub(CONFIG, content)
+    content = configRE.sub(CONFIGS, content)
     configPostRE = re.compile(r'\tGlobalSection\(SolutionConfigurationPlatforms\) = postSolution.+?\tEndGlobalSection', re.S)
-    content = configRE.sub(config, content)
+    content = configPostRE.sub(config, content)
     file = open('all.sln', 'w')
     file.write(content)
     file.close()
