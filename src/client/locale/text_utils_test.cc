@@ -120,7 +120,7 @@ TEST_F(TextManipulatorZhCnTest, TestExpandToWordEnd) {
 }  // namespace ime_goopy
 
 int main(int argc, char *argv[]) {
-  testing::ParseGUnitFlags(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
 #ifdef DEBUG
   logging::InitLogging(NULL,
                        logging::LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG,

@@ -146,7 +146,7 @@ TEST(SpinLock, MultiProcess) {
 }
 
 int main(int argc, char **argv) {
-  testing::ParseGUnitFlags(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
   ParseCommandLineFlags(&argc, &argv, true);
   if (FLAGS_worker_process) {
     return WorkerMain();

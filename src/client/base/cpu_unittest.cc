@@ -107,7 +107,7 @@ TEST(CPU, RunExtendedInstructions) {
 }
 
 int main(int argc, char* argv[]) {
-  testing::ParseGUnitFlags(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
   logging::InitLogging("", logging::LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG,
       logging::DONT_LOCK_LOG_FILE, logging::APPEND_TO_OLD_LOG_FILE);
 

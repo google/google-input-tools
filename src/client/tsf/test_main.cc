@@ -19,7 +19,7 @@
 
 int main(int argc, char *argv[]) {
   CoInitialize(NULL);
-  testing::ParseGUnitFlags(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
   int ret = RUN_ALL_TESTS();
   CoUninitialize();
   return ret;

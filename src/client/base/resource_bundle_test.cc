@@ -71,6 +71,6 @@ TEST(ResourceBundleTest, ResourceBundleTest) {
 }  // namespace
 
 int main(int argc, char **argv) {
-  testing::ParseGUnitFlags(&argc, argv);
+  testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
