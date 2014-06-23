@@ -717,6 +717,8 @@ HangulIme.prototype.handleKey_ = function(keyData) {
   }
   // Does not handle key with modifiers
   if (keyData['altKey'] || keyData['ctrlKey']) {
+    this.prepareCommitText_();
+    this.update_();
     return false;
   }
   // Does not handle single Shift key
@@ -836,7 +838,9 @@ HangulIme.prototype.handleArrowKey_ = function(keyData) {
  */
 HangulIme.prototype.handleSpecialKey_ = function(keyData) {
   if (keyData['altKey'] || keyData['ctrlKey'] || keyData['shiftKey']) {
-    return false;
+    if (keyData['code'] != 'AltRight' && keyData['code'] != 'ControlRight') {
+      return false;
+    }
   }
 
   // When pressing Esc, discard preedit text and reset
