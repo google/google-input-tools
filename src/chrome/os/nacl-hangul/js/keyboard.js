@@ -108,6 +108,7 @@ HangulIme.keyboardLayouts.push({
     '<': ',',
     '>': '.',
     '?': '!',
+    'B': '?',
   }
 });
 
