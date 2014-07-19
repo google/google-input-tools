@@ -2,6 +2,7 @@
   'type': '<(library)',
   'sources': [
     'at_exit.cc',
+    'callback.cc',
     'commandlineflags.cc',
     'commandlineflags_reporting.cc',
     'cpu.cc',
