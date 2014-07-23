@@ -1,0 +1,182 @@
+goog.provide('i18n.input.chrome.inputview.layouts.util');
+
+goog.require('i18n.input.chrome.inputview.elements.ElementType');
+
+
+
+goog.scope(function() {
+var ElementType = i18n.input.chrome.inputview.elements.ElementType;
+
+
+/**
+ * The id for the key.
+ *
+ * @type {number}
+ * @private
+ */
+i18n.input.chrome.inputview.layouts.util.keyId_ = 0;
+
+
+/**
+ * The prefix of the key id, it's overwritten by layout file.
+ *
+ * @type {string}
+ */
+i18n.input.chrome.inputview.layouts.util.keyIdPrefix = '';
+
+
+/**
+ * Creates a sequence of key with the same specification.
+ *
+ * @param {!Object} spec The specification.
+ * @param {number} num How many keys.
+ * @return {!Array.<Object>} The keys.
+ */
+i18n.input.chrome.inputview.layouts.util.createKeySequence = function(spec,
+    num) {
+  var sequence = [];
+  for (var i = 0; i < num; i++) {
+    sequence.push(i18n.input.chrome.inputview.layouts.util.createKey(spec));
+  }
+  return sequence;
+};
+
+
+/**
+ * Creates a soft key view.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The soft key view.
+ */
+i18n.input.chrome.inputview.layouts.util.createKey = function(spec, opt_id) {
+  var id = i18n.input.chrome.inputview.layouts.util.keyIdPrefix +
+      i18n.input.chrome.inputview.layouts.util.keyId_++;
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.SOFT_KEY_VIEW, spec, id);
+};
+
+
+/**
+ * Creates a linear layout.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The linear layout.
+ */
+i18n.input.chrome.inputview.layouts.util.createLinearLayout = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.LINEAR_LAYOUT, spec, opt_id);
+};
+
+
+/**
+ * Creates a handwriting layout.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The handwriting layout.
+ */
+i18n.input.chrome.inputview.layouts.util.createHandwritingLayout =
+    function(spec, opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.HANDWRITING_LAYOUT, spec, opt_id);
+};
+
+
+/**
+ * Creates a vertical layout.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The vertical layout.
+ */
+i18n.input.chrome.inputview.layouts.util.createVerticalLayout = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.VERTICAL_LAYOUT, spec, opt_id);
+};
+
+
+/**
+ * Creates a layout view.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The view.
+ */
+i18n.input.chrome.inputview.layouts.util.createLayoutView = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.LAYOUT_VIEW, spec, opt_id);
+};
+
+
+/**
+ * Creates a candidate view.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The view.
+ */
+i18n.input.chrome.inputview.layouts.util.createCandidateView = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.CANDIDATE_VIEW, spec, opt_id);
+};
+
+
+/**
+ * Creates a canvas view.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The view.
+ */
+i18n.input.chrome.inputview.layouts.util.createCanvasView = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.CANVAS_VIEW, spec, opt_id);
+};
+
+
+/**
+ * Creates the keyboard.
+ *
+ * @param {Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {Object} The keyboard.
+ */
+i18n.input.chrome.inputview.layouts.util.createKeyboard = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.KEYBOARD, spec, opt_id);
+};
+
+
+/**
+ * Creates an element which could be any type, such as soft key view, layout,
+ *     etc.
+ *
+ * @param {!ElementType} type The type.
+ * @param {Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The element.
+ */
+i18n.input.chrome.inputview.layouts.util.createElem = function(type, spec,
+    opt_id) {
+  var newSpec = {};
+  for (var key in spec) {
+    newSpec[key] = spec[key];
+  }
+  newSpec['type'] = type;
+  if (opt_id) {
+    newSpec['id'] = opt_id;
+  }
+  return {
+    'spec': newSpec
+  };
+};
+
+});  // goog.scope

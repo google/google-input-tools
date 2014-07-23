@@ -1,0 +1,175 @@
+goog.provide('i18n.input.chrome.DataSource');
+
+goog.require('goog.events');
+goog.require('goog.events.Event');
+goog.require('goog.events.EventTarget');
+goog.require('goog.functions');
+goog.require('i18n.input.net.JsonpService');
+
+
+
+/**
+ * The data source.
+ *
+ * @param {number} numOfCanddiate The number of canddiate to fetch.
+ * @param {function(string, !Array.<string>, !Array.<number>)} callback .
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
+i18n.input.chrome.DataSource = function(numOfCanddiate, callback) {
+  goog.base(this);
+
+  /**
+   * The number of candidates to fetch.
+   *
+   * @type {number}
+   */
+  this.numOfCandidate = numOfCanddiate;
+
+  /** @protected {function(string, !Array.<string>, !Array.<number>)} */
+  this.callback = callback;
+};
+goog.inherits(i18n.input.chrome.DataSource, goog.events.EventTarget);
+
+
+/** @type {boolean} */
+i18n.input.chrome.DataSource.prototype.ready = false;
+
+
+/**
+ * The correction level.
+ *
+ * @protected {number}
+ */
+i18n.input.chrome.DataSource.prototype.correctionLevel = 0;
+
+
+/**
+ * The language code.
+ *
+ * @type {string}
+ * @protected
+ */
+i18n.input.chrome.DataSource.prototype.language;
+
+
+/**
+ * Sets the langauge code.
+ *
+ * @param {string} language The language code.
+ */
+i18n.input.chrome.DataSource.prototype.setLanguage = function(
+    language) {
+  this.language = language;
+};
+
+
+/**
+ * True if the datasource is ready.
+ *
+ * @return {boolean} .
+ */
+i18n.input.chrome.DataSource.prototype.isReady = function() {
+  return this.ready;
+};
+
+
+/**
+ * Creates the common payload for completion or prediction request.
+ *
+ * @return {!Object} The payload.
+ * @protected
+ */
+i18n.input.chrome.DataSource.prototype.createCommonPayload =
+    function() {
+  return {
+    'itc': this.getInputToolCode(),
+    'num': this.numOfCandidate
+  };
+};
+
+
+/**
+ * Gets the input tool code.
+ *
+ * @return {string} .
+ */
+i18n.input.chrome.DataSource.prototype.getInputToolCode = function() {
+  return this.language + '-t-i0-und';
+};
+
+
+/**
+ * Sends completion request.
+ *
+ * @param {string} query The query.
+ * @param {!Object=} opt_spatialData .
+ */
+i18n.input.chrome.DataSource.prototype.sendCompletionRequest =
+    goog.functions.NULL;
+
+
+/**
+ * Sends prediciton request.
+ *
+ * @param {string} query The query.
+ */
+i18n.input.chrome.DataSource.prototype.sendPredictionRequest =
+    goog.functions.NULL;
+
+
+/**
+ * Sets the correction level.
+ *
+ * @param {number} level .
+ */
+i18n.input.chrome.DataSource.prototype.setCorrectionLevel = function(level) {
+  this.correctionLevel = level;
+};
+
+
+/**
+ * The event type.
+ *
+ * @enum {string}
+ */
+i18n.input.chrome.DataSource.EventType = {
+  CANDIDATES_BACK: goog.events.getUniqueId('cb'),
+  READY: goog.events.getUniqueId('r')
+};
+
+
+
+/**
+ * The candidates is fetched back.
+ *
+ * @param {string} source The source.
+ * @param {!Array.<!Object>} candidates The candidates.
+ * @param {!Array.<number>=} opt_matchedLengths .
+ * @constructor
+ * @extends {goog.events.Event}
+ */
+i18n.input.chrome.DataSource.CandidatesBackEvent =
+    function(source, candidates, opt_matchedLengths) {
+  goog.base(this, i18n.input.chrome.DataSource.EventType.CANDIDATES_BACK);
+
+  /**
+   * The source.
+   *
+   * @type {string}
+   */
+  this.source = source;
+
+  /**
+   * The candidate list.
+   *
+   * @type {!Array.<!Object>}
+   */
+  this.candidates = candidates;
+
+  /** @type {Array.<number>} */
+  this.matchedLengths = opt_matchedLengths || null;
+};
+goog.inherits(i18n.input.chrome.DataSource.CandidatesBackEvent,
+    goog.events.Event);
+

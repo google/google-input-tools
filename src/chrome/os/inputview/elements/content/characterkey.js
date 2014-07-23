@@ -1,0 +1,255 @@
+goog.provide('i18n.input.chrome.inputview.elements.content.CharacterKey');
+
+goog.require('goog.array');
+goog.require('i18n.input.chrome.inputview.StateType');
+goog.require('i18n.input.chrome.inputview.SwipeDirection');
+goog.require('i18n.input.chrome.inputview.elements.ElementType');
+goog.require('i18n.input.chrome.inputview.elements.content.Character');
+goog.require('i18n.input.chrome.inputview.elements.content.CharacterModel');
+goog.require('i18n.input.chrome.inputview.elements.content.SoftKey');
+
+
+
+goog.scope(function() {
+var CharacterModel = i18n.input.chrome.inputview.elements.content.
+    CharacterModel;
+var Character = i18n.input.chrome.inputview.elements.content.Character;
+
+/**
+ * The class for a character key, it would be symbol or letter key which is
+ * different than modifier key and functional key.
+ *
+ * @param {string} id The id.
+ * @param {number} keyCode The key code.
+ * @param {!Array.<string>} characters The characters.
+ * @param {boolean} isLetterKey True if this is a letter key.
+ * @param {boolean} hasAltGrCharacterInTheKeyset True if there is altgr
+ *     character in the keyset.
+ * @param {boolean} alwaysRenderAltGrCharacter True if always renders the altgr
+ *     character.
+ * @param {!i18n.input.chrome.inputview.StateManager} stateManager The state
+ *     manager.
+ * @param {boolean} isRTL Whether the key shows characters in a RTL layout.
+ * @param {goog.events.EventTarget=} opt_eventTarget The event target.
+ * @constructor
+ * @extends {i18n.input.chrome.inputview.elements.content.SoftKey}
+ */
+i18n.input.chrome.inputview.elements.content.CharacterKey = function(id,
+    keyCode, characters, isLetterKey, hasAltGrCharacterInTheKeyset,
+    alwaysRenderAltGrCharacter, stateManager, isRTL, opt_eventTarget) {
+  goog.base(this, id, i18n.input.chrome.inputview.elements.ElementType.
+      CHARACTER_KEY, opt_eventTarget);
+
+  /**
+   * The key code for sending key events.
+   *
+   * @type {number}
+   */
+  this.keyCode = keyCode;
+
+  /**
+   * The content to shown in the soft key.
+   *
+   * @type {!Array.<string>}
+   */
+  this.characters = characters;
+
+  /**
+   * True if this is a letter key.
+   *
+   * @type {boolean}
+   */
+  this.isLetterKey = isLetterKey;
+
+  /**
+   * True if there is altgr character in the keyset.
+   *
+   * @type {boolean}
+   * @private
+   */
+  this.hasAltGrCharacterInTheKeyset_ = hasAltGrCharacterInTheKeyset;
+
+  /**
+   * The state manager.
+   *
+   * @type {!i18n.input.chrome.inputview.StateManager}
+   * @private
+   */
+  this.stateManager_ = stateManager;
+
+  /**
+   * Whether the key shows characters in a RTL layout.
+   *
+   * @type {boolean}
+   * @private
+   */
+  this.isRTL_ = isRTL;
+
+  /**
+   * Whether to always renders the altgr character..
+   *
+   * @type {boolean}
+   * @private
+   */
+  this.alwaysRenderAltGrCharacter_ = alwaysRenderAltGrCharacter;
+
+  this.pointerConfig.longPressWithPointerUp = true;
+  this.pointerConfig.longPressDelay = 500;
+};
+goog.inherits(i18n.input.chrome.inputview.elements.content.CharacterKey,
+    i18n.input.chrome.inputview.elements.content.SoftKey);
+var CharacterKey = i18n.input.chrome.inputview.elements.content.CharacterKey;
+
+
+/**
+ * The flickerred character.
+ *
+ * @type {string}
+ */
+CharacterKey.prototype.flickerredCharacter = '';
+
+
+/**
+ * The state map.
+ *
+ * @type {!Array.<number>}
+ * @private
+ */
+CharacterKey.STATE_LIST_ = [
+  i18n.input.chrome.inputview.StateType.DEFAULT,
+  i18n.input.chrome.inputview.StateType.SHIFT,
+  i18n.input.chrome.inputview.StateType.ALTGR,
+  i18n.input.chrome.inputview.StateType.ALTGR |
+      i18n.input.chrome.inputview.StateType.SHIFT
+];
+
+
+/** @override */
+CharacterKey.prototype.createDom = function() {
+  goog.base(this, 'createDom');
+
+  var elem = this.getElement();
+  var dom = this.getDomHelper();
+
+  for (var i = 0; i < this.characters.length; i++) {
+    var ch = this.characters[i];
+    if (ch && ch != '\x00') {
+      var model = new CharacterModel(ch, this.isLetterKey,
+          this.hasAltGrCharacterInTheKeyset_,
+          this.alwaysRenderAltGrCharacter_,
+          CharacterKey.STATE_LIST_[i],
+          this.stateManager_);
+      var character = new Character(this.id + '-' + i, model, this.isRTL_);
+      this.addChild(character, true);
+    }
+  }
+};
+
+
+/** @override */
+CharacterKey.prototype.resize = function(width,
+    height) {
+  goog.base(this, 'resize', width, height);
+
+  for (var i = 0; i < this.getChildCount(); i++) {
+    var child = /** @type {!i18n.input.chrome.inputview.elements.Element} */ (
+        this.getChildAt(i));
+    child.resize(this.availableWidth, this.availableHeight);
+  }
+};
+
+
+/**
+ * Gets the alternative characters.
+ *
+ * @return {!Array.<string>} The characters.
+ */
+CharacterKey.prototype.getAltCharacters =
+    function() {
+  var altCharacters = [];
+  for (var i = 0; i < this.characters.length; i++) {
+    var ch = this.characters[i];
+    if (ch && ch != '\x00' && ch != this.getActiveCharacter()) {
+      goog.array.insert(altCharacters, ch);
+    }
+  }
+  return altCharacters;
+};
+
+
+/**
+ * The active letter.
+ *
+ * @return {string} The active letter.
+ */
+CharacterKey.prototype.getActiveCharacter =
+    function() {
+  if (this.flickerredCharacter) {
+    return this.flickerredCharacter;
+  }
+
+  for (var i = 0; i < this.getChildCount(); i++) {
+    var child = /** @type {!i18n.input.chrome.inputview.elements.content.
+        Character} */ (this.getChildAt(i));
+    if (child.isHighlighted()) {
+      return child.getContent();
+    }
+  }
+  return this.getChildAt(0).getContent();
+};
+
+
+/**
+ * Gets the character by gesture direction.
+ *
+ * @param {boolean} upOrDown True if up, false if down.
+ * @return {string} The character content.
+ */
+CharacterKey.prototype.getCharacterByGesture =
+    function(upOrDown) {
+  var hasAltGrState = this.stateManager_.hasState(
+      i18n.input.chrome.inputview.StateType.ALTGR);
+  var hasShiftState = this.stateManager_.hasState(i18n.input.chrome.inputview.
+      StateType.SHIFT);
+
+  if (upOrDown == hasShiftState) {
+    // When shift is on, we only take swipe down, otherwise we only
+    // take swipe up.
+    return '';
+  }
+
+  // The index is based on the characters in order:
+  // 0: Default
+  // 1: Shift
+  // 2: ALTGR
+  // 3: SHIFT + ALTGR
+  var index = 0;
+  if (upOrDown && hasAltGrState) {
+    index = 3;
+  } else if (upOrDown && !hasAltGrState) {
+    index = 1;
+  } else if (!upOrDown && hasAltGrState) {
+    index = 2;
+  }
+
+  var character = index >= this.getChildCount() ? null :
+      /** @type {!i18n.input.chrome.inputview.elements.content.Character} */
+      (this.getChildAt(index));
+  if (character && character.isVisible()) {
+    return character.getContent();
+  }
+  return '';
+};
+
+
+/** @override */
+CharacterKey.prototype.update = function() {
+  goog.base(this, 'update');
+
+  this.pointerConfig.flickerDirection = this.stateManager_.hasState(
+      i18n.input.chrome.inputview.StateType.SHIFT) ?
+      i18n.input.chrome.inputview.SwipeDirection.DOWN :
+      i18n.input.chrome.inputview.SwipeDirection.UP;
+};
+
+});  // goog.scope

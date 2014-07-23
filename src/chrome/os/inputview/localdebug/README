@@ -1,0 +1,8 @@
+./run.sh
+
+then you can visit:
+http://localhost:5050
+
+pick up different keyboard by cgi parameter 'id', 'language', for example:
+http://localhost:5050/?id=us&language=en-US&
+http://localhost:5050/?id=us-intl&language=en&
