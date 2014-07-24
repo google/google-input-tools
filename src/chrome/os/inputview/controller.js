@@ -1,3 +1,16 @@
+// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
+// limitations under the License.
+// See the License for the specific language governing permissions and
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// distributed under the License is distributed on an "AS-IS" BASIS,
+// Unless required by applicable law or agreed to in writing, software
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// You may obtain a copy of the License at
+// you may not use this file except in compliance with the License.
+// Licensed under the Apache License, Version 2.0 (the "License");
+//
 goog.provide('i18n.input.chrome.inputview.Controller');
 
 goog.require('goog.Disposable');
@@ -148,6 +161,12 @@ i18n.input.chrome.inputview.Controller = function(keyset, languageCode,
 goog.inherits(i18n.input.chrome.inputview.Controller,
     goog.Disposable);
 var Controller = i18n.input.chrome.inputview.Controller;
+
+
+/**
+ * @define {boolean} Flag to disable handwriting.
+ */
+Controller.DISABLE_HWT = false;
 
 
 /**
@@ -560,8 +579,8 @@ Controller.prototype.executeCommand_ = function(command, opt_arg) {
       break;
 
     case CommandEnum.OPEN_SETTING:
-      if (chrome.virtualKeyboardPrivate.openSettings) {
-        chrome.virtualKeyboardPrivate.openSettings();
+      if (window.inputview) {
+        inputview.openSettings();
       }
       break;
   }
@@ -859,11 +878,12 @@ Controller.prototype.handlePointerEventForSoftKey_ = function(softKey, e) {
             this.model_.settings.supportCompact;
         var self = this;
         var currentKeyset = this.currentKeyset_;
-        var hasHwt = goog.object.contains(
+        var hasHwt = !Controller.DISABLE_HWT && goog.object.contains(
             InputToolCode, this.getHwtInputToolCode_());
+        var enableSettings = window.inputview && inputview.openSettings;
         this.adapter_.getInputMethods(function(inputMethods) {
           self.container_.menuView.show(key, currentKeyset, isCompact,
-              enableCompact, inputMethods, hasHwt);
+              enableCompact, inputMethods, hasHwt, enableSettings);
         });
       }
       break;

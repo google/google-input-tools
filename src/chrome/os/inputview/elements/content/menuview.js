@@ -1,3 +1,16 @@
+// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
+// limitations under the License.
+// See the License for the specific language governing permissions and
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// distributed under the License is distributed on an "AS-IS" BASIS,
+// Unless required by applicable law or agreed to in writing, software
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// You may obtain a copy of the License at
+// you may not use this file except in compliance with the License.
+// Licensed under the Apache License, Version 2.0 (the "License");
+//
 goog.provide('i18n.input.chrome.inputview.elements.content.MenuView');
 
 goog.require('goog.dom.TagName');
@@ -122,9 +135,10 @@ MenuView.prototype.enterDocument = function() {
  *     key enabled compact layout.
  * @param {?Array.<Object>} inputMethods The list of activated input methods.
  * @param {boolean} hasHwt Whether to add handwriting button.
+ * @param {boolean} enableSettings Whether to add a link to settings page.
  */
 MenuView.prototype.show = function(key, currentKeysetId, isCompact,
-    enableCompactLayout, inputMethods, hasHwt) {
+    enableCompactLayout, inputMethods, hasHwt, enableSettings) {
   var ElementType = i18n.input.chrome.inputview.elements.ElementType;
   var dom = this.getDomHelper();
   if (key.type != ElementType.MENU_KEY) {
@@ -145,7 +159,9 @@ MenuView.prototype.show = function(key, currentKeysetId, isCompact,
   totalHeight += this.addInputMethodItems_(inputMethods);
   totalHeight += this.addLayoutSwitcherItem_(key, currentKeysetId, isCompact,
       enableCompactLayout);
-  totalHeight += this.addFooterItems_(hasHwt);
+  if (hasHwt || enableSettings) {
+    totalHeight += this.addFooterItems_(hasHwt);
+  }
 
 
   var left = x;

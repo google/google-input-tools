@@ -1,6 +1,6 @@
 {
   "name": "Chrome OS XKB",
-  "version": "1.0.2.0",
+  "version": "1.0.3.0",
   "description": "Chrome OS XKB",
   "default_locale": "en",
   "incognito": "split",
@@ -10,7 +10,8 @@
     "accessibilityFeatures.read"
   ],
   "background": {
-    "page": "background.html"
+    "page": "background.html",
+    "persistent": false
   },
   "input_components": [
     {
