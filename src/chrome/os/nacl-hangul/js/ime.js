@@ -766,7 +766,7 @@ HangulIme.prototype.handleKey_ = function(keyData) {
     case HangulIme.State.HANJA:
       // If Hanja mode is transfered by HanjaKey, and a valid char key is
       // pressed, then do nothing and the char key is consumed
-      if (!this.autoHanjaConversion_) {
+      if (!this.autoHanjaConversion_){
         return true;
       }
       // Or else Hanja mode is transfered automatically by HanjaMode, append
@@ -982,7 +982,6 @@ HangulIme.prototype.onDeactivated = function(engineID) {
 HangulIme.prototype.onFocus = function(context) {
   this.context_ = context;
   this.clear_();
-  this.update_();
 };
 
 
