@@ -857,7 +857,7 @@ HangulIme.prototype.handleSpecialKey_ = function(keyData) {
   }
 
   // When pressing Esc, discard preedit text and reset
-  if (keyData['code'] === 'Esc') {
+  if (keyData['code'] === 'Escape') {
     if (this.state_ === HangulIme.State.HANGUL ||
         this.state_ === HangulIme.State.HANJA) {
       this.clear_();
