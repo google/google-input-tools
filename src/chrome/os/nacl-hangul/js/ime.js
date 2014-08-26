@@ -434,11 +434,6 @@ HangulIme.prototype.getPreeditText_ = function() {
  */
 HangulIme.prototype.updatePreedit_ = function() {
   if (this.state_ === HangulIme.State.RESET) {
-    chrome.input.ime.setComposition({
-      'contextID': this.context_.contextID,
-      'text': '',
-      'cursor': 0
-    });
     return;
   }
 
