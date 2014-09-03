@@ -82,6 +82,9 @@ Candidate.prototype.createDom = function() {
   var dom = this.getDomHelper();
   var elem = this.getElement();
   goog.dom.classlist.add(elem, Css.CANDIDATE);
+  if (this.candidate['isEmoji']) {
+    goog.dom.classlist.add(elem, Css.EMOJI_FONT);
+  }
   dom.setTextContent(elem, this.candidate[Name.CANDIDATE]);
   elem.style.height = this.height + 'px';
   if (this.width > 0) {
@@ -89,6 +92,9 @@ Candidate.prototype.createDom = function() {
   }
   if (this.isDefault) {
     goog.dom.classlist.add(elem, Css.CANDIDATE_DEFAULT);
+  }
+  if (!!this.candidate[Name.IS_AUTOCORRECT]) {
+    goog.dom.classlist.add(elem, Css.CANDIDATE_AUTOCORRECT);
   }
 };
 

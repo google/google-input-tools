@@ -14,19 +14,17 @@
 goog.provide('i18n.input.chrome.Background');
 
 goog.require('goog.Disposable');
-goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
+goog.require('goog.object');
 goog.require('i18n.input.chrome.EventType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 goog.require('i18n.input.chrome.xkb.Controller');
-goog.require('i18n.input.lang.InputToolCode');
 
 
 
 goog.scope(function() {
-var InputToolCode = i18n.input.lang.InputToolCode;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
 
@@ -41,11 +39,6 @@ var Type = i18n.input.chrome.message.Type;
  */
 i18n.input.chrome.Background = function() {
   goog.base(this);
-  /**
-   * Whether the JavaScript side code is handling an event or not.
-   * @private {boolean}
-   */
-  this.isHandlingEvent_ = false;
 
   /**
    * Array of waiting event handlers.
@@ -72,13 +65,21 @@ i18n.input.chrome.Background = function() {
   this.activateFn_ = this.onActivate.bind(this);
 
   /** @private {!Function} */
-  this.deactivateFn_ = this.wrapAsyncHandler_(this.onDeactivate_);
+  this.deactivateFn_ = this.onDeactivate_.bind(this);
 
   /** @private {!Function} */
-  this.focusFn_ = this.wrapAsyncHandler_(this.onFocus_);
+  this.focusFn_ = this.onFocus.bind(this);
 
   /** @private {!Function} */
-  this.blurFn_ = this.wrapAsyncHandler_(this.onBlur_);
+  this.blurFn_ = this.onBlur.bind(this);
+
+  /** @private {!Function} */
+  this.onInputContextUpdateFn_ = this.wrapAsyncHandler_(
+      this.onInputContextUpdate_);
+
+  /** @private {!Function} */
+  this.onSurroundingTextFn_ = this.wrapAsyncHandler_(
+      this.onSurroundingTextChanged_);
 
   /** @private {!Function} */
   this.onKeyEventFn_ = this.wrapAsyncHandler_(
@@ -93,45 +94,37 @@ i18n.input.chrome.Background = function() {
       this.onMenuItemActivated_);
 
   /** @private {!Function} */
-  this.onInputContextUpdateFn_ = this.wrapAsyncHandler_(
-      this.onInputContextUpdate_);
-
-  /** @private {!Function} */
-  this.onSurroundingTextFn_ = this.wrapAsyncHandler_(
-      this.onSurroundingTextChanged_);
-
-  /** @private {!Function} */
   this.onResetFn_ = this.wrapAsyncHandler_(this.onReset_);
 
-  if (Background.IS_XKB) {
-    this.activeController = new i18n.input.chrome.xkb.Controller();
-    this.controllers[ControllerType.XKB] = this.activeController;
-  }
 
-  /** @private {!goog.events.EventHandler} */
-  this.eventHandler_ = new goog.events.EventHandler(this);
+  /**
+   * The active controller.
+   *
+   * @protected {!i18n.input.chrome.AbstractController}
+   */
+  this.activeController = new i18n.input.chrome.xkb.Controller();
+  this.controllers[ControllerType.XKB] = this.activeController;
+
+  /** @protected {!goog.events.EventHandler} */
+  this.eventHandler = new goog.events.EventHandler(this);
 
   // Sets up a listener which communicate with the
   // option page or inputview
   // window.
   chrome.runtime.onMessage.addListener(this.wrapAsyncHandler_(this.onMessage));
-  this.eventHandler_.listen(
+  this.eventHandler.listen(
       this.eventTarget,
       i18n.input.chrome.EventType.EXECUTE_WAITING_EVENT,
-      this.executeWaitingEventHandlers_);
+      this.executeWaitingEventHandlers);
 
-  if (!Background.IS_XKB) {
-    this.init_();
-  }
+  this.init_();
 };
 goog.inherits(i18n.input.chrome.Background, goog.Disposable);
 var Background = i18n.input.chrome.Background;
 
 
-/**
- * @define {boolean} Flag to indicate whether it is xkb.
- */
-Background.IS_XKB = false;
+/** @protected {string} */
+Background.prototype.engineId = '';
 
 
 /**
@@ -154,7 +147,9 @@ Background.ControllerType = {
   JA: 4,
   HWT: 5,
   XKB: 6,
-  VKD: 7
+  VKD: 7,
+  KOREAN: 8,
+  EMOJI: 9
 };
 var ControllerType = Background.ControllerType;
 
@@ -168,20 +163,12 @@ Background.MAX_QUEUE_LEN_ = 255;
 
 
 /**
- * The active controller.
- *
- * @protected {i18n.input.chrome.AbstractController}
- */
-Background.prototype.activeController = null;
-
-
-/**
  * The previous active controller, when handwriting panel switch back to
  * previous inputtool, need set previous active controller.
  *
- * @protected {i18n.input.chrome.AbstractController}
+ * @protected {!i18n.input.chrome.AbstractController}
  */
-Background.prototype.previousActiveController = null;
+Background.prototype.previousActiveController;
 
 
 /**
@@ -267,7 +254,7 @@ Background.prototype.init_ = function() {
   }
 
   this.initialized_ = true;
-  window['setContext'] = this.onFocus_.bind(this);
+  window['setContext'] = this.onFocus.bind(this);
 };
 
 
@@ -288,8 +275,18 @@ Background.prototype.wrapAsyncHandler_ = function(handler) {
                   Function.prototype.apply.bind(handler, this,
                       Array.prototype.slice.call(arguments, 1)));
             }
-            this.executeWaitingEventHandlers_();
+            this.executeWaitingEventHandlers();
           })).bind(this, handler);
+};
+
+
+/**
+ * Gets whether the active controller is ready.
+ *
+ * @return {boolean} Whether the active controller is ready.
+ */
+Background.prototype.isControllerReady = function() {
+  return this.activeController.isReady();
 };
 
 
@@ -298,23 +295,17 @@ Background.prototype.wrapAsyncHandler_ = function(handler) {
  * This function is used to prevent the event handlers from being executed while
  * the NaCl module is being initialized or another event handler is being
  * executed or waiting for the callback from the NaCl module.
- * @private
+ *
+ * @protected
  */
-Background.prototype.executeWaitingEventHandlers_ = function() {
-  // Consider other Input Tools Nacl module is always ready other than
-  // Japanese moudle.
-  while ((!this.activeController ||
-          !this.activeController.isNaclReady ||
-          this.activeController.isNaclReady()) &&
-         !this.isHandlingEvent_ &&
-         this.waitingEventHandlers.length != 0) {
-    this.isHandlingEvent_ = true;
+Background.prototype.executeWaitingEventHandlers = function() {
+  while (this.isControllerReady() && this.waitingEventHandlers.length > 0) {
+    /** @preserveTry */
     try {
       this.waitingEventHandlers.shift()();
     } catch (e) {
       console.log(e.stack);
     }
-    this.isHandlingEvent_ = false;
   }
 };
 
@@ -330,16 +321,15 @@ Background.prototype.executeWaitingEventHandlers_ = function() {
  *     order to send a response asynchronously.
  */
 Background.prototype.onMessage = function(message, sender, sendResponse) {
+  if (message[Name.MSG_TYPE] == Type.VISIBILITY_CHANGE &&
+      message[Name.VISIBILITY]) {
+    chrome.input.ime.setCandidateWindowProperties(goog.object.create(
+        Name.ENGINE_ID, this.engineId,
+        Name.PROPERTIES, goog.object.create(
+            Name.VISIBLE, false)));
+  }
   if (this.activeController) {
     this.activeController.processMessage(message, sender, sendResponse);
-  }
-  if (Background.IS_XKB) {
-    var msgType = message[Name.MSG_TYPE];
-    if (msgType == Type.CONNECT) {
-      this.init_();
-    } else if (msgType == Type.DISCONNECT) {
-      this.uninit_();
-    }
   }
   return false;
 };
@@ -347,11 +337,14 @@ Background.prototype.onMessage = function(message, sender, sendResponse) {
 
 /**
  * Callback method called when IME is activated.
+ *
  * @param {string} engineId ID of the engine.
+ * @param {string} screenType The current screen type.
  */
-Background.prototype.onActivate = function(engineId) {
-  // Activate the new Input Tools. So cleans up the previous queue.
-  this.waitingEventHandlers = [];
+Background.prototype.onActivate = function(engineId, screenType) {
+  chrome.runtime.onSuspend.addListener((function() {
+    this.uninit_();
+  }).bind(this));
 
   if (this.activeController) {
     // Resets the previous controller.
@@ -364,6 +357,7 @@ Background.prototype.onActivate = function(engineId) {
     this.controllers[ControllerType.XKB] = this.activeController;
   }
   this.activeController.activate(engineId);
+  this.activeController.setScreenType(screenType);
   if (this.context) {
     this.activeController.register(this.context);
   }
@@ -383,9 +377,9 @@ Background.prototype.onDeactivate_ = function(engineID) {
 /**
  * Callback method called when a context acquires a focus.
  * @param {!InputContext} context The context information.
- * @private
+ * @protected
  */
-Background.prototype.onFocus_ = function(context) {
+Background.prototype.onFocus = function(context) {
   this.context = context;
   this.activeController && this.activeController.register(context);
 };
@@ -393,10 +387,12 @@ Background.prototype.onFocus_ = function(context) {
 
 /**
  * Callback method called when a context lost a focus.
+ *
  * @param {number} contextID ID of the context.
- * @private
+ * @param {string=} opt_screen The screen type.
+ * @protected
  */
-Background.prototype.onBlur_ = function(contextID) {
+Background.prototype.onBlur = function(contextID, opt_screen) {
   this.context = null;
   this.activeController && this.activeController.unregister();
 };
@@ -408,7 +404,7 @@ Background.prototype.onBlur_ = function(contextID) {
  * @private
  */
 Background.prototype.onReset_ = function(engineID) {
-  this.activeController && this.activeController.reset();
+  this.activeController && this.activeController.onCompositionCanceled();
 };
 
 
@@ -433,6 +429,8 @@ Background.prototype.onKeyEventAsync_ = function(engineID, keyData) {
     if (goog.isDef(ret)) {
       chrome.input.ime.keyEventHandled(keyData.requestId, ret);
     }
+  } else {
+    chrome.input.ime.keyEventHandled(keyData.requestId, false);
   }
 };
 
@@ -489,7 +487,7 @@ Background.prototype.onSurroundingTextChanged_ = function(engineID, info) {
 
 /** @override */
 Background.prototype.disposeInternal = function() {
-  goog.dispose(this.eventHandler_);
+  goog.dispose(this.eventHandler);
   goog.base(this, 'disposeInternal');
 };
 

@@ -17,7 +17,7 @@ goog.require('i18n.input.chrome.inputview.layouts.util');
 
 
 (function() {
-  i18n.input.chrome.inputview.layouts.util.keyIdPrefix = 'compactkbd-k-';
+  i18n.input.chrome.inputview.layouts.util.setPrefix('compactkbd-k-');
 
   var topThreeRows = i18n.input.chrome.inputview.layouts.RowsOfCompact.create();
   var spaceRow =

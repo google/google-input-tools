@@ -17,16 +17,42 @@ goog.require('i18n.input.chrome.inputview.Controller');
 
 (function() {
   window.onload = function() {
-    var uri = new goog.Uri(window.location.href);
-    var code = uri.getParameterValue('id') || 'us';
-    var language = uri.getParameterValue('language') || 'en';
-    var passwordLayout = uri.getParameterValue('passwordLayout') || 'us';
-    var name = chrome.i18n.getMessage(
-        uri.getParameterValue('name') || 'English');
+    var code, language, passwordLayout, name;
+
+    var fetchHashParam = function() {
+      var hash = window.location.hash;
+      if (!hash) {
+        return false;
+      }
+      var param = {};
+      hash.slice(1).split('&').forEach(function(s) {
+        var pair = s.split('=');
+        param[pair[0]] = pair[1];
+      });
+      code = param['id'] || 'us';
+      language = param['language'] || 'en';
+      passwordLayout = param['passwordLayout'] || 'us';
+      name = chrome.i18n.getMessage(param['name'] || 'English');
+      return true;
+    };
+
+    if (!fetchHashParam()) {
+      var uri = new goog.Uri(window.location.href);
+      code = uri.getParameterValue('id') || 'us';
+      language = uri.getParameterValue('language') || 'en';
+      passwordLayout = uri.getParameterValue('passwordLayout') || 'us';
+      name = chrome.i18n.getMessage(uri.getParameterValue('name') || 'English');
+    }
 
     var controller = new i18n.input.chrome.inputview.Controller(code,
         language, passwordLayout, name);
-    window.unload = function() {
+
+    window.onhashchange = function() {
+      fetchHashParam();
+      controller.initialize(code, language, passwordLayout, name);
+    };
+
+    window.onbeforeunload = function() {
       goog.dispose(controller);
     };
 

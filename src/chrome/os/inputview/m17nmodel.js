@@ -66,10 +66,13 @@ i18n.input.chrome.inputview.M17nModel.prototype.layoutView_;
 /**
  * Loads the configuration.
  *
- * @param {string} lang The language code.
+ * @param {string} lang The m17n keyboard layout code (with 'm17n:' prefix).
  */
 i18n.input.chrome.inputview.M17nModel.prototype.loadConfig = function(lang) {
-  this.model_.loadLayout(lang);
+  var m17nMatches = lang.match(/^m17n:(.*)/);
+  if (m17nMatches && m17nMatches[1]) {
+    this.model_.loadLayout(m17nMatches[1]);
+  }
 };
 
 
@@ -95,7 +98,8 @@ i18n.input.chrome.inputview.M17nModel.prototype.onLayoutLoaded_ = function(
     keyCharacters.push(characters);
   }
   keyCharacters.push(['\u0020', '\u0020']);
-  var hasAltGrKey = !!layoutView.view.mappings['c'];
+  var hasAltGrKey = !!layoutView.view.mappings['c'] &&
+      layoutView.view.mappings['c'] != layoutView.view.mappings[''];
   var skvPrefix = is102 ? '102kbd-k-' : '101kbd-k-';
   var skPrefix = layoutView.view.id + '-k-';
   var data = i18n.input.chrome.inputview.content.util.createData(keyCharacters,
@@ -104,7 +108,7 @@ i18n.input.chrome.inputview.M17nModel.prototype.onLayoutLoaded_ = function(
     data[i18n.input.chrome.inputview.SpecNodeName.TITLE] =
         layoutView.view.title;
     data[i18n.input.chrome.inputview.SpecNodeName.ID] =
-        e.layoutCode;
+        'm17n:' + e.layoutCode;
     this.dispatchEvent(new i18n.input.chrome.inputview.events.
         ConfigLoadedEvent(data));
   }
@@ -126,11 +130,17 @@ i18n.input.chrome.inputview.M17nModel.prototype.findCharacters_ = function(
     '',
     's',
     'c',
-    'sc'
+    'sc',
+    'l',
+    'sl',
+    'cl',
+    'scl'
   ];
   for (var i = 0; i < states.length; i++) {
     if (mappings[states[i]] && mappings[states[i]][code]) {
       characters[i] = mappings[states[i]][code][1];
+    } else if (code == '\u0020') {
+      characters[i] = '\u0020';
     } else {
       characters[i] = '';
     }

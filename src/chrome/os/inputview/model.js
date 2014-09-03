@@ -13,13 +13,18 @@
 //
 goog.provide('i18n.input.chrome.inputview.Model');
 
+goog.require('goog.array');
 goog.require('goog.events.EventTarget');
 goog.require('goog.net.jsloader');
 goog.require('i18n.input.chrome.inputview.ConditionName');
 goog.require('i18n.input.chrome.inputview.Settings');
+goog.require('i18n.input.chrome.inputview.SpecNodeName');
 goog.require('i18n.input.chrome.inputview.StateManager');
 goog.require('i18n.input.chrome.inputview.events.ConfigLoadedEvent');
 goog.require('i18n.input.chrome.inputview.events.LayoutLoadedEvent');
+
+goog.scope(function() {
+var SpecNodeName = i18n.input.chrome.inputview.SpecNodeName;
 
 
 
@@ -45,12 +50,16 @@ i18n.input.chrome.inputview.Model = function() {
    */
   this.settings = new i18n.input.chrome.inputview.Settings();
 
+  /** @private {!Array.<string>} */
+  this.loadingResources_ = [];
+
   goog.exportSymbol('google.ime.chrome.inputview.onLayoutLoaded',
       goog.bind(this.onLayoutLoaded_, this));
   goog.exportSymbol('google.ime.chrome.inputview.onConfigLoaded',
       goog.bind(this.onConfigLoaded_, this));
 };
-goog.inherits(i18n.input.chrome.inputview.Model, goog.events.EventTarget);
+var Model = i18n.input.chrome.inputview.Model;
+goog.inherits(Model, goog.events.EventTarget);
 
 
 /**
@@ -59,7 +68,7 @@ goog.inherits(i18n.input.chrome.inputview.Model, goog.events.EventTarget);
  * @type {string}
  * @private
  */
-i18n.input.chrome.inputview.Model.LAYOUTS_PATH_ =
+Model.LAYOUTS_PATH_ =
     '/inputview_layouts/';
 
 
@@ -69,7 +78,7 @@ i18n.input.chrome.inputview.Model.LAYOUTS_PATH_ =
  * @type {string}
  * @private
  */
-i18n.input.chrome.inputview.Model.CONTENT_PATH_ =
+Model.CONTENT_PATH_ =
     '/config/';
 
 
@@ -79,9 +88,37 @@ i18n.input.chrome.inputview.Model.CONTENT_PATH_ =
  * @param {!Object} data The configuration data.
  * @private
  */
-i18n.input.chrome.inputview.Model.prototype.onConfigLoaded_ = function(data) {
+Model.prototype.onConfigLoaded_ = function(data) {
+  goog.array.remove(this.loadingResources_, this.getConfigUrl_(
+      data[SpecNodeName.ID]));
   this.dispatchEvent(new i18n.input.chrome.inputview.events.ConfigLoadedEvent(
       data));
+};
+
+
+/**
+ * Gets the layout url.
+ *
+ * @param {string} layout .
+ * @private
+ * @return {string} The url of the layout data.
+ */
+Model.prototype.getLayoutUrl_ = function(layout) {
+  return Model.LAYOUTS_PATH_ + layout + '.js';
+};
+
+
+/**
+ * Gets the keyset configuration url.
+ *
+ * @param {string} keyset .
+ * @private
+ * @return {string} .
+ */
+Model.prototype.getConfigUrl_ = function(keyset) {
+  // Strips out all the suffixes in the keyboard code.
+  var configId = keyset.replace(/\..*$/, '');
+  return Model.CONTENT_PATH_ + configId + '.js';
 };
 
 
@@ -91,7 +128,9 @@ i18n.input.chrome.inputview.Model.prototype.onConfigLoaded_ = function(data) {
  * @param {!Object} data The layout data.
  * @private
  */
-i18n.input.chrome.inputview.Model.prototype.onLayoutLoaded_ = function(data) {
+Model.prototype.onLayoutLoaded_ = function(data) {
+  goog.array.remove(this.loadingResources_, this.getLayoutUrl_(data[
+      SpecNodeName.LAYOUT_ID]));
   this.dispatchEvent(new i18n.input.chrome.inputview.events.LayoutLoadedEvent(
       data));
 };
@@ -102,9 +141,12 @@ i18n.input.chrome.inputview.Model.prototype.onLayoutLoaded_ = function(data) {
  *
  * @param {string} layout The layout name.
  */
-i18n.input.chrome.inputview.Model.prototype.loadLayout = function(layout) {
-  var url = i18n.input.chrome.inputview.Model.LAYOUTS_PATH_ + layout + '.js';
-  goog.net.jsloader.load(url);
+Model.prototype.loadLayout = function(layout) {
+  var url = this.getLayoutUrl_(layout);
+  if (!goog.array.contains(this.loadingResources_, url)) {
+    this.loadingResources_.push(url);
+    goog.net.jsloader.load(url);
+  }
 };
 
 
@@ -113,12 +155,12 @@ i18n.input.chrome.inputview.Model.prototype.loadLayout = function(layout) {
  *
  * @param {string} keyboardCode The keyboard code.
  */
-i18n.input.chrome.inputview.Model.prototype.loadConfig = function(
-    keyboardCode) {
-  // Strips out all the suffixes in the keyboard code.
-  var configId = keyboardCode.replace(/\..*$/, '');
-  var url = i18n.input.chrome.inputview.Model.CONTENT_PATH_ + configId +
-      '.js';
-  goog.net.jsloader.load(url);
+Model.prototype.loadConfig = function(keyboardCode) {
+  var url = this.getConfigUrl_(keyboardCode);
+  if (!goog.array.contains(this.loadingResources_, url)) {
+    this.loadingResources_.push(url);
+    goog.net.jsloader.load(url);
+  }
 };
 
+});  // goog.scope

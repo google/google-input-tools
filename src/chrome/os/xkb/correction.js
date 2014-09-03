@@ -27,5 +27,62 @@ i18n.input.chrome.xkb.Correction = function(source, target) {
 
   /** @type {string} */
   this.target = target;
+
+  /**
+   * True if in the process of reverting correction.
+   *
+   * @type {boolean}
+   * */
+  this.reverting = false;
+
+  /**
+   * True if the auto-correct is triggerred by enter.
+   *
+   * @type {boolean}
+   */
+  this.isTriggerredByEnter = false;
+};
+
+
+/**
+ * True to cancel this correction.
+ *
+ * @param {string} text .
+ * @return {boolean} .
+ */
+i18n.input.chrome.xkb.Correction.prototype.shouldCancel = function(text) {
+  var cancel = !goog.string.endsWith(text, this.target);
+  if (this.isTriggerredByEnter && cancel) {
+    cancel = !goog.string.endsWith(text, this.target + '\n');
+  }
+  return cancel;
+};
+
+
+/**
+ * Gets the offset to delete.
+ *
+ * @param {string} text .
+ * @return {number} .
+ */
+i18n.input.chrome.xkb.Correction.prototype.getTargetLength = function(text) {
+  if (this.isTriggerredByEnter && goog.string.endsWith(text, '\n')) {
+    return this.target.length + 1;
+  }
+  return this.target.length;
+};
+
+
+/**
+ * Gets the source of the correction.
+ *
+ * @param {string} text .
+ * @return {string} .
+ */
+i18n.input.chrome.xkb.Correction.prototype.getSource = function(text) {
+  if (this.isTriggerredByEnter && goog.string.endsWith(text, '\n')) {
+    return this.source + '\n';
+  }
+  return this.source;
 };
 

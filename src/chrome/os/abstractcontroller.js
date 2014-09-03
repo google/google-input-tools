@@ -13,8 +13,8 @@
 //
 goog.provide('i18n.input.chrome.AbstractController');
 
-goog.require('goog.Disposable');
 goog.require('goog.array');
+goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.object');
@@ -34,14 +34,14 @@ var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
  * Abstract controller defines the abstracted operations to IME events which
  * specific IME want to integrated into Google Input Tools.
  *
- * @extends {goog.Disposable}
+ * @extends {goog.events.EventTarget}
  * @constructor
  */
 i18n.input.chrome.AbstractController = function() {
   goog.base(this);
 };
 var AbstractController = i18n.input.chrome.AbstractController;
-goog.inherits(AbstractController, goog.Disposable);
+goog.inherits(AbstractController, goog.events.EventTarget);
 
 
 /**
@@ -53,7 +53,7 @@ AbstractController.prototype.requestId = 0;
 
 
 /**
- * The funcitonal keys.
+ * The functional keys.
  *
  * @type {!Array.<string>}
  */
@@ -89,11 +89,32 @@ AbstractController.prototype.standalone = true;
 
 
 /**
+ * The current screen type.
+ *
+ * @protected {string}
+ */
+AbstractController.prototype.screenType = 'normal';
+
+
+/**
+ * Sets the current screen type.
+ *
+ * @param {string} screenType .
+ */
+AbstractController.prototype.setScreenType = function(screenType) {
+  this.screenType = screenType;
+  this.updateSettings({});
+};
+
+
+/**
  * Activates an input tool.
  *
  * @param {string} inputToolCode The input tool or engine ID.
  */
-AbstractController.prototype.activate = goog.functions.NULL;
+AbstractController.prototype.activate = function(inputToolCode) {
+  this.updateOptions(inputToolCode);
+};
 
 
 /**
@@ -107,6 +128,7 @@ AbstractController.prototype.deactivate = goog.functions.NULL;
  * @param {!InputContext} context context information.
  */
 AbstractController.prototype.onInputContextUpdate = goog.functions.NULL;
+
 
 /**
  * Register a context.
@@ -130,6 +152,12 @@ AbstractController.prototype.unregister = function() {
  * Resets the current context.
  */
 AbstractController.prototype.reset = goog.functions.NULL;
+
+
+/**
+ * Callback when composition is cancelled by system.
+ */
+AbstractController.prototype.onCompositionCanceled = goog.functions.NULL;
 
 
 /**
@@ -184,8 +212,35 @@ AbstractController.prototype.handleSendKeyEventMessage_ = function(keyData) {
   var kData = /** @type {!ChromeKeyboardEvent} */ (keyData);
   if (this.isNonCharacterKeyEvent(kData)) {
     this.handleNonCharacterKeyEvent(kData);
+  } else if (this.isPasswordBox()) {
+    this.handleSendKeyEventInPasswordBox_(kData);
   } else {
     this.handleCharacterKeyEvent(kData);
+  }
+};
+
+
+/**
+ * Whether current input  box is password box.
+ *
+ * @return {boolean}
+ * @protected
+ */
+AbstractController.prototype.isPasswordBox = function() {
+  return !!this.context && this.context.type == 'password';
+};
+
+
+/**
+ * Handle send key event in password input box.
+ *
+ * @param {!ChromeKeyboardEvent} keyData .
+ * @private
+ */
+AbstractController.prototype.handleSendKeyEventInPasswordBox_ =
+    function(keyData) {
+  if (keyData[Name.MSG_TYPE] == goog.events.EventType.KEYDOWN) {
+    this.commitText(keyData[Name.KEY]);
   }
 };
 
@@ -197,11 +252,8 @@ AbstractController.prototype.handleSendKeyEventMessage_ = function(keyData) {
  */
 AbstractController.prototype.handleCharacterKeyEvent = function(keyData) {
   var ret = this.handleEvent(keyData);
-  if (ret === false && keyData[Name.MSG_TYPE] == goog.events.EventType.
-      KEYDOWN) {
-    // If handles keydown event return false,
-    // commit the char.
-    this.commitText(keyData[Name.KEY]);
+  if (ret === false) {
+    this.handleSendKeyEventInPasswordBox_(keyData);
   }
 };
 
@@ -256,8 +308,17 @@ AbstractController.prototype.selectCandidate = goog.functions.NULL;
  * Switch the input tool state.
  *
  * @param {string} stateId The state ID.
+ * @param {boolean=} opt_stateIdValue The value of state ID.
  */
 AbstractController.prototype.switchInputToolState = goog.functions.NULL;
+
+
+/**
+ * Updates options for this input tool code.
+ *
+ * @param {string} inputToolCode The input method to update.
+ */
+AbstractController.prototype.updateOptions = goog.functions.NULL;
 
 
 /**
@@ -328,8 +389,20 @@ AbstractController.prototype.commitText = function(text) {
  * @protected
  */
 AbstractController.prototype.updateSettings = function(settings) {
+  if (this.context) {
+    settings[Name.CONTEXT_TYPE] = this.context.type;
+  }
+  settings[Name.SCREEN] = this.screenType;
   chrome.runtime.sendMessage(goog.object.create(
       Name.MSG_TYPE, Type.UPDATE_SETTINGS,
       Name.MSG, settings));
 };
+
+
+/**
+ * Gets whether the controller is ready for handling events.
+ *
+ * @return {boolean}
+ */
+AbstractController.prototype.isReady = goog.functions.TRUE;
 });  // goog.scope

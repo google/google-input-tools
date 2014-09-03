@@ -13,8 +13,7 @@
 //
 goog.provide('i18n.input.chrome.inputview.StateManager');
 
-goog.require('i18n.input.chrome.inputview.StateType');
-
+goog.require('i18n.input.chrome.inputview.Covariance');
 
 
 /**
@@ -54,6 +53,9 @@ i18n.input.chrome.inputview.StateManager = function() {
    * @private
    */
   this.chording_ = 0;
+
+  /** @type {!i18n.input.chrome.inputview.Covariance} */
+  this.covariance = new i18n.input.chrome.inputview.Covariance();
 };
 
 
@@ -222,4 +224,3 @@ i18n.input.chrome.inputview.StateManager.prototype.reset = function() {
   this.state_ = 0;
   this.sticky_ = 0;
 };
-

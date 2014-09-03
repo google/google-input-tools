@@ -11,7 +11,7 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-goog.provide('i18n.input.chrome.inputview.KeysetView');
+goog.provide('i18n.input.chrome.inputview.elements.content.KeysetView');
 
 goog.require('goog.array');
 goog.require('goog.dom.classlist');
@@ -22,15 +22,20 @@ goog.require('i18n.input.chrome.inputview.ConditionName');
 goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.SpecNodeName');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
+goog.require('i18n.input.chrome.inputview.elements.content.CandidateButton');
 goog.require('i18n.input.chrome.inputview.elements.content.CanvasView');
 goog.require('i18n.input.chrome.inputview.elements.content.CharacterKey');
 goog.require('i18n.input.chrome.inputview.elements.content.CompactKey');
+goog.require('i18n.input.chrome.inputview.elements.content.EmojiKey');
 goog.require('i18n.input.chrome.inputview.elements.content.FunctionalKey');
 goog.require('i18n.input.chrome.inputview.elements.content.KeyboardView');
 goog.require('i18n.input.chrome.inputview.elements.content.MenuKey');
 goog.require('i18n.input.chrome.inputview.elements.content.ModifierKey');
+goog.require('i18n.input.chrome.inputview.elements.content.PageIndicator');
 goog.require('i18n.input.chrome.inputview.elements.content.SpaceKey');
 goog.require('i18n.input.chrome.inputview.elements.content.SwitcherKey');
+goog.require('i18n.input.chrome.inputview.elements.content.TabBarKey');
+goog.require('i18n.input.chrome.inputview.elements.layout.ExtendedLayout');
 goog.require('i18n.input.chrome.inputview.elements.layout.HandwritingLayout');
 goog.require('i18n.input.chrome.inputview.elements.layout.LinearLayout');
 goog.require('i18n.input.chrome.inputview.elements.layout.SoftKeyView');
@@ -64,8 +69,9 @@ var layout = i18n.input.chrome.inputview.elements.layout;
  * @constructor
  * @extends {goog.ui.Container}
  */
-i18n.input.chrome.inputview.KeysetView = function(keyData, layoutData,
-    keyboardCode, languageCode, model, name, opt_eventTarget, opt_adapter) {
+i18n.input.chrome.inputview.elements.content.KeysetView = function(keyData,
+    layoutData, keyboardCode, languageCode, model, name, opt_eventTarget,
+    opt_adapter) {
   goog.base(this);
   this.setParentEventTarget(opt_eventTarget || null);
 
@@ -98,10 +104,9 @@ i18n.input.chrome.inputview.KeysetView = function(keyData, layoutData,
   /**
    * The language code.
    *
-   * @type {string}
-   * @private
+   * @protected {string}
    */
-  this.languageCode_ = languageCode;
+  this.languageCode = languageCode;
 
   /**
    * The model, the reason use dataModel as its name because model_ will
@@ -149,9 +154,9 @@ i18n.input.chrome.inputview.KeysetView = function(keyData, layoutData,
   /**
    * The bus channel to communicate with background.
    *
-   * @private {i18n.input.chrome.inputview.Adapter}
+   * @protected {i18n.input.chrome.inputview.Adapter}
    */
-  this.adapter_ = opt_adapter || null;
+  this.adapter = opt_adapter || null;
 
   /**
    * The conditions.
@@ -159,9 +164,35 @@ i18n.input.chrome.inputview.KeysetView = function(keyData, layoutData,
    * @private {!Object.<string, boolean>}
    */
   this.conditions_ = {};
+
+  /**
+   * whether to display the candidate view or not.
+   *
+   * @type {boolean}
+   */
+  this.disableCandidateView =
+      goog.isDef(this.layoutData_['disableCandidateView']) ?
+      this.layoutData_['disableCandidateView'] : false;
+
+  /**
+   * The map of the child views.
+   * Key: The id of the child element.
+   * Value: The element.
+   *
+   * @private {!Object.<string, !i18n.input.chrome.inputview.elements.Element>}
+   */
+  this.childMap_ = {};
 };
-goog.inherits(i18n.input.chrome.inputview.KeysetView, goog.ui.Container);
-var KeysetView = i18n.input.chrome.inputview.KeysetView;
+var KeysetView = i18n.input.chrome.inputview.elements.content.KeysetView;
+goog.inherits(KeysetView, goog.ui.Container);
+
+
+/**
+ * True if the keyset view has shift state.
+ *
+ * @type {boolean}
+ */
+KeysetView.prototype.hasShift = true;
 
 
 /**
@@ -184,19 +215,17 @@ KeysetView.prototype.fromKeyset = '';
 /**
  * The handwriting canvas view.
  *
- * @type {content.CanvasView}
- * @private
+ * @protected {!content.CanvasView}
  */
-KeysetView.prototype.canvasView_;
+KeysetView.prototype.canvasView;
 
 
 /**
  * The space key.
  *
  * @type {!content.SpaceKey}
- * @private
  */
-KeysetView.prototype.spaceKey_;
+KeysetView.prototype.spaceKey;
 
 
 /**
@@ -221,10 +250,10 @@ KeysetView.prototype.outerWidth_ = 0;
 KeysetView.prototype.createDom = function() {
   goog.base(this, 'createDom');
 
+  this.hasShift = !this.keyData_[SpecNodeName.NO_SHIFT];
   var elem = this.getElement();
   elem.id = this.keyboardCode_.replace(/\./g, '-');
   goog.dom.classlist.add(elem, i18n.input.chrome.inputview.Css.VIEW);
-  elem.setAttribute('lang', this.languageCode_);
 
   var children = this.layoutData_['children'];
   for (var i = 0; i < children.length; i++) {
@@ -394,29 +423,42 @@ KeysetView.prototype.createElement_ = function(spec, opt_eventTarget) {
   var padding = spec[SpecNodeName.PADDING];
   var widthPercent = spec[SpecNodeName.WIDTH_PERCENT];
   var heightPercent = spec[SpecNodeName.HEIGHT_PERCENT];
+  var elem = null;
   switch (type) {
     case ElementType.SOFT_KEY_VIEW:
       var condition = spec[SpecNodeName.CONDITION];
       var giveWeightTo = spec[SpecNodeName.GIVE_WEIGHT_TO];
-      var softKeyView = new layout.SoftKeyView(id, widthInWeight,
+      elem = new layout.SoftKeyView(id, widthInWeight,
           heightInWeight, condition, giveWeightTo, opt_eventTarget);
-      this.softKeyConditionMap_[condition] = softKeyView;
-      return softKeyView;
+      this.softKeyConditionMap_[condition] = elem;
+      break;
     case ElementType.LINEAR_LAYOUT:
-      return new layout.LinearLayout(id, opt_eventTarget);
+      var opt_iconCssClass = spec[SpecNodeName.ICON_CSS_CLASS];
+      elem = new layout.LinearLayout(id, opt_eventTarget, opt_iconCssClass);
+      break;
+    case ElementType.EXTENDED_LAYOUT:
+      elem = new layout.ExtendedLayout(id, opt_eventTarget);
+      break;
     case ElementType.VERTICAL_LAYOUT:
-      return new layout.VerticalLayout(id, opt_eventTarget);
+      elem = new layout.VerticalLayout(id, opt_eventTarget);
+      break;
     case ElementType.LAYOUT_VIEW:
       this.keyboardView_ = new content.KeyboardView(id, opt_eventTarget);
-      return this.keyboardView_;
+      elem = this.keyboardView_;
+      break;
     case ElementType.CANVAS_VIEW:
-      this.canvasView_ = new content.CanvasView(id, widthInWeight,
-          heightInWeight, opt_eventTarget, this.adapter_);
-      return this.canvasView_;
+      this.canvasView = new content.CanvasView(id, widthInWeight,
+          heightInWeight, opt_eventTarget, this.adapter);
+      elem = this.canvasView;
+      break;
     case ElementType.HANDWRITING_LAYOUT:
-      return new layout.HandwritingLayout(id, opt_eventTarget);
+      elem = new layout.HandwritingLayout(id, opt_eventTarget);
+      break;
   }
-  return null;
+  if (elem) {
+    this.childMap_[id] = elem;
+  }
+  return elem;
 };
 
 
@@ -487,7 +529,7 @@ KeysetView.prototype.hasAltGrCharacterInTheKeyset_ = function(keySpecs) {
  * @param {!Array.<boolean, boolean>} hasAltGrCharacterInTheKeyset The list
  *     of results for whether there is altgr character, the first for letter
  *     key, the second for symbol key.
- * @return {i18n.input.chrome.inputview.elements.content.SoftKey} The soft key.
+ * @return {i18n.input.chrome.inputview.elements.Element} The soft key.
  * @private
  */
 KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
@@ -501,16 +543,19 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
   var toKeyset = spec[SpecNodeName.TO_KEYSET];
   var toKeysetName = spec[SpecNodeName.
       TO_KEYSET_NAME];
+  var elem = null;
   switch (type) {
     case ElementType.MODIFIER_KEY:
       var toState = spec[SpecNodeName.TO_STATE];
       var supportSticky = spec[SpecNodeName.SUPPORT_STICKY];
-      return new content.ModifierKey(id, name, iconCssClass, toState,
+      elem = new content.ModifierKey(id, name, iconCssClass, toState,
           this.dataModel_.stateManager, supportSticky);
+      break;
     case ElementType.SPACE_KEY:
-      this.spaceKey_ = new content.SpaceKey(id, this.dataModel_.stateManager,
+      this.spaceKey = new content.SpaceKey(id, this.dataModel_.stateManager,
           this.title_, characters, undefined, iconCssClass);
-      return this.spaceKey_;
+      elem = this.spaceKey;
+      break;
     case ElementType.BACKSPACE_KEY:
     case ElementType.ENTER_KEY:
     case ElementType.TAB_KEY:
@@ -520,16 +565,32 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
     case ElementType.ARROW_RIGHT:
     case ElementType.HIDE_KEYBOARD_KEY:
     case ElementType.GLOBE_KEY:
-      return new content.FunctionalKey(id, type, name, iconCssClass);
+      elem = new content.FunctionalKey(id, type, name, iconCssClass);
+      break;
+    case ElementType.TAB_BAR_KEY:
+      elem = new content.TabBarKey(id, type, name, iconCssClass,
+          toKeyset, this.dataModel_.stateManager);
+      break;
+    case ElementType.EMOJI_KEY:
+      var text = spec[SpecNodeName.TEXT];
+      var isEmoticon = spec[SpecNodeName.IS_EMOTICON];
+      elem = new content.EmojiKey(id, type, text, iconCssClass, isEmoticon);
+      break;
+    case ElementType.PAGE_INDICATOR:
+      elem = new content.PageIndicator(id, type);
+      break;
     case ElementType.IME_SWITCH:
-      return new content.FunctionalKey(id, type, name, iconCssClass, undefined,
+      elem = new content.FunctionalKey(id, type, name, iconCssClass, undefined,
           textCssClass);
+      break;
     case ElementType.MENU_KEY:
-      return new content.MenuKey(id, type, name, iconCssClass, toKeyset);
+      elem = new content.MenuKey(id, type, name, iconCssClass, toKeyset);
+      break;
     case ElementType.SWITCHER_KEY:
       var record = spec[SpecNodeName.RECORD];
-      return new content.SwitcherKey(id, type, name, iconCssClass, toKeyset,
+      elem = new content.SwitcherKey(id, type, name, iconCssClass, toKeyset,
           toKeysetName, record);
+      break;
     case ElementType.COMPACT_KEY:
       var hintText = spec[SpecNodeName.HINT_TEXT];
       var text = spec[SpecNodeName.TEXT];
@@ -537,19 +598,30 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
       var marginRightPercent = spec[SpecNodeName.MARGIN_RIGHT_PERCENT];
       var isGrey = spec[SpecNodeName.IS_GREY];
       var moreKeys = spec[SpecNodeName.MORE_KEYS];
-      return new content.CompactKey(
-          id, text, hintText, this.dataModel_.stateManager, marginLeftPercent,
-          marginRightPercent, isGrey, moreKeys);
+      elem = new content.CompactKey(
+          id, text, hintText, this.dataModel_.stateManager, this.hasShift,
+          marginLeftPercent, marginRightPercent, isGrey, moreKeys);
+      break;
     case ElementType.CHARACTER_KEY:
       var isLetterKey = i18n.input.chrome.inputview.util.isLetterKey(
           characters);
-      return new content.CharacterKey(id, keyCode || 0,
+      elem = new content.CharacterKey(id, keyCode || 0,
           characters, isLetterKey, hasAltGrCharacterInTheKeyset[isLetterKey],
           this.dataModel_.settings.alwaysRenderAltGrCharacter,
           this.dataModel_.stateManager,
-          goog.i18n.bidi.isRtlLanguage(this.languageCode_));
+          goog.i18n.bidi.isRtlLanguage(this.languageCode));
+      break;
+
+    case ElementType.BACK_BUTTON:
+      elem = new content.CandidateButton(
+          id, ElementType.BACK_BUTTON, iconCssClass,
+          chrome.i18n.getMessage('HANDWRITING_BACK'), this);
+      break;
   }
-  return null;
+  if (elem) {
+    this.childMap_[id] = elem;
+  }
+  return elem;
 };
 
 
@@ -561,18 +633,6 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
  */
 KeysetView.prototype.getViewForKey = function(code) {
   return this.keyboardView_.getViewForKey(code);
-};
-
-
-/**
- * True to set the title visible.
- *
- * @param {boolean} visible True to set title visible.
- */
-KeysetView.prototype.setTitleVisible = function(visible) {
-  if (this.spaceKey_) {
-    this.spaceKey_.setTitleVisible(visible);
-  }
 };
 
 
@@ -596,8 +656,8 @@ KeysetView.prototype.getWidthInWeight = function() {
  * @return {boolean} Whether there are strokes on canvas.
  */
 KeysetView.prototype.hasStrokesOnCanvas = function() {
-  if (this.canvasView_) {
-    return this.canvasView_.hasStrokesOnCanvas();
+  if (this.canvasView) {
+    return this.canvasView.hasStrokesOnCanvas();
   } else {
     return false;
   }
@@ -608,8 +668,8 @@ KeysetView.prototype.hasStrokesOnCanvas = function() {
  * Cleans the stokes.
  */
 KeysetView.prototype.cleanStroke = function() {
-  if (this.canvasView_) {
-    this.canvasView_.reset();
+  if (this.canvasView) {
+    this.canvasView.reset();
   }
 };
 
@@ -622,5 +682,31 @@ KeysetView.prototype.cleanStroke = function() {
 KeysetView.prototype.isHandwriting = function() {
   return this.keyboardCode_ == 'hwt';
 };
-});  // goog.scope
 
+
+/**
+ * Get the subview of the keysetview according to the id.
+ *
+ * @param {string} id The id.
+ * @return {i18n.input.chrome.inputview.elements.Element}
+ */
+KeysetView.prototype.getChildViewById = function(id) {
+  return this.childMap_[id];
+};
+
+
+/**
+ * Activate the current keyset view instance.
+ *
+ * @param {string} rawKeyset The raw keyset.
+ */
+KeysetView.prototype.activate = goog.nullFunction;
+
+
+/**
+ * Deactivate the current keyset view instance.
+ *
+ * @param {string} rawKeyset The raw keyset id map to the instance keyset id.
+ */
+KeysetView.prototype.deactivate = goog.nullFunction;
+});  // goog.scope

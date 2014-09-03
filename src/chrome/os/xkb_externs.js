@@ -361,6 +361,12 @@ chrome.inputMethodPrivate.getInputMethods = function(callback) {};
 
 
 /**
+ * @param {function(string)} callback .
+ */
+chrome.inputMethodPrivate.getCurrentInputMethod = function(callback) {};
+
+
+/**
  * @param {!string} inputMethodId .
  * @param {function(Object)=} callback .
  */

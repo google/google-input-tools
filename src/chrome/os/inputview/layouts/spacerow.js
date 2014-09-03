@@ -38,7 +38,7 @@ i18n.input.chrome.inputview.layouts.SpaceRow.create = function() {
     'widthInWeight': 1
   });
   var spaceKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 6.75
+    'widthInWeight': 5.87
   });
   var altGrKey = i18n.input.chrome.inputview.layouts.util.createKey({
     'widthInWeight': 1.25,
@@ -51,13 +51,13 @@ i18n.input.chrome.inputview.layouts.SpaceRow.create = function() {
   altGrKey['spec']['giveWeightTo'] = spaceKey['spec']['id'];
 
   var leftKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1
+    'widthInWeight': 1.08
   });
   var rightKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1
+    'widthInWeight': 1.08
   });
   var hideKeyboardKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1
+    'widthInWeight': 1.08
   });
   var spaceKeyRow = i18n.input.chrome.inputview.layouts.util.
       createLinearLayout({

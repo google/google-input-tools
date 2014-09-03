@@ -61,8 +61,8 @@ goog.require('i18n.input.chrome.inputview.content.util');
     ['\u05e0', '\u0042'], // AB05
     ['\u05de', '\u004e'], // AB06
     ['\u05e6', '\u004d'], // AB07
-    ['\u05ea', '\u003e'], // AB08
-    ['\u05e5', '\u003c'], // AB09
+    ['\u05ea', '\u003c'], // AB08
+    ['\u05e5', '\u003e'], // AB09
     ['\u002e', '\u003f', '\u05c3', '\u05c3'], // AB10
     ['\u0020', '\u0020'] // SPCE
   ];

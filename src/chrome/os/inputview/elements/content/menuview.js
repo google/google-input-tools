@@ -20,12 +20,14 @@ goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.elements.Element');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
 goog.require('i18n.input.chrome.inputview.elements.content.MenuItem');
+goog.require('i18n.input.chrome.inputview.util');
 
 
 
 goog.scope(function() {
 var ElementType = i18n.input.chrome.inputview.elements.ElementType;
 var MenuItem = i18n.input.chrome.inputview.elements.content.MenuItem;
+var Css = i18n.input.chrome.inputview.Css;
 
 
 /**
@@ -39,6 +41,9 @@ var MenuItem = i18n.input.chrome.inputview.elements.content.MenuItem;
 i18n.input.chrome.inputview.elements.content.MenuView = function(
     opt_eventTarget) {
   goog.base(this, '', ElementType.MENU_VIEW, opt_eventTarget);
+
+  this.pointerConfig.stopEventPropagation = false;
+  this.pointerConfig.preventDefault = false;
 };
 goog.inherits(i18n.input.chrome.inputview.elements.content.MenuView,
     i18n.input.chrome.inputview.elements.Element);
@@ -53,8 +58,9 @@ var MenuView = i18n.input.chrome.inputview.elements.content.MenuView;
 MenuView.Command = {
   SWITCH_IME: 0,
   SWITCH_KEYSET: 1,
-  OPEN_HANDWRITING: 2,
-  OPEN_SETTING: 3
+  OPEN_EMOJI: 2,
+  OPEN_HANDWRITING: 3,
+  OPEN_SETTING: 4
 };
 
 
@@ -105,10 +111,8 @@ MenuView.prototype.createDom = function() {
 
   var dom = this.getDomHelper();
   var elem = this.getElement();
-  goog.dom.classlist.add(elem, i18n.input.chrome.inputview.Css.MENU_VIEW);
-  goog.dom.classlist.add(elem, i18n.input.chrome.inputview.Css.FONT);
-  this.coverElement_ = dom.createDom(goog.dom.TagName.DIV,
-      i18n.input.chrome.inputview.Css.ALTDATA_COVER);
+  goog.dom.classlist.add(elem, Css.MENU_VIEW);
+  this.coverElement_ = dom.createDom(goog.dom.TagName.DIV, Css.ALTDATA_COVER);
   dom.appendChild(document.body, this.coverElement_);
   goog.style.setElementShown(this.coverElement_, false);
 
@@ -133,12 +137,15 @@ MenuView.prototype.enterDocument = function() {
  *     compact layout.
  * @param {boolean} enableCompactLayout True if the keyset that owns the menu
  *     key enabled compact layout.
+ * @param {!string} currentInputMethod The current input method ID.
  * @param {?Array.<Object>} inputMethods The list of activated input methods.
  * @param {boolean} hasHwt Whether to add handwriting button.
  * @param {boolean} enableSettings Whether to add a link to settings page.
+ * @param {boolean} hasEmoji Whether to enable emoji.
  */
 MenuView.prototype.show = function(key, currentKeysetId, isCompact,
-    enableCompactLayout, inputMethods, hasHwt, enableSettings) {
+    enableCompactLayout, currentInputMethod, inputMethods, hasHwt,
+    enableSettings, hasEmoji) {
   var ElementType = i18n.input.chrome.inputview.elements.ElementType;
   var dom = this.getDomHelper();
   if (key.type != ElementType.MENU_KEY) {
@@ -156,11 +163,11 @@ MenuView.prototype.show = function(key, currentKeysetId, isCompact,
   dom.removeChildren(this.getElement());
 
   var totalHeight = 0;
-  totalHeight += this.addInputMethodItems_(inputMethods);
+  totalHeight += this.addInputMethodItems_(currentInputMethod, inputMethods);
   totalHeight += this.addLayoutSwitcherItem_(key, currentKeysetId, isCompact,
       enableCompactLayout);
-  if (hasHwt || enableSettings) {
-    totalHeight += this.addFooterItems_(hasHwt);
+  if (hasHwt || enableSettings || hasEmoji) {
+    totalHeight += this.addFooterItems_(hasHwt, enableSettings, hasEmoji);
   }
 
 
@@ -180,21 +187,25 @@ MenuView.prototype.show = function(key, currentKeysetId, isCompact,
 MenuView.prototype.hide = function() {
   goog.style.setElementShown(this.getElement(), false);
   goog.style.setElementShown(this.coverElement_, false);
-  this.triggeredBy.setHighlighted(false);
+  if (this.triggeredBy) {
+    this.triggeredBy.setHighlighted(false);
+  }
 };
 
 
 /**
  * Adds the list of activated input methods.
  *
+ * @param {!string} currentInputMethod The current input method ID.
  * @param {?Array.<Object>} inputMethods The list of activated input methods.
  * @return {number} The height of the ime list container.
  * @private
  */
-MenuView.prototype.addInputMethodItems_ = function(inputMethods) {
+MenuView.prototype.addInputMethodItems_ = function(currentInputMethod,
+    inputMethods) {
   var dom = this.getDomHelper();
   var container = dom.createDom(goog.dom.TagName.DIV,
-      i18n.input.chrome.inputview.Css.IME_LIST_CONTAINER);
+      Css.IME_LIST_CONTAINER);
 
   for (var i = 0; i < inputMethods.length; i++) {
     var inputMethod = inputMethods[i];
@@ -205,6 +216,9 @@ MenuView.prototype.addInputMethodItems_ = function(inputMethods) {
         [MenuView.Command.SWITCH_IME, inputMethod['id']];
     var imeItem = new MenuItem(String(i), listItem, MenuItem.Type.LIST_ITEM);
     imeItem.render(container);
+    if (currentInputMethod == inputMethod['id']) {
+      imeItem.check();
+    }
     goog.style.setSize(imeItem.getElement(), MenuView.WIDTH_,
         MenuView.LIST_ITEM_HEIGHT_);
   }
@@ -245,15 +259,17 @@ MenuView.prototype.addLayoutSwitcherItem_ = function(key, currentKeysetId,
   var layoutSwitcher = {};
   if (isCompact) {
     layoutSwitcher['iconURL'] = 'images/regular_size.png';
-    // TODO: Need to i18n the following string.
-    layoutSwitcher['name'] = 'Switch to full layout';
+    layoutSwitcher['name'] = chrome.i18n.getMessage('SWITCH_TO_FULL_LAYOUT');
     var fullLayoutId = currentKeysetId.split('.')[0];
     layoutSwitcher['command'] =
-        [MenuView.Command.SWITCH_KEYSET, key.toKeyset];
+        [MenuView.Command.SWITCH_KEYSET, fullLayoutId];
   } else {
     layoutSwitcher['iconURL'] = 'images/compact.png';
-    // TODO: Need to i18n the following string.
-    layoutSwitcher['name'] = 'Switch to compact layout';
+    layoutSwitcher['name'] = chrome.i18n.getMessage('SWITCH_TO_COMPACT_LAYOUT');
+    if (goog.array.contains(i18n.input.chrome.inputview.util.KEYSETS_USE_US,
+        currentKeysetId)) {
+      key.toKeyset = currentKeysetId + '.compact.qwerty';
+    }
     layoutSwitcher['command'] =
         [MenuView.Command.SWITCH_KEYSET, key.toKeyset];
 
@@ -273,30 +289,41 @@ MenuView.prototype.addLayoutSwitcherItem_ = function(key, currentKeysetId,
  * now.
  *
  * @param {boolean} hasHwt Whether to add handwriting button.
+ * @param {boolean} enableSettings Whether to add settings button.
+ * @param {boolean} hasEmoji Whether to add emoji button.
  * @return {number} The height of the footer.
  * @private
  */
-MenuView.prototype.addFooterItems_ = function(hasHwt) {
+MenuView.prototype.addFooterItems_ = function(hasHwt, enableSettings,
+    hasEmoji) {
   var dom = this.getDomHelper();
-  var footer = dom.createDom(goog.dom.TagName.DIV,
-      i18n.input.chrome.inputview.Css.MENU_FOOTER);
+  var footer = dom.createDom(goog.dom.TagName.DIV, Css.MENU_FOOTER);
+  if (hasEmoji) {
+    var emoji = {};
+    emoji['iconCssClass'] = Css.MENU_FOOTER_EMOJI_BUTTON;
+    emoji['command'] = [MenuView.Command.OPEN_EMOJI];
+    var emojiFooter = new MenuItem('emoji', emoji,
+        MenuItem.Type.FOOTER_ITEM);
+    emojiFooter.render(footer);
+  }
+
   if (hasHwt) {
     var handWriting = {};
-    handWriting['iconCssClass'] =
-        i18n.input.chrome.inputview.Css.MENU_FOOTER_HANDWRITING_BUTTON;
+    handWriting['iconCssClass'] = Css.MENU_FOOTER_HANDWRITING_BUTTON;
     handWriting['command'] = [MenuView.Command.OPEN_HANDWRITING];
     var handWritingFooter = new MenuItem('handwriting', handWriting,
         MenuItem.Type.FOOTER_ITEM);
     handWritingFooter.render(footer);
   }
 
-  var setting = {};
-  setting['iconCssClass'] =
-      i18n.input.chrome.inputview.Css.MENU_FOOTER_SETTING_BUTTON;
-  setting['command'] = [MenuView.Command.OPEN_SETTING];
-  var settingFooter = new MenuItem('setting', setting,
-      MenuItem.Type.FOOTER_ITEM);
-  settingFooter.render(footer);
+  if (enableSettings) {
+    var setting = {};
+    setting['iconCssClass'] = Css.MENU_FOOTER_SETTING_BUTTON;
+    setting['command'] = [MenuView.Command.OPEN_SETTING];
+    var settingFooter = new MenuItem('setting', setting,
+        MenuItem.Type.FOOTER_ITEM);
+    settingFooter.render(footer);
+  }
 
   // Sets footer itmes' width.
   var elems = dom.getChildren(footer);
@@ -330,6 +357,8 @@ MenuView.prototype.resize = function(width, height) {
   goog.base(this, 'resize', width, height);
 
   goog.style.setSize(this.coverElement_, width, height);
+  // Hides the menu view directly after resize.
+  this.hide();
 };
 
 
@@ -340,3 +369,4 @@ MenuView.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };
 });  // goog.scope
+

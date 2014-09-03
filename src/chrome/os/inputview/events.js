@@ -11,12 +11,10 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-
 goog.provide('i18n.input.chrome.inputview.events.ConfigLoadedEvent');
-goog.provide('i18n.input.chrome.inputview.events.ContextFocusEvent');
 goog.provide('i18n.input.chrome.inputview.events.ContextUpdateEvent');
+goog.provide('i18n.input.chrome.inputview.events.DragEvent');
 goog.provide('i18n.input.chrome.inputview.events.EventType');
-goog.provide('i18n.input.chrome.inputview.events.KeyClickEvent');
 goog.provide('i18n.input.chrome.inputview.events.LayoutLoadedEvent');
 goog.provide('i18n.input.chrome.inputview.events.PointerEvent');
 goog.provide('i18n.input.chrome.inputview.events.SurroundingTextChangedEvent');
@@ -36,8 +34,11 @@ var events = i18n.input.chrome.inputview.events;
  * @enum {string}
  */
 events.EventType = {
+  CLICK: goog.events.getUniqueId('c'),
   CONFIG_LOADED: goog.events.getUniqueId('cl'),
   DOUBLE_CLICK: goog.events.getUniqueId('dc'),
+  DOUBLE_CLICK_END: goog.events.getUniqueId('dce'),
+  DRAG: goog.events.getUniqueId('dg'),
   LAYOUT_LOADED: goog.events.getUniqueId('ll'),
   LONG_PRESS: goog.events.getUniqueId('lp'),
   LONG_PRESS_END: goog.events.getUniqueId('lpe'),
@@ -107,10 +108,11 @@ goog.inherits(events.ConfigLoadedEvent, goog.events.Event);
  * @param {Node} target The event target.
  * @param {number} x .
  * @param {number} y .
+ * @param {number=} opt_timestamp The timestamp of a pointer event.
  * @constructor
  * @extends {goog.events.Event}
  */
-events.PointerEvent = function(view, type, target, x, y) {
+events.PointerEvent = function(view, type, target, x, y, opt_timestamp) {
   goog.base(this, type, target);
 
   /**
@@ -133,6 +135,13 @@ events.PointerEvent = function(view, type, target, x, y) {
    * @type {number}
    */
   this.y = y;
+
+  /**
+   * The timestamp.
+   *
+   * @type {number}
+   */
+  this.timestamp = opt_timestamp || 0;
 };
 goog.inherits(events.PointerEvent, goog.events.Event);
 
@@ -161,6 +170,47 @@ events.SwipeEvent = function(view, direction, target, x, y) {
   this.direction = direction;
 };
 goog.inherits(events.SwipeEvent, events.PointerEvent);
+
+
+
+/**
+ * The drag event.
+ *
+ * @param {i18n.input.chrome.inputview.elements.Element} view .
+ * @param {number} direction See SwipeDirection in pointer handler.
+ * @param {Node} target The event target.
+ * @param {number} x .
+ * @param {number} y .
+ * @param {number} deltaX The drag distance of x-coordinate.
+ * @param {number} deltaY The drag distance of y-coordinate.
+ * @constructor
+ * @extends {events.PointerEvent}
+ */
+events.DragEvent = function(view, direction, target, x, y, deltaX, deltaY) {
+  goog.base(this, view, events.EventType.DRAG,
+      target, x, y);
+  /**
+   * The direction
+   *
+   * @type {number}
+   */
+  this.direction = direction;
+
+  /**
+   * The value of deltaX
+   *
+   * @type {number}
+   */
+  this.deltaX = deltaX;
+
+  /**
+   * The value of deltaY
+   *
+   * @type {number}
+   */
+  this.deltaY = deltaY;
+};
+goog.inherits(events.DragEvent, events.PointerEvent);
 
 
 
@@ -199,23 +249,5 @@ events.ContextUpdateEvent = function(compositionText, committedText) {
   this.committedText = committedText;
 };
 goog.inherits(events.ContextUpdateEvent, goog.events.Event);
-
-
-
-/**
- * The event when context is focus on.
- *
- * @param {string} contextType .
- * @constructor
- * @extends {goog.events.Event}
- */
-events.ContextFocusEvent = function(contextType) {
-  goog.base(this, events.EventType.CONTEXT_FOCUS);
-
-  /** @type {string} */
-  this.contextType = contextType;
-};
-goog.inherits(events.ContextFocusEvent, goog.events.Event);
-
 
 });  // goog.scope

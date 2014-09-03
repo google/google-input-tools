@@ -12,12 +12,15 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
 goog.provide('i18n.input.chrome.inputview.content.compact.util');
+goog.provide('i18n.input.chrome.inputview.content.compact.util.CompactKeysetSpec');
 
 goog.require('i18n.input.chrome.inputview.Css');
+goog.require('i18n.input.chrome.inputview.content.constants');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
 
 goog.scope(function() {
 var util = i18n.input.chrome.inputview.content.compact.util;
+var Css = i18n.input.chrome.inputview.Css;
 
 
 /**
@@ -50,8 +53,27 @@ util.MSG_MORE_SYMBOLS =
 /**
  * @desc The name of the main layout.
  */
-util.MSG_MAIN_LAYOUT =
-    goog.getMsg('main layout');
+util.MSG_MAIN_LAYOUT = goog.getMsg('main layout');
+
+
+/**
+ * @desc The name of the english main layout.
+ */
+util.MSG_ENG_MAIN_LAYOUT = goog.getMsg('english main layout');
+
+
+/**
+ * @desc The name of the english layout providing numbers from 0-9 and common.
+ */
+util.MSG_ENG_MORE_SYMBOLS =
+    goog.getMsg('english more symbols layout');
+
+
+/**
+ * @desc The name of the english layout providing more symbols.
+ */
+util.MSG_ENG_NUMBER_AND_SYMBOL =
+    goog.getMsg('english number and symbol layout');
 
 
 /**
@@ -185,6 +207,7 @@ util.generateCompactKeyboard =
       symbolKeysetSpec, 'compactkbd-k-', 'compactkbd-k-key-');
   data['id'] = symbolKeysetSpec[keysetSpecNode.ID];
   data['showMenuKey'] = false;
+  data['noShift'] = true;
   onLoaded(data);
 
   // Creates compact more keyset.
@@ -206,7 +229,150 @@ util.generateCompactKeyboard =
       'compactkbd-k-key-');
   data['id'] = moreKeysetSpec[keysetSpecNode.ID];
   data['showMenuKey'] = false;
+  data['noShift'] = true;
   onLoaded(data);
 };
 
+
+/**
+ * Generates letter, symbol and more compact keysets for
+ *     pinyin's chinese and english mode and load them.
+ *
+ * @param {!Object} letterKeysetSpec The spec of letter keyset.
+ * @param {!Object} engKeysetSpec The english spec of letter keyset
+ * @param {!Object} symbolKeysetSpec The spec of symbol keyset.
+ * @param {!Object} engSymbolKeysetSpec The spec of engish symbol keyset.
+ * @param {!Object} moreKeysetSpec The spec of more keyset.
+ * @param {!Object} engMoreKeysetSpec The spec of english more keyset.
+ * @param {!function(!Object): void} onLoaded The function to call once a keyset
+ *     data is ready.
+ */
+util.generatePinyinCompactKeyboard = function(letterKeysetSpec, engKeysetSpec,
+    symbolKeysetSpec, engSymbolKeysetSpec,
+    moreKeysetSpec, engMoreKeysetSpec, onLoaded) {
+  // Creates compacty qwerty keyset for pinyin.
+  var keysetSpecNode = util.CompactKeysetSpec;
+  util.customizeSwitchers(
+      letterKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '?123',
+         'toKeyset': symbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_NUMBER_AND_SYMBOL
+       },
+       { 'toKeyset': engKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_MAIN_LAYOUT,
+         'iconCssClass': Css.SWITCHER_CHINESE
+       }]);
+
+  var data = util.createCompactData(
+      letterKeysetSpec, 'compactkbd-k-', 'compactkbd-k-key-');
+  data['id'] = letterKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = true;
+  onLoaded(data);
+
+  // Creates the compacty qwerty keyset for pinyin's English mode.
+  util.customizeSwitchers(
+      engKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '?123',
+         'toKeyset': engSymbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_NUMBER_AND_SYMBOL
+       },
+       { 'toKeyset': letterKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_MAIN_LAYOUT,
+         'iconCssClass': Css.SWITCHER_ENGLISH
+       }]);
+
+  data = util.createCompactData(
+      engKeysetSpec, 'compactkbd-k-', 'compactkbd-k-key-');
+  data['id'] = engKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = true;
+  onLoaded(data);
+
+  // Creates compacty symbol keyset for pinyin.
+  util.customizeSwitchers(
+      symbolKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '~[<',
+         'toKeyset': moreKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_MORE_SYMBOLS
+       },
+       { 'name': '~[<',
+         'toKeyset': moreKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_MORE_SYMBOLS
+       },
+       { 'name': 'abc',
+         'toKeyset': letterKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_MAIN_LAYOUT
+       }]);
+  data = util.createCompactData(
+      symbolKeysetSpec, 'compactkbd-k-', 'compactkbd-k-key-');
+  data['id'] = symbolKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = false;
+  data['noShift'] = true;
+  onLoaded(data);
+
+  // Creates compacty symbol keyset for English mode.
+  util.customizeSwitchers(
+      engSymbolKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '~[<',
+         'toKeyset': engMoreKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_MORE_SYMBOLS
+       },
+       { 'name': '~[<',
+         'toKeyset': engMoreKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_MORE_SYMBOLS
+       },
+       { 'name': 'abc',
+         'toKeyset': engKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_MAIN_LAYOUT
+       }]);
+  data = util.createCompactData(
+      engSymbolKeysetSpec, 'compactkbd-k-', 'compactkbd-k-key-');
+  data['id'] = engSymbolKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = false;
+  data['noShift'] = true;
+  onLoaded(data);
+
+  // Creates compact more keyset for pinyin.
+  util.customizeSwitchers(
+      moreKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '?123',
+         'toKeyset': symbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_NUMBER_AND_SYMBOL
+       },
+       { 'name': '?123',
+         'toKeyset': symbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_NUMBER_AND_SYMBOL
+       },
+       { 'name': 'abc',
+         'toKeyset': letterKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_MAIN_LAYOUT
+       }]);
+  data = util.createCompactData(moreKeysetSpec, 'compactkbd-k-',
+      'compactkbd-k-key-');
+  data['id'] = moreKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = false;
+  data['noShift'] = true;
+  onLoaded(data);
+
+  // Creates the compact more keyset of english mode.
+  util.customizeSwitchers(
+      engMoreKeysetSpec[keysetSpecNode.DATA],
+      [{ 'name': '?123',
+         'toKeyset': engSymbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_NUMBER_AND_SYMBOL
+       },
+       { 'name': '?123',
+         'toKeyset': engSymbolKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_NUMBER_AND_SYMBOL
+       },
+       { 'name': 'abc',
+         'toKeyset': engKeysetSpec[keysetSpecNode.ID],
+         'toKeysetName': util.MSG_ENG_MAIN_LAYOUT
+       }]);
+  data = util.createCompactData(engMoreKeysetSpec, 'compactkbd-k-',
+      'compactkbd-k-key-');
+  data['id'] = engMoreKeysetSpec[keysetSpecNode.ID];
+  data['showMenuKey'] = false;
+  data['noShift'] = true;
+  onLoaded(data);
+};
 });  // goog.scope

@@ -42,6 +42,7 @@ i18n.input.chrome.inputview.SpecNodeName = {
   MARGIN_RIGHT_PERCENT: 'marginRightPercent',
   MINIMUM_HEIGHT: 'minimumHeight',
   MORE_KEYS: 'moreKeys',
+  NO_SHIFT: 'noShift',
   NUMBER_ROW_WEIGHT: 'numberRowWeight',
   KEY_CODE: 'keyCode',
   KEY_LIST: 'keyList',
@@ -61,6 +62,8 @@ i18n.input.chrome.inputview.SpecNodeName = {
   TO_KEYSET_NAME: 'toKeysetName',
   WIDTH: 'width',
   WIDTH_IN_WEIGHT: 'widthInWeight',
-  WIDTH_PERCENT: 'widthPercent'
+  WIDTH_PERCENT: 'widthPercent',
+  IS_EMOTICON: 'isEmoticon',
+  MORE_KEYS_SHIFT_OPERATION: 'moreKeysShiftOperation'
 };
 

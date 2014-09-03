@@ -13,6 +13,7 @@
 //
 goog.provide('i18n.input.chrome.inputview.handler.PointerHandler');
 
+goog.require('goog.Timer');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
@@ -26,10 +27,11 @@ goog.scope(function() {
 /**
  * The pointer controller.
  *
+ * @param {!Element=} opt_target .
  * @constructor
  * @extends {goog.events.EventTarget}
  */
-i18n.input.chrome.inputview.handler.PointerHandler = function() {
+i18n.input.chrome.inputview.handler.PointerHandler = function(opt_target) {
   goog.base(this);
 
   /**
@@ -48,12 +50,13 @@ i18n.input.chrome.inputview.handler.PointerHandler = function() {
    */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
+  var target = opt_target || document;
   this.eventHandler_.
-      listen(document, [goog.events.EventType.MOUSEDOWN,
+      listen(target, [goog.events.EventType.MOUSEDOWN,
         goog.events.EventType.TOUCHSTART], this.onPointerDown_, true).
-      listen(document, [goog.events.EventType.MOUSEUP,
+      listen(target, [goog.events.EventType.MOUSEUP,
         goog.events.EventType.TOUCHEND], this.onPointerUp_, true).
-      listen(document, goog.events.EventType.TOUCHMOVE, this.onTouchMove_,
+      listen(target, goog.events.EventType.TOUCHMOVE, this.onTouchMove_,
           true);
 };
 goog.inherits(i18n.input.chrome.inputview.handler.PointerHandler,
@@ -70,13 +73,29 @@ PointerHandler.CANVAS_CLASS_NAME_ = 'ita-hwt-canvas';
 
 
 /**
+ * Mouse down tick, which is for delayed pointer up for tap action on touchpad.
+ *
+ * @private {Date}
+ */
+PointerHandler.prototype.mouseDownTick_ = null;
+
+
+/**
+ * Event handler for previous mousedown or touchstart target.
+ *
+ * @private {i18n.input.chrome.inputview.handler.PointerActionBundle}
+ */
+PointerHandler.prototype.previousPointerActionBundle_ = null;
+
+
+/**
  * Creates a new pointer handler.
  *
  * @param {!Node} target .
  * @return {!i18n.input.chrome.inputview.handler.PointerActionBundle} .
  * @private
  */
-PointerHandler.prototype.createPointerHandler_ = function(target) {
+PointerHandler.prototype.createPointerActionBundle_ = function(target) {
   var uid = goog.getUid(target);
   if (!this.pointerActionBundles_[uid]) {
     this.pointerActionBundles_[uid] = new i18n.input.chrome.inputview.handler.
@@ -93,10 +112,16 @@ PointerHandler.prototype.createPointerHandler_ = function(target) {
  * @private
  */
 PointerHandler.prototype.onPointerDown_ = function(e) {
-  if (!this.isOnCanvas_(e)) {
-    var pointerHandler = this.createPointerHandler_(
-        /** @type {!Node} */ (e.target));
-    pointerHandler.handlePointerDown(e);
+  var pointerActionBundle = this.createPointerActionBundle_(
+      /** @type {!Node} */ (e.target));
+  if (this.previousPointerActionBundle_ &&
+      this.previousPointerActionBundle_ != pointerActionBundle) {
+    this.previousPointerActionBundle_.cancelDoubleClick();
+  }
+  this.previousPointerActionBundle_ = pointerActionBundle;
+  pointerActionBundle.handlePointerDown(e);
+  if (e.type == goog.events.EventType.MOUSEDOWN) {
+    this.mouseDownTick_ = new Date();
   }
 };
 
@@ -108,12 +133,19 @@ PointerHandler.prototype.onPointerDown_ = function(e) {
  * @private
  */
 PointerHandler.prototype.onPointerUp_ = function(e) {
-  if (!this.isOnCanvas_(e)) {
-    var uid = goog.getUid(e.target);
-    var pointerHandler = this.pointerActionBundles_[uid];
-    if (pointerHandler) {
-      pointerHandler.handlePointerUp(e);
+  if (e.type == goog.events.EventType.MOUSEUP) {
+    // If mouseup happens too fast after mousedown, it may be a tap action on
+    // touchpad, so delay the pointer up action so user can see the visual
+    // flash.
+    if (this.mouseDownTick_ && new Date() - this.mouseDownTick_ < 10) {
+      goog.Timer.callOnce(this.onPointerUp_.bind(this, e), 50);
+      return;
     }
+  }
+  var uid = goog.getUid(e.target);
+  var pointerActionBundle = this.pointerActionBundles_[uid];
+  if (pointerActionBundle) {
+    pointerActionBundle.handlePointerUp(e);
   }
 };
 
@@ -125,21 +157,16 @@ PointerHandler.prototype.onPointerUp_ = function(e) {
  * @private
  */
 PointerHandler.prototype.onTouchMove_ = function(e) {
-  if (!this.isOnCanvas_(e)) {
-    var touches = e.getBrowserEvent()['touches'];
-    if (!touches || touches.length == 0) {
-      return;
+  var touches = e.getBrowserEvent()['touches'];
+  if (!touches || touches.length == 0) {
+    return;
+  }
+  for (var i = 0; i < touches.length; i++) {
+    var uid = goog.getUid(touches[i].target);
+    var pointerActionBundle = this.pointerActionBundles_[uid];
+    if (pointerActionBundle) {
+      pointerActionBundle.handleTouchMove(touches[i]);
     }
-    for (var i = 0; i < touches.length; i++) {
-      var uid = goog.getUid(touches[i].target);
-      var pointerHandler = this.pointerActionBundles_[uid];
-      if (pointerHandler) {
-        pointerHandler.handleTouchMove(touches[i]);
-      }
-    }
-
-    e.stopPropagation();
-    e.preventDefault();
   }
 };
 
@@ -154,14 +181,4 @@ PointerHandler.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };
 
-
-/**
- * Checks whether the current event target element is on cavas element.
- *
- * @param {!goog.events.BrowserEvent} e .
- * @private
- */
-PointerHandler.prototype.isOnCanvas_ = function(e) {
-  return e.target.className == PointerHandler.CANVAS_CLASS_NAME_;
-};
 });  // goog.scope

@@ -66,8 +66,8 @@ i18n.input.chrome.inputview.content.constants.NonLetterKeys = {
       'type': ElementType.SWITCHER_KEY
   },
   MENU: {
+      'iconCssClass': i18n.input.chrome.inputview.Css.MENU_ICON,
       'type': ElementType.MENU_KEY,
-      'name': '\u22EE',
       'id': 'Menu'
   },
   GLOBE: {

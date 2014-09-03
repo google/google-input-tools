@@ -18,8 +18,7 @@ goog.require('i18n.input.chrome.inputview.layouts.util');
 
 
 (function() {
-  i18n.input.chrome.inputview.layouts.util.keyIdPrefix = '102kbd-k-';
-
+  i18n.input.chrome.inputview.layouts.util.setPrefix('102kbd-k-');
 
   var topFourRows = i18n.input.chrome.inputview.layouts.RowsOf102.create();
   var spaceRow = i18n.input.chrome.inputview.layouts.SpaceRow.create();

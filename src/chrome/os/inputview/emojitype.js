@@ -11,11 +11,23 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-./run.sh
+goog.provide('i18n.input.chrome.inputview.EmojiType');
 
-then you can visit:
-http://localhost:5050
 
-pick up different keyboard by cgi parameter 'id', 'language', for example:
-http://localhost:5050/?id=us&language=en-US&
-http://localhost:5050/?id=us-intl&language=en&
+/**
+ * The emoji category type.
+ *
+ * @enum {number}
+ */
+i18n.input.chrome.inputview.EmojiType = {
+  RECENT: 0,
+  FAVORITS: 1,
+  FACES: 2,
+  EMOTICON: 3,
+  SYMBOL: 4,
+  NATURE: 5,
+  PLACES: 6,
+  OBJECTS: 7
+};
+
+

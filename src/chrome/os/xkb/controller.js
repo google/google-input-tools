@@ -17,6 +17,7 @@ goog.require('goog.array');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventType');
 goog.require('goog.object');
+goog.require('goog.string');
 goog.require('i18n.input.chrome.AbstractController');
 goog.require('i18n.input.chrome.DataSource');
 goog.require('i18n.input.chrome.inputview.Statistics');
@@ -24,16 +25,21 @@ goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.inputview.util');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
+goog.require('i18n.input.chrome.options.OptionStorageHandlerFactory');
+goog.require('i18n.input.chrome.options.OptionType');
 goog.require('i18n.input.chrome.xkb.Correction');
 
 
 goog.scope(function() {
+var AbstractController = i18n.input.chrome.AbstractController;
 var EventType = i18n.input.chrome.DataSource.EventType;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
+var OptionType = i18n.input.chrome.options.OptionType;
+var OptionStorageHandlerFactory =
+    i18n.input.chrome.options.OptionStorageHandlerFactory;
 var util = i18n.input.chrome.inputview.util;
-var AbstractController = i18n.input.chrome.AbstractController;
 
 
 /**
@@ -42,7 +48,8 @@ var AbstractController = i18n.input.chrome.AbstractController;
  * @type {!RegExp}
  */
 var REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS =
-    /[a-z0-9\u00E0-\u00F6\u00F8-\u017F'"%\)\]\}\>\+]\s\s$/i;
+    /[a-z0-9\u00E0-\u00F6\u00F8-\u017F'"%\)\]\}\>\+]\s$/i;
+
 
 
 /**
@@ -70,18 +77,27 @@ i18n.input.chrome.xkb.Controller = function() {
   this.statistics_ = i18n.input.chrome.inputview.Statistics.getInstance();
 
   /**
-   * Weather or not enable double space to period feature.
+   * Whether or not to enable double space to period feature.
+   *
    * @private {boolean}
    */
-  // TODO: Double space to peroid feature should be controlled by IME
-  // setting. Remove this flag once setting page is ready.
-  this.enableDoubleSpacePeriod_ = true;
+  this.enableDoubleSpacePeriod_ = false;
 
-  /** @private {!Array.<string>} */
+  /** @private {!Array.<!Object>} */
   this.candidates_ = [];
+
+  if (window.inputview && inputview.getKeyboardConfig) {
+    inputview.getKeyboardConfig((function(config) {
+      this.enableEmojiCandidate_ = !!config['experimental'];
+    }).bind(this));
+  }
 };
 var Controller = i18n.input.chrome.xkb.Controller;
 goog.inherits(Controller, i18n.input.chrome.AbstractController);
+
+
+/** @private {boolean} */
+Controller.prototype.enableEmojiCandidate_ = false;
 
 
 /**
@@ -150,7 +166,7 @@ Controller.prototype.committedText_ = '';
  *
  * @private {string}
  */
-Controller.prototype.surroundingText_;
+Controller.prototype.surroundingText_ = '';
 
 
 /**
@@ -159,6 +175,14 @@ Controller.prototype.surroundingText_;
  * @private {number}
  */
 Controller.prototype.lastCommitType_ = -1;
+
+
+/**
+ * Whehter the candidates are predicted.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.isPredict_ = false;
 
 
 /** @private {string} */
@@ -172,19 +196,10 @@ Controller.prototype.onSurroundingTextChanged = function(
       0, Math.min(surroundingInfo.anchor, surroundingInfo.focus));
   this.surroundingText_ = text;
   if (!this.compositionText_) {
-    if (this.lastCorrection_ && !goog.string.endsWith(text,
-        this.lastCorrection_.target)) {
+    if (this.lastCorrection_ && !this.lastCorrection_.reverting &&
+        this.lastCorrection_.shouldCancel(text)) {
       // Clears the last correct if the cursor changed.
       this.lastCorrection_ = null;
-    }
-    if (this.enableDoubleSpacePeriod_ &&
-        REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS.test(text)) {
-      this.deleteSurroudingText_(-2, 2, (function() {
-        this.commitText_('. ', false, 4);
-        this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(' ',
-            '. ');
-      }).bind(this));
-      return;
     }
 
     chrome.runtime.sendMessage(goog.object.create(
@@ -204,6 +219,9 @@ Controller.prototype.onSurroundingTextChanged = function(
  */
 Controller.prototype.deleteSurroudingText_ = function(offset, length,
     callback) {
+  if (!this.context) {
+    return;
+  }
   var parameters = {};
   parameters['engineID'] = this.engineID_;
   parameters['contextID'] = this.context.contextID;
@@ -215,7 +233,24 @@ Controller.prototype.deleteSurroudingText_ = function(offset, length,
 
 /** @override */
 Controller.prototype.activate = function(inputToolCode) {
+  Controller.base(this, 'activate', inputToolCode);
   this.engineID_ = inputToolCode;
+};
+
+
+/** @override */
+Controller.prototype.updateOptions = function(inputToolCode) {
+  var optionStorageHandler =
+      OptionStorageHandlerFactory.getInstance().getHandler(inputToolCode);
+  var doubleSpacePeriod = /** @type {boolean} */
+      (optionStorageHandler.get(OptionType.DOUBLE_SPACE_PERIOD));
+  var soundOnKeypress = /** @type {boolean} */
+      (optionStorageHandler.get(OptionType.SOUND_ON_KEYPRESS));
+  this.enableDoubleSpacePeriod_ = doubleSpacePeriod;
+  this.updateSettings({
+    'doubleSpacePeriod': doubleSpacePeriod,
+    'soundOnKeypress': soundOnKeypress
+  });
 };
 
 
@@ -228,9 +263,6 @@ Controller.prototype.unregister = function() {
   this.textBeforeCursor_ = '';
   this.lastCommitType_ = -1;
   this.deadKey_ = '';
-  chrome.runtime.sendMessage(goog.object.create(
-      Name.MSG_TYPE, Type.CONTEXT_BLUR
-      ));
 };
 
 
@@ -241,35 +273,35 @@ Controller.prototype.reset = function() {
   this.commitText_('', false, 1);
   this.compositionText_ = '';
   this.committedText_ = '';
+  this.dataSource_ && this.dataSource_.clear();
 };
 
 
 /** @override */
-Controller.prototype.register = function(context) {
-  goog.base(this, 'register', context);
+Controller.prototype.onCompositionCanceled = function() {
+  goog.base(this, 'onCompositionCanceled');
 
-  this.sendContextFocusEvent_();
+  this.clearCandidates_();
+  this.compositionText_ = '';
+  this.committedText_ = '';
+  this.dataSource_ && this.dataSource_.clear();
 };
 
 
 /**
- * Sends the CONTEXT_FOCUS event.
+ * Clears the candidates.
  *
  * @private
  */
-Controller.prototype.sendContextFocusEvent_ = function() {
-  if (!this.context) {
-    return;
-  }
-
-  var contextType = this.context.type;
-  if (this.isPasswdBox_()) {
-    contextType = 'password';
-  }
+Controller.prototype.clearCandidates_ = function() {
+  this.candidates_ = [];
   chrome.runtime.sendMessage(goog.object.create(
-      Name.MSG_TYPE, Type.CONTEXT_FOCUS,
-      Name.CONTEXT_TYPE, contextType
-      ));
+      Name.MSG_TYPE, Type.CANDIDATES_BACK,
+      Name.MSG, goog.object.create(
+          Name.SOURCE, [],
+          Name.CANDIDATES, [],
+          Name.MATCHED_LENGTHS, []
+      )));
 };
 
 
@@ -284,12 +316,13 @@ Controller.prototype.sendContextFocusEvent_ = function() {
  * @private
  */
 Controller.prototype.commitText_ = function(text, append, triggerType) {
-  var textToCommit;
-  if (!this.context) {
+  if (!this.context || this.context.contextID == 0) {
     return;
   }
 
   this.lastCommitType_ = triggerType;
+  text = this.maybeNormalizeDeadKey_(text, append);
+  var textToCommit;
   if (text && append) {
     textToCommit = this.compositionText_ + text;
   } else if (text && !append) {
@@ -297,31 +330,66 @@ Controller.prototype.commitText_ = function(text, append, triggerType) {
   } else {
     textToCommit = this.compositionText_;
   }
-  if (this.context.contextID == 0 || !textToCommit) {
-    return;
-  }
 
-  var contextID = this.context.contextID;
-  chrome.input.ime.commitText(goog.object.create(
-      Name.CONTEXT_ID, contextID,
-      Name.TEXT, textToCommit
-      ));
-  if (this.dataSource_ && this.supportPrediction_()) {
-    this.dataSource_.sendPredictionRequest(textToCommit);
+  if (textToCommit) {
+    var contextID = this.context.contextID;
+    chrome.input.ime.commitText(goog.object.create(
+        Name.CONTEXT_ID, contextID,
+        Name.TEXT, textToCommit
+        ));
   }
-
-  var source = this.compositionText_;
-  var target = textToCommit.trim();
-  this.statistics_.recordCommit(
-      source.length, target.length,
-      goog.array.indexOf(this.candidates_, target),
-      this.statistics_.getTargetType(source, target), triggerType);
+  if (text) {
+    if (this.dataSource_ && this.supportPrediction_()) {
+      this.dataSource_.sendPredictionRequest(
+          this.filterPreviousText_(this.surroundingText_ + textToCommit));
+    }
+    // statstics for text committing.
+    var source = this.compositionText_;
+    var target = textToCommit.trim();
+    var candidates = goog.array.map(this.candidates_, function(candidate) {
+      return candidate[Name.CANDIDATE];
+    });
+    this.statistics_.recordCommit(
+        source.length, target.length,
+        goog.array.indexOf(candidates, target),
+        this.statistics_.getTargetType(source, target), triggerType);
+  } else {
+    this.clearCandidates_();
+  }
 
   this.compositionText_ = '';
   if (textToCommit != ' ') {
     // If it is a space, don't reset the committed text.
     this.committedText_ = textToCommit;
   }
+};
+
+
+/**
+ * If there is a deadkey in previous, normalize the dead key with this text.
+ *
+ * @param {string} text .
+ * @param {boolean} normalizable .
+ * @private
+ */
+Controller.prototype.maybeNormalizeDeadKey_ = function(text, normalizable) {
+  var deadKey = this.deadKey_;
+  this.deadKey_ = '';
+  if (util.DISPLAY_MAPPING[text]) {
+    // If this is a dead key.
+    if (deadKey == text) {
+      // If the previous deadkey is equal to current deadkey, show
+      // the visible character for the dead key.
+      text = util.DISPLAY_MAPPING[text];
+    } else {
+      this.deadKey_ = text;
+      text = '';
+    }
+  } else if (normalizable && deadKey && util.supportDeadKey(text)) {
+    // Jscompiler doesn't recognize normalize method, use quote first.
+    text = (text + deadKey)['normalize']();
+  }
+  return text;
 };
 
 
@@ -340,23 +408,9 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
     return;
   }
 
-  var deadKey = this.deadKey_;
-  this.deadKey_ = '';
-  if (util.DISPLAY_MAPPING[text]) {
-    // If this is a dead key.
-    if (deadKey == text) {
-      // If the previous deadkey is equal to current deadkey, show
-      // the visible character for the dead key.
-      text = util.DISPLAY_MAPPING[text];
-    } else {
-      this.deadKey_ = text;
-    }
-  } else if (normalizable && deadKey) {
-    if (!util.supportDeadKey(text)) {
-      return;
-    }
-    // Jscompiler doesn't recognize normalize method, use quote first.
-    text = (text + deadKey)['normalize']();
+  text = this.maybeNormalizeDeadKey_(text, normalizable);
+  if (!text && append) {
+    return;
   }
 
   this.committedText_ = '';
@@ -372,16 +426,11 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
 
   if (text) {
     this.statistics_.recordCommit(text.length, text.length, -1, 0, 1);
-    this.dataSource_ && this.dataSource_.sendCompletionRequest(text,
+    this.dataSource_ && this.dataSource_.sendCompletionRequest(
+        text, this.filterPreviousText_(this.surroundingText_),
         opt_spatialData);
   } else {
-    chrome.runtime.sendMessage(goog.object.create(
-        Name.MSG_TYPE, Type.CANDIDATES_BACK,
-        Name.MSG, goog.object.create(
-        Name.SOURCE, [],
-        Name.CANDIDATES, [],
-        Name.MATCHED_LENGTHS, []
-        )));
+    this.clearCandidates_();
   }
 };
 
@@ -401,55 +450,39 @@ Controller.prototype.processSetLanguage_ = function(msg) {
  * Callback when candidates is fetched back.
  *
  * @param {string} source .
- * @param {!Array.<string>} candidates .
- * @param {!Array.<number>} matchedLengths .
+ * @param {!Array.<!Object>} candidates .
  * @private
  */
-Controller.prototype.onCandidatesBack_ = function(source, candidates,
-    matchedLengths) {
+Controller.prototype.onCandidatesBack_ = function(source, candidates) {
   this.candidates_ = [];
   if (source == this.compositionText_) {
-    for (var i = 0; i < candidates.length; i++) {
-      this.candidates_.push(goog.object.create(Name.CANDIDATE, candidates[i],
-          Name.ID, i));
+    this.candidates_ = candidates;
+  }
+
+  if (!this.enableEmojiCandidate_) {
+    this.candidates_ = goog.array.filter(this.candidates_, function(candidate) {
+      return !candidate[Name.IS_EMOJI];
+    });
+  }
+
+  if (this.candidates_.length == 2) {
+    // Simply filters out case when there is only two candidates.
+    this.candidates_ = [];
+  }
+
+  if (source && this.correctionLevel > 0 && this.candidates_.length > 0) {
+    var firstCandidate = this.candidates_[0];
+    if (firstCandidate[Name.CANDIDATE] != source) {
+      firstCandidate[Name.IS_AUTOCORRECT] = true;
     }
   }
 
-  if (source) {
-    // Removes the candidates whose matched length doesn't equal to the length
-    // of source.
-    this.candidates_ = goog.array.filter(this.candidates_, function(c, i) {
-      // Engine returns wrong length if source contains ' or -.
-      // So remove the ' and - in source and then compare the length with
-      // matched_length. If matched_lengths[i] is undefined, don't filter
-      // out the candidate.
-      return matchedLengths[i] == undefined ||
-          matchedLengths[i] == source.length;
-    });
-    // Makes sure the candidates align with the upper case pattern as source.
-    this.candidates_ = goog.array.map(this.candidates_, function(candidate,
-        index) {
-          var c = candidate[Name.CANDIDATE];
-          if (c.toLowerCase().indexOf(source.toLowerCase()) == 0) {
-            candidate[Name.CANDIDATE] = source + c.slice(source.length);
-          } else if (source.toUpperCase() == source) {
-            candidate[Name.CANDIDATE] = c.toUpperCase();
-          } else {
-            var ch = source.charAt(0);
-            if (ch.toUpperCase() == ch) {
-              candidate[Name.CANDIDATE] = c.charAt(0).toUpperCase() +
-                  c.slice(1);
-            }
-          }
-          return candidate;
-        });
-  }
+  this.isPredict_ = !source;
   chrome.runtime.sendMessage(goog.object.create(
       Name.MSG_TYPE, Type.CANDIDATES_BACK,
       Name.MSG, goog.object.create(
           Name.SOURCE, source,
-          Name.CANDIDATES, this.candidates_,
-          Name.MATCHED_LENGTHS, matchedLengths
+          Name.CANDIDATES, this.candidates_
       )));
 };
 
@@ -491,11 +524,44 @@ Controller.prototype.supportPrediction_ = function() {
 /**
  * If the previous text is not whitespace, then add a space automatically.
  *
+ * @return {boolean}
  * @private
  */
-Controller.prototype.maybeAutoSpace_ = function() {
-  if (!this.compositionText_ && this.lastCommitType_ == 2) {
-    this.commitText_(' ', false, 0);
+Controller.prototype.shouldAutoSpace_ = function() {
+  return !this.compositionText_ && this.lastCommitType_ == 2;
+};
+
+
+/**
+ * Gets the filtered previous word.
+ *
+ * @param {string} preText The text before composition or cursor.
+ * @return {string} The filtered previous word
+ * @private
+ */
+Controller.prototype.filterPreviousText_ = function(preText) {
+  return preText.match(
+      /[a-z\-\'\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u017f]* *$/i)[0].trim();
+};
+
+
+/**
+ * True to do the auto-correct.
+ *
+ * @param {string} ch .
+ * @param {number} triggerType .
+ * @private
+ */
+Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
+  var firstCandidate = this.candidates_.length > 0 ? this.candidates_[0][
+      Name.CANDIDATE] : '';
+  if (firstCandidate && this.compositionText_ &&
+      firstCandidate != this.compositionText_) {
+    this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(
+        this.compositionText_ + ch, firstCandidate + ch);
+    this.commitText_(firstCandidate + ch, false, triggerType);
+  } else {
+    this.commitText_(ch, true, triggerType);
   }
 };
 
@@ -513,25 +579,23 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
     }
 
     if (this.lastCorrection_) {
-      var offset = this.lastCorrection_.target.length;
+      var offset = this.lastCorrection_.getTargetLength(this.surroundingText_);
+      this.lastCorrection_.reverting = true;
       this.deleteSurroudingText_(offset, offset, (function() {
-        this.commitText_(this.lastCorrection_.source, false, 1);
+        this.commitText_(this.lastCorrection_.getSource(this.surroundingText_),
+            false, 1);
         this.lastCorrection_ = null;
       }).bind(this));
       return;
     }
-
-    chrome.runtime.sendMessage(goog.object.create(
-        Name.MSG_TYPE, Type.CANDIDATES_BACK,
-        Name.MSG, goog.object.create(
-            Name.SOURCE, [],
-            Name.CANDIDATES, [],
-            Name.MATCHED_LENGTHS, []
-        )));
+    this.clearCandidates_();
   }
 
-  if (code != KeyCodes.BACKSPACE) {
-    this.commitText_('', false, 1);
+  if (code == KeyCodes.ENTER) {
+    this.maybeTriggerAutoCorrect_('', 1);
+    if (this.lastCorrection_) {
+      this.lastCorrection_.isTriggerredByEnter = true;
+    }
   }
 
   if (goog.array.contains(AbstractController.FUNCTIONAL_KEYS, code)) {
@@ -547,28 +611,20 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
 Controller.prototype.handleCharacterKeyEvent = function(keyData) {
   if (keyData[Name.MSG_TYPE] == goog.events.EventType.KEYUP) {
     var ch = keyData[Name.KEY];
+    var commit = util.isCommitCharacter(ch);
     var isSpaceKey = keyData[Name.CODE] == KeyCodes.SPACE;
-    if (isSpaceKey) {
-      // Commits the first candidate, if not, commits the current composition.
-      var firstCandidate = this.candidates_.length > 0 ? this.candidates_[0][
-          Name.CANDIDATE] : '';
-      if (firstCandidate && this.compositionText_ &&
-          firstCandidate != this.compositionText_) {
-        this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(
-            this.compositionText_ + ' ', firstCandidate + ' ');
-        this.commitText_(firstCandidate + ' ', false, 0);
-      } else {
-        this.commitText_(' ', true, 0);
-      }
+    if (isSpaceKey || commit) {
+      this.maybeTriggerAutoCorrect_(ch, isSpaceKey ? 0 : 3);
       return;
     }
 
-    var commit = util.isCommitCharacter(ch);
-    if (commit || !this.dataSource_ || !this.dataSource_.isReady() ||
+    if (!this.dataSource_ || !this.dataSource_.isReady() ||
         this.isPasswdBox_() || this.isUrlBox_()) {
-      this.commitText_(ch, true, commit ? 3 : 1);
+      this.commitText_(ch, true, 1);
     } else {
-      this.maybeAutoSpace_();
+      if (this.shouldAutoSpace_()) {
+        this.commitText_(' ', false, 0);
+      }
       this.setComposition_(ch, true, true, keyData[Name.SPATIAL_DATA] || {});
     }
   }
@@ -581,31 +637,41 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
   switch (type) {
     case Type.SELECT_CANDIDATE:
       var candidate = message[Name.CANDIDATE];
-      this.maybeAutoSpace_();
-      this.commitText_(candidate[Name.CANDIDATE], false, 2);
+      var committingText = this.shouldAutoSpace_() ?
+          ' ' + candidate[Name.CANDIDATE] : candidate[Name.CANDIDATE];
+      this.commitText_(committingText, false, 2);
       // TODO: A hack to workaround the IME bug: surrounding text event won't
       // trigger when composition text is equal to committed text. Remove this
       // line when bug is fixed.
       this.surroundingText_ = candidate[Name.CANDIDATE];
-      return;
+      break;
     case Type.SET_LANGUAGE:
       this.processSetLanguage_(message);
-      return;
-    case Type.CONNECT:
-      var contextType = '';
-      if (this.context) {
-        contextType = this.context.type;
-        if (this.isPasswdBox_()) {
-          contextType = 'password';
+      break;
+    case Type.DOUBLE_CLICK_ON_SPACE_KEY:
+      if (this.enableDoubleSpacePeriod_ &&
+          REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS.test(this.surroundingText_)) {
+        if (this.compositionText_) {
+          console.error('Composition text is not expected when double click' +
+              ' on space key.');
         }
+        this.deleteSurroudingText_(-1, 1, (function() {
+          this.commitText_('. ', false, 4);
+          this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(' ',
+              '. ');
+        }).bind(this));
+      } else {
+        this.commitText_(' ', true, 0);
       }
+      break;
+    case Type.CONNECT:
       this.updateSettings({
         'autoSpace': true,
         'autoCapital': true,
         'supportCompact': true,
-        'contextType': contextType
+        'doubleSpacePeriod': this.enableDoubleSpacePeriod_
       });
-      return;
+      break;
     case Type.SEND_KEY_EVENT:
       var keyData = /** @type {!Array.<!ChromeKeyboardEvent>} */
           (message[Name.KEY_DATA]);
@@ -620,12 +686,20 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
             Name.CONTEXT_ID, 0,
             Name.KEY_DATA, keyData
             ));
-        return;
-      }
-      if (window.xkb && xkb.handleSendKeyEvent) {
+      } else if (window.xkb && xkb.handleSendKeyEvent) {
         xkb.handleSendKeyEvent(keyData);
-        return;
       }
+      break;
+    case Type.OPTION_CHANGE:
+      var optionType = message[Name.OPTION_TYPE];
+      var prefix = message[Name.OPTION_PREFIX];
+      switch (optionType) {
+        case OptionType.DOUBLE_SPACE_PERIOD:
+        case OptionType.SOUND_ON_KEYPRESS:
+          this.updateOptions(prefix);
+          break;
+      }
+      break;
   }
 
   goog.base(this, 'processMessage', message, sender, sendResponse);

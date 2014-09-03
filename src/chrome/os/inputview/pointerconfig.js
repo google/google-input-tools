@@ -32,6 +32,14 @@ i18n.input.chrome.inputview.PointerConfig = function(dblClick,
   this.dblClick = dblClick;
 
   /**
+   * The delay of the double click. If not set or is 0, the default delay(500ms)
+   * is used.
+   *
+   * @type {number}
+   */
+  this.dblClickDelay = 0;
+
+  /**
    * True to enable long press and not cancel the next pointer up.
    *
    * @type {boolean}
@@ -58,5 +66,11 @@ i18n.input.chrome.inputview.PointerConfig = function(dblClick,
    * @type {number}
    */
   this.longPressDelay = 0;
+
+  /** @type {boolean} */
+  this.stopEventPropagation = true;
+
+  /** @type {boolean} */
+  this.preventDefault = true;
 };
 

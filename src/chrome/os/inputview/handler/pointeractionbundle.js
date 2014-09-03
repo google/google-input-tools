@@ -16,8 +16,10 @@ goog.provide('i18n.input.chrome.inputview.handler.PointerActionBundle');
 goog.require('goog.Timer');
 goog.require('goog.dom');
 goog.require('goog.events.EventTarget');
+goog.require('goog.events.EventType');
 goog.require('goog.math.Coordinate');
 goog.require('i18n.input.chrome.inputview.SwipeDirection');
+goog.require('i18n.input.chrome.inputview.events.DragEvent');
 goog.require('i18n.input.chrome.inputview.events.EventType');
 goog.require('i18n.input.chrome.inputview.events.PointerEvent');
 goog.require('i18n.input.chrome.inputview.events.SwipeEvent');
@@ -111,6 +113,15 @@ PointerActionBundle.prototype.pointerDownTimeStamp_ = 0;
 
 
 /**
+ * The timestamp of the pointer up.
+ *
+ * @type {number}
+ * @private
+ */
+PointerActionBundle.prototype.pointerUpTimeStamp_ = 0;
+
+
+/**
  * True if it is double clicking.
  *
  * @type {boolean}
@@ -171,6 +182,9 @@ PointerActionBundle.prototype.handleTouchMove = function(touchEvent) {
       (touchEvent.pageY - this.swipeState_.previousY);
   this.swipeState_.offsetX += deltaX;
   this.swipeState_.offsetY += deltaY;
+  this.dispatchEvent(new i18n.input.chrome.inputview.events.DragEvent(
+      this.view_, direction, /** @type {!Node} */ (touchEvent.target),
+      touchEvent.pageX, touchEvent.pageY, deltaX, deltaY));
 
   var minimumSwipeDist = PointerActionBundle.
       MINIMUM_SWIPE_DISTANCE_;
@@ -256,8 +270,12 @@ PointerActionBundle.prototype.handlePointerUp = function(e) {
   this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(
       this.view_, i18n.input.chrome.inputview.events.EventType.LONG_PRESS_END,
       e.target, pageOffset.x, pageOffset.y));
-  if (!this.isDBLClicking_ && !(this.isLongPressing_ &&
-      this.view_.pointerConfig.longPressWithoutPointerUp)) {
+  if (this.isDBLClicking_) {
+    this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(
+        this.view_, i18n.input.chrome.inputview.events.EventType.
+        DOUBLE_CLICK_END, e.target, pageOffset.x, pageOffset.y));
+  } else if (!(this.isLongPressing_ && this.view_.pointerConfig.
+      longPressWithoutPointerUp)) {
     if (this.isLongPressing_) {
       // If the finger didn't move but it triggers a longpress, it could cause
       // a target switch, so checks it here.
@@ -265,22 +283,39 @@ PointerActionBundle.prototype.handlePointerUp = function(e) {
     }
     var view = this.getView_(this.currentTarget_);
     var target = this.currentTarget_;
-    if (!view || this.isFlickering_) {
+    if (this.isFlickering_) {
       view = this.view_;
       target = e.target;
     }
     if (view) {
+      this.pointerUpTimeStamp_ = new Date().getTime();
       this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(
           view, i18n.input.chrome.inputview.events.EventType.POINTER_UP,
-          target, pageOffset.x, pageOffset.y));
+          target, pageOffset.x, pageOffset.y, this.pointerUpTimeStamp_));
     }
+  }
+  if (this.getView_(this.currentTarget_) == this.view_) {
+    this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(
+        this.view_, i18n.input.chrome.inputview.events.EventType.CLICK,
+        e.target, pageOffset.x, pageOffset.y));
   }
   this.isDBLClicking_ = false;
   this.isLongPressing_ = false;
   this.isFlickering_ = false;
   this.swipeState_.reset();
+
   e.preventDefault();
-  e.stopPropagation();
+  if (this.view_ && this.view_.pointerConfig.stopEventPropagation) {
+    e.stopPropagation();
+  }
+};
+
+
+/**
+ * Cancel double click recognition on this target.
+ */
+PointerActionBundle.prototype.cancelDoubleClick = function() {
+  this.pointerDownTimeStamp_ = 0;
 };
 
 
@@ -301,11 +336,15 @@ PointerActionBundle.prototype.handlePointerDown = function(e) {
     var pageOffset = this.getPageOffset_(e);
     this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(
         this.view_, i18n.input.chrome.inputview.events.EventType.POINTER_DOWN,
-        e.target, pageOffset.x, pageOffset.y));
+        e.target, pageOffset.x, pageOffset.y, this.pointerDownTimeStamp_));
   }
 
-  e.preventDefault();
-  e.stopPropagation();
+  if (this.view_ && this.view_.pointerConfig.preventDefault) {
+    e.preventDefault();
+  }
+  if (this.view_ && this.view_.pointerConfig.stopEventPropagation) {
+    e.stopPropagation();
+  }
 };
 
 
@@ -321,9 +360,13 @@ PointerActionBundle.prototype.getPageOffset_ = function(e) {
     return new goog.math.Coordinate(e.pageX, e.pageY);
   }
 
+  if (!e.getBrowserEvent) {
+    return new goog.math.Coordinate(0, 0);
+  }
+
   var nativeEvt = e.getBrowserEvent();
   if (nativeEvt.pageX && nativeEvt.pageY) {
-     return new goog.math.Coordinate(nativeEvt.pageX, nativeEvt.pageY);
+    return new goog.math.Coordinate(nativeEvt.pageX, nativeEvt.pageY);
   }
 
 
@@ -365,8 +408,8 @@ PointerActionBundle.prototype.maybeTriggerKeyDownLongPress_ = function(e) {
 PointerActionBundle.prototype.maybeHandleDBLClick_ = function(e) {
   if (this.view_ && this.view_.pointerConfig.dblClick) {
     var timeInMs = new Date().getTime();
-    var interval = PointerActionBundle.
-        DOUBLE_CLICK_INTERVAL_;
+    var interval = this.view_.pointerConfig.dblClickDelay ||
+        PointerActionBundle.DOUBLE_CLICK_INTERVAL_;
     var nativeEvt = e.getBrowserEvent();
     if ((timeInMs - this.pointerDownTimeStamp_) < interval) {
       this.dispatchEvent(new i18n.input.chrome.inputview.events.PointerEvent(

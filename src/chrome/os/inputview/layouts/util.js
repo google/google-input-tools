@@ -12,7 +12,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
 goog.provide('i18n.input.chrome.inputview.layouts.util');
-
+goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
 
 
@@ -37,6 +37,14 @@ i18n.input.chrome.inputview.layouts.util.keyId_ = 0;
  */
 i18n.input.chrome.inputview.layouts.util.keyIdPrefix = '';
 
+/**
+ * Resets id counter for keys in preparation for processing a new layout.
+ * @param {string} prefix  The prefix for the key id.
+ */
+i18n.input.chrome.inputview.layouts.util.setPrefix = function(prefix) {
+  i18n.input.chrome.inputview.layouts.util.keyIdPrefix = prefix;
+  i18n.input.chrome.inputview.layouts.util.keyId_ = 0;
+};
 
 /**
  * Creates a sequence of key with the same specification.
@@ -80,7 +88,21 @@ i18n.input.chrome.inputview.layouts.util.createKey = function(spec, opt_id) {
 i18n.input.chrome.inputview.layouts.util.createLinearLayout = function(spec,
     opt_id) {
   return i18n.input.chrome.inputview.layouts.util.createElem(
-      ElementType.LINEAR_LAYOUT, spec, opt_id);
+      ElementType.LINEAR_LAYOUT, spec, opt_id, spec['iconCssClass']);
+};
+
+
+/**
+ * Creates an extended layout.
+ *
+ * @param {!Object} spec The specification.
+ * @param {string=} opt_id The id.
+ * @return {!Object} The extended layout.
+ */
+i18n.input.chrome.inputview.layouts.util.createExtendedLayout = function(spec,
+    opt_id) {
+  return i18n.input.chrome.inputview.layouts.util.createElem(
+      ElementType.EXTENDED_LAYOUT, spec, opt_id, spec['iconCssClass']);
 };
 
 
@@ -175,10 +197,11 @@ i18n.input.chrome.inputview.layouts.util.createKeyboard = function(spec,
  * @param {!ElementType} type The type.
  * @param {Object} spec The specification.
  * @param {string=} opt_id The id.
+ * @param {i18n.input.chrome.inputview.Css=} opt_iconCssClass The Css class.
  * @return {!Object} The element.
  */
 i18n.input.chrome.inputview.layouts.util.createElem = function(type, spec,
-    opt_id) {
+    opt_id, opt_iconCssClass) {
   var newSpec = {};
   for (var key in spec) {
     newSpec[key] = spec[key];
@@ -186,6 +209,9 @@ i18n.input.chrome.inputview.layouts.util.createElem = function(type, spec,
   newSpec['type'] = type;
   if (opt_id) {
     newSpec['id'] = opt_id;
+  }
+  if (opt_iconCssClass) {
+    newSpec['iconCssClass'] = opt_iconCssClass;
   }
   return {
     'spec': newSpec

@@ -17,7 +17,7 @@ goog.require('i18n.input.chrome.inputview.layouts.util');
 
 (function() {
   var util = i18n.input.chrome.inputview.layouts.util;
-  util.keyIdPrefix = 'handwriting-k-';
+  util.setPrefix('handwriting-k-');
 
   var verticalRows = [];
   var baseKeySpec = {

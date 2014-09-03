@@ -13,7 +13,6 @@
 //
 goog.provide('i18n.input.chrome.message.Name');
 
-
 /**
  * The message attribute name.
  *
@@ -33,6 +32,8 @@ i18n.input.chrome.message.Name = {
   ENGINE_ID: 'engineID',
   HEIGHT: 'height',
   ID: 'id',
+  IS_EMOJI: 'isEmoji',
+  IS_AUTOCORRECT: 'isAutoCorrect',
   KEY: 'key',
   KEYCODE: 'keyCode',
   KEYSET: 'keyset',
@@ -41,6 +42,8 @@ i18n.input.chrome.message.Name = {
   MATCHED_LENGTHS: 'matchedLengths',
   MSG: 'msg',
   MSG_TYPE: 'type',
+  OPTION_PREFIX: 'optionPrefix',
+  OPTION_TYPE: 'optionType',
   PAGE_SIZE: 'pageSize',
   POSSIBILITIES: 'possibilities',
   PROPERTIES: 'properties',
@@ -49,6 +52,7 @@ i18n.input.chrome.message.Name = {
   SOURCE: 'source',
   SOURCES: 'sources',
   SPATIAL_DATA: 'spatialData',
+  SCREEN: 'screen',
   STROKES: 'strokes',
   TEXT: 'text',
   VERTICAL: 'vertical',

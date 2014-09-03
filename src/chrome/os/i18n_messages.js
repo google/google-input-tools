@@ -1,16 +1,3 @@
-// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
-// limitations under the License.
-// See the License for the specific language governing permissions and
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// distributed under the License is distributed on an "AS-IS" BASIS,
-// Unless required by applicable law or agreed to in writing, software
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// You may obtain a copy of the License at
-// you may not use this file except in compliance with the License.
-// Licensed under the Apache License, Version 2.0 (the "License");
-//
 // Copyright 2011 Google Inc. All Rights Reserved.
 
 goog.require('goog.chrome.extensions.i18n');
@@ -38,16 +25,16 @@ msgs.MSG_CHOS_INPUTTOOL_DESCRIPTION = goog.getMsg(
 /**
  * @desc It is the description of Pinyin setting pages.
  */
-msgs.MSG_PINYIN_SETTING_PAGE = goog.getMsg(
-    'Pinyin Setting Page'
+msgs.MSG_PINYIN_SETTINGS_PAGE = goog.getMsg(
+    'Pinyin Settings Page'
     );
 
 
 /**
  * @desc It is the description of Zhuyin setting pages.
  */
-msgs.MSG_ZHUYIN_SETTING_PAGE = goog.getMsg(
-    'Zhuyin Setting Page'
+msgs.MSG_ZHUYIN_SETTINGS_PAGE = goog.getMsg(
+    'Zhuyin Settings Page'
     );
 
 
@@ -1983,4 +1970,148 @@ msgs.MSG_SWITCHED_TO = goog.getMsg('switched to ');
 msgs.MSG_GOT_IT = goog.getMsg('Got it');
 
 
+/**
+ * @desc Option for input to never automatically correct or change user input
+ * from keyboard.
+ */
+msgs.MSG_NEVER_AUTO_CORRECT = goog.getMsg('No autocorrect');
+
+
+/**
+ * @desc Option for input to sometimes automatically correct user input to what
+ * the model thinks is the intended input when confidence is high.
+ */
+msgs.MSG_SOMETIMES_AUTO_CORRECT = goog.getMsg('Moderate autocorrect');
+
+
+/**
+ * @desc Option for input to always automatically correct user input to what
+ * the model thinks is the intended input when confidence is high.
+ */
+msgs.MSG_ALWAYS_AUTO_CORRECT = goog.getMsg('Aggressive autocorrect');
+
+
+/**
+ * @desc Option to determine how candidates are triggered. This one displays
+ * input candidates only on backspace.
+ */
+msgs.MSG_SHOW_CANDIDATES_BACKSPACE =
+    goog.getMsg('Show suggestion dropdown by Backspace');
+
+
+/**
+ * @desc Option to determine how candidates are triggered. This one displays
+ * input candidates after waiting 500ms.
+ */
+msgs.MSG_SHOW_CANDIDATES_500 =
+    goog.getMsg('Show suggestion dropdown after 500ms');
+
+
+/**
+ * @desc Option to determine how candidates are triggered. This one displays
+ * input candidates after waiting 1 second.
+ */
+msgs.MSG_SHOW_CANDIDATES_1000 =
+    goog.getMsg('Show suggestion dropdown after 1s');
+
+
+/**
+ * @desc Option to determine how candidates are triggered. This one displays
+ * input candidates after waiting 2 second.
+ */
+msgs.MSG_SHOW_CANDIDATES_2000 =
+    goog.getMsg('Show suggestion dropdown after 2s');
+
+
+/**
+ * @desc Option to determine how candidates are triggered. This one displays
+ * input candidates after waiting 5 second.
+ */
+msgs.MSG_SHOW_CANDIDATES_5000 =
+    goog.getMsg('Show suggestion dropdown after 5s');
+
+
+/**
+ * @desc The title for the settings page of latin input methods.
+ */
+msgs.MSG_LATIN_SETTINGS_PAGE = goog.getMsg('Settings');
+
+
+/**
+ * @desc Title for options to determine how often the input method
+ * automatically corrects user input when confidence is high.
+ */
+msgs.MSG_AUTO_CORRECTION_LEVEL = goog.getMsg('Autocorrect level');
+
+
+/**
+ * @desc Option to enable automatic capitalization of first character in a
+ * sentence.
+ */
+msgs.MSG_ENABLE_CAPITALIZATION = goog.getMsg('Enable auto-capitalization');
+
+
+/**
+ * @desc Title for options to determine when to show candidates.
+ */
+msgs.MSG_SHOW_CANDIDATE_MODE = goog.getMsg('Delay of suggestion dropdown');
+
+
+/**
+ * @desc Option to enable prediction of next word to be typed.
+ */
+msgs.MSG_ENABLE_PREDICTION = goog.getMsg('Enable next word prediction');
+
+
+/**
+ * @desc The title for the US keyboard's settings page.
+ */
+msgs.MSG_US_ENG_SETTINGS_PAGE =
+    goog.getMsg('US Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the section containing touch-enabled keyboard settings.
+ */
+msgs.MSG_TOUCH_KEYBOARD = goog.getMsg('Touch Keyboard');
+
+
+/**
+ * @desc Description of a checkbox that when checked, will produce a sound for
+ * every keypress on the touch keyboard, and when unchecked, will be silent.
+ */
+msgs.MSG_SOUND_ON_KEYPRESS = goog.getMsg('Sound on keypress');
+
+
+/**
+ * @desc Description of a checkbox that when checked, will replace two
+ * consecutive space key presses with a period and a space, thus making it
+ * easier to type long paragraphs by double tapping space at the end of a
+ * sentence instead of finding the period key and pressing that and then space.
+ */
+msgs.MSG_DOUBLE_SPACE_PERIOD = goog.getMsg('Double-space to type period');
+
+
+/**
+ * @desc Option to enable auto-completion of the word being typed.
+ */
+msgs.MSG_ENABLE_COMPLETION = goog.getMsg('Enable completion');
+
+
+/**
+ * @desc It is the description of Korean setting pages.
+ */
+msgs.MSG_KOREAN_SETTINGS_PAGE = goog.getMsg('Korean Settings Page');
+
+
+/**
+ * @desc Title for the switch to compact layout menu item.
+ */
+msgs.MSG_SWITCH_TO_COMPACT_LAYOUT = goog.getMsg('Switch to compact layout');
+
+
+/**
+ * @desc Title for the switch to full layout menu item.
+ */
+msgs.MSG_SWITCH_TO_FULL_LAYOUT = goog.getMsg('Switch to full layout');
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));

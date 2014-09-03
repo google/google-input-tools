@@ -30,14 +30,23 @@ goog.scope(function() {
  *
  * @param {string} id The id.
  * @param {goog.events.EventTarget=} opt_eventTarget The event target.
+ * @param {i18n.input.chrome.inputview.Css=} opt_iconCssClass The css class.
  * @constructor
  * @extends {i18n.input.chrome.inputview.elements.Element}
  * @implements {i18n.input.chrome.inputview.elements.Weightable}
  */
 i18n.input.chrome.inputview.elements.layout.LinearLayout = function(id,
-    opt_eventTarget) {
+    opt_eventTarget, opt_iconCssClass) {
   goog.base(this, id, i18n.input.chrome.inputview.elements.ElementType.
       LINEAR_LAYOUT, opt_eventTarget);
+
+  /**
+   * The icon Css class for the linearlayout
+   *
+   * @type {i18n.input.chrome.inputview.Css}
+   */
+  this.iconCssClass = opt_iconCssClass ||
+      i18n.input.chrome.inputview.Css.LINEAR_LAYOUT;
 };
 goog.inherits(i18n.input.chrome.inputview.elements.layout.LinearLayout,
     i18n.input.chrome.inputview.elements.Element);
@@ -65,9 +74,7 @@ LinearLayout.prototype.widthInWeight_ = 0;
 /** @override */
 LinearLayout.prototype.createDom = function() {
   goog.base(this, 'createDom');
-
-  goog.dom.classlist.add(this.getElement(), i18n.input.chrome.inputview.Css.
-      LINEAR_LAYOUT);
+  goog.dom.classlist.add(this.getElement(), this.iconCssClass);
 };
 
 

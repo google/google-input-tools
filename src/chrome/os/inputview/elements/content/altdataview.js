@@ -108,7 +108,6 @@ AltDataView.prototype.createDom = function() {
   var dom = this.getDomHelper();
   var elem = this.getElement();
   goog.dom.classlist.add(elem, i18n.input.chrome.inputview.Css.ALTDATA_VIEW);
-  goog.dom.classlist.add(elem, i18n.input.chrome.inputview.Css.FONT);
   this.coverElement_ = dom.createDom(goog.dom.TagName.DIV,
       i18n.input.chrome.inputview.Css.ALTDATA_COVER);
   dom.appendChild(document.body, this.coverElement_);
@@ -149,17 +148,7 @@ AltDataView.prototype.show = function(key, isRTL) {
   } else if (key.type == ElementType.COMPACT_KEY) {
     key = /** @type {!i18n.input.chrome.inputview.elements.content.
         CompactKey} */ (key);
-    var accents = key.moreKeys;
-    characters = [];
-    if (accents.length != 0) {
-      characters = goog.array.clone(accents);
-      // Converts all accents to upper case if current key is upper case.
-      if (key.getActiveCharacter().toLowerCase() != key.getActiveCharacter()) {
-        for (var i = 0; i < characters.length; i++) {
-          characters[i] = characters[i].toUpperCase();
-        }
-      }
-    }
+    characters = key.getMoreCharacters();
     if (key.hintText) {
       goog.array.insertAt(characters, key.hintText, 0);
     }

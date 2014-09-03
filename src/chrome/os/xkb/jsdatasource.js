@@ -13,18 +13,22 @@
 //
 goog.provide('i18n.input.chrome.xkb.JsDataSource');
 
+goog.require('goog.array');
+goog.require('goog.object');
 goog.require('i18n.input.chrome.DataSource');
+goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.offline.latin.Decoder');
 
-
 goog.scope(function() {
+var Name = i18n.input.chrome.message.Name;
+
 
 
 /**
  * The js data source.
  *
  * @param {number} numOfCandidate The number of canddiate to fetch.
- * @param {function(string, !Array.<string>, !Array.<number>)} callback .
+ * @param {function(string, !Array.<!Object>)} callback .
  * @constructor
  * @extends {i18n.input.chrome.DataSource}
  */
@@ -59,17 +63,28 @@ JsDataSource.prototype.onLoaded_ = function() {
 
 
 /** @override */
-JsDataSource.prototype.sendCompletionRequest = function(query,
+JsDataSource.prototype.sendCompletionRequest = function(query, context,
     opt_spatialData) {
   var candidates = this.decoder_.decode(query, this.numOfCandidate);
-  this.callback(query, candidates || [], []);
+  candidates = goog.array.map(candidates, function(candidate, index) {
+    return goog.object.create(Name.CANDIDATE, candidate,
+        Name.CANDIDATE_ID, index,
+        Name.MATCHED_LENGTHS, query.length,
+        Name.IS_EMOJI, false);
+  });
+  this.callback(query, candidates || []);
 };
 
 
 /** @override */
-JsDataSource.prototype.sendPredictionRequest = function(query) {
-  this.callback('', [], []);
+JsDataSource.prototype.sendPredictionRequest = function(context) {
+  this.callback('', []);
 };
+
+
+/** @override */
+JsDataSource.prototype.clear = function() {};
+
 
 (function() {
   goog.exportSymbol('xkb.DataSource', JsDataSource);
@@ -82,10 +97,12 @@ JsDataSource.prototype.sendPredictionRequest = function(query) {
       dataSourceProto.sendPredictionRequest);
   goog.exportProperty(dataSourceProto, 'seCorrectionLevel',
       dataSourceProto.setCorrectionLevel);
+  goog.exportProperty(dataSourceProto, 'clear',
+      dataSourceProto.clear);
   goog.exportProperty(dataSourceProto, 'isReady',
       dataSourceProto.isReady);
 }) ();
 
 
-}); // goog.scope
+});  // goog.scope
 

@@ -14,11 +14,13 @@
 goog.provide('i18n.input.chrome.inputview.elements.content.CharacterKey');
 
 goog.require('goog.array');
+goog.require('goog.math.Coordinate');
 goog.require('i18n.input.chrome.inputview.StateType');
 goog.require('i18n.input.chrome.inputview.SwipeDirection');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
 goog.require('i18n.input.chrome.inputview.elements.content.Character');
 goog.require('i18n.input.chrome.inputview.elements.content.CharacterModel');
+goog.require('i18n.input.chrome.inputview.elements.content.GaussianEstimator');
 goog.require('i18n.input.chrome.inputview.elements.content.SoftKey');
 
 
@@ -144,18 +146,36 @@ CharacterKey.prototype.createDom = function() {
   var elem = this.getElement();
   var dom = this.getDomHelper();
 
-  for (var i = 0; i < this.characters.length; i++) {
-    var ch = this.characters[i];
+  for (var i = 0; i < CharacterKey.STATE_LIST_.length; i++) {
+    var ch = this.characters.length > i ? this.characters[i] : '';
     if (ch && ch != '\x00') {
       var model = new CharacterModel(ch, this.isLetterKey,
           this.hasAltGrCharacterInTheKeyset_,
           this.alwaysRenderAltGrCharacter_,
           CharacterKey.STATE_LIST_[i],
-          this.stateManager_);
+          this.stateManager_,
+          this.getCapslockCharacter_(i));
       var character = new Character(this.id + '-' + i, model, this.isRTL_);
       this.addChild(character, true);
     }
   }
+};
+
+
+/**
+ * Gets the capslock character if have.
+ *
+ * @param {number} i .
+ * @private
+ * @return {string} .
+ */
+CharacterKey.prototype.getCapslockCharacter_ = function(i) {
+  var capslockCharacterIndex = i + 4;
+  if (this.characters.length > capslockCharacterIndex) {
+    return this.characters[capslockCharacterIndex];
+  }
+
+  return '';
 };
 
 
@@ -169,6 +189,16 @@ CharacterKey.prototype.resize = function(width,
         this.getChildAt(i));
     child.resize(this.availableWidth, this.availableHeight);
   }
+
+  var elem = this.getElement();
+  this.topLeftCoordinate = goog.style.getClientPosition(elem);
+  this.centerCoordinate = new goog.math.Coordinate(
+      this.topLeftCoordinate.x + this.availableWidth / 2,
+      this.topLeftCoordinate.y + this.availableHeight / 2);
+  this.estimator = new i18n.input.chrome.inputview.elements.content.
+      GaussianEstimator(this.centerCoordinate,
+          this.stateManager_.covariance.getValue(this.type),
+          this.availableHeight / this.availableWidth);
 };
 
 
@@ -210,6 +240,7 @@ CharacterKey.prototype.getActiveCharacter =
   }
   return this.getChildAt(0).getContent();
 };
+
 
 
 /**

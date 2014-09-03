@@ -50,6 +50,16 @@ AbstractView.prototype.context = null;
 
 
 /**
+ * A flag being flipped when onCompsitionCanceled to avoid composition ops
+ * when hiding. Defualt to true and only be set to false when
+ * onCompsitionCanceled.
+ *
+ * @type {boolean}
+ */
+AbstractView.prototype.resetCompositionWhenHiding = true;
+
+
+/**
  * Sets the property of the candidate window.
  *
  * @param {string} engineID .
@@ -88,9 +98,11 @@ AbstractView.prototype.setCandidateWindowProperties = function(engineID,
  */
 AbstractView.prototype.setCandidates = function(candidates) {
   if (this.standalone) {
-    chrome.input.ime.setCandidates(goog.object.create(
-        Name.CONTEXT_ID, this.context.contextID,
-        Name.CANDIDATES, candidates));
+    if (this.context) {
+      chrome.input.ime.setCandidates(goog.object.create(
+          Name.CONTEXT_ID, this.context.contextID,
+          Name.CANDIDATES, candidates));
+    }
   } else {
     chrome.runtime.sendMessage(goog.object.create(
         Name.MSG_TYPE, Type.CANDIDATES_BACK,
@@ -105,7 +117,7 @@ AbstractView.prototype.setCandidates = function(candidates) {
  * @param {number} cursorPosition .
  */
 AbstractView.prototype.setCursorPosition = function(cursorPosition) {
-  if (this.standalone) {
+  if (this.standalone && this.context) {
     chrome.input.ime.setCursorPosition(goog.object.create(
         Name.CONTEXT_ID, this.context.contextID,
         Name.CANDIDATE_ID, cursorPosition));

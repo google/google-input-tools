@@ -52,6 +52,25 @@ util.DISPLAY_MAPPING = {
 
 
 /**
+ * The keysets using US keyboard layouts.
+ *
+ * @type {!Array.<string>}
+ */
+util.KEYSETS_USE_US = [
+  'array',
+  'cangjie',
+  'dayi',
+  'jp_us',
+  'pinyin-zh-CN',
+  'pinyin-zh-TW',
+  'quick',
+  't13n',
+  'wubi',
+  'zhuyin'
+];
+
+
+/**
  * A regular expression for the end of a sentence.
  *
  * @private {!RegExp}
@@ -66,7 +85,7 @@ util.END_SENTENCE_REGEX_ = /[\.\?!] +$/;
  * @private
  */
 util.REGEX_CHARACTER_SUPPORT_DEADKEY_ =
-    /^[a-zA-ZæÆœŒ]+$/;
+    /^[a-zA-ZæÆœŒΑΕΗΙΟΥΩαεηιυοωϒ]+$/;
 
 
 /**
@@ -74,7 +93,8 @@ util.REGEX_CHARACTER_SUPPORT_DEADKEY_ =
  *
  * @type {!RegExp}
  */
-util.REGEX_LANGUAGE_MODEL_CHARACTERS = /^[a-zA-ZæÆœŒ\'-]$/;
+util.REGEX_LANGUAGE_MODEL_CHARACTERS =
+    /(?=[^\u00d7\u00f7])[a-z\-\'\u00c0-\u017F]/i;
 
 
 /**
@@ -187,8 +207,7 @@ util.isCommitCharacter = function(character) {
     return false;
   }
 
-  return character.toUpperCase() == character && character.toLowerCase() ==
-      character;
+  return true;
 };
 
 
@@ -244,7 +263,7 @@ util.supportDeadKey = function(character) {
  */
 util.needAutoCap = function(text) {
   if (goog.string.isEmpty(text)) {
-    return true;
+    return false;
   } else {
     return util.END_SENTENCE_REGEX_.test(text);
   }

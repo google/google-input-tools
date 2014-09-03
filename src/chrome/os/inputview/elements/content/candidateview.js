@@ -145,6 +145,14 @@ CandidateView.ICON_WIDTH_ = 120;
 
 
 /**
+ * The handwriting keyset code.
+ *
+ * @private {string}
+ */
+CandidateView.HANDWRITING_VIEW_CODE_ = 'hwt';
+
+
+/**
  * The width of the inter container.
  *
  * @private {number}
@@ -167,6 +175,10 @@ CandidateView.prototype.createDom = function() {
     button.render(elem);
     button.setVisible(false);
   }
+
+  // CandidateView is a container which doesn't handle any event and could be
+  // taken as a empty area, so don't attach the view.
+  elem['view'] = null;
 };
 
 
@@ -191,13 +203,11 @@ CandidateView.prototype.showNumberRow = function() {
   var numberWidth = this.width / this.widthInWeight_ - 1;
   dom.removeChildren(this.interContainer_);
   for (var i = 0; i < 10; i++) {
-    this.createSeparator_();
     var candidateElem = new Candidate(String(i), goog.object.create(
         Name.CANDIDATE, String((i + 1) % 10)),
         Type.NUMBER, this.height, false, numberWidth, this);
     candidateElem.render(this.interContainer_);
   }
-  this.createSeparator_();
   this.showingNumberRow = true;
 };
 
@@ -240,13 +250,11 @@ CandidateView.prototype.addThreeCandidates_ = function(candidates) {
   var num = Math.min(3, candidates.length);
   var dom = this.getDomHelper();
   for (var i = 0; i < num; i++) {
-    this.createSeparator_();
     var candidateElem = new Candidate(String(i), candidates[i], Type.CANDIDATE,
         this.height, i == 1 || num == 1, CandidateView.
         WIDTH_FOR_THREE_CANDIDATES_, this);
     candidateElem.render(this.interContainer_);
   }
-  this.createSeparator_();
   this.candidateCount = num;
 };
 
@@ -277,7 +285,6 @@ CandidateView.prototype.addFullCandidates_ = function(candidates) {
   var dom = this.getDomHelper();
   var i;
   for (i = 0; i < candidates.length; i++) {
-    this.createSeparator_();
     var candidateElem = new Candidate(String(i), candidates[i], Type.CANDIDATE,
         this.height, false, undefined, this);
     candidateElem.render(this.interContainer_);
@@ -293,23 +300,6 @@ CandidateView.prototype.addFullCandidates_ = function(candidates) {
     goog.style.setWidth(candidateElem.getElement(), candidateWidth);
   }
   this.candidateCount = i;
-};
-
-
-/**
- * Creates a separator.
- *
- * @private
- */
-CandidateView.prototype.createSeparator_ = function() {
-  var dom = this.getDomHelper();
-  var tableCell = dom.createDom(TagName.DIV,
-      i18n.input.chrome.inputview.Css.TABLE_CELL);
-  var separator = dom.createDom(TagName.DIV,
-      i18n.input.chrome.inputview.Css.CANDIDATE_SEPARATOR);
-  separator.style.height = Math.floor(this.height * 0.5) + 'px';
-  dom.appendChild(tableCell, separator);
-  dom.appendChild(this.interContainer_, tableCell);
 };
 
 
@@ -355,4 +345,20 @@ CandidateView.prototype.switchToIcon = function(type, visible) {
   this.iconButtons_[type].setVisible(visible);
 };
 
+
+/**
+ * updates the candidate view by key set changing.
+ *
+ * @param {string} keyset .
+ * @param {boolean} isPasswordBox .
+ */
+CandidateView.prototype.updateByKeyset = function(keyset, isPasswordBox) {
+  this.switchToIcon(CandidateView.IconType.BACK,
+      keyset == CandidateView.HANDWRITING_VIEW_CODE_);
+  if (isPasswordBox && keyset.indexOf('compact') != -1) {
+    this.showNumberRow();
+  } else {
+    this.hideNumberRow();
+  }
+};
 });  // goog.scope

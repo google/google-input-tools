@@ -54,7 +54,11 @@ goog.inherits(CandidateButton, i18n.input.chrome.inputview.elements.Element);
 
 
 /** @type {!Element} */
-CandidateButton.prototype.tableCell;
+CandidateButton.prototype.iconCell;
+
+
+/** @type {!Element} */
+CandidateButton.prototype.separatorCell;
 
 
 /** @override */
@@ -65,8 +69,11 @@ CandidateButton.prototype.createDom = function() {
   var elem = this.getElement();
   goog.dom.classlist.addAll(elem, [Css.CANDIDATE_INTER_CONTAINER,
     Css.CANDIDATE_BUTTON]);
-  this.tableCell = dom.createDom(goog.dom.TagName.DIV, Css.TABLE_CELL);
-  dom.appendChild(elem, this.tableCell);
+
+  this.separatorCell = this.createSeparator_();
+
+  this.iconCell = dom.createDom(goog.dom.TagName.DIV, Css.TABLE_CELL);
+  dom.appendChild(elem, this.iconCell);
 
   var iconElem = dom.createDom(goog.dom.TagName.DIV, Css.INLINE_DIV);
   if (this.iconCss) {
@@ -75,13 +82,32 @@ CandidateButton.prototype.createDom = function() {
   if (this.text) {
     dom.setTextContent(iconElem, this.text);
   }
-  dom.appendChild(this.tableCell, iconElem);
+  dom.appendChild(this.iconCell, iconElem);
+};
+
+
+/**
+ * Creates a separator.
+ *
+ * @private
+ */
+CandidateButton.prototype.createSeparator_ = function() {
+  var dom = this.getDomHelper();
+  var tableCell = dom.createDom(goog.dom.TagName.DIV,
+      i18n.input.chrome.inputview.Css.TABLE_CELL);
+  var separator = dom.createDom(goog.dom.TagName.DIV,
+      i18n.input.chrome.inputview.Css.CANDIDATE_SEPARATOR);
+  separator.style.height = '32%';
+  dom.appendChild(tableCell, separator);
+  dom.appendChild(this.getElement(), tableCell);
+  return tableCell;
 };
 
 
 /** @override */
 CandidateButton.prototype.resize = function(width, height) {
-  goog.style.setSize(this.tableCell, width, height);
+  goog.style.setSize(this.separatorCell, 1, height);
+  goog.style.setSize(this.iconCell, width - 1, height);
 
   goog.base(this, 'resize', width, height);
 };

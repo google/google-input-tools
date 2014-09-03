@@ -20,19 +20,14 @@ goog.provide('i18n.input.chrome.inputview.CandidatesInfo');
  *
  * @param {string} source .
  * @param {!Array.<!Object>} candidates .
- * @param {Array.<number>=} opt_matchedLengths .
  * @constructor
  */
-i18n.input.chrome.inputview.CandidatesInfo = function(source, candidates,
-    opt_matchedLengths) {
+i18n.input.chrome.inputview.CandidatesInfo = function(source, candidates) {
   /** @type {string} */
   this.source = source;
 
   /** @type {!Array.<!Object>} */
   this.candidates = candidates;
-
-  /** @type {Array.<number>} */
-  this.matchedLengths = opt_matchedLengths || null;
 };
 
 

@@ -28,14 +28,17 @@ i18n.input.chrome.inputview.layouts.RowsOf102.create = function() {
   };
 
   // Row1
-  var keySequenceOf13 = i18n.input.chrome.inputview.layouts.util.
-      createKeySequence(baseKeySpec, 13);
+  var backquoteKey = i18n.input.chrome.inputview.layouts.util.createKey({
+    'widthInWeight': 0.94
+  });
+  var keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
+      createKeySequence(baseKeySpec, 12);
   var backspaceKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2
+    'widthInWeight': 1.42
   });
   var row1 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row1',
-    'children': [keySequenceOf13, backspaceKey]
+    'children': [backquoteKey, keySequenceOf12, backspaceKey]
   });
 
 
@@ -43,24 +46,22 @@ i18n.input.chrome.inputview.layouts.RowsOf102.create = function() {
 
   // First linear layout at the left of the enter.
   var tabKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.5
+    'widthInWeight': 1.38
   });
-  var keySequenceOf11 = i18n.input.chrome.inputview.layouts.util.
-      createKeySequence(baseKeySpec, 11);
-  var slashKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.25
-  });
+  keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
+      createKeySequence(baseKeySpec, 12);
   var row2 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row2',
-    'children': [tabKey, keySequenceOf11, slashKey]
+    'children': [tabKey, keySequenceOf12]
   });
 
   // Second linear layout at the right of the enter.
   var capslockKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.75
+    'widthInWeight': 1.74
   });
-  var keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
-      createKeySequence(baseKeySpec, 12);
+  keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.createKeySequence({
+    'widthInWeight': 0.97
+  }, 12);
   var row3 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row3',
     'children': [capslockKey, keySequenceOf12]
@@ -74,7 +75,7 @@ i18n.input.chrome.inputview.layouts.RowsOf102.create = function() {
 
   // Vertical layout contains enter key.
   var enterKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.25,
+    'widthInWeight': 0.98,
     'heightInWeight': 2
   });
   var enterLayout = i18n.input.chrome.inputview.layouts.util.
@@ -91,12 +92,12 @@ i18n.input.chrome.inputview.layouts.RowsOf102.create = function() {
 
   // Row4
   var shiftLeft = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.25
+    'widthInWeight': 1.2
   });
-  keySequenceOf11 = i18n.input.chrome.inputview.layouts.util.createKeySequence(
-      baseKeySpec, 11);
+  var keySequenceOf11 = i18n.input.chrome.inputview.layouts.util.
+      createKeySequence(baseKeySpec, 11);
   var shiftRight = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2.75
+    'widthInWeight': 2.16
   });
   var row4 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row4',

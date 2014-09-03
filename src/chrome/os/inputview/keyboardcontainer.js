@@ -17,17 +17,23 @@ goog.require('goog.dom.TagName');
 goog.require('goog.dom.classlist');
 goog.require('goog.ui.Container');
 goog.require('i18n.input.chrome.inputview.Css');
-goog.require('i18n.input.chrome.inputview.KeysetView');
 goog.require('i18n.input.chrome.inputview.elements.content.AltDataView');
 goog.require('i18n.input.chrome.inputview.elements.content.CandidateView');
+goog.require('i18n.input.chrome.inputview.elements.content.EmojiView');
 goog.require('i18n.input.chrome.inputview.elements.content.ExpandedCandidateView');
+goog.require('i18n.input.chrome.inputview.elements.content.HandwritingView');
+goog.require('i18n.input.chrome.inputview.elements.content.KeysetView');
 goog.require('i18n.input.chrome.inputview.elements.content.MenuView');
 
 
 
 goog.scope(function() {
-var SpecNodeName = i18n.input.chrome.inputview.SpecNodeName;
 var Css = i18n.input.chrome.inputview.Css;
+var EmojiView = i18n.input.chrome.inputview.elements.content.EmojiView;
+var HandwritingView = i18n.input.chrome.inputview.elements.content.
+    HandwritingView;
+var KeysetView = i18n.input.chrome.inputview.elements.content.KeysetView;
+var SpecNodeName = i18n.input.chrome.inputview.SpecNodeName;
 var content = i18n.input.chrome.inputview.elements.content;
 
 
@@ -59,7 +65,7 @@ i18n.input.chrome.inputview.KeyboardContainer = function(opt_adapter) {
    * Key: keyboard code.
    * Value: The view object.
    *
-   * @type {!Object.<string, !i18n.input.chrome.inputview.KeysetView>}
+   * @type {!Object.<string, !KeysetView>}
    */
   this.keysetViewMap = {};
 
@@ -75,7 +81,7 @@ goog.inherits(i18n.input.chrome.inputview.KeyboardContainer,
 var KeyboardContainer = i18n.input.chrome.inputview.KeyboardContainer;
 
 
-/** @type {!i18n.input.chrome.inputview.KeysetView} */
+/** @type {!KeysetView} */
 KeyboardContainer.prototype.currentKeysetView;
 
 
@@ -94,6 +100,15 @@ KeyboardContainer.PADDING_BOTTOM_ = 7;
  * @private
  */
 KeyboardContainer.HANDWRITING_PADDING_ = 22;
+
+
+/**
+ * The padding of emoji keyset.
+ *
+ * @type {number}
+ * @private
+ */
+KeyboardContainer.EMOJI_PADDING_ = 22;
 
 
 /**
@@ -117,7 +132,7 @@ KeyboardContainer.prototype.createDom = function() {
   this.menuView.render();
   this.expandedCandidateView.render(this.wrapperDiv_);
   this.expandedCandidateView.setVisible(false);
-  goog.dom.classlist.addAll(elem, [Css.CONTAINER, Css.FONT]);
+  goog.dom.classlist.add(elem, Css.CONTAINER);
 };
 
 
@@ -151,8 +166,17 @@ KeyboardContainer.prototype.update = function() {
  */
 KeyboardContainer.prototype.addKeysetView = function(keysetData, layoutData,
     keyset, languageCode, model, inputToolName, conditions) {
-  var view = new i18n.input.chrome.inputview.KeysetView(keysetData, layoutData,
-      keyset, languageCode, model, inputToolName, this, this.adapter_);
+  var view;
+  if (keyset == 'emoji') {
+    view = new EmojiView(keysetData, layoutData, keyset, languageCode, model,
+        inputToolName, this, this.adapter_);
+  } else if (keyset == 'hwt') {
+    view = new HandwritingView(keysetData, layoutData, keyset, languageCode,
+        model, inputToolName, this, this.adapter_);
+  } else {
+    view = new KeysetView(keysetData, layoutData, keyset, languageCode, model,
+        inputToolName, this, this.adapter_);
+  }
   view.render(this.wrapperDiv_);
   view.applyConditions(conditions);
   view.setVisible(false);
@@ -164,12 +188,16 @@ KeyboardContainer.prototype.addKeysetView = function(keysetData, layoutData,
  * Switches to a keyset.
  *
  * @param {string} keyset .
+ * @param {string} title .
  * @param {boolean} isPasswordBox .
  * @param {boolean} isA11yMode .
+ * @param {string} rawKeyset The raw keyset id will switch to.
+ * @param {string} lastRawkeyset .
+ * @param {string} languageCode .
  * @return {boolean} True if switched successfully.
  */
-KeyboardContainer.prototype.switchToKeyset = function(keyset, isPasswordBox,
-    isA11yMode) {
+KeyboardContainer.prototype.switchToKeyset = function(keyset, title,
+    isPasswordBox, isA11yMode, rawKeyset, lastRawkeyset, languageCode) {
   if (!this.keysetViewMap[keyset]) {
     return false;
   }
@@ -177,13 +205,25 @@ KeyboardContainer.prototype.switchToKeyset = function(keyset, isPasswordBox,
   for (var name in this.keysetViewMap) {
     var view = this.keysetViewMap[name];
     if (name == keyset) {
+      this.candidateView.setVisible(!view.disableCandidateView);
       view.setVisible(true);
       view.update();
-      view.setTitleVisible(!isPasswordBox);
+      if (view.spaceKey) {
+        view.spaceKey.updateTitle(title, !isPasswordBox);
+      }
       if (isA11yMode) {
         goog.dom.classlist.add(this.getElement(), Css.A11Y);
       }
+      // If current raw keyset is changed, record it.
+      if (lastRawkeyset != rawKeyset) {
+        view.fromKeyset = lastRawkeyset;
+      }
+      if (view instanceof HandwritingView) {
+        view.setLanguagecode(languageCode);
+      }
+      this.updateLanguageState_(lastRawkeyset, rawKeyset);
       this.currentKeysetView = view;
+      this.candidateView.updateByKeyset(rawKeyset, isPasswordBox);
     } else {
       view.setVisible(false);
     }
@@ -205,7 +245,6 @@ KeyboardContainer.prototype.resize = function(width, height, widthPercent,
   if (!this.currentKeysetView) {
     return;
   }
-
   var elem = this.getElement();
 
   var h;
@@ -217,16 +256,18 @@ KeyboardContainer.prototype.resize = function(width, height, widthPercent,
     elem.style.paddingBottom = KeyboardContainer.PADDING_BOTTOM_ + 'px';
   }
 
-
   var padding = Math.round((width - width * widthPercent) / 2);
   elem.style.paddingLeft = elem.style.paddingRight = padding + 'px';
 
   var w = width - 2 * padding;
+  h = this.currentKeysetView.disableCandidateView ?
+      h - KeyboardContainer.EMOJI_PADDING_ : h - candidateViewHeight;
+
+  this.candidateView.setWidthInWeight(
+      this.currentKeysetView.getWidthInWeight());
   this.candidateView.resize(w, candidateViewHeight);
-  this.candidateView.setWidthInWeight(this.currentKeysetView.
-      getWidthInWeight());
-  this.currentKeysetView.resize(w, h - candidateViewHeight);
-  this.expandedCandidateView.resize(w, h - candidateViewHeight);
+  this.currentKeysetView.resize(w, h);
+  this.expandedCandidateView.resize(w, h);
   this.altDataView.resize(screen.width, height);
   this.menuView.resize(screen.width, height);
 };
@@ -267,5 +308,24 @@ KeyboardContainer.prototype.cleanStroke = function() {
     this.currentKeysetView.cleanStroke();
   }
 };
-});  // goog.scope
 
+
+/**
+
+ * Updates the compact pinyin to set the inputcode for english and pinyin.
+ *
+ * @param {string} fromRawKeyset .
+ * @param {string} toRawKeyset .
+ * @private
+ */
+KeyboardContainer.prototype.updateLanguageState_ =
+    function(fromRawKeyset, toRawKeyset) {
+  if (fromRawKeyset == 'pinyin-zh-CN.en.compact.qwerty' &&
+      toRawKeyset.indexOf('en.compact') == -1) {
+    this.adapter_.toggleLanguageState(true);
+  } else if (fromRawKeyset == 'pinyin-zh-CN.compact.qwerty' &&
+      toRawKeyset == 'pinyin-zh-CN.en.compact.qwerty') {
+    this.adapter_.toggleLanguageState(false);
+  }
+};
+});  // goog.scope

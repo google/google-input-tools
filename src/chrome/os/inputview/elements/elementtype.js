@@ -57,6 +57,10 @@ i18n.input.chrome.inputview.elements.ElementType = {
   EXPANDED_CANDIDATE_VIEW: 34,
   IME_SWITCH: 35,
   HWT_PRIVACY_GOT_IT: 36,
-  MENU_ITEM: 37
+  MENU_ITEM: 37,
+  EMOJI_KEY: 38,
+  TAB_BAR_KEY: 39,
+  EXTENDED_LAYOUT: 40,
+  PAGE_INDICATOR: 41
 };
 

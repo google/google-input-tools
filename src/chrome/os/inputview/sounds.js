@@ -11,16 +11,19 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-var chrome = {};
-chrome.i18n = {};
-chrome.i18n.getMessage = function(message) {
-  return message;
+goog.provide('i18n.input.chrome.inputview.Sounds');
+
+
+/**
+ * The available sounds.
+ *
+ * @enum {string}
+ */
+i18n.input.chrome.inputview.Sounds = {
+  DELETE: 'keypress-delete',
+  RETURN: 'keypress-return',
+  SPACEBAR: 'keypress-spacebar',
+  STANDARD: 'keypress-standard',
+  NONE: 'none'
 };
-chrome.runtime = {};
-chrome.runtime.sendMessage = function(message, opt_callback) {};
-chrome.runtime.onMessage = {};
-chrome.runtime.onMessage.addListener = function(request, sender, opt_callback) {};
-chrome.runtime.getBackgroundPage = function(callback) {};
 
-
-var inputview = undefined;

@@ -59,6 +59,11 @@ i18n.input.chrome.inputview.elements.content.SpaceKey = function(id,
    * @private
    */
   this.stateManager_ = stateManager;
+
+  // Double click on space key may convert two spaces to a period followed by a
+  // space.
+  this.pointerConfig.dblClick = true;
+  this.pointerConfig.dblClickDelay = 1000;
 };
 goog.inherits(i18n.input.chrome.inputview.elements.content.SpaceKey,
     i18n.input.chrome.inputview.elements.content.FunctionalKey);
@@ -98,14 +103,15 @@ SpaceKey.prototype.getCharacter = function() {
 
 
 /**
- * True to set the title visible.
+ * Updates the title on the space key.
  *
+ * @param {string} title .
  * @param {boolean} visible True to set title visible.
  */
-SpaceKey.prototype.setTitleVisible = function(
-    visible) {
+SpaceKey.prototype.updateTitle = function(title, visible) {
   if (this.textElem) {
-    goog.dom.setTextContent(this.textElem, visible ? this.text : '');
+    this.text = title;
+    goog.dom.setTextContent(this.textElem, visible ? title : '');
     goog.dom.classlist.add(this.textElem,
         i18n.input.chrome.inputview.Css.TITLE);
   }

@@ -15,6 +15,8 @@
  * Provides mock implementation of Chrome extension APIs for testing.
  */
 
+goog.provide('i18n.input.chrome.inputview.testing.MockExtensionApi');
+
 var chrome = {};
 
 /**
@@ -45,12 +47,18 @@ function mockExtensionApis(mockControl) {
   };
 
   addMocks(chrome, 'virtualKeyboardPrivate', ['getKeyboardConfig']);
-  addMocks(chrome, 'inputMethodPrivate', ['getInputMethods']);
+  addMocks(chrome, 'inputMethodPrivate', ['getInputMethods',
+      'setCurrentInputMethod']);
   addMocks(chrome, 'runtime', ['getBackgroundPage', 'sendMessage']);
   addMocks(chrome.runtime, 'onMessage', ['addListener']);
 
   // Ignore calls to addListener. Reevaluate if important to properly track the
   // flow of events.
   chrome.runtime.onMessage.addListener = function() {};
+
+  chrome.i18n = {};
+  chrome.i18n.getMessage = function(name) {
+    return name;
+  };
 }
 

@@ -18,7 +18,6 @@ goog.require('goog.math.Coordinate');
 goog.require('goog.style');
 goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.elements.Element');
-goog.require('i18n.input.chrome.inputview.elements.content.GaussianEstimator');
 goog.require('i18n.input.chrome.inputview.util');
 
 
@@ -65,16 +64,6 @@ i18n.input.chrome.inputview.elements.content.SoftKey = function(id, type,
 goog.inherits(i18n.input.chrome.inputview.elements.content.SoftKey,
     i18n.input.chrome.inputview.elements.Element);
 var SoftKey = i18n.input.chrome.inputview.elements.content.SoftKey;
-
-
-/**
- * The covariance for gaussian estimator.
- * TODO: Needs training here.
- *
- * @type {number}
- * @private
- */
-SoftKey.GAUSSIAN_COVARIANCE_ = 120;
 
 
 /**
@@ -133,14 +122,6 @@ SoftKey.prototype.resize = function(width,
 
   this.availableWidth = w;
   this.availableHeight = h;
-
-  this.topLeftCoordinate = goog.style.getClientPosition(elem);
-  this.centerCoordinate = new goog.math.Coordinate(
-      this.topLeftCoordinate.x + width / 2,
-      this.topLeftCoordinate.y + height / 2);
-  this.estimator = new i18n.input.chrome.inputview.elements.content.
-      GaussianEstimator(this.centerCoordinate, SoftKey.GAUSSIAN_COVARIANCE_,
-          this.availableHeight / this.availableWidth);
 };
 
 });  // goog.scope

@@ -13,7 +13,7 @@
 //
 goog.provide('i18n.input.chrome.inputview.elements.content.MenuKey');
 
-
+goog.require('i18n.input.chrome.inputview.elements.content.FunctionalKey');
 
 goog.scope(function() {
 

@@ -93,10 +93,61 @@ i18n.input.chrome.inputview.content.util.createGlobeKey = function() {
 i18n.input.chrome.inputview.content.util.createMenuKey = function(
     opt_toKeyset) {
   var spec = {};
-  spec[SpecNodeName.NAME] = '\u22EE';
+  spec[SpecNodeName.ICON_CSS_CLASS] =
+      i18n.input.chrome.inputview.Css.MENU_ICON;
   spec[SpecNodeName.TO_KEYSET] = opt_toKeyset;
   spec[SpecNodeName.TYPE] = ElementType.MENU_KEY;
   spec[SpecNodeName.ID] = 'Menu';
+  return i18n.input.chrome.inputview.content.util.createKey(spec);
+};
+
+
+/**
+ * Create the  Emoji switch key.
+ *
+ * @param {string} id The emoji key id.
+ * @param {number} toKeyset The keyset that the tabbar represents.
+ * @param {i18n.input.chrome.inputview.Css}
+ *     iconCssClass The icon css for the tabbar.
+ * @return {!Object} The emoji key.
+ */
+i18n.input.chrome.inputview.content.util.createTabBarKey =
+    function(id, toKeyset, iconCssClass) {
+  var spec = {};
+  spec[SpecNodeName.ICON_CSS_CLASS] = iconCssClass;
+  spec[SpecNodeName.TYPE] = ElementType.TAB_BAR_KEY;
+  spec[SpecNodeName.ID] = id;
+  spec[SpecNodeName.TO_KEYSET] = toKeyset;
+  return i18n.input.chrome.inputview.content.util.createKey(spec);
+};
+
+
+/**
+ * Create the indicator
+ *
+ * @param {string} id The indicator id.
+ * @return {!Object} The indicator.
+ */
+i18n.input.chrome.inputview.content.util.createPageIndicator =
+    function(id) {
+  var spec = {};
+  spec[SpecNodeName.TYPE] = ElementType.PAGE_INDICATOR;
+  spec[SpecNodeName.ID] = id;
+  return i18n.input.chrome.inputview.content.util.createKey(spec);
+};
+
+
+/**
+ * Create the back key for emoji
+ *
+ * @return {!Object} The back key.
+ */
+i18n.input.chrome.inputview.content.util.createBackKey = function() {
+  var spec = {};
+  spec[SpecNodeName.ICON_CSS_CLASS] =
+      i18n.input.chrome.inputview.Css.EMOJI_BACK;
+  spec[SpecNodeName.TYPE] = ElementType.BACK_BUTTON;
+  spec[SpecNodeName.ID] = 'backkey';
   return i18n.input.chrome.inputview.content.util.createKey(spec);
 };
 

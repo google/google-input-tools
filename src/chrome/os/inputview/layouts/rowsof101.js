@@ -28,38 +28,41 @@ i18n.input.chrome.inputview.layouts.RowsOf101.create = function() {
   };
 
   // Row1
-  var keySequenceOf13 = i18n.input.chrome.inputview.layouts.util.
-      createKeySequence(baseKeySpec, 13);
+  var backquoteKey = i18n.input.chrome.inputview.layouts.util.createKey({
+    'widthInWeight': 0.94
+  });
+  var keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
+      createKeySequence(baseKeySpec, 12);
   var backspaceKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2
+    'widthInWeight': 1.42
   });
   var row1 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row1',
-    'children': [keySequenceOf13, backspaceKey]
+    'children': [backquoteKey, keySequenceOf12, backspaceKey]
   });
 
   // Row2
   var tabKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.5
+    'widthInWeight': 1.38
   });
-  var keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
+  keySequenceOf12 = i18n.input.chrome.inputview.layouts.util.
       createKeySequence(baseKeySpec, 12);
-  var slashKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.5
+  var backSlashKey = i18n.input.chrome.inputview.layouts.util.createKey({
+    'widthInWeight': 0.98
   });
   var row2 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row2',
-    'children': [tabKey, keySequenceOf12, slashKey]
+    'children': [tabKey, keySequenceOf12, backSlashKey]
   });
 
   // Row3
   var capslockKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 1.75
+    'widthInWeight': 1.68
   });
   var keySequenceOf11 = i18n.input.chrome.inputview.layouts.util.
       createKeySequence(baseKeySpec, 11);
   var enterKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2.25
+    'widthInWeight': 1.68
   });
   var row3 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row3',
@@ -68,16 +71,19 @@ i18n.input.chrome.inputview.layouts.RowsOf101.create = function() {
 
   // Row4
   var shiftLeftKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2.5
+    'widthInWeight': 2.12
   });
-  var keySequenceOf10 = i18n.input.chrome.inputview.layouts.util.
-      createKeySequence(baseKeySpec, 10);
+  var keySequenceOf9 = i18n.input.chrome.inputview.layouts.util.
+      createKeySequence(baseKeySpec, 9);
+  var slashKey = i18n.input.chrome.inputview.layouts.util.createKey({
+    'widthInWeight': 1.08
+  });
   var shiftRightKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 2.5
+    'widthInWeight': 2.16
   });
   var row4 = i18n.input.chrome.inputview.layouts.util.createLinearLayout({
     'id': 'row4',
-    'children': [shiftLeftKey, keySequenceOf10, shiftRightKey]
+    'children': [shiftLeftKey, keySequenceOf9, slashKey, shiftRightKey]
   });
 
   return [row1, row2, row3, row4];

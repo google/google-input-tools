@@ -19,8 +19,8 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.DataSource');
+goog.require('i18n.input.chrome.inputview.ReadyState');
 goog.require('i18n.input.chrome.inputview.StateType');
-goog.require('i18n.input.chrome.inputview.events.ContextFocusEvent');
 goog.require('i18n.input.chrome.inputview.events.EventType');
 goog.require('i18n.input.chrome.inputview.events.SurroundingTextChangedEvent');
 goog.require('i18n.input.chrome.message.Event');
@@ -38,10 +38,11 @@ var Name = i18n.input.chrome.message.Name;
 /**
  * The adapter for interview.
  *
+ * @param {!i18n.input.chrome.inputview.ReadyState} readyState .
  * @extends {goog.events.EventTarget}
  * @constructor
  */
-i18n.input.chrome.inputview.Adapter = function() {
+i18n.input.chrome.inputview.Adapter = function(readyState) {
   goog.base(this);
 
   /**
@@ -58,6 +59,13 @@ i18n.input.chrome.inputview.Adapter = function() {
    * @private
    */
   this.modifierState_ = {};
+
+  /**
+   * The system ready state.
+   *
+   * @private {!i18n.input.chrome.inputview.ReadyState}
+   */
+  this.readyState_ = readyState;
 
   chrome.runtime.onMessage.addListener(this.onMessage_.bind(this));
 
@@ -76,11 +84,19 @@ Adapter.prototype.isA11yMode = false;
 
 
 /** @type {boolean} */
+Adapter.prototype.isExperimental = false;
+
+
+/** @type {boolean} */
 Adapter.prototype.showGlobeKey = false;
 
 
 /** @type {string} */
 Adapter.prototype.contextType;
+
+
+/** @type {string} */
+Adapter.prototype.screen;
 
 
 /** @type {boolean} */
@@ -99,6 +115,7 @@ Adapter.prototype.textBeforeCursor = '';
  */
 Adapter.prototype.onUpdateSettings_ = function(message) {
   this.contextType = message['contextType'];
+  this.screen = message['screen'];
   this.dispatchEvent(new i18n.input.chrome.message.Event(Type.UPDATE_SETTINGS,
       message));
 };
@@ -290,15 +307,36 @@ Adapter.prototype.onContextBlur_ = function() {
  */
 Adapter.prototype.onContextFocus_ = function(contextType) {
   this.contextType = contextType;
-  this.dispatchEvent(new i18n.input.chrome.inputview.events.ContextFocusEvent(
-      this.contextType));
+  this.dispatchEvent(new goog.events.Event(i18n.input.chrome.inputview.events.
+      EventType.CONTEXT_FOCUS));
+};
+
+
+/**
+ * Intializes the communication to background page.
+ *
+ * @param {string} languageCode The language code.
+ * @private
+ */
+Adapter.prototype.initBackground_ = function(languageCode) {
+  chrome.runtime.getBackgroundPage((function() {
+    chrome.runtime.sendMessage(
+        goog.object.create(Name.MSG_TYPE, Type.CONNECT));
+    chrome.runtime.sendMessage(goog.object.create(Name.MSG_TYPE,
+        Type.VISIBILITY_CHANGE, Name.VISIBILITY, !document.webkitHidden));
+    if (languageCode) {
+      this.setLanguage(languageCode);
+    }
+  }).bind(this));
 };
 
 
 /**
  * Loads the keyboard settings.
+ *
+ * @param {string} languageCode The language code.
  */
-Adapter.prototype.initialize = function() {
+Adapter.prototype.initialize = function(languageCode) {
   if (chrome.accessibilityFeatures &&
       chrome.accessibilityFeatures.spokenFeedback) {
     chrome.accessibilityFeatures.spokenFeedback.get({}, (function(details) {
@@ -310,28 +348,63 @@ Adapter.prototype.initialize = function() {
         }).bind(this));
   }
 
-  chrome.runtime.sendMessage(goog.object.create(Name.MSG_TYPE, Type.CONNECT));
-  chrome.runtime.sendMessage(goog.object.create(Name.MSG_TYPE,
-      Type.VISIBILITY_CHANGE, Name.VISIBILITY, !document.webkitHidden));
+  this.initBackground_(languageCode);
 
+  var StateType = i18n.input.chrome.inputview.ReadyState.StateType;
   if (window.inputview) {
     if (inputview.getKeyboardConfig) {
       inputview.getKeyboardConfig((function(config) {
         this.isA11yMode = !!config['a11ymode'];
+        this.isExperimental = !!config['experimental'];
+        this.readyState_.markStateReady(StateType.KEYBOARD_CONFIG_READY);
+        if (this.readyState_.isReady(StateType.IME_LIST_READY)) {
+          this.dispatchEvent(new goog.events.Event(
+              i18n.input.chrome.inputview.events.EventType.SETTINGS_READY));
+        }
       }).bind(this));
+    } else {
+      this.readyState_.markStateReady(StateType.KEYBOARD_CONFIG_READY);
     }
     if (inputview.getInputMethods) {
       inputview.getInputMethods((function(inputMethods) {
-        this.showGlobeKey = inputMethods.length > 0;
+        // Only show globe key to switching between IMEs when there are more
+        // than one IME.
+        this.showGlobeKey = inputMethods.length > 1;
+        this.readyState_.markStateReady(StateType.IME_LIST_READY);
+        if (this.readyState_.isReady(StateType.KEYBOARD_CONFIG_READY)) {
+          this.dispatchEvent(new goog.events.Event(
+              i18n.input.chrome.inputview.events.EventType.SETTINGS_READY));
+        }
       }).bind(this));
+    } else {
+      this.readyState_.markStateReady(StateType.IME_LIST_READY);
     }
+  } else {
+    this.readyState_.markStateReady(StateType.IME_LIST_READY);
+    this.readyState_.markStateReady(StateType.KEYBOARD_CONFIG_READY);
   }
 
-  // Wait 500 ms if the settings havn't get loaded, just mark it as loaded.
-  window.setTimeout((function() {
-    this.dispatchEvent(new goog.events.Event(i18n.input.chrome.inputview.
-        events.EventType.SETTINGS_READY));
-  }).bind(this), 500);
+  if (this.readyState_.isReady(StateType.KEYBOARD_CONFIG_READY) &&
+      this.readyState_.isReady(StateType.IME_LIST_READY)) {
+    window.setTimeout((function() {
+      this.dispatchEvent(new goog.events.Event(
+          i18n.input.chrome.inputview.events.EventType.SETTINGS_READY));
+    }).bind(this), 0);
+  }
+};
+
+
+/**
+ * Gets the currently activated input method.
+ *
+ * @param {function(string)} callback .
+ */
+Adapter.prototype.getCurrentInputMethod = function(callback) {
+  if (window.inputview && inputview.getCurrentInputMethod) {
+    inputview.getCurrentInputMethod(callback);
+  } else {
+    callback('DU');
+  }
 };
 
 
@@ -344,7 +417,9 @@ Adapter.prototype.getInputMethods = function(callback) {
   if (window.inputview && inputview.getInputMethods) {
     inputview.getInputMethods(callback);
   } else {
-    callback([]);
+    // Provides a dummy IME item to enable IME switcher UI.
+    callback([
+      {'indicator': 'DU', 'id': 'DU', 'name': 'Dummy IME', 'command': 1}]);
   }
 };
 
@@ -434,9 +509,7 @@ Adapter.prototype.setLanguage = function(language) {
 Adapter.prototype.onCandidatesBack_ = function(message) {
   var source = message['source'] || '';
   var candidates = message['candidates'] || [];
-  var matchedLengths = message['matchedLengths'] || [];
-  this.dispatchEvent(
-      new CandidatesBackEvent(source, candidates, matchedLengths));
+  this.dispatchEvent(new CandidatesBackEvent(source, candidates));
 };
 
 
@@ -464,6 +537,44 @@ Adapter.prototype.setInputToolCode = function(inputToolCode) {
 
 
 /**
+ * Sends DOUBLE_CLICK_ON_SPACE_KEY message.
+ */
+Adapter.prototype.doubleClickOnSpaceKey = function() {
+  chrome.runtime.sendMessage(
+      goog.object.create(
+          Name.MSG_TYPE,
+          Type.DOUBLE_CLICK_ON_SPACE_KEY));
+};
+
+
+/**
+ * Sends message to the background when switch to emoji.
+ *
+ */
+Adapter.prototype.setEmojiInputToolCode = function() {
+  chrome.runtime.sendMessage(
+      goog.object.create(
+          Name.MSG_TYPE,
+          Type.EMOJI_SET_INPUTTOOL));
+};
+
+
+/**
+ * Sends message to the background when do internal inputtool switch.
+ *
+ * @param {boolean} inputToolValue The value of the language flag.
+ */
+Adapter.prototype.toggleLanguageState = function(inputToolValue) {
+  chrome.runtime.sendMessage(
+      goog.object.create(
+          Name.MSG_TYPE,
+          Type.TOGGLE_LANGUAGE_STATE,
+          Name.MSG,
+          inputToolValue));
+};
+
+
+/**
  * Sends unset Input Tool code to background.
  */
 Adapter.prototype.unsetInputToolCode = function() {
@@ -471,6 +582,18 @@ Adapter.prototype.unsetInputToolCode = function() {
       goog.object.create(
           Name.MSG_TYPE,
           Type.HWT_UNSET_INPUTTOOL));
+};
+
+
+/**
+ * Sends message to the background when switch to other mode from emoji.
+ *
+ */
+Adapter.prototype.unsetEmojiInputToolCode = function() {
+  chrome.runtime.sendMessage(
+      goog.object.create(
+          Name.MSG_TYPE,
+          Type.EMOJI_UNSET_INPUTTOOL));
 };
 
 

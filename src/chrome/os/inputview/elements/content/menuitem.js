@@ -19,6 +19,7 @@ goog.require('goog.dom.classlist');
 goog.require('goog.style');
 goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.elements.Element');
+goog.require('i18n.input.chrome.inputview.elements.ElementType');
 
 
 goog.scope(function() {
@@ -52,6 +53,9 @@ i18n.input.chrome.inputview.elements.content.MenuItem = function(id, item,
    * @private
    */
   this.menuItemType_ = menuItemType;
+
+  this.pointerConfig.stopEventPropagation = false;
+  this.pointerConfig.preventDefault = false;
 };
 var MenuItem = i18n.input.chrome.inputview.elements.content.MenuItem;
 goog.inherits(MenuItem, i18n.input.chrome.inputview.elements.Element);
@@ -121,6 +125,14 @@ MenuItem.prototype.setHighlighted = function(highlight) {
   } else {
     goog.dom.classlist.remove(this.getElement(), Css.ELEMENT_HIGHLIGHT);
   }
+};
+
+
+/**
+ * Append a checkmark to this element.
+ */
+MenuItem.prototype.check = function() {
+  goog.dom.classlist.add(this.getElement(), Css.CHECKED_MENU_LIST);
 };
 
 });  // goog.scope

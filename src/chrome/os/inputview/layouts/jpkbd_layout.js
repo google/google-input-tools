@@ -19,7 +19,7 @@ goog.require('i18n.input.chrome.inputview.layouts.util');
 (function() {
   var ConditionName = i18n.input.chrome.inputview.ConditionName;
   var util = i18n.input.chrome.inputview.layouts.util;
-  i18n.input.chrome.inputview.layouts.util.keyIdPrefix = 'jpkbd-k-';
+  i18n.input.chrome.inputview.layouts.util.setPrefix('jpkbd-k-');
 
   var topFourRows = i18n.input.chrome.inputview.layouts.RowsOfJP.create();
 

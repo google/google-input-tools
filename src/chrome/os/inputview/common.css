@@ -1,41 +1,27 @@
-// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
-// limitations under the License.
-// See the License for the specific language governing permissions and
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// distributed under the License is distributed on an "AS-IS" BASIS,
-// Unless required by applicable law or agreed to in writing, software
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// You may obtain a copy of the License at
-// you may not use this file except in compliance with the License.
-// Licensed under the Apache License, Version 2.0 (the "License");
-//
 .inputview-layoutview {
   position: relative;
   -webkit-user-select: none;
 }
-
 .inputview-canvasview,
 .inputview-skv {
   display: inline-block;
   overflow: hidden;
 }
 .inputview-sk {
-  margin: 0 7px 7px 0;
+  margin: 3px 4px 4px 3px;
   position: relative;
   background-color: #ffffff;
 }
 .inputview-a11y .inputview-sk {
-  margin: 0 5px 5px 0;
+  margin: 2px 3px 3px 2px;
 }
 #us-compact-symbol .inputview-sk,
 #us-compact-more .inputview-sk,
 #us-compact-qwerty .inputview-sk {
-  margin: 10px 10px 0 0;
+  margin: 5px;
 }
 #us-compact-qwerty #Globe {
-  margin: 10px 0 0 0;
+  margin: 5px 0 5px 0;
 }
 .inputview-character {
   position: absolute;
@@ -62,9 +48,19 @@
 }
 .inputview-vertical {
   display: inline-block;
+  overflow: hidden;
 }
 .inputview-linear {
   display: inline-block;
+}
+.inputview-extended-transition {
+  transition: margin-left 0.2s;
+}
+.inputview-linear-border {
+  display:inline-block;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #dddddd;
 }
 .inputview-container {
   position: fixed;
@@ -74,63 +70,67 @@
   border: 1px solid #eeeeee;
   background-color: #EBEBEB;
   -webkit-user-select: none;
+  cursor: default;
 }
 .inputview-font {
-  font-family: Roboto, Noto Sans, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
 }
 .inputview-font[lang=am] {
-  font-family: Roboto, Noto Sans Armenian, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Armenian, Sans-Serif;
 }
 .inputview-font[lang=il] {
-  font-family: Roboto, Noto Sans Hebrew, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Hebrew, Sans-Serif;
 }
 .inputview-font[lang=jp] {
-  font-family: Roboto, MotoyaG04Gothic, IPAGothic, Sans-Serif;
+  font-family: Roboto2, Roboto, MotoyaG04Gothic, IPAGothic, Sans-Serif;
 }
 .inputview-font[lang=ar] {
-  font-family: Roboto, Noto Arabic Naskh ui, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Arabic Naskh ui, Sans-Serif;
 }
 .inputview-font[lang=bn] {
-  font-family: Roboto, Noto Sans Bengali, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Bengali, Sans-Serif;
 }
 .inputview-font[lang=ethi] {
-  font-family: Roboto, Noto Sans Ethiopic, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Ethiopic, Sans-Serif;
 }
 .inputview-font[lang=fa] {
-  font-family: Roboto, Noto Arabic Naskh ui, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Arabic Naskh ui, Sans-Serif;
 }
 .inputview-font[lang=gu] {
-  font-family: Roboto, Noto Sans Gujarati, Lohit Gujarati, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Gujarati, Lohit Gujarati, Sans-Serif;
 }
 .inputview-font[lang=kn] {
-  font-family: Roboto, Noto Sans Kannada, Lohit Kannada, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Kannada, Lohit Kannada, Sans-Serif;
 }
 .inputview-font[lang=ml] {
-  font-family: Roboto, Noto Sans Malayalam, Lohit Malayalam, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Malayalam, Lohit Malayalam, Sans-Serif;
 }
 .inputview-font[lang=ta] {
-  font-family: Roboto, Noto Sans Tamil, Lohit Tamil, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Tamil, Lohit Tamil, Sans-Serif;
 }
 .inputview-font[lang=te] {
-  font-family: Roboto, Noto Sans Telugu, Lohit Telugu, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Telugu, Lohit Telugu, Sans-Serif;
 }
 .inputview-font[lang=th] {
-  font-family: Roboto, Noto Sans Thai, Sans-Serif;
+  font-family: Roboto2, Roboto, Noto Sans Thai, Sans-Serif;
 }
 .inputview-font[lang=zh-CN] {
-  font-family: Roboto, MYingHeiGB18030, Droid Sans Fallback, Sans-Serif;
+  font-family: Roboto2, Roboto, MYingHeiGB18030, Droid Sans Fallback, Sans-Serif;
 }
 .inputview-font[lang=zh-TW],
 .inputview-font[lang=zh-HK] {
-  font-family: Roboto, MYingHeiB5HK, Droid Sans Fallback, Sans-Serif;
+  font-family: Roboto2, Roboto, MYingHeiB5HK, Droid Sans Fallback, Sans-Serif;
 }
 .inputview-font[lang=kr] {
-  font-family: Roboto, NanumGothic, Sans-Serif;
+  font-family: Roboto2, Roboto, NanumGothic, Sans-Serif;
+}
+.inputview-emoji-font {
+  font-family: Noto Color Emoji, Noto Sans Emoji, Droid Emoji;
 }
 .inputview-modifier {
   display: table-cell;
   vertical-align: middle;
-  font-size: 15px;
+  font-size: 16px;
   text-align: center;
   position: relative;
 }
@@ -142,6 +142,14 @@
   background-repeat: no-repeat;
   background-size: 25px;
   width: 25%;
+}
+.inputview-checked-menu-list .inputview-menu-list-name {
+  background-image: url('images/check.png');
+  background-position: right 25px center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  font-weight: bold;
+  padding-right: 50px;
 }
 .inputview-menu-list-name {
   height: 100%;
@@ -159,27 +167,37 @@
 }
 .inputview-ime-list-container {
   -webkit-box-orient: vertical;
-  border-bottom: solid 2px #eeeeee;
   display: -webkit-box;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.inputview-ime-list-container .inputview-menu-list-item {
+  border-bottom: solid 1px #cccccc;
+  box-sizing: border-box;
 }
 .inputview-menu-list-item {
   -webkit-box-orient: horizontal;
   display: -webkit-box;
+  font-size: 16px;
   width: 100%;
 }
 .inputview-menu-footer-item {
   position: relative;
 }
 .inputview-menu-footer-item:not(:last-child):after {
-  background-color: #bbbbbb;
+  background-color: #cccccc;
   content: '';
   height: 70%;
   position: absolute;
   right: 0;
   top: 15%;
   width: 1px;
+}
+.inputview-menu-footer-emoji-button {
+  background: url('images/emoji.png') no-repeat center;
+  background-size: 25px;
+  height: 100%;
 }
 .inputview-menu-footer-handwriting-button {
   background: url('images/pencil.png') no-repeat center;
@@ -193,14 +211,14 @@
 }
 .inputview-menu-footer {
   -webkit-box-orient: horizontal;
-  background: #dddddd;
+  background: #f5f5f5;
   display: -webkit-box;
 }
 .inputview-globe-icon {
-  background: transparent url('images/globe.png') 0 0 / 20.5px 20.5px no-repeat;
+  background: transparent url('images/globe.png') 0 0 / 21px 21px no-repeat;
   display: inline-block;
-  width: 20.5px;
-  height: 20.5px;
+  width: 21px;
+  height: 21px;
 }
 .inputview-menu-view,
 .inputview-altdata-view {
@@ -212,6 +230,7 @@
                       0 0 2px rgba(136, 136, 136, 0.65),
                       0 0 6px rgba(204, 204, 204, 0.65),
                       0 0 6px rgba(204, 204, 204, 0.65);
+  cursor: default;
 }
 .inputview-altdata-separator {
   height: 20px;
@@ -230,6 +249,10 @@
   font-size: 18px;
 }
 .inputview-candidate.inputview-candidate-default {
+  color: #111111;
+}
+.inputview-candidate.inputview-candidate-autocorrect {
+  font-weight: bold;
   color: #111111;
 }
 .inputview-candidate-view {
@@ -261,7 +284,7 @@
   text-align: center;
 }
 .inputview-title {
-  font-size: 18px;
+  font-size: 16px;
   color: #AAAAAA;
 }
 .inputview-special-key-name {
@@ -326,6 +349,12 @@
   width: 10.5px;
   height: 5.5px;
   display: inline-block;
+}
+.inputview-menu-icon {
+  background: transparent url('images/menu.png') 0 0/4px 17px no-repeat;
+  display: inline-block;
+  width: 4px;
+  height: 17px;
 }
 .inputview-hide-keyboard-icon {
   background: transparent url('images/hide.png') 0 0/20px 14.5px no-repeat;
@@ -421,15 +450,16 @@
 }
 #Menu {
   font-weight: bold;
+  margin-left: 0 !important;
 }
 .inputview-a11y #Globe {
-  margin: 0 0 5px 0;
+  margin: 2px 0 3px 0;
 }
 #Globe {
-  margin: 0 0 7px 0;
+  margin: 3px 0 4px 0;
 }
 #Globe:after {
-  background-color: #bbbbbb;
+  background-color: #cccccc;
   content: '';
   height: 50%;
   position: absolute;
@@ -480,10 +510,6 @@
   display: inline-block;
   width: 19px;
   height: 19px;
-}
-
-.inputview-handwriting .inputview-candidate-separator {
-  display: none;
 }
 
 .inputview-handwriting-back {
@@ -541,10 +567,20 @@
   height: 100px;
 }
 
+.inputview-handwriting-privacy-cover {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .inputview-handwriting-privacy-info {
   position: absolute;
   width: 300px;
   height: 100px;
+  z-index: 2;
 }
 
 .inputview-handwriting-privacy-info-hidden {
@@ -565,4 +601,19 @@
   text-align: left;
   font-size: 12px;
   display: inline-block;
+}
+
+.inputview-switcher-chinese {
+  display: inline-block;
+  background: url('images/english.png') no-repeat center;
+  background-size: 50px 20px;
+  height: 20px;
+  width: 50px;
+}
+.inputview-switcher-english {
+  display: inline-block;
+  background: url('images/chinese.png') no-repeat center;
+  background-size: 50px 20px;
+  height: 20px;
+  width: 50px;
 }

@@ -17,15 +17,13 @@ goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
 goog.require('goog.functions');
-goog.require('i18n.input.net.JsonpService');
-
 
 
 /**
  * The data source.
  *
  * @param {number} numOfCanddiate The number of canddiate to fetch.
- * @param {function(string, !Array.<string>, !Array.<number>)} callback .
+ * @param {function(string, !Array.<!Object>)} callback .
  * @constructor
  * @extends {goog.events.EventTarget}
  */
@@ -39,7 +37,7 @@ i18n.input.chrome.DataSource = function(numOfCanddiate, callback) {
    */
   this.numOfCandidate = numOfCanddiate;
 
-  /** @protected {function(string, !Array.<string>, !Array.<number>)} */
+  /** @protected {function(string, !Array.<!Object>)} */
   this.callback = callback;
 };
 goog.inherits(i18n.input.chrome.DataSource, goog.events.EventTarget);
@@ -115,7 +113,8 @@ i18n.input.chrome.DataSource.prototype.getInputToolCode = function() {
 /**
  * Sends completion request.
  *
- * @param {string} query The query.
+ * @param {string} query The query .
+ * @param {string} context The context .
  * @param {!Object=} opt_spatialData .
  */
 i18n.input.chrome.DataSource.prototype.sendCompletionRequest =
@@ -125,7 +124,7 @@ i18n.input.chrome.DataSource.prototype.sendCompletionRequest =
 /**
  * Sends prediciton request.
  *
- * @param {string} query The query.
+ * @param {string} context The context.
  */
 i18n.input.chrome.DataSource.prototype.sendPredictionRequest =
     goog.functions.NULL;
@@ -139,6 +138,12 @@ i18n.input.chrome.DataSource.prototype.sendPredictionRequest =
 i18n.input.chrome.DataSource.prototype.setCorrectionLevel = function(level) {
   this.correctionLevel = level;
 };
+
+
+/**
+ * Clears the data source.
+ */
+i18n.input.chrome.DataSource.prototype.clear = goog.functions.NULL;
 
 
 /**
@@ -158,12 +163,11 @@ i18n.input.chrome.DataSource.EventType = {
  *
  * @param {string} source The source.
  * @param {!Array.<!Object>} candidates The candidates.
- * @param {!Array.<number>=} opt_matchedLengths .
  * @constructor
  * @extends {goog.events.Event}
  */
 i18n.input.chrome.DataSource.CandidatesBackEvent =
-    function(source, candidates, opt_matchedLengths) {
+    function(source, candidates) {
   goog.base(this, i18n.input.chrome.DataSource.EventType.CANDIDATES_BACK);
 
   /**
@@ -179,9 +183,6 @@ i18n.input.chrome.DataSource.CandidatesBackEvent =
    * @type {!Array.<!Object>}
    */
   this.candidates = candidates;
-
-  /** @type {Array.<number>} */
-  this.matchedLengths = opt_matchedLengths || null;
 };
 goog.inherits(i18n.input.chrome.DataSource.CandidatesBackEvent,
     goog.events.Event);

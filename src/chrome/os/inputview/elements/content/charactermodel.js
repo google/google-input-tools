@@ -34,11 +34,13 @@ goog.scope(function() {
  * @param {number} stateType The state type for this character.
  * @param {!i18n.input.chrome.inputview.StateManager} stateManager The state
  *     manager.
+ * @param {string=} opt_capslockCharacter .
  * @constructor
  */
 i18n.input.chrome.inputview.elements.content.CharacterModel = function(
     character, belongToLetterKey, hasAltGrCharacterInTheKeyset,
-    alwaysRenderAltGrCharacter, stateType, stateManager) {
+    alwaysRenderAltGrCharacter, stateType, stateManager,
+    opt_capslockCharacter) {
 
   /**
    * The character.
@@ -47,6 +49,13 @@ i18n.input.chrome.inputview.elements.content.CharacterModel = function(
    * @private
    */
   this.character_ = character;
+
+  /**
+   * The character for the capslock state.
+   *
+   * @private {string}
+   */
+  this.capslockCharacter_ = opt_capslockCharacter || '';
 
   /**
    * Whether this character is belong to a letter key.
@@ -182,7 +191,8 @@ CharacterModel.prototype.toReversedCase_ = function() {
 CharacterModel.prototype.getContent = function() {
   if (this.stateManager_.hasState(
       i18n.input.chrome.inputview.StateType.CAPSLOCK)) {
-    return this.toReversedCase_();
+    return this.capslockCharacter_ ? this.capslockCharacter_ :
+        this.toReversedCase_();
   }
 
   return this.character_;

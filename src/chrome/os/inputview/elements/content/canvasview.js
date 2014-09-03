@@ -36,7 +36,6 @@ var Css = i18n.input.chrome.inputview.Css;
 var ElementType = i18n.input.chrome.inputview.elements.ElementType;
 var FunctionalKey = i18n.input.chrome.inputview.elements.content.FunctionalKey;
 var Name = i18n.input.chrome.message.Name;
-var SoftKeyView = i18n.input.chrome.inputview.elements.layout.SoftKeyView;
 var Type = i18n.input.chrome.message.Type;
 
 
@@ -85,6 +84,8 @@ i18n.input.chrome.inputview.elements.content.CanvasView = function(id,
    * @private {i18n.input.chrome.inputview.Adapter}
    */
   this.adapter_ = goog.asserts.assertObject(opt_adapter);
+
+  this.pointerConfig.stopEventPropagation = false;
 };
 goog.inherits(i18n.input.chrome.inputview.elements.content.CanvasView,
     i18n.input.chrome.inputview.elements.Element);
@@ -112,27 +113,35 @@ CanvasView.INK_COLOR_ = '#111111';
 /**
  * The div to show network error message.
  *
- * @type {Element}
+ * @type {!Element}
  * @private
  */
-CanvasView.prototype.networkErrorDiv_ = null;
+CanvasView.prototype.networkErrorDiv_;
 
 
 /**
  * The div to show privacy information message.
  *
- * @type {Element}
+ * @type {!Element}
  * @private
  */
-CanvasView.prototype.privacyDiv_ = null;
+CanvasView.prototype.privacyDiv_;
 
 
 /**
  * The confirm button of privacy information.
  *
- * @private {FunctionalKey}
+ * @private {!FunctionalKey}
  */
-CanvasView.prototype.confirmBtn_ = null;
+CanvasView.prototype.confirmBtn_;
+
+
+/**
+ * The cover mask element.
+ *
+ * @private {!Element}
+ */
+CanvasView.prototype.coverElement_;
 
 
 /** @override */
@@ -142,6 +151,11 @@ CanvasView.prototype.createDom = function() {
   var container = this.getElement();
   var dom = this.getDomHelper();
   goog.dom.classlist.add(container, Css.CANVAS_VIEW);
+  this.coverElement_ = dom.createDom(goog.dom.TagName.DIV,
+      Css. HANDWRITING_PRIVACY_COVER);
+  dom.appendChild(container, this.coverElement_);
+  goog.style.setElementShown(this.coverElement_, false);
+
 
   this.canvas_.render(container);
   goog.dom.classlist.add(this.canvas_.getElement(), Css.CANVAS);
@@ -162,6 +176,7 @@ CanvasView.prototype.createDom = function() {
   this.confirmBtn_ = new FunctionalKey(
       '', ElementType.HWT_PRIVACY_GOT_IT, chrome.i18n.getMessage('GOT_IT'), '');
   this.confirmBtn_.render(this.privacyDiv_);
+
   dom.appendChild(container, this.privacyDiv_);
 };
 
@@ -184,6 +199,10 @@ CanvasView.prototype.enterDocument = function() {
 
 
 /** @override */
+CanvasView.prototype.setHighlighted = goog.nullFunction;
+
+
+/** @override */
 CanvasView.prototype.getWidthInWeight = function() {
   return this.widthInWeight_;
 };
@@ -200,8 +219,8 @@ CanvasView.prototype.resize = function(width, height) {
   goog.base(this, 'resize', width, height);
 
   var elem = this.getElement();
-  elem.style.width = width + 'px';
-  elem.style.height = height + 'px';
+  elem.style.width = this.coverElement_.style.width = width + 'px';
+  elem.style.height = this.coverElement_.style.height = height + 'px';
 
   this.networkErrorDiv_.style.top = this.privacyDiv_.style.top =
       Math.round(height / 2 - 50) + 'px';
@@ -275,6 +294,7 @@ CanvasView.prototype.onNetworkState_ = function(e) {
  * @private
  */
 CanvasView.prototype.onShowPrivacyInfo_ = function() {
+  goog.style.setElementShown(this.coverElement_, true);
   goog.dom.classlist.remove(this.privacyDiv_,
       Css.HANDWRITING_PRIVACY_INFO_HIDDEN);
 };
@@ -286,6 +306,7 @@ CanvasView.prototype.onShowPrivacyInfo_ = function() {
  * @private
  */
 CanvasView.prototype.onConfirmPrivacyInfo_ = function() {
+  goog.style.setElementShown(this.coverElement_, false);
   goog.dom.classlist.add(this.privacyDiv_, Css.HANDWRITING_PRIVACY_INFO_HIDDEN);
 };
 });  // goog.scope
