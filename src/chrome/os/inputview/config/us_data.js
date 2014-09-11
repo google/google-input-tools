@@ -11,14 +11,18 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
+goog.require('i18n.input.chrome.inputview.content.ContextlayoutUtil');
 goog.require('i18n.input.chrome.inputview.content.compact.letter');
 goog.require('i18n.input.chrome.inputview.content.compact.more');
+goog.require('i18n.input.chrome.inputview.content.compact.numberpad');
 goog.require('i18n.input.chrome.inputview.content.compact.symbol');
 goog.require('i18n.input.chrome.inputview.content.compact.util');
 goog.require('i18n.input.chrome.inputview.content.util');
+goog.require('i18n.input.chrome.message.ContextType');
 
 (function() {
   var viewIdPrefix_ = '101kbd-k-';
+  var ContextType = i18n.input.chrome.message.ContextType;
 
   var keyCharacters = [
     ['\u0060', '\u007e'], // TLDE
@@ -100,4 +104,16 @@ goog.require('i18n.input.chrome.inputview.content.util');
   i18n.input.chrome.inputview.content.compact.util.generateCompactKeyboard(
       letterKeysetSpec, symbolKeysetSpec, moreKeysetSpec,
       google.ime.chrome.inputview.onConfigLoaded);
+
+  var inputTypeToKeysetSpecMap = {};
+
+  var numberKeysetSpec = {};
+  numberKeysetSpec[keysetSpecNode.ID] = 'us.compact.numberpad';
+  numberKeysetSpec[keysetSpecNode.LAYOUT] = 'compactkbd-numberpad';
+  numberKeysetSpec[keysetSpecNode.DATA] = i18n.input.chrome.inputview.content.
+      compact.numberpad.keyNumberpadCharacters();
+  inputTypeToKeysetSpecMap[ContextType.NUMBER] = numberKeysetSpec;
+
+  i18n.input.chrome.inputview.content.ContextlayoutUtil.generateContextLayouts(
+      inputTypeToKeysetSpecMap, google.ime.chrome.inputview.onConfigLoaded);
 }) ();

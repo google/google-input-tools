@@ -23,13 +23,14 @@ goog.require('i18n.input.chrome.inputview.ReadyState');
 goog.require('i18n.input.chrome.inputview.StateType');
 goog.require('i18n.input.chrome.inputview.events.EventType');
 goog.require('i18n.input.chrome.inputview.events.SurroundingTextChangedEvent');
+goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Event');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 
-
 goog.scope(function() {
 var CandidatesBackEvent = i18n.input.chrome.DataSource.CandidatesBackEvent;
+var ContextType = i18n.input.chrome.message.ContextType;
 var Type = i18n.input.chrome.message.Type;
 var Name = i18n.input.chrome.message.Name;
 
@@ -91,12 +92,12 @@ Adapter.prototype.isExperimental = false;
 Adapter.prototype.showGlobeKey = false;
 
 
-/** @type {string} */
-Adapter.prototype.contextType;
+/** @protected {string} */
+Adapter.prototype.contextType = ContextType.DEFAULT;
 
 
 /** @type {string} */
-Adapter.prototype.screen;
+Adapter.prototype.screen = '';
 
 
 /** @type {boolean} */
@@ -262,6 +263,16 @@ Adapter.prototype.getContext = function() {
   var matches = this.textBeforeCursor.match(/([a-zA-Z'-Ḁ-ỹÀ-ȳ]+)\s+$/);
   var text = matches ? matches[1] : '';
   return text;
+};
+
+
+/**
+ * Gets the context type.
+ *
+ * @return {string} .
+ */
+Adapter.prototype.getContextType = function() {
+  return this.contextType || ContextType.DEFAULT;
 };
 
 

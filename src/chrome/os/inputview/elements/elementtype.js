@@ -61,6 +61,7 @@ i18n.input.chrome.inputview.elements.ElementType = {
   EMOJI_KEY: 38,
   TAB_BAR_KEY: 39,
   EXTENDED_LAYOUT: 40,
-  PAGE_INDICATOR: 41
+  PAGE_INDICATOR: 41,
+  EN_SWITCHER: 42
 };
 

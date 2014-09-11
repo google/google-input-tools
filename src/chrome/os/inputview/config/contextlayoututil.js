@@ -11,14 +11,15 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-goog.provide('i18n.input.chrome.inputview.content.contextlayout.util');
+goog.provide('i18n.input.chrome.inputview.content.ContextlayoutUtil');
 
 goog.require('i18n.input.chrome.inputview.content.compact.util');
 goog.require('i18n.input.chrome.inputview.content.compact.util.CompactKeysetSpec');
+goog.require('i18n.input.chrome.message.ContextType');
 
 goog.scope(function() {
-var util = i18n.input.chrome.inputview.content.
-    contextlayout.util;
+var ContextType = i18n.input.chrome.message.ContextType;
+var util = i18n.input.chrome.inputview.content.ContextlayoutUtil;
 var compact = i18n.input.chrome.inputview.content.compact.util;
 var keysetSpecNode = compact.CompactKeysetSpec;
 
@@ -27,8 +28,8 @@ var keysetSpecNode = compact.CompactKeysetSpec;
  * Generates custom layouts to be displayed on specified input type contexts.
  *
  *
- * @param {Object.<string, !Object>} inputTypeToKeysetSpecMap Map from input
- *     types to context-specific keysets.
+ * @param {Object.<ContextType, !Object>} inputTypeToKeysetSpecMap Map from
+ *     input types to context-specific keysets.
  * @param {!function(!Object): void} onLoaded The function to call once a keyset
  *     data is ready.
  */

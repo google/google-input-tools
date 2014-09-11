@@ -221,9 +221,9 @@ KeyboardContainer.prototype.switchToKeyset = function(keyset, title,
       if (view instanceof HandwritingView) {
         view.setLanguagecode(languageCode);
       }
-      this.updateLanguageState_(lastRawkeyset, rawKeyset);
       this.currentKeysetView = view;
-      this.candidateView.updateByKeyset(rawKeyset, isPasswordBox);
+      this.candidateView.updateByKeyset(rawKeyset, isPasswordBox,
+          goog.i18n.bidi.isRtlLanguage(languageCode));
     } else {
       view.setVisible(false);
     }
@@ -306,26 +306,6 @@ KeyboardContainer.prototype.hasStrokesOnCanvas = function() {
 KeyboardContainer.prototype.cleanStroke = function() {
   if (this.currentKeysetView) {
     this.currentKeysetView.cleanStroke();
-  }
-};
-
-
-/**
-
- * Updates the compact pinyin to set the inputcode for english and pinyin.
- *
- * @param {string} fromRawKeyset .
- * @param {string} toRawKeyset .
- * @private
- */
-KeyboardContainer.prototype.updateLanguageState_ =
-    function(fromRawKeyset, toRawKeyset) {
-  if (fromRawKeyset == 'pinyin-zh-CN.en.compact.qwerty' &&
-      toRawKeyset.indexOf('en.compact') == -1) {
-    this.adapter_.toggleLanguageState(true);
-  } else if (fromRawKeyset == 'pinyin-zh-CN.compact.qwerty' &&
-      toRawKeyset == 'pinyin-zh-CN.en.compact.qwerty') {
-    this.adapter_.toggleLanguageState(false);
   }
 };
 });  // goog.scope

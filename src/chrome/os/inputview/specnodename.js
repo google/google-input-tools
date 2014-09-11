@@ -48,6 +48,7 @@ i18n.input.chrome.inputview.SpecNodeName = {
   KEY_LIST: 'keyList',
   MAPPING: 'mapping',
   NAME: 'name',
+  ON_CONTEXT: 'onContext',
   PADDING: 'padding',
   RECORD: 'record',
   SHOW_MENU_KEY: 'showMenuKey',

@@ -309,7 +309,7 @@ goog.require('i18n.input.chrome.inputview.elements.ElementType');
     ['\u308D']  // 'ろ', IntlRo
   ]; // 46
 
-  var kanaData = createData(kanaKeyCharacters, viewIdPrefix_, keyCodes,);
+  var kanaData = createData(kanaKeyCharacters, viewIdPrefix_, keyCodes);
   kanaData['id'] = 'jp-kana';
   google.ime.chrome.inputview.onConfigLoaded(kanaData);
 })(); // goog.scope;

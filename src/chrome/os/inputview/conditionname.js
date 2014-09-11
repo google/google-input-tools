@@ -24,6 +24,7 @@ i18n.input.chrome.inputview.ConditionName = {
   SHOW_ALTGR: 'showAltGr',
   SHOW_HANDWRITING_SWITCHER: 'showHandwritingSwitcher',
   SHOW_MENU: 'showMenu',
-  SHOW_GLOBE_OR_SYMBOL: 'showGlobeOrSymbol'
+  SHOW_GLOBE_OR_SYMBOL: 'showGlobeOrSymbol',
+  SHOW_EN_SWITCHER_KEY: 'showEnSwitcherKey'
 };
 

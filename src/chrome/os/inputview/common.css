@@ -617,3 +617,17 @@
   height: 20px;
   width: 50px;
 }
+.inputview-pinyin .inputview-en-switcher-default {
+  display: inline-block;
+  background: url('images/chinese_small.png') no-repeat center;
+  background-size: 40px 16px;
+  height: 16px;
+  width: 40px;
+}
+.inputview-pinyin .inputview-en-switcher-english {
+  display: inline-block;
+  background: url('images/english_small.png') no-repeat center;
+  background-size: 40px 16px;
+  height: 16px;
+  width: 40px;
+}

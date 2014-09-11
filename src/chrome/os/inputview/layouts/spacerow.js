@@ -38,7 +38,12 @@ i18n.input.chrome.inputview.layouts.SpaceRow.create = function() {
     'widthInWeight': 1
   });
   var spaceKey = i18n.input.chrome.inputview.layouts.util.createKey({
-    'widthInWeight': 5.87
+    'widthInWeight': 4.87
+  });
+  var enSwitcher = i18n.input.chrome.inputview.layouts.util.createKey({
+    'widthInWeight': 1,
+    'condition': i18n.input.chrome.inputview.ConditionName.
+        SHOW_EN_SWITCHER_KEY
   });
   var altGrKey = i18n.input.chrome.inputview.layouts.util.createKey({
     'widthInWeight': 1.25,
@@ -49,6 +54,7 @@ i18n.input.chrome.inputview.layouts.SpaceRow.create = function() {
   globeKey['spec']['giveWeightTo'] = spaceKey['spec']['id'];
   menuKey['spec']['giveWeightTo'] = spaceKey['spec']['id'];
   altGrKey['spec']['giveWeightTo'] = spaceKey['spec']['id'];
+  enSwitcher['spec']['giveWeightTo'] = spaceKey['spec']['id'];
 
   var leftKey = i18n.input.chrome.inputview.layouts.util.createKey({
     'widthInWeight': 1.08
@@ -63,7 +69,7 @@ i18n.input.chrome.inputview.layouts.SpaceRow.create = function() {
       createLinearLayout({
         'id': 'spaceKeyrow',
         'children': [globeKey, menuKey, ctrlKey, altKey, spaceKey,
-              altGrKey, leftKey, rightKey, hideKeyboardKey]
+             enSwitcher, altGrKey, leftKey, rightKey, hideKeyboardKey]
       });
   return spaceKeyRow;
 };

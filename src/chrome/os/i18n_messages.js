@@ -48,8 +48,7 @@ msgs.MSG_FUZZY_PINYIN = goog.getMsg(
 
 /**
  * @desc It is the description of personal dictionary checkbox in Pinyin
- * setting
- * page.
+ * setting page.
  */
 msgs.MSG_USER_DICT = goog.getMsg(
     'Enable personal dictionary'
@@ -2064,10 +2063,428 @@ msgs.MSG_ENABLE_PREDICTION = goog.getMsg('Enable next word prediction');
 
 
 /**
- * @desc The title for the US keyboard's settings page.
+ * @desc The title for the Armenian Phonetic Keyboard (Armenian) settings page.
+ */
+msgs.MSG_AM_PHONETIC_ARM_SETTINGS_PAGE =
+    goog.getMsg('Armenian Phonetic Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Belgian Keyboard (French) settings page.
+ */
+msgs.MSG_BE_FRA_SETTINGS_PAGE =
+    goog.getMsg('Belgian Keyboard (French) Settings Page');
+
+
+/**
+ * @desc The title for the Belgian Keyboard (German) settings page.
+ */
+msgs.MSG_BE_GER_SETTINGS_PAGE =
+    goog.getMsg('Belgian Keyboard (German) Settings Page');
+
+
+/**
+ * @desc The title for the Belgian Keyboard (Dutch) settings page.
+ */
+msgs.MSG_BE_NLD_SETTINGS_PAGE =
+    goog.getMsg('Belgian Keyboard (Dutch) Settings Page');
+
+
+/**
+ * @desc The title for the Bulgarian Keyboard (Bulgarian) settings page.
+ */
+msgs.MSG_BG_BUL_SETTINGS_PAGE =
+    goog.getMsg('Bulgarian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Bulgarian Phonetic Keyboard (Bulgarian) settings
+ * page.
+ */
+msgs.MSG_BG_PHONETIC_BUL_SETTINGS_PAGE =
+    goog.getMsg('Bulgarian Phonetic Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Brazilian Keyboard (Brazilian Portuguese) settings
+ * page.
+ */
+msgs.MSG_BR_POR_SETTINGS_PAGE =
+    goog.getMsg('Brazilian Keyboard (Brazilian Portuguese) Settings Page');
+
+
+/**
+ * @desc The title for the Belarusian Keyboard (Belarusian) settings page.
+ */
+msgs.MSG_BY_BEL_SETTINGS_PAGE =
+    goog.getMsg('Belarusian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Canadian French Keyboard (French) settings page.
+ */
+msgs.MSG_CA_FRA_SETTINGS_PAGE =
+    goog.getMsg('Canadian French Keyboard (French) Settings Page');
+
+
+/**
+ * @desc The title for the Canadian English Keyboard (English) settings page.
+ */
+msgs.MSG_CA_ENG_ENG_SETTINGS_PAGE =
+    goog.getMsg('Canadian English Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the Canadian Multilingual Keyboard (French) settings
+ * page.
+ */
+msgs.MSG_CA_MULTIX_FRA_SETTINGS_PAGE =
+    goog.getMsg('Canadian Multilingual Keyboard (French) Settings Page');
+
+
+/**
+ * @desc The title for the Swiss Keyboard (German) settings page.
+ */
+msgs.MSG_CH_GER_SETTINGS_PAGE =
+    goog.getMsg('Swiss Keyboard (German) Settings Page');
+
+
+/**
+ * @desc The title for the Swiss French Keyboard (French) settings page.
+ */
+msgs.MSG_CH_FR_FRA_SETTINGS_PAGE =
+    goog.getMsg('Swiss French Keyboard (French) Settings Page');
+
+
+/**
+ * @desc The title for the Czech Keyboard (Czech) settings page.
+ */
+msgs.MSG_CZ_CZE_SETTINGS_PAGE =
+    goog.getMsg('Czech Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Czech Qwerty Keyboard (Czech) settings page.
+ */
+msgs.MSG_CZ_QWERTY_CZE_SETTINGS_PAGE =
+    goog.getMsg('Czech Qwerty Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the German Keyboard (German) settings page.
+ */
+msgs.MSG_DE_GER_SETTINGS_PAGE =
+    goog.getMsg('German Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the German Neo 2 Keyboard (German) settings page.
+ */
+msgs.MSG_DE_NEO_GER_SETTINGS_PAGE =
+    goog.getMsg('German Neo 2 Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Danish Keyboard (Danish) settings page.
+ */
+msgs.MSG_DK_DAN_SETTINGS_PAGE =
+    goog.getMsg('Danish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Estonian Keyboard (Estonian) settings page.
+ */
+msgs.MSG_EE_EST_SETTINGS_PAGE =
+    goog.getMsg('Estonian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Spanish Keyboard (Spanish) settings page.
+ */
+msgs.MSG_ES_SPA_SETTINGS_PAGE =
+    goog.getMsg('Spanish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Catalan Keyboard (Catalan) settings page.
+ */
+msgs.MSG_ES_CAT_CAT_SETTINGS_PAGE =
+    goog.getMsg('Catalan Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Finnish Keyboard (Finnish) settings page.
+ */
+msgs.MSG_FI_FIN_SETTINGS_PAGE =
+    goog.getMsg('Finnish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the French Keyboard (French) settings page.
+ */
+msgs.MSG_FR_FRA_SETTINGS_PAGE =
+    goog.getMsg('French Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Uk Dvorak Keyboard (English) settings page.
+ */
+msgs.MSG_GB_DVORAK_ENG_SETTINGS_PAGE =
+    goog.getMsg('Uk Dvorak Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the Uk Keyboard (English) settings page.
+ */
+msgs.MSG_GB_EXTD_ENG_SETTINGS_PAGE =
+    goog.getMsg('Uk Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the Georgian Keyboard (Georgian) settings page.
+ */
+msgs.MSG_GE_GEO_SETTINGS_PAGE =
+    goog.getMsg('Georgian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Greek Keyboard (Greek) settings page.
+ */
+msgs.MSG_GR_GRE_SETTINGS_PAGE =
+    goog.getMsg('Greek Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Croatian Keyboard (Croatian) settings page.
+ */
+msgs.MSG_HR_SCR_SETTINGS_PAGE =
+    goog.getMsg('Croatian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Hungarian Keyboard (Hungarian) settings page.
+ */
+msgs.MSG_HU_HUN_SETTINGS_PAGE =
+    goog.getMsg('Hungarian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Irish Keyboard (Irish) settings page.
+ */
+msgs.MSG_IE_GA_SETTINGS_PAGE =
+    goog.getMsg('Irish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Hebrew Keyboard (Hebrew) settings page.
+ */
+msgs.MSG_IL_HEB_SETTINGS_PAGE =
+    goog.getMsg('Hebrew Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Icelandic Keyboard (Icelandic) settings page.
+ */
+msgs.MSG_IS_ICE_SETTINGS_PAGE =
+    goog.getMsg('Icelandic Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Italian Keyboard (Italian) settings page.
+ */
+msgs.MSG_IT_ITA_SETTINGS_PAGE =
+    goog.getMsg('Italian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Japanese Keyboard (Japanese) settings page.
+ */
+msgs.MSG_JP_JPN_SETTINGS_PAGE =
+    goog.getMsg('Japanese Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Latin American Keyboard (Spanish) settings page.
+ */
+msgs.MSG_LATAM_SPA_SETTINGS_PAGE =
+    goog.getMsg('Latin American Keyboard (Spanish) Settings Page');
+
+
+/**
+ * @desc The title for the Lithuanian Keyboard (Lithuanian) settings page.
+ */
+msgs.MSG_LT_LIT_SETTINGS_PAGE =
+    goog.getMsg('Lithuanian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Latvian Keyboard (Latvian, Lettish) settings page.
+ */
+msgs.MSG_LV_APOSTROPHE_LAV_SETTINGS_PAGE =
+    goog.getMsg('Latvian Keyboard (Latvian, Lettish) Settings Page');
+
+
+/**
+ * @desc The title for the Mongolian Keyboard (Mongolian) settings page.
+ */
+msgs.MSG_MN_MON_SETTINGS_PAGE =
+    goog.getMsg('Mongolian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Norwegian Keyboard (Norwegian) settings page.
+ */
+msgs.MSG_NO_NOB_SETTINGS_PAGE =
+    goog.getMsg('Norwegian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Polish Keyboard (Polish) settings page.
+ */
+msgs.MSG_PL_POL_SETTINGS_PAGE =
+    goog.getMsg('Polish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Portuguese Keyboard (Portuguese) settings page.
+ */
+msgs.MSG_PT_POR_SETTINGS_PAGE =
+    goog.getMsg('Portuguese Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Romanian Keyboard (Romanian) settings page.
+ */
+msgs.MSG_RO_RUM_SETTINGS_PAGE =
+    goog.getMsg('Romanian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Serbian Keyboard (Serbian) settings page.
+ */
+msgs.MSG_RS_SRP_SETTINGS_PAGE =
+    goog.getMsg('Serbian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Russian Keyboard (Russian) settings page.
+ */
+msgs.MSG_RU_RUS_SETTINGS_PAGE =
+    goog.getMsg('Russian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Russian Phonetic Keyboard (Russian) settings page.
+ */
+msgs.MSG_RU_PHONETIC_RUS_SETTINGS_PAGE =
+    goog.getMsg('Russian Phonetic Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Swedish Keyboard (Swedish) settings page.
+ */
+msgs.MSG_SE_SWE_SETTINGS_PAGE =
+    goog.getMsg('Swedish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Slovenian Keyboard (Slovenian) settings page.
+ */
+msgs.MSG_SI_SLV_SETTINGS_PAGE =
+    goog.getMsg('Slovenian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Slovakian Keyboard (Slovak) settings page.
+ */
+msgs.MSG_SK_SLO_SETTINGS_PAGE =
+    goog.getMsg('Slovakian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Turkish Keyboard (Turkish) settings page.
+ */
+msgs.MSG_TR_TUR_SETTINGS_PAGE =
+    goog.getMsg('Turkish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Ukrainian Keyboard (Ukrainian) settings page.
+ */
+msgs.MSG_UA_UKR_SETTINGS_PAGE =
+    goog.getMsg('Ukrainian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the US Keyboard (English) settings page.
  */
 msgs.MSG_US_ENG_SETTINGS_PAGE =
     goog.getMsg('US Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the US Keyboard (Filipino) settings page.
+ */
+msgs.MSG_US_FIL_SETTINGS_PAGE =
+    goog.getMsg('US Keyboard (Filipino) Settings Page');
+
+
+/**
+ * @desc The title for the US Keyboard (Indonesian) settings page.
+ */
+msgs.MSG_US_IND_SETTINGS_PAGE =
+    goog.getMsg('US Keyboard (Indonesian) Settings Page');
+
+
+/**
+ * @desc The title for the US Keyboard (Malay) settings page.
+ */
+msgs.MSG_US_MSA_SETTINGS_PAGE =
+    goog.getMsg('US Keyboard (Malay) Settings Page');
+
+
+/**
+ * @desc The title for the US Extended Keyboard (English) settings page.
+ */
+msgs.MSG_US_ALTGR_INTL_ENG_SETTINGS_PAGE =
+    goog.getMsg('US Extended Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the US Colemak Keyboard (English) settings page.
+ */
+msgs.MSG_US_COLEMAK_ENG_SETTINGS_PAGE =
+    goog.getMsg('US Colemak Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the US Dvorak Keyboard (English) settings page.
+ */
+msgs.MSG_US_DVORAK_ENG_SETTINGS_PAGE =
+    goog.getMsg('US Dvorak Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the US International Keyboard (English) settings page.
+ */
+msgs.MSG_US_INTL_ENG_SETTINGS_PAGE =
+    goog.getMsg('US International Keyboard (English) Settings Page');
+
+
+/**
+ * @desc The title for the US International Keyboard (Dutch) settings page.
+ */
+msgs.MSG_US_INTL_NLD_SETTINGS_PAGE =
+    goog.getMsg('US International Keyboard (Dutch) Settings Page');
+
+
+/**
+ * @desc The title for the US International Keyboard (Brazilian Portuguese)
+ * settings page.
+ */
+msgs.MSG_US_INTL_POR_SETTINGS_PAGE =
+    goog.getMsg(
+        'US International Keyboard (Brazilian Portuguese) Settings Page');
 
 
 /**
@@ -2114,4 +2531,6 @@ msgs.MSG_SWITCH_TO_COMPACT_LAYOUT = goog.getMsg('Switch to compact layout');
  * @desc Title for the switch to full layout menu item.
  */
 msgs.MSG_SWITCH_TO_FULL_LAYOUT = goog.getMsg('Switch to full layout');
+
+
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));

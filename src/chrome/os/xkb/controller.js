@@ -28,17 +28,19 @@ goog.require('i18n.input.chrome.message.Type');
 goog.require('i18n.input.chrome.options.OptionStorageHandlerFactory');
 goog.require('i18n.input.chrome.options.OptionType');
 goog.require('i18n.input.chrome.xkb.Correction');
+goog.require('i18n.input.chrome.xkb.LatinInputToolCode');
 
 
 goog.scope(function() {
 var AbstractController = i18n.input.chrome.AbstractController;
 var EventType = i18n.input.chrome.DataSource.EventType;
-var Name = i18n.input.chrome.message.Name;
-var Type = i18n.input.chrome.message.Type;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
+var LatinInputToolCode = i18n.input.chrome.xkb.LatinInputToolCode;
+var Name = i18n.input.chrome.message.Name;
 var OptionType = i18n.input.chrome.options.OptionType;
 var OptionStorageHandlerFactory =
     i18n.input.chrome.options.OptionStorageHandlerFactory;
+var Type = i18n.input.chrome.message.Type;
 var util = i18n.input.chrome.inputview.util;
 
 
@@ -76,13 +78,6 @@ i18n.input.chrome.xkb.Controller = function() {
    */
   this.statistics_ = i18n.input.chrome.inputview.Statistics.getInstance();
 
-  /**
-   * Whether or not to enable double space to period feature.
-   *
-   * @private {boolean}
-   */
-  this.enableDoubleSpacePeriod_ = false;
-
   /** @private {!Array.<!Object>} */
   this.candidates_ = [];
 
@@ -98,6 +93,22 @@ goog.inherits(Controller, i18n.input.chrome.AbstractController);
 
 /** @private {boolean} */
 Controller.prototype.enableEmojiCandidate_ = false;
+
+
+/**
+ * Whether or not to enable double space to period feature.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.doubleSpacePeriod_ = false;
+
+
+/**
+ * Whether to to auto-capitalize or not.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.autoCapital_ = false;
 
 
 /**
@@ -178,7 +189,7 @@ Controller.prototype.lastCommitType_ = -1;
 
 
 /**
- * Whehter the candidates are predicted.
+ * Whether the candidates are predicted.
  *
  * @private {boolean}
  */
@@ -242,12 +253,33 @@ Controller.prototype.activate = function(inputToolCode) {
 Controller.prototype.updateOptions = function(inputToolCode) {
   var optionStorageHandler =
       OptionStorageHandlerFactory.getInstance().getHandler(inputToolCode);
+  if (goog.object.containsKey(LatinInputToolCode, inputToolCode)) {
+    // Override default of false for latin, all users with no pre-existing
+    // stored values should have default set to true instead. Non-latin XKB
+    // input components require the option default as false.
+    if (!optionStorageHandler.has(OptionType.DOUBLE_SPACE_PERIOD)) {
+      optionStorageHandler.set(OptionType.DOUBLE_SPACE_PERIOD, true);
+    }
+    if (!optionStorageHandler.has(OptionType.ENABLE_CAPITALIZATION)) {
+      optionStorageHandler.set(OptionType.ENABLE_CAPITALIZATION, true);
+    }
+  }
   var doubleSpacePeriod = /** @type {boolean} */
       (optionStorageHandler.get(OptionType.DOUBLE_SPACE_PERIOD));
   var soundOnKeypress = /** @type {boolean} */
       (optionStorageHandler.get(OptionType.SOUND_ON_KEYPRESS));
-  this.enableDoubleSpacePeriod_ = doubleSpacePeriod;
+  var correctionLevel = /** @type {number} */ (optionStorageHandler.get(
+      OptionType.AUTO_CORRECTION_LEVEL));
+  var autoCapital = /** @type {boolean} */ (optionStorageHandler.get(
+      OptionType.ENABLE_CAPITALIZATION));
+  this.correctionLevel = correctionLevel;
+  if (this.dataSource_) {
+    this.dataSource_.setCorrectionLevel(this.correctionLevel);
+  }
+  this.doubleSpacePeriod_ = doubleSpacePeriod;
+  this.autoCapital_ = autoCapital;
   this.updateSettings({
+    'autoCapital': autoCapital,
     'doubleSpacePeriod': doubleSpacePeriod,
     'soundOnKeypress': soundOnKeypress
   });
@@ -649,7 +681,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       this.processSetLanguage_(message);
       break;
     case Type.DOUBLE_CLICK_ON_SPACE_KEY:
-      if (this.enableDoubleSpacePeriod_ &&
+      if (this.doubleSpacePeriod_ &&
           REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS.test(this.surroundingText_)) {
         if (this.compositionText_) {
           console.error('Composition text is not expected when double click' +
@@ -667,9 +699,9 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
     case Type.CONNECT:
       this.updateSettings({
         'autoSpace': true,
-        'autoCapital': true,
+        'autoCapital': this.autoCapital_,
         'supportCompact': true,
-        'doubleSpacePeriod': this.enableDoubleSpacePeriod_
+        'doubleSpacePeriod': this.doubleSpacePeriod_
       });
       break;
     case Type.SEND_KEY_EVENT:

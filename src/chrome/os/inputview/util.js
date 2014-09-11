@@ -71,6 +71,18 @@ util.KEYSETS_USE_US = [
 
 
 /**
+ * The keysets that have en switcher key.
+ *
+ * @type {!Array.<string>}
+ */
+util.KEYSETS_HAVE_EN_SWTICHER = [
+  // When other keysets that use us add the enswitcher key,
+  // should move them to this array.
+  'pinyin-zh-CN'
+];
+
+
+/**
  * A regular expression for the end of a sentence.
  *
  * @private {!RegExp}

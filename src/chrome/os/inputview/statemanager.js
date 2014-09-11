@@ -54,6 +54,13 @@ i18n.input.chrome.inputview.StateManager = function() {
    */
   this.chording_ = 0;
 
+  /**
+   * Whether the current keyset is in English mode.
+   *
+   * @type {boolean}
+   */
+  this.isEnMode = false;
+
   /** @type {!i18n.input.chrome.inputview.Covariance} */
   this.covariance = new i18n.input.chrome.inputview.Covariance();
 };

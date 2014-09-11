@@ -347,12 +347,14 @@ CandidateView.prototype.switchToIcon = function(type, visible) {
 
 
 /**
- * updates the candidate view by key set changing.
+ * Updates the candidate view by key set changing.
  *
  * @param {string} keyset .
  * @param {boolean} isPasswordBox .
+ * @param {boolean} isRTL .
  */
-CandidateView.prototype.updateByKeyset = function(keyset, isPasswordBox) {
+CandidateView.prototype.updateByKeyset = function(
+    keyset, isPasswordBox, isRTL) {
   this.switchToIcon(CandidateView.IconType.BACK,
       keyset == CandidateView.HANDWRITING_VIEW_CODE_);
   if (isPasswordBox && keyset.indexOf('compact') != -1) {
@@ -360,5 +362,6 @@ CandidateView.prototype.updateByKeyset = function(keyset, isPasswordBox) {
   } else {
     this.hideNumberRow();
   }
+  this.interContainer_.style.direction = isRTL ? 'rtl' : 'ltr';
 };
 });  // goog.scope

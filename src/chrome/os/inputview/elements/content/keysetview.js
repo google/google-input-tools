@@ -27,6 +27,7 @@ goog.require('i18n.input.chrome.inputview.elements.content.CanvasView');
 goog.require('i18n.input.chrome.inputview.elements.content.CharacterKey');
 goog.require('i18n.input.chrome.inputview.elements.content.CompactKey');
 goog.require('i18n.input.chrome.inputview.elements.content.EmojiKey');
+goog.require('i18n.input.chrome.inputview.elements.content.EnSwitcherKey');
 goog.require('i18n.input.chrome.inputview.elements.content.FunctionalKey');
 goog.require('i18n.input.chrome.inputview.elements.content.KeyboardView');
 goog.require('i18n.input.chrome.inputview.elements.content.MenuKey');
@@ -51,6 +52,8 @@ var SpecNodeName = i18n.input.chrome.inputview.SpecNodeName;
 var ElementType = i18n.input.chrome.inputview.elements.ElementType;
 var content = i18n.input.chrome.inputview.elements.content;
 var layout = i18n.input.chrome.inputview.elements.layout;
+var Css = i18n.input.chrome.inputview.Css;
+var util = i18n.input.chrome.inputview.util;
 
 
 
@@ -366,18 +369,18 @@ KeysetView.prototype.applyConditions = function(conditions) {
   // Adjusts the width of globe key and menu key according to the mock when they
   // both show up.
   // TODO: This is hacky. Remove the hack once figure out a better way.
-  if (conditions[ConditionName.SHOW_GLOBE_OR_SYMBOL] &&
-      conditions[ConditionName.SHOW_MENU]) {
-    var menuKeyView = this.softKeyConditionMap_[ConditionName.SHOW_MENU];
-    var globeKeyView =
-        this.softKeyConditionMap_[ConditionName.SHOW_GLOBE_OR_SYMBOL];
-    if (menuKeyView && globeKeyView) {
-      var softKeyViewGetWeight =
-          this.softKeyViewMap_[menuKeyView.giveWeightTo];
-      if (softKeyViewGetWeight) {
-        globeKeyView.widthInWeight -= 0.1;
-        menuKeyView.widthInWeight -= 0.4;
-        // Shrink a total of 0.5 weight from globe key view and menu key view.
+  var showGlobeKey = conditions[ConditionName.SHOW_GLOBE_OR_SYMBOL];
+  var showMenuKey = conditions[ConditionName.SHOW_MENU];
+  var menuKeyView = this.softKeyConditionMap_[ConditionName.SHOW_MENU];
+  var globeKeyView =
+      this.softKeyConditionMap_[ConditionName.SHOW_GLOBE_OR_SYMBOL];
+  if (menuKeyView && globeKeyView) {
+    var softKeyViewGetWeight =
+        this.softKeyViewMap_[menuKeyView.giveWeightTo];
+    if (softKeyViewGetWeight) {
+      if (showGlobeKey && showMenuKey) {
+        globeKeyView.dynamicaGrantedWeight = -0.1;
+        menuKeyView.dynamicaGrantedWeight = -0.4;
         softKeyViewGetWeight.dynamicaGrantedWeight += 0.5;
       }
     }
@@ -556,6 +559,11 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
           this.title_, characters, undefined, iconCssClass);
       elem = this.spaceKey;
       break;
+    case ElementType.EN_SWITCHER:
+      elem = new content.EnSwitcherKey(id, type, name, iconCssClass,
+          this.dataModel_.stateManager, Css.EN_SWITCHER_DEFAULT,
+          Css.EN_SWITCHER_ENGLISH);
+      break;
     case ElementType.BACKSPACE_KEY:
     case ElementType.ENTER_KEY:
     case ElementType.TAB_KEY:
@@ -700,7 +708,14 @@ KeysetView.prototype.getChildViewById = function(id) {
  *
  * @param {string} rawKeyset The raw keyset.
  */
-KeysetView.prototype.activate = goog.nullFunction;
+KeysetView.prototype.activate = function(rawKeyset) {
+  if (goog.array.contains(util.KEYSETS_HAVE_EN_SWTICHER, rawKeyset)) {
+    this.updateCondition(ConditionName.SHOW_EN_SWITCHER_KEY, true);
+    var elem = this.getElement();
+    var name = rawKeyset.replace(/\-.*$/, '').toUpperCase();
+    goog.dom.classlist.add(elem, Css[name]);
+  }
+};
 
 
 /**

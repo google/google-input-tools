@@ -198,6 +198,20 @@ i18n.input.chrome.inputview.content.util.createAltgrKey = function() {
 
 
 /**
+ * Creates a key used to switch to english.
+ *
+ * @return {!Object} The enSwitcher key.
+ */
+i18n.input.chrome.inputview.content.util.createEnSwitcherKey =
+    function() {
+  var spec = {};
+  spec[SpecNodeName.TYPE] = ElementType.EN_SWITCHER;
+  spec[SpecNodeName.ID] = 'enSwitcher';
+  return i18n.input.chrome.inputview.content.util.createKey(spec);
+};
+
+
+/**
  * Creates a capslock key.
  *
  * @return {!Object} The capslock key.
@@ -579,6 +593,7 @@ i18n.input.chrome.inputview.content.util.addLastRowKeys =
   keyList.push(i18n.input.chrome.inputview.content.util.createCtrlKey());
   keyList.push(i18n.input.chrome.inputview.content.util.createAltKey());
   keyList.push(i18n.input.chrome.inputview.content.util.createSpaceKey());
+  keyList.push(i18n.input.chrome.inputview.content.util.createEnSwitcherKey());
   keyList.push(i18n.input.chrome.inputview.content.util.createAltgrKey());
   keyList.push(i18n.input.chrome.inputview.content.util.createArrowKey(
       i18n.input.chrome.inputview.Direction.LEFT));
