@@ -353,6 +353,9 @@ HangulIme.prototype.resetSegment_ = function() {
  */
 HangulIme.prototype.requestCandidates_ = function(opt_text) {
   var text = opt_text || this.inputText_;
+  if (!text) {
+    return;
+  }
   var request = JSON.stringify({
     'text': text,
     'num': 0
@@ -434,6 +437,11 @@ HangulIme.prototype.getPreeditText_ = function() {
  */
 HangulIme.prototype.updatePreedit_ = function() {
   if (this.state_ === HangulIme.State.RESET) {
+    chrome.input.ime.setComposition({
+      'contextID': this.context_.contextID,
+      'text': '',
+      'cursor': 0
+    });
     return;
   }
 
@@ -654,6 +662,7 @@ HangulIme.prototype.removeChar_ = function(index) {
 
   if (this.inputText_.length === 0) {
     this.clear_();
+    this.update_();
     return;
   }
 
@@ -853,9 +862,13 @@ HangulIme.prototype.handleSpecialKey_ = function(keyData) {
 
   // When pressing Esc, discard preedit text and reset
   if (keyData['code'] === 'Escape') {
-    if (this.state_ === HangulIme.State.HANGUL ||
-        this.state_ === HangulIme.State.HANJA) {
+    if (this.state_ === HangulIme.State.HANGUL) {
       this.clear_();
+      this.update_();
+      return true;
+    }
+    if (this.state_ === HangulIme.State.HANJA) {
+      this.state_ = HangulIme.State.HANGUL;
       this.update_();
       return true;
     }
@@ -990,6 +1003,7 @@ HangulIme.prototype.onDeactivated = function(engineID) {
 HangulIme.prototype.onFocus = function(context) {
   this.context_ = context;
   this.clear_();
+  this.updateCandidatesWindow_();
 };
 
 
@@ -1000,7 +1014,7 @@ HangulIme.prototype.onFocus = function(context) {
  */
 HangulIme.prototype.onBlur = function(contextID) {
   this.clear_();
-  this.update_();
+  this.updateCandidatesWindow_();
   this.context_ = null;
 };
 
@@ -1012,7 +1026,7 @@ HangulIme.prototype.onBlur = function(contextID) {
  */
 HangulIme.prototype.onReset = function(contextID) {
   this.clear_();
-  this.update_();
+  this.updateCandidatesWindow_();
 };
 
 
