@@ -1195,6 +1195,7 @@ document.addEventListener('readystatechange', function() {
   var imeInstance = window.imeInstance = new HangulIme;
   if (document.readyState === 'complete') {
     console.log('Initializing Hangul IME...');
+    var requestId = 0;
     chrome.input.ime.onActivate.addListener(function(engineID) {
       imeInstance.switchKeyboard(engineID);
       imeInstance.onActivate(engineID);
@@ -1214,6 +1215,7 @@ document.addEventListener('readystatechange', function() {
     });
     chrome.input.ime.onKeyEvent.addListener(function(engineID, keyData) {
       imeInstance.switchKeyboard(engineID);
+      requestId = Number(keyData.requestId) + 1;
       return imeInstance.onKeyEvent(engineID, keyData);
     });
     chrome.input.ime.onCandidateClicked.addListener(
@@ -1233,6 +1235,48 @@ document.addEventListener('readystatechange', function() {
         imeInstance.onReset(engineID);
       });
     }
+    var enChars = 'qwertyuiopasdfghjklzxcvbnm';
+    var hangulChars =
+        '\u3142\u3148\u3137\u3131\u3145\u315B\u3155\u3151\u3150\u3154' +
+        '\u3141\u3134\u3147\u3139\u314E\u3157\u3153\u314F\u3163' +
+        '\u314B\u314C\u314A\u314D\u3160\u315C\u3161';
+    var hangulShiftChars =
+        '\u3143\u3149\u3138\u3132\u3146\u315B\u3155\u3151\u3152\u3156' +
+        '\u3141\u3134\u3147\u3139\u314E\u3157\u3153\u314F\u3163' +
+        '\u314B\u314C\u314A\u314D\u3160\u315C\u3161';
+    var hangulMap = {};
+    for (var i = 0; i < hangulChars.length; ++i) {
+      hangulMap[hangulChars[i]] = enChars[i];
+      hangulMap[hangulShiftChars[i]] = enChars[i].toUpperCase();
+    }
+    var handleSoftKey = function(keyData) {
+      var kData = {};
+      var properties = ['type', 'requestId', 'extensionId', 'key', 'code',
+      'keyCode', 'altKey', 'ctrlKey', 'shiftKey', 'capsLock'];
+      properties.forEach(function(property) {
+        if (keyData[property] !== undefined) {
+          kData[property] = keyData[property];
+        }
+      });
+      kData['requestId'] = String(requestId++);
+      if (hangulMap[kData['key']]) {
+        kData['key'] = hangulMap[kData['key']];
+      }
+      chrome.input.ime.sendKeyEvents({
+          'contextID': 0,
+          'keyData': [kData]
+      });
+    };
+    chrome.runtime.onMessage.addListener(function(message) {
+      if (message['type'] == 'send_key_event') {
+        var keyData = message['keyData'];
+        if (keyData.length) {
+          keyData.forEach(function(kd) { handleSoftKey(kd); });
+        } else {
+          handleSoftKey(keyData);
+        }
+      }
+    });
     var naclModule = document.getElementById('nacl_module');
     imeInstance.setNaclModule(naclModule);
     if (chrome.inputMethodPrivate && chrome.inputMethodPrivate.startIme) {
