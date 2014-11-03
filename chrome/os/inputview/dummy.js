@@ -11,27 +11,4 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-goog.provide('i18n.input.chrome.xkb.Constants');
-
-
-/**
- * Languages support nacl module.
- *
- * @type {!Array.<string>}
- */
-i18n.input.chrome.xkb.Constants.NACL_LANGUAGES = [
-  'da',
-  'de',
-  'en',
-  'es',
-  'fi',
-  'fr',
-  'it',
-  'nl',
-  'no',
-  'pl',
-  'pt',
-  'sv',
-  'tr'
-];
-
+window.InputViewPageStartLoading = new Date().getTime();

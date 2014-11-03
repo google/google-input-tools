@@ -239,7 +239,7 @@ AbstractController.prototype.isPasswordBox = function() {
  */
 AbstractController.prototype.handleSendKeyEventInPasswordBox_ =
     function(keyData) {
-  if (keyData[Name.MSG_TYPE] == goog.events.EventType.KEYDOWN) {
+  if (keyData[Name.TYPE] == goog.events.EventType.KEYDOWN) {
     this.commitText(keyData[Name.KEY]);
   }
 };
@@ -333,7 +333,7 @@ AbstractController.prototype.updateOptions = goog.functions.NULL;
  */
 AbstractController.prototype.processMessage = function(message, sender,
     sendResponse) {
-  var msgType = message[Name.MSG_TYPE];
+  var msgType = message[Name.TYPE];
   switch (msgType) {
     case Type.SEND_KEY_EVENT:
       this.handleSendKeyEventMessage_(message[Name.KEY_DATA]);
@@ -394,7 +394,7 @@ AbstractController.prototype.updateSettings = function(settings) {
   }
   settings[Name.SCREEN] = this.screenType;
   chrome.runtime.sendMessage(goog.object.create(
-      Name.MSG_TYPE, Type.UPDATE_SETTINGS,
+      Name.TYPE, Type.UPDATE_SETTINGS,
       Name.MSG, settings));
 };
 

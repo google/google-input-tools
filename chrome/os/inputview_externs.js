@@ -14,6 +14,16 @@
 var xkb = {};
 
 
+/** @const */
+chrome.metricsPrivate = {};
+
+
+/**
+ * @param {!Object} metrics The metrics object.
+ * @param {number} value The count value to be recorded.
+ */
+chrome.metricsPrivate.recordValue = function(metrics, value) {};
+
 
 /**
  * @param {number} num .
@@ -92,3 +102,43 @@ inputview.switchToInputMethod = function(inputMethodId) {};
  */
 inputview.openSettings = function() {};
 
+
+/**
+ * @param {string} url URL to create.
+ * @param {!Object=} opt_options The options for
+ *     the new window.
+ * @param {function(!Object)=} opt_createWindowCallback
+ *     Callback to be run.
+ */
+inputview.createWindow = function(
+    url, opt_options, opt_createWindowCallback) {};
+
+
+var accents = {};
+
+
+/**
+ * Gets the highlighted character.
+ *
+ * @return {string} The character.
+ */
+accents.highlightedAccent = function() {
+  return '';
+};
+
+
+/**
+ * Highlights the item according to the current coordinate of the finger.
+ *
+ * @param {number} x The x position of finger in screen coordinate system.
+ * @param {number} y The y position of finger in screen coordinate system.
+ */
+accents.highlightItem = function(x, y) {};
+
+
+/**
+ * Sets the accents which this window should display.
+ *
+ * @param {!Array.<string>} accents .
+ */
+accents.setAccents = function(accents) {};

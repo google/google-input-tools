@@ -51,6 +51,27 @@ Element.prototype.postMessage = function(message) {};
 /**
  * @const
  */
+chrome.app = {};
+
+/**
+ * @const
+ */
+chrome.app.window = {};
+
+/**
+ * @param {string} url URL to create.
+ * @param {!Object=} opt_options The options for
+ *     the new window.
+ * @param {function(!Object)=} opt_createWindowCallback
+ *     Callback to be run.
+ * @see http://developer.chrome.com/apps/app.window.html#method-create
+ */
+chrome.app.window.create = function(
+    url, opt_options, opt_createWindowCallback) {};
+
+/**
+ * @const
+ */
 chrome.i18n = {};
 
 /**
@@ -62,6 +83,12 @@ chrome.i18n.getMessage = function(message) {};
  * @const
  */
 chrome.runtime = {};
+
+/**
+ * @param {string} path .
+ * @return {string} .
+ */
+chrome.runtime.getURL = function(path) { return '' };
 
 /**
  * @param {*} message
@@ -82,7 +109,7 @@ chrome.runtime.onMessage.addListener = function(callback) {};
 /**
  * @param {Function=} backgroundPage
  */
- chrome.runtime.getBackgroundPage = function(backgroundPage) {};
+chrome.runtime.getBackgroundPage = function(backgroundPage) {};
 
 /**
  * @const
@@ -395,16 +422,6 @@ chrome.virtualKeyboardPrivate.openSettings = function() {};
 chrome.virtualKeyboardPrivate.sendKeyEvent =
     function(parameters, opt_callback) {};
 
-
-/** @const */
-chrome.metricsPrivate = {};
-
-
-/**
- * @param {string} name The metrics name.
- * @param {number} count The count value to be recorded.
- */
-chrome.metricsPrivate.recordCount = function(name, count) {};
 
 /**
  * namespace

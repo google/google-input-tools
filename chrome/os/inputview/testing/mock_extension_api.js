@@ -49,9 +49,11 @@ function mockExtensionApis(mockControl) {
   addMocks(chrome, 'virtualKeyboardPrivate', ['getKeyboardConfig']);
   addMocks(chrome, 'inputMethodPrivate', ['getInputMethods',
       'setCurrentInputMethod']);
-  addMocks(chrome, 'runtime', ['getBackgroundPage', 'sendMessage']);
+  addMocks(chrome, 'runtime', ['getBackgroundPage']);
   addMocks(chrome.runtime, 'onMessage', ['addListener']);
-
+  // Ignore the sendMessage first, added it back when we need to check the
+  // message calls.
+  chrome.runtime.sendMessage = function(msg) {};
   // Ignore calls to addListener. Reevaluate if important to properly track the
   // flow of events.
   chrome.runtime.onMessage.addListener = function() {};

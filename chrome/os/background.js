@@ -18,6 +18,7 @@ goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.EventType');
+goog.require('i18n.input.chrome.inputview.PerfTracker');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 goog.require('i18n.input.chrome.xkb.Controller');
@@ -27,7 +28,7 @@ goog.require('i18n.input.chrome.xkb.Controller');
 goog.scope(function() {
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
-
+var PerfTracker = i18n.input.chrome.inputview.PerfTracker;
 
 
 /**
@@ -96,6 +97,9 @@ i18n.input.chrome.Background = function() {
   /** @private {!Function} */
   this.onResetFn_ = this.wrapAsyncHandler_(this.onReset_);
 
+  /** @private {!PerfTracker} */
+  this.perfTracker_ = new PerfTracker(PerfTracker.TickName.
+      BACKGROUND_HTML_LOADED);
 
   /**
    * The active controller.
@@ -299,6 +303,8 @@ Background.prototype.isControllerReady = function() {
  * @protected
  */
 Background.prototype.executeWaitingEventHandlers = function() {
+  this.perfTracker_.tick(PerfTracker.TickName.NACL_LOADED);
+  this.perfTracker_.stop();
   while (this.isControllerReady() && this.waitingEventHandlers.length > 0) {
     /** @preserveTry */
     try {
@@ -321,7 +327,7 @@ Background.prototype.executeWaitingEventHandlers = function() {
  *     order to send a response asynchronously.
  */
 Background.prototype.onMessage = function(message, sender, sendResponse) {
-  if (message[Name.MSG_TYPE] == Type.VISIBILITY_CHANGE &&
+  if (message[Name.TYPE] == Type.VISIBILITY_CHANGE &&
       message[Name.VISIBILITY]) {
     chrome.input.ime.setCandidateWindowProperties(goog.object.create(
         Name.ENGINE_ID, this.engineId,
@@ -348,7 +354,7 @@ Background.prototype.onActivate = function(engineId, screenType) {
 
   if (this.activeController) {
     // Resets the previous controller.
-    this.activeController.reset();
+    this.activeController.onCompositionCanceled();
   }
 
   this.activeController = this.controllers[ControllerType.XKB];

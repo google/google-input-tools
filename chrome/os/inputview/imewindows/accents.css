@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+}
+
+.accent-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.accent-container div {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.accent-container div:not(:last-child) {
+  border-right: 1px solid #cccccc;
+}
+
+.accent-container div div {
+  color: #111111;
+  font-size: 23px;
+  height: 100%;
+  line-height: 3;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.highlight {
+  background-color: #dddddd;
+}

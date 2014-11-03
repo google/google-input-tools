@@ -85,7 +85,7 @@ AbstractView.prototype.setCandidateWindowProperties = function(engineID,
         Name.ENGINE_ID, engineID, Name.PROPERTIES, properties));
   } else if (!visible) {
     chrome.runtime.sendMessage(goog.object.create(
-        Name.MSG_TYPE, Type.CANDIDATES_BACK,
+        Name.TYPE, Type.CANDIDATES_BACK,
         Name.MSG, goog.object.create(Name.CANDIDATES, [])));
   }
 };
@@ -105,7 +105,7 @@ AbstractView.prototype.setCandidates = function(candidates) {
     }
   } else {
     chrome.runtime.sendMessage(goog.object.create(
-        Name.MSG_TYPE, Type.CANDIDATES_BACK,
+        Name.TYPE, Type.CANDIDATES_BACK,
         Name.MSG, goog.object.create(Name.CANDIDATES, candidates)));
   }
 };

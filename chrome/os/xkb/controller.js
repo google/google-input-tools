@@ -20,7 +20,7 @@ goog.require('goog.object');
 goog.require('goog.string');
 goog.require('i18n.input.chrome.AbstractController');
 goog.require('i18n.input.chrome.DataSource');
-goog.require('i18n.input.chrome.inputview.Statistics');
+goog.require('i18n.input.chrome.Statistics');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.inputview.util');
 goog.require('i18n.input.chrome.message.Name');
@@ -73,10 +73,10 @@ i18n.input.chrome.xkb.Controller = function() {
   /**
    * The statistics object for recording metrics values.
    *
-   * @type {!i18n.input.chrome.inputview.Statistics}
+   * @type {!i18n.input.chrome.Statistics}
    * @private
    */
-  this.statistics_ = i18n.input.chrome.inputview.Statistics.getInstance();
+  this.statistics_ = i18n.input.chrome.Statistics.getInstance();
 
   /** @private {!Array.<!Object>} */
   this.candidates_ = [];
@@ -104,7 +104,7 @@ Controller.prototype.doubleSpacePeriod_ = false;
 
 
 /**
- * Whether to to auto-capitalize or not.
+ * Whether to auto-capitalize or not.
  *
  * @private {boolean}
  */
@@ -214,7 +214,7 @@ Controller.prototype.onSurroundingTextChanged = function(
     }
 
     chrome.runtime.sendMessage(goog.object.create(
-        Name.MSG_TYPE, Type.SURROUNDING_TEXT_CHANGED,
+        Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
         Name.TEXT, text));
   }
 };
@@ -246,6 +246,7 @@ Controller.prototype.deleteSurroudingText_ = function(offset, length,
 Controller.prototype.activate = function(inputToolCode) {
   Controller.base(this, 'activate', inputToolCode);
   this.engineID_ = inputToolCode;
+  this.statistics_.setInputMethodId(inputToolCode);
 };
 
 
@@ -257,6 +258,9 @@ Controller.prototype.updateOptions = function(inputToolCode) {
     // Override default of false for latin, all users with no pre-existing
     // stored values should have default set to true instead. Non-latin XKB
     // input components require the option default as false.
+    // This is required both in xkb/controller.js and hmm/init_options.js as
+    // the user can access them in either order and the experience in both
+    // should be the same.
     if (!optionStorageHandler.has(OptionType.DOUBLE_SPACE_PERIOD)) {
       optionStorageHandler.set(OptionType.DOUBLE_SPACE_PERIOD, true);
     }
@@ -275,10 +279,12 @@ Controller.prototype.updateOptions = function(inputToolCode) {
   this.correctionLevel = correctionLevel;
   if (this.dataSource_) {
     this.dataSource_.setCorrectionLevel(this.correctionLevel);
+    this.statistics_.setAutoCorrectLevel(this.correctionLevel);
   }
   this.doubleSpacePeriod_ = doubleSpacePeriod;
   this.autoCapital_ = autoCapital;
   this.updateSettings({
+    'autoSpace': true,
     'autoCapital': autoCapital,
     'doubleSpacePeriod': doubleSpacePeriod,
     'soundOnKeypress': soundOnKeypress
@@ -328,7 +334,7 @@ Controller.prototype.onCompositionCanceled = function() {
 Controller.prototype.clearCandidates_ = function() {
   this.candidates_ = [];
   chrome.runtime.sendMessage(goog.object.create(
-      Name.MSG_TYPE, Type.CANDIDATES_BACK,
+      Name.TYPE, Type.CANDIDATES_BACK,
       Name.MSG, goog.object.create(
           Name.SOURCE, [],
           Name.CANDIDATES, [],
@@ -344,7 +350,7 @@ Controller.prototype.clearCandidates_ = function() {
  * @param {boolean} append .
  * @param {number} triggerType The trigger type:
  *     0: BySpace; 1: ByReset; 2: ByCandidate; 3: BySymbolOrNumber;
- *     4: ByDoubleSpaceToPeriod.
+ *     4: ByDoubleSpaceToPeriod; 5: ByRevert.
  * @private
  */
 Controller.prototype.commitText_ = function(text, append, triggerType) {
@@ -382,9 +388,7 @@ Controller.prototype.commitText_ = function(text, append, triggerType) {
       return candidate[Name.CANDIDATE];
     });
     this.statistics_.recordCommit(
-        source.length, target.length,
-        goog.array.indexOf(candidates, target),
-        this.statistics_.getTargetType(source, target), triggerType);
+        source, target, goog.array.indexOf(candidates, target), triggerType);
   } else {
     this.clearCandidates_();
   }
@@ -457,7 +461,6 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
       ));
 
   if (text) {
-    this.statistics_.recordCommit(text.length, text.length, -1, 0, 1);
     this.dataSource_ && this.dataSource_.sendCompletionRequest(
         text, this.filterPreviousText_(this.surroundingText_),
         opt_spatialData);
@@ -511,7 +514,7 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
 
   this.isPredict_ = !source;
   chrome.runtime.sendMessage(goog.object.create(
-      Name.MSG_TYPE, Type.CANDIDATES_BACK,
+      Name.TYPE, Type.CANDIDATES_BACK,
       Name.MSG, goog.object.create(
           Name.SOURCE, source,
           Name.CANDIDATES, this.candidates_
@@ -601,7 +604,7 @@ Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
 /** @override */
 Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
   var code = keyData[Name.CODE];
-  var type = keyData[Name.MSG_TYPE];
+  var type = keyData[Name.TYPE];
   if (code == KeyCodes.BACKSPACE && type == goog.events.EventType.KEYDOWN) {
     if (this.compositionText_) {
       this.compositionText_ = this.compositionText_.substring(
@@ -615,7 +618,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
       this.lastCorrection_.reverting = true;
       this.deleteSurroudingText_(offset, offset, (function() {
         this.commitText_(this.lastCorrection_.getSource(this.surroundingText_),
-            false, 1);
+            false, 5);
         this.lastCorrection_ = null;
       }).bind(this));
       return;
@@ -630,10 +633,6 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
     }
   }
 
-  if (goog.array.contains(AbstractController.FUNCTIONAL_KEYS, code)) {
-    this.statistics_.recordSpecialKey(code, !!this.compositionText_);
-  }
-
   this.lastCommitType_ = -1;
   goog.base(this, 'handleNonCharacterKeyEvent', keyData);
 };
@@ -641,7 +640,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
 
 /** @override */
 Controller.prototype.handleCharacterKeyEvent = function(keyData) {
-  if (keyData[Name.MSG_TYPE] == goog.events.EventType.KEYUP) {
+  if (keyData[Name.TYPE] == goog.events.EventType.KEYUP) {
     var ch = keyData[Name.KEY];
     var commit = util.isCommitCharacter(ch);
     var isSpaceKey = keyData[Name.CODE] == KeyCodes.SPACE;
@@ -665,7 +664,7 @@ Controller.prototype.handleCharacterKeyEvent = function(keyData) {
 
 /** @override */
 Controller.prototype.processMessage = function(message, sender, sendResponse) {
-  var type = message[Name.MSG_TYPE];
+  var type = message[Name.TYPE];
   switch (type) {
     case Type.SELECT_CANDIDATE:
       var candidate = message[Name.CANDIDATE];
@@ -697,12 +696,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       }
       break;
     case Type.CONNECT:
-      this.updateSettings({
-        'autoSpace': true,
-        'autoCapital': this.autoCapital_,
-        'supportCompact': true,
-        'doubleSpacePeriod': this.doubleSpacePeriod_
-      });
+      this.updateOptions(this.engineID_);
       break;
     case Type.SEND_KEY_EVENT:
       var keyData = /** @type {!Array.<!ChromeKeyboardEvent>} */
@@ -725,11 +719,10 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
     case Type.OPTION_CHANGE:
       var optionType = message[Name.OPTION_TYPE];
       var prefix = message[Name.OPTION_PREFIX];
-      switch (optionType) {
-        case OptionType.DOUBLE_SPACE_PERIOD:
-        case OptionType.SOUND_ON_KEYPRESS:
-          this.updateOptions(prefix);
-          break;
+      // We only need to immediately update controller when the currently active
+      // IME's options are changed.
+      if (this.engineID_ == prefix) {
+        this.updateOptions(prefix);
       }
       break;
   }

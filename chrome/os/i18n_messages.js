@@ -1985,21 +1985,21 @@ msgs.MSG_GOT_IT = goog.getMsg('Got it');
  * @desc Option for input to never automatically correct or change user input
  * from keyboard.
  */
-msgs.MSG_NEVER_AUTO_CORRECT = goog.getMsg('No autocorrect');
+msgs.MSG_NEVER_AUTO_CORRECT = goog.getMsg('Off');
 
 
 /**
  * @desc Option for input to sometimes automatically correct user input to what
  * the model thinks is the intended input when confidence is high.
  */
-msgs.MSG_SOMETIMES_AUTO_CORRECT = goog.getMsg('Moderate autocorrect');
+msgs.MSG_SOMETIMES_AUTO_CORRECT = goog.getMsg('Modest');
 
 
 /**
  * @desc Option for input to always automatically correct user input to what
  * the model thinks is the intended input when confidence is high.
  */
-msgs.MSG_ALWAYS_AUTO_CORRECT = goog.getMsg('Aggressive autocorrect');
+msgs.MSG_ALWAYS_AUTO_CORRECT = goog.getMsg('Aggressive');
 
 
 /**
@@ -2052,14 +2052,14 @@ msgs.MSG_LATIN_SETTINGS_PAGE = goog.getMsg('Settings');
  * @desc Title for options to determine how often the input method
  * automatically corrects user input when confidence is high.
  */
-msgs.MSG_AUTO_CORRECTION_LEVEL = goog.getMsg('Autocorrect level');
+msgs.MSG_AUTO_CORRECTION_LEVEL = goog.getMsg('Auto-correction');
 
 
 /**
  * @desc Option to enable automatic capitalization of first character in a
  * sentence.
  */
-msgs.MSG_ENABLE_CAPITALIZATION = goog.getMsg('Enable auto-capitalization');
+msgs.MSG_ENABLE_CAPITALIZATION = goog.getMsg('Auto-capitalization');
 
 
 /**
@@ -2543,6 +2543,18 @@ msgs.MSG_SWITCH_TO_COMPACT_LAYOUT = goog.getMsg('Switch to compact layout');
  * @desc Title for the switch to full layout menu item.
  */
 msgs.MSG_SWITCH_TO_FULL_LAYOUT = goog.getMsg('Switch to full layout');
+
+
+/**
+ * @desc Title for the pause key in the phonepad keyset.
+ */
+msgs.MSG_PAUSE = goog.getMsg('Pause');
+
+
+/**
+ * @desc Title for the pause key in the phonepad keyset.
+ */
+msgs.MSG_WAIT = goog.getMsg('Wait');
 
 
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));

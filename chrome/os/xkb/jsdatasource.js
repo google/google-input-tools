@@ -95,7 +95,7 @@ JsDataSource.prototype.clear = function() {};
       dataSourceProto.sendCompletionRequest);
   goog.exportProperty(dataSourceProto, 'sendPredictionRequest',
       dataSourceProto.sendPredictionRequest);
-  goog.exportProperty(dataSourceProto, 'seCorrectionLevel',
+  goog.exportProperty(dataSourceProto, 'setCorrectionLevel',
       dataSourceProto.setCorrectionLevel);
   goog.exportProperty(dataSourceProto, 'clear',
       dataSourceProto.clear);
