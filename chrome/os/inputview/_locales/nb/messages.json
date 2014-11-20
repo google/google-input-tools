@@ -1,1 +1,1058 @@
-{"chos_inputtool_title":{"message":"Google Inndataverkt\u00f8y"},"chos_inputtool_description":{"message":"Med Google Inndataverkt\u00f8y for Chrome OS kan du skrive i Chrome OS med spr\u00e5ket du \u00f8nsker."},"pinyin_settings_page":{"message":"Pinyin Settings Page"},"zhuyin_settings_page":{"message":"Zhuyin Settings Page"},"fuzzy_pinyin":{"message":"Aktiv\u00e9r Fuzzy pinyin-modus"},"user_dict":{"message":"Sl\u00e5 p\u00e5 personlig ordliste"},"move_page_key_above":{"message":"Bruk tastene for - og = til \u00e5 paginere en kandidatliste"},"move_page_key_below":{"message":"Bruk tastene for , og . til \u00e5 paginere en kandidatliste"},"init_lang":{"message":"Det opprinnelige inndataspr\u00e5ket er kinesisk"},"init_punc":{"message":"Opprinnelig tegnsettingsbredde er satt til Full"},"init_sbc":{"message":"Opprinnelig tegnbredde er satt til Full"},"current_lang":{"message":"Inndataspr\u00e5ket er kinesisk"},"current_punc":{"message":"Tegnsettingsbredden er Full"},"current_sbc":{"message":"Karakterbredden er Full"},"zhuyin_keyboard_layout":{"message":"Tastaturtype"},"zhuyin_select_keys":{"message":"Valgtaster"},"zhuyin_page_size":{"message":"Antall kandidater som vises per side"},"keyboard_none":{"message":"Tastatur"},"keyboard_phonetic":{"message":"Tastatur (fonetisk)"},"keyboard_inscript":{"message":"Tastatur (InScript)"},"keyboard_tamil99":{"message":"Tastatur (Tamil99)"},"keyboard_typewriter":{"message":"Tastatur (skrivemaskin)"},"keyboard_itrans":{"message":"Tastatur (itrans)"},"keyboard_kedmanee":{"message":"Tastatur (Kedmanee)"},"keyboard_pattachote":{"message":"Tastatur (Pattachote)"},"keyboard_tis":{"message":"Tastatur (TIS 820-2531)"},"keyboard_tcvn":{"message":"Tastatur (TCVN)"},"keyboard_telex":{"message":"Tastatur (Telex)"},"keyboard_vni":{"message":"Tastatur (VNI)"},"keyboard_viqr":{"message":"Tastatur (VIQR)"},"basic":{"message":"Grunnleggende"},"advanced":{"message":"Avansert"},"inputmethod_pinyin":{"message":"Pinyin input method"},"inputmethod_traditional_pinyin":{"message":"Pinyin input method for traditional Chinese"},"inputmethod_zhuyin":{"message":"Zhuyin input method"},"inputmethod_wubi":{"message":"Wubi input method"},"inputmethod_cangjie":{"message":"Cangjie input method"},"inputmethod_array":{"message":"Array input method"},"inputmethod_dayi":{"message":"Dayi input method"},"inputmethod_quick":{"message":"Quick input method"},"keyboard_bengali_phonetic":{"message":"Bengalisk tastatur (fonetisk)"},"keyboard_gujarati_phonetic":{"message":"Gujarati-tastatur (fonetisk)"},"keyboard_devanagari_phonetic":{"message":"Devanagari-tastatur (fonetisk)"},"keyboard_kannada_phonetic":{"message":"Kannada-tastatur (fonetisk)"},"keyboard_malayalam_phonetic":{"message":"Malayalam-tastatur (fonetisk)"},"keyboard_tamil_phonetic":{"message":"Tamilsk tastatur (fonetisk)"},"keyboard_tamil_inscript":{"message":"Tamilsk tastatur (InScript)"},"keyboard_tamil_tamil99":{"message":"Tamilsk tastatur (Tamil99)"},"keyboard_tamil_typewriter":{"message":"Tamilsk tastatur (skrivemaskin)"},"keyboard_tamil_itrans":{"message":"Tamilsk tastatur (itrans)"},"keyboard_telugu_phonetic":{"message":"Telugu-tastatur (fonetisk)"},"keyboard_ethiopic":{"message":"Etiopisk tastatur"},"keyboard_thai_kedmanee":{"message":"Thai-tastatur (Kedmanee)"},"keyboard_thai_pattachote":{"message":"Thai-tastatur (Pattachote)"},"keyboard_thai_tis":{"message":"Thai-tastatur (TIS 820-2531)"},"keyboard_persian":{"message":"Persisk tastatur"},"keyboard_vietnamese_tcvn":{"message":"Vietnamesisk tastatur (TCVN)"},"keyboard_vietnamese_telex":{"message":"Vietnamesisk tastatur (Telex)"},"keyboard_vietnamese_vni":{"message":"Vietnamesisk tastatur (VNI)"},"keyboard_vietnamese_viqr":{"message":"Vietnamesisk tastatur (VIQR)"},"keyboard_arabic":{"message":"Arabisk tastatur"},"keyboard_lao":{"message":"Lao-tastatur"},"keyboard_nepali_inscript":{"message":"Nepali-tastatur (InScript)"},"keyboard_nepali_phonetic":{"message":"Nepali-tastatur (fonetisk)"},"keyboard_khmer":{"message":"Khmer-tastatur"},"keyboard_myanmar":{"message":"Myanmar MM3-tastatur"},"keyboard_sinhala":{"message":"Singalesisk tastatur"},"keyboard_us":{"message":"US keyboard"},"keyboard_us_international":{"message":"US international keyboard"},"keyboard_us_extended":{"message":"US extended keyboard"},"keyboard_us_dvorak":{"message":"US Dvorak keyboard"},"keyboard_us_colemak":{"message":"US Colemak keyboard"},"keyboard_belgian":{"message":"Belgian keyboard"},"keyboard_french":{"message":"French keyboard"},"keyboard_canadian_french":{"message":"Canadian French keyboard"},"keyboard_swiss_french":{"message":"Swiss French keyboard"},"keyboard_canadian_multilingual":{"message":"Canadian Multilingual keyboard"},"keyboard_german":{"message":"German keyboard"},"keyboard_german_neo_2":{"message":"German Neo 2 keyboard"},"keyboard_swiss":{"message":"Swiss keyboard"},"keyboard_japanese":{"message":"Japanese keyboard"},"keyboard_russian":{"message":"Russian keyboard"},"keyboard_russian_phonetic":{"message":"Russian phonetic keyboard"},"keyboard_brazilian":{"message":"Brazilian keyboard"},"keyboard_bulgarian":{"message":"Bulgarian keyboard"},"keyboard_bulgarian_phonetic":{"message":"Bulgarian phonetic keyboard"},"keyboard_canadian_english":{"message":"Canadian English keyboard"},"keyboard_czech":{"message":"Czech keyboard"},"keyboard_czech_qwerty":{"message":"Czech QWERTY keyboard"},"keyboard_estonian":{"message":"Estonian keyboard"},"keyboard_spanish":{"message":"Spanish keyboard"},"keyboard_catalan":{"message":"Catalan keyboard"},"keyboard_danish":{"message":"Danish keyboard"},"keyboard_greek":{"message":"Greek keyboard"},"keyboard_hebrew":{"message":"Hebrew keyboard"},"keyboard_latin_american":{"message":"Latin American keyboard"},"keyboard_lithuanian":{"message":"Lithuanian keyboard"},"keyboard_latvian":{"message":"Latvian keyboard"},"keyboard_croatian":{"message":"Croatian keyboard"},"keyboard_uk":{"message":"UK keyboard"},"keyboard_uk_dvorak":{"message":"UK Dvorak keyboard"},"keyboard_finnish":{"message":"Finnish keyboard"},"keyboard_hungarian":{"message":"Hungarian keyboard"},"keyboard_italian":{"message":"Italian keyboard"},"keyboard_icelandic":{"message":"Icelandic keyboard"},"keyboard_norwegian":{"message":"Norwegian keyboard"},"keyboard_polish":{"message":"Polish keyboard"},"keyboard_portuguese":{"message":"Portuguese keyboard"},"keyboard_romanian":{"message":"Romanian keyboard"},"keyboard_swedish":{"message":"Swedish keyboard"},"keyboard_slovakian":{"message":"Slovakian keyboard"},"keyboard_slovenian":{"message":"Slovenian keyboard"},"keyboard_serbian":{"message":"Serbian keyboard"},"keyboard_turkish":{"message":"Turkish keyboard"},"keyboard_ukrainian":{"message":"Ukrainian keyboard"},"keyboard_belarusian":{"message":"Belarusian keyboard"},"keyboard_armenian_phonetic":{"message":"Armenian Phonetic keyboard"},"keyboard_georgian":{"message":"Georgian keyboard"},"keyboard_mongolian":{"message":"Mongolian keyboard"},"keyboard_irish":{"message":"Irish keyboard"},"keyboard_soranikurdish_en":{"message":"Sorani Kurdish English-based keyboard"},"keyboard_soranikurdish_ar":{"message":"Sorani Kurdish Arabic-based keyboard"},"keyboard_myanmar_myansan":{"message":"Myanmar Myansan-tastatur"},"transliteration_am":{"message":"Translitterasjon (salam \u2192 \u1230\u120b\u121d)"},"transliteration_ar":{"message":"Translitterasjon (marhaban \u2190 \u0645\u0631\u062d\u0628\u0627)"},"transliteration_be":{"message":"Translitterasjon (pryvitannie \u2192 \u043f\u0440\u044b\u0432\u0456\u0442\u0430\u043d\u043d\u0435)"},"transliteration_bg":{"message":"Translitterasjon (zdrasti \u2192 \u0437\u0434\u0440\u0430\u0441\u0442\u0438)"},"transliteration_bn":{"message":"Translitterasjon (namaskar \u2192 \u09a8\u09ae\u09b8\u09cd\u0995\u09be\u09b0)"},"transliteration_el":{"message":"Translitterasjon (geia \u2192 \u03b3\u03b5\u03b9\u03b1)"},"transliteration_fa":{"message":"Translitterasjon (salam \u2190 \u0633\u0644\u0627\u0645)"},"transliteration_gu":{"message":"Translitterasjon (namaste \u2192 \u0aa8\u0aae\u0ab8\u0acd\u0aa4\u0ac7)"},"transliteration_he":{"message":"Translitterasjon (shalom \u2190 \u05e9\u05dc\u05d5\u05dd)"},"transliteration_hi":{"message":"Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"},"transliteration_kn":{"message":"Translitterasjon (namaskaram \u2192 \u0ca8\u0cae\u0cb8\u0ccd\u0c95\u0cbe\u0cb0)"},"transliteration_ml":{"message":"Translitterasjon (namaskar \u2192 \u0d28\u0d2e\u0d38\u0d4d\u0d15\u0d3e\u0d30\u0d02)"},"transliteration_mr":{"message":"Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0915\u093e\u0930)"},"transliteration_ne":{"message":"Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"},"transliteration_or":{"message":"Translitterasjon (mausam \u2192 \u0b28\u0b2e\u0b38\u0b4d\u0b24\u0b47)"},"transliteration_pa":{"message":"Translitterasjon (mausam \u2192 \u0a2e\u0a4c\u0a38\u0a2e)"},"transliteration_ru":{"message":"Translitterasjon (privet \u2192 \u043f\u0440\u0438\u0432\u0435\u0442)"},"transliteration_sa":{"message":"Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"},"transliteration_sr":{"message":"Translitterasjon (zdravo \u2192 \u0437\u0434\u0440\u0430\u0432\u043e)"},"transliteration_si":{"message":"Translitterasjon (halo \u2192 \u0dc4\u0dbd\u0ddd)"},"transliteration_ta":{"message":"Translitterasjon (vanakkam \u2192 \u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd)"},"transliteration_te":{"message":"Translitterasjon (emandi \u2192 \u0c0f\u0c2e\u0c02\u0c21\u0c40)"},"transliteration_ti":{"message":"Translitterasjon (selam \u2192 \u1230\u120b\u121d)"},"transliteration_uk":{"message":"Translitterasjon (pryvit \u2192 \u043f\u0440\u0438\u0432\u0456\u0442)"},"transliteration_ur":{"message":"Translitterasjon (salam \u2190 \u0633\u0644\u0627\u0645)"},"transliteration_vi":{"message":"Translitterasjon (chao \u2192 ch\u00e0o)"},"appnamejpkeyboard":{"message":"Google-inndatametode for japansk (for japansk tastatur)"},"appnameuskeyboard":{"message":"Google-inndatametode for japansk (for amerikansk tastatur)"},"compositionmodehiragana":{"message":"Hiragana"},"compositionmodefullkatakana":{"message":"Katakana"},"compositionmodefullascii":{"message":"Bred Latin"},"compositionmodehalfkatakana":{"message":"Katakana \u2013 halv bredde"},"compositionmodehalfascii":{"message":"Latinsk"},"compositionmodedirect":{"message":"Direkte inndata"},"configpunctuationmethod":{"message":"Tegnsettingsstil:"},"configpreeditmethod":{"message":"Inndatamodus:"},"configpreeditmethodromaji":{"message":"Romaji"},"configpreeditmethodkana":{"message":"Kana"},"configsymbolmethod":{"message":"Symbolstil:"},"configspacecharacterform":{"message":"Inndatastil for mellomrom:"},"configspacecharacterformfollow":{"message":"F\u00f8lgemodus for inndata"},"configspacecharacterformfull":{"message":"Full bredde"},"configspacecharacterformhalf":{"message":"Halv bredde"},"configselectionshortcut":{"message":"Velg snarvei:"},"configselectionshortcutno":{"message":"Ingen snarvei"},"configshiftkeymodeswitch":{"message":"Modusbryter for Shift-tasten:"},"configshiftkeymodeswitchoff":{"message":"Av"},"configshiftkeymodeswitchalphanumeric":{"message":"Alfanumerisk"},"configshiftkeymodeswitchkatakana":{"message":"Katakana"},"configsessionkeymap":{"message":"Tastaturstil"},"configsessionkeymapatok":{"message":"ATOK"},"configsessionkeymapchromeos":{"message":"Chrome OS"},"configsessionkeymapmsime":{"message":"MS-IME"},"configsessionkeymapkotoeri":{"message":"Kotoeri"},"configsessionkeymapcustom":{"message":"Spesialtilpasset tastaturoppsett"},"configincognitomode":{"message":"Deaktiver personlige konverteringer og forslag samt brukerordlisten"},"configuseautoimeturnoff":{"message":"Bytt automatisk til halv bredde"},"configusehistorysuggest":{"message":"Bruk inndatalogg"},"configusedictionarysuggest":{"message":"Bruk systemordlisten"},"configsuggestionssize":{"message":"Antall forslag:"},"configsettingstitle":{"message":"Inndatainnstillinger for japansk"},"configbasicstitle":{"message":"Grunnleggende"},"configinputassistancetitle":{"message":"Inndatast\u00f8tte"},"configsuggesttitle":{"message":"Foresl\u00e5"},"configprivacytitle":{"message":"Personvern"},"configclearhistory":{"message":"T\u00f8m data for personlig tilpassing"},"configclearhistorytitle":{"message":"T\u00f8m data for personlig tilpassing"},"configclearhistorymessage":{"message":"Slett f\u00f8lgende elementer:"},"configclearhistoryconversionhistory":{"message":"Konverteringslogg"},"configclearhistorysuggestionhistory":{"message":"Forslagslogg"},"configclearhistoryokbutton":{"message":"T\u00f8m data for personlig tilpassing"},"configclearhistorycancelbutton":{"message":"Avbryt"},"configcreditsdescription":{"message":"Copyright \u00a9 2013 Google Inc. Med enerett."},"configosscreditsdescription":{"message":"This software is made possible by <a href=\"./credits_en.html\">open source software</a>."},"configdialogcancel":{"message":"Avbryt"},"configdialogok":{"message":"Ok"},"configdictionarytooltitle":{"message":"Brukerordlister"},"configdictionarytooldescription":{"message":"Legg til dine egne ord i brukerordlisten for \u00e5 tilpasse konverteringsforslagene."},"configdictionarytoolbutton":{"message":"Administrer brukerordlisten"},"dictionarytoolpagetitle":{"message":"Brukerordlister"},"dictionarytooldictionarylisttitle":{"message":"Ordlister"},"dictionarytoolreadingtitle":{"message":"Lesing"},"dictionarytoolwordtitle":{"message":"Ord"},"dictionarytoolcategorytitle":{"message":"Kategori"},"dictionarytoolcommenttitle":{"message":"Kommentar"},"dictionarytoolmenutitle":{"message":"Administrering av ordlister"},"dictionarytoolexportbutton":{"message":"Eksport\u00e9r"},"dictionarytoolimportbutton":{"message":"Import\u00e9r"},"dictionarytooldonebutton":{"message":"Ferdig"},"dictionarytoolreadingnewinput":{"message":"Ny lesing"},"dictionarytoolwordnewinput":{"message":"Nytt ord"},"dictionarytoolcommentnewinput":{"message":"Kommentar"},"dictionarytooldeletedictionarytitle":{"message":"Slett ordlisten"},"dictionarytooldictionaryname":{"message":"Ordlistenavn"},"dictionarytoolnewdictionarynameplaceholder":{"message":"Ny ordliste"},"dictionarytooldeletedictionaryconfirm":{"message":"Vil du slette [object Object]?"},"dictionarytoolstatuserrorgeneral":{"message":"Handlingen mislyktes."},"dictionarytoolstatuserrorfilenotfound":{"message":"Kunne ikke \u00e5pne filen."},"dictionarytoolstatuserrorinvalidfileformat":{"message":"Kunne ikke lese filen."},"dictionarytoolstatuserroremptyfile":{"message":"Filen er tom."},"dictionarytoolstatuserrorfilesizelimitexceeded":{"message":"Datast\u00f8rrelsen overskrider grensen for filst\u00f8rrelse."},"dictionarytoolstatuserrordictionarysizelimitexceeded":{"message":"Kan ikke opprette flere ordlister."},"dictionarytoolstatuserrorentrysizelimitexceeded":{"message":"Kan ikke legge inn flere oppf\u00f8ringer i denne ordlisten."},"dictionarytoolstatuserrordictionarynameempty":{"message":"Skriv inn et ordlistenavn."},"dictionarytoolstatuserrordictionarynametoolong":{"message":"Navnet er for langt."},"dictionarytoolstatuserrordictionarynamecontainsinvalidcharacter":{"message":"Navnet inneholder ugyldige tegn."},"dictionarytoolstatuserrordictionarynameduplicated":{"message":"Navnet er allerede i bruk."},"dictionarytoolstatuserrorreadingempty":{"message":"Skriv inn avlesingen."},"dictionarytoolstatuserrorreadingtoolong":{"message":"Avlesingen er for lang."},"dictionarytoolstatuserrorreadingcontainsinvalidcharacter":{"message":"Avlesingen inneholder ugyldige tegn. Du kan bruke ASCII-tegn, Hiragana, lydtegn for tale(\u309b), lydtegn for semitale(\u309c), mellompunkt(\u30fb), forlenget lydtegn(\u30fc), japansk komma(\u3001), japansk punktum(\u3002), japanske klammer(\u300c\u300d\u300e\u300f) og japanske b\u00f8lgetegn(\u301c) i avlesingen."},"dictionarytoolstatuserrorwordempty":{"message":"Skriv inn ordet."},"dictionarytoolstatuserrorwordtoolong":{"message":"Ordet er for langt."},"dictionarytoolstatuserrorwordcontainsinvalidcharacter":{"message":"Ordet inneholder ugyldige tegn."},"dictionarytoolstatuserrorimporttoomanywords":{"message":"Importkilden inneholder for mange ord."},"dictionarytoolstatuserrorimportinvalidentries":{"message":"Noen ord kunne ikke importeres."},"dictionarytoolstatuserrornoundohistory":{"message":"Ingen flere handlinger kan angres."},"dictionarytoolstatuserrortitlecreatedictionary":{"message":"Feil \u2013 kunne ikke opprette ordlisten"},"dictionarytoolstatuserrortitledeletedictionary":{"message":"Feil \u2013 kunne ikke slette ordlisten"},"dictionarytoolstatuserrortitlerenamedictionary":{"message":"Feil \u2013 kunne ikke gi ordlisten nytt navn"},"dictionarytoolstatuserrortitleeditentry":{"message":"Feil \u2013 kunne ikke endre oppf\u00f8ringen"},"dictionarytoolstatuserrortitledeleteentry":{"message":"Feil \u2013 kunne ikke slette oppf\u00f8ringen"},"dictionarytoolstatuserrortitleaddentry":{"message":"Feil \u2013 kunne ikke legge til oppf\u00f8ringen"},"dictionarytoolstatuserrortitleimportdata":{"message":"Importfeil"},"configuploadusagestats":{"message":"Send bruksstatistikk og programstopprapporter automatisk til Google"},"handwriting_back":{"message":"Tilbake"},"handwriting_netowrk_error":{"message":"Beklager, du kan ikke bruke h\u00e5ndskrift, fordi nettverket ikke er tilgjengelig."},"handwriting_privacy_info":{"message":"Your input will be sent to a Google server to recognize text"},"capital":{"message":"stor bokstav"},"backspace":{"message":"tilbake"},"tab":{"message":"tab"},"enter":{"message":"enter"},"space":{"message":"mellomrom"},"shift":{"message":"shift"},"ctrl":{"message":"ctrl"},"alt":{"message":"alt"},"altgr":{"message":"Alt Gr"},"capslock":{"message":"capslock"},"shift_lock":{"message":"Shift er l\u00e5st"},"left_arrow":{"message":"pil venstre"},"right_arrow":{"message":"pil h\u00f8yre"},"up_arrow":{"message":"pil opp"},"down_arrow":{"message":"pil ned"},"hide_keyboard":{"message":"skjul tastatur"},"globe":{"message":"bytt til forrige tastatur"},"switch_to":{"message":"bytt til "},"switched_to":{"message":"byttet til "},"got_it":{"message":"Greit"},"never_auto_correct":{"message":"Off"},"sometimes_auto_correct":{"message":"Modest"},"always_auto_correct":{"message":"Aggressive"},"show_candidates_backspace":{"message":"Show suggestion dropdown by Backspace"},"show_candidates_500":{"message":"Show suggestion dropdown after 500ms"},"show_candidates_1000":{"message":"Show suggestion dropdown after 1s"},"show_candidates_2000":{"message":"Show suggestion dropdown after 2s"},"show_candidates_5000":{"message":"Show suggestion dropdown after 5s"},"latin_settings_page":{"message":"Settings"},"auto_correction_level":{"message":"Auto-correction"},"enable_capitalization":{"message":"Auto-capitalization"},"show_candidate_mode":{"message":"Delay of suggestion dropdown"},"enable_prediction":{"message":"Enable next word prediction"},"am_phonetic_arm_settings_page":{"message":"Armenian Phonetic Keyboard Settings Page"},"be_fra_settings_page":{"message":"Belgian Keyboard (French) Settings Page"},"be_ger_settings_page":{"message":"Belgian Keyboard (German) Settings Page"},"be_nld_settings_page":{"message":"Belgian Keyboard (Dutch) Settings Page"},"bg_bul_settings_page":{"message":"Bulgarian Keyboard Settings Page"},"bg_phonetic_bul_settings_page":{"message":"Bulgarian Phonetic Keyboard Settings Page"},"br_por_settings_page":{"message":"Brazilian Keyboard (Brazilian Portuguese) Settings Page"},"by_bel_settings_page":{"message":"Belarusian Keyboard Settings Page"},"ca_fra_settings_page":{"message":"Canadian French Keyboard (French) Settings Page"},"ca_eng_eng_settings_page":{"message":"Canadian English Keyboard (English) Settings Page"},"ca_multix_fra_settings_page":{"message":"Canadian Multilingual Keyboard (French) Settings Page"},"ch_ger_settings_page":{"message":"Swiss Keyboard (German) Settings Page"},"ch_fr_fra_settings_page":{"message":"Swiss French Keyboard (French) Settings Page"},"cz_cze_settings_page":{"message":"Czech Keyboard Settings Page"},"cz_qwerty_cze_settings_page":{"message":"Czech Qwerty Keyboard Settings Page"},"de_ger_settings_page":{"message":"German Keyboard Settings Page"},"de_neo_ger_settings_page":{"message":"German Neo 2 Keyboard Settings Page"},"dk_dan_settings_page":{"message":"Danish Keyboard Settings Page"},"ee_est_settings_page":{"message":"Estonian Keyboard Settings Page"},"es_spa_settings_page":{"message":"Spanish Keyboard Settings Page"},"es_cat_cat_settings_page":{"message":"Catalan Keyboard Settings Page"},"fi_fin_settings_page":{"message":"Finnish Keyboard Settings Page"},"fr_fra_settings_page":{"message":"French Keyboard Settings Page"},"gb_dvorak_eng_settings_page":{"message":"Uk Dvorak Keyboard (English) Settings Page"},"gb_extd_eng_settings_page":{"message":"Uk Keyboard (English) Settings Page"},"ge_geo_settings_page":{"message":"Georgian Keyboard Settings Page"},"gr_gre_settings_page":{"message":"Greek Keyboard Settings Page"},"hr_scr_settings_page":{"message":"Croatian Keyboard Settings Page"},"hu_hun_settings_page":{"message":"Hungarian Keyboard Settings Page"},"ie_ga_settings_page":{"message":"Irish Keyboard Settings Page"},"il_heb_settings_page":{"message":"Hebrew Keyboard Settings Page"},"is_ice_settings_page":{"message":"Icelandic Keyboard Settings Page"},"it_ita_settings_page":{"message":"Italian Keyboard Settings Page"},"jp_jpn_settings_page":{"message":"Japanese Keyboard Settings Page"},"latam_spa_settings_page":{"message":"Latin American Keyboard (Spanish) Settings Page"},"lt_lit_settings_page":{"message":"Lithuanian Keyboard Settings Page"},"lv_apostrophe_lav_settings_page":{"message":"Latvian Keyboard (Latvian, Lettish) Settings Page"},"mn_mon_settings_page":{"message":"Mongolian Keyboard Settings Page"},"no_nob_settings_page":{"message":"Norwegian Keyboard Settings Page"},"pl_pol_settings_page":{"message":"Polish Keyboard Settings Page"},"pt_por_settings_page":{"message":"Portuguese Keyboard Settings Page"},"ro_rum_settings_page":{"message":"Romanian Keyboard Settings Page"},"rs_srp_settings_page":{"message":"Serbian Keyboard Settings Page"},"ru_rus_settings_page":{"message":"Russian Keyboard Settings Page"},"ru_phonetic_rus_settings_page":{"message":"Russian Phonetic Keyboard Settings Page"},"se_swe_settings_page":{"message":"Swedish Keyboard Settings Page"},"si_slv_settings_page":{"message":"Slovenian Keyboard Settings Page"},"sk_slo_settings_page":{"message":"Slovakian Keyboard Settings Page"},"tr_tur_settings_page":{"message":"Turkish Keyboard Settings Page"},"ua_ukr_settings_page":{"message":"Ukrainian Keyboard Settings Page"},"us_eng_settings_page":{"message":"US Keyboard (English) Settings Page"},"us_fil_settings_page":{"message":"US Keyboard (Filipino) Settings Page"},"us_ind_settings_page":{"message":"US Keyboard (Indonesian) Settings Page"},"us_msa_settings_page":{"message":"US Keyboard (Malay) Settings Page"},"us_altgr_intl_eng_settings_page":{"message":"US Extended Keyboard (English) Settings Page"},"us_colemak_eng_settings_page":{"message":"US Colemak Keyboard (English) Settings Page"},"us_dvorak_eng_settings_page":{"message":"US Dvorak Keyboard (English) Settings Page"},"us_intl_eng_settings_page":{"message":"US International Keyboard (English) Settings Page"},"us_intl_nld_settings_page":{"message":"US International Keyboard (Dutch) Settings Page"},"us_intl_por_settings_page":{"message":"US International Keyboard (Brazilian Portuguese) Settings Page"},"touch_keyboard":{"message":"Touch Keyboard"},"sound_on_keypress":{"message":"Sound on keypress"},"double_space_period":{"message":"Double-space to type period"},"enable_completion":{"message":"Enable completion"},"korean_settings_page":{"message":"Korean Settings Page"},"switch_to_compact_layout":{"message":"Switch to compact layout"},"switch_to_full_layout":{"message":"Switch to full layout"},"pause":{"message":"Pause"},"wait":{"message":"Wait"}}
+{
+  "advanced": {
+    "message": "Avansert"
+  },
+  "alt": {
+    "message": "alt"
+  },
+  "altgr": {
+    "message": "Alt Gr"
+  },
+  "always_auto_correct": {
+    "message": "Aggressive"
+  },
+  "am_phonetic_arm_settings_page": {
+    "message": "Armenian Phonetic Keyboard Settings Page"
+  },
+  "appnamejpkeyboard": {
+    "message": "Google-inndatametode for japansk (for japansk tastatur)"
+  },
+  "appnameuskeyboard": {
+    "message": "Google-inndatametode for japansk (for amerikansk tastatur)"
+  },
+  "auto_correction_level": {
+    "message": "Auto-correction"
+  },
+  "backspace": {
+    "message": "tilbake"
+  },
+  "basic": {
+    "message": "Grunnleggende"
+  },
+  "be_fra_settings_page": {
+    "message": "Belgian Keyboard (French) Settings Page"
+  },
+  "be_ger_settings_page": {
+    "message": "Belgian Keyboard (German) Settings Page"
+  },
+  "be_nld_settings_page": {
+    "message": "Belgian Keyboard (Dutch) Settings Page"
+  },
+  "bg_bul_settings_page": {
+    "message": "Bulgarian Keyboard Settings Page"
+  },
+  "bg_phonetic_bul_settings_page": {
+    "message": "Bulgarian Phonetic Keyboard Settings Page"
+  },
+  "br_por_settings_page": {
+    "message": "Brazilian Keyboard (Brazilian Portuguese) Settings Page"
+  },
+  "by_bel_settings_page": {
+    "message": "Belarusian Keyboard Settings Page"
+  },
+  "ca_eng_eng_settings_page": {
+    "message": "Canadian English Keyboard (English) Settings Page"
+  },
+  "ca_fra_settings_page": {
+    "message": "Canadian French Keyboard (French) Settings Page"
+  },
+  "ca_multix_fra_settings_page": {
+    "message": "Canadian Multilingual Keyboard (French) Settings Page"
+  },
+  "capital": {
+    "message": "stor bokstav"
+  },
+  "capslock": {
+    "message": "capslock"
+  },
+  "ch_fr_fra_settings_page": {
+    "message": "Swiss French Keyboard (French) Settings Page"
+  },
+  "ch_ger_settings_page": {
+    "message": "Swiss Keyboard (German) Settings Page"
+  },
+  "chos_inputtool_description": {
+    "message": "Med Google Inndataverkt\u00f8y for Chrome OS kan du skrive i Chrome OS med spr\u00e5ket du \u00f8nsker."
+  },
+  "chos_inputtool_title": {
+    "message": "Google Inndataverkt\u00f8y"
+  },
+  "compositionmodedirect": {
+    "message": "Direkte inndata"
+  },
+  "compositionmodefullascii": {
+    "message": "Bred Latin"
+  },
+  "compositionmodefullkatakana": {
+    "message": "Katakana"
+  },
+  "compositionmodehalfascii": {
+    "message": "Latinsk"
+  },
+  "compositionmodehalfkatakana": {
+    "message": "Katakana \u2013 halv bredde"
+  },
+  "compositionmodehiragana": {
+    "message": "Hiragana"
+  },
+  "configbasicstitle": {
+    "message": "Grunnleggende"
+  },
+  "configclearhistory": {
+    "message": "T\u00f8m data for personlig tilpassing"
+  },
+  "configclearhistorycancelbutton": {
+    "message": "Avbryt"
+  },
+  "configclearhistoryconversionhistory": {
+    "message": "Konverteringslogg"
+  },
+  "configclearhistorymessage": {
+    "message": "Slett f\u00f8lgende elementer:"
+  },
+  "configclearhistoryokbutton": {
+    "message": "T\u00f8m data for personlig tilpassing"
+  },
+  "configclearhistorysuggestionhistory": {
+    "message": "Forslagslogg"
+  },
+  "configclearhistorytitle": {
+    "message": "T\u00f8m data for personlig tilpassing"
+  },
+  "configcreditsdescription": {
+    "message": "Copyright \u00a9 2013 Google Inc. Med enerett."
+  },
+  "configdialogcancel": {
+    "message": "Avbryt"
+  },
+  "configdialogok": {
+    "message": "Ok"
+  },
+  "configdictionarytoolbutton": {
+    "message": "Administrer brukerordlisten"
+  },
+  "configdictionarytooldescription": {
+    "message": "Legg til dine egne ord i brukerordlisten for \u00e5 tilpasse konverteringsforslagene."
+  },
+  "configdictionarytooltitle": {
+    "message": "Brukerordlister"
+  },
+  "configincognitomode": {
+    "message": "Deaktiver personlige konverteringer og forslag samt brukerordlisten"
+  },
+  "configinputassistancetitle": {
+    "message": "Inndatast\u00f8tte"
+  },
+  "configosscreditsdescription": {
+    "message": "This software is made possible by <a href=\"./credits_en.html\">open source software</a>."
+  },
+  "configpreeditmethod": {
+    "message": "Inndatamodus:"
+  },
+  "configpreeditmethodkana": {
+    "message": "Kana"
+  },
+  "configpreeditmethodromaji": {
+    "message": "Romaji"
+  },
+  "configprivacytitle": {
+    "message": "Personvern"
+  },
+  "configpunctuationmethod": {
+    "message": "Tegnsettingsstil:"
+  },
+  "configselectionshortcut": {
+    "message": "Velg snarvei:"
+  },
+  "configselectionshortcutno": {
+    "message": "Ingen snarvei"
+  },
+  "configsessionkeymap": {
+    "message": "Tastaturstil"
+  },
+  "configsessionkeymapatok": {
+    "message": "ATOK"
+  },
+  "configsessionkeymapchromeos": {
+    "message": "Chrome OS"
+  },
+  "configsessionkeymapcustom": {
+    "message": "Spesialtilpasset tastaturoppsett"
+  },
+  "configsessionkeymapkotoeri": {
+    "message": "Kotoeri"
+  },
+  "configsessionkeymapmsime": {
+    "message": "MS-IME"
+  },
+  "configsettingstitle": {
+    "message": "Inndatainnstillinger for japansk"
+  },
+  "configshiftkeymodeswitch": {
+    "message": "Modusbryter for Shift-tasten:"
+  },
+  "configshiftkeymodeswitchalphanumeric": {
+    "message": "Alfanumerisk"
+  },
+  "configshiftkeymodeswitchkatakana": {
+    "message": "Katakana"
+  },
+  "configshiftkeymodeswitchoff": {
+    "message": "Av"
+  },
+  "configspacecharacterform": {
+    "message": "Inndatastil for mellomrom:"
+  },
+  "configspacecharacterformfollow": {
+    "message": "F\u00f8lgemodus for inndata"
+  },
+  "configspacecharacterformfull": {
+    "message": "Full bredde"
+  },
+  "configspacecharacterformhalf": {
+    "message": "Halv bredde"
+  },
+  "configsuggestionssize": {
+    "message": "Antall forslag:"
+  },
+  "configsuggesttitle": {
+    "message": "Foresl\u00e5"
+  },
+  "configsymbolmethod": {
+    "message": "Symbolstil:"
+  },
+  "configuploadusagestats": {
+    "message": "Send bruksstatistikk og programstopprapporter automatisk til Google"
+  },
+  "configuseautoimeturnoff": {
+    "message": "Bytt automatisk til halv bredde"
+  },
+  "configusedictionarysuggest": {
+    "message": "Bruk systemordlisten"
+  },
+  "configusehistorysuggest": {
+    "message": "Bruk inndatalogg"
+  },
+  "ctrl": {
+    "message": "ctrl"
+  },
+  "current_lang": {
+    "message": "Inndataspr\u00e5ket er kinesisk"
+  },
+  "current_punc": {
+    "message": "Tegnsettingsbredden er Full"
+  },
+  "current_sbc": {
+    "message": "Karakterbredden er Full"
+  },
+  "cz_cze_settings_page": {
+    "message": "Czech Keyboard Settings Page"
+  },
+  "cz_qwerty_cze_settings_page": {
+    "message": "Czech Qwerty Keyboard Settings Page"
+  },
+  "de_ger_settings_page": {
+    "message": "German Keyboard Settings Page"
+  },
+  "de_neo_ger_settings_page": {
+    "message": "German Neo 2 Keyboard Settings Page"
+  },
+  "dictionarytoolcategorytitle": {
+    "message": "Kategori"
+  },
+  "dictionarytoolcommentnewinput": {
+    "message": "Kommentar"
+  },
+  "dictionarytoolcommenttitle": {
+    "message": "Kommentar"
+  },
+  "dictionarytooldeletedictionaryconfirm": {
+    "message": "Vil du slette [object Object]?"
+  },
+  "dictionarytooldeletedictionarytitle": {
+    "message": "Slett ordlisten"
+  },
+  "dictionarytooldictionarylisttitle": {
+    "message": "Ordlister"
+  },
+  "dictionarytooldictionaryname": {
+    "message": "Ordlistenavn"
+  },
+  "dictionarytooldonebutton": {
+    "message": "Ferdig"
+  },
+  "dictionarytoolexportbutton": {
+    "message": "Eksport\u00e9r"
+  },
+  "dictionarytoolimportbutton": {
+    "message": "Import\u00e9r"
+  },
+  "dictionarytoolmenutitle": {
+    "message": "Administrering av ordlister"
+  },
+  "dictionarytoolnewdictionarynameplaceholder": {
+    "message": "Ny ordliste"
+  },
+  "dictionarytoolpagetitle": {
+    "message": "Brukerordlister"
+  },
+  "dictionarytoolreadingnewinput": {
+    "message": "Ny lesing"
+  },
+  "dictionarytoolreadingtitle": {
+    "message": "Lesing"
+  },
+  "dictionarytoolstatuserrordictionarynamecontainsinvalidcharacter": {
+    "message": "Navnet inneholder ugyldige tegn."
+  },
+  "dictionarytoolstatuserrordictionarynameduplicated": {
+    "message": "Navnet er allerede i bruk."
+  },
+  "dictionarytoolstatuserrordictionarynameempty": {
+    "message": "Skriv inn et ordlistenavn."
+  },
+  "dictionarytoolstatuserrordictionarynametoolong": {
+    "message": "Navnet er for langt."
+  },
+  "dictionarytoolstatuserrordictionarysizelimitexceeded": {
+    "message": "Kan ikke opprette flere ordlister."
+  },
+  "dictionarytoolstatuserroremptyfile": {
+    "message": "Filen er tom."
+  },
+  "dictionarytoolstatuserrorentrysizelimitexceeded": {
+    "message": "Kan ikke legge inn flere oppf\u00f8ringer i denne ordlisten."
+  },
+  "dictionarytoolstatuserrorfilenotfound": {
+    "message": "Kunne ikke \u00e5pne filen."
+  },
+  "dictionarytoolstatuserrorfilesizelimitexceeded": {
+    "message": "Datast\u00f8rrelsen overskrider grensen for filst\u00f8rrelse."
+  },
+  "dictionarytoolstatuserrorgeneral": {
+    "message": "Handlingen mislyktes."
+  },
+  "dictionarytoolstatuserrorimportinvalidentries": {
+    "message": "Noen ord kunne ikke importeres."
+  },
+  "dictionarytoolstatuserrorimporttoomanywords": {
+    "message": "Importkilden inneholder for mange ord."
+  },
+  "dictionarytoolstatuserrorinvalidfileformat": {
+    "message": "Kunne ikke lese filen."
+  },
+  "dictionarytoolstatuserrornoundohistory": {
+    "message": "Ingen flere handlinger kan angres."
+  },
+  "dictionarytoolstatuserrorreadingcontainsinvalidcharacter": {
+    "message": "Avlesingen inneholder ugyldige tegn. Du kan bruke ASCII-tegn, Hiragana, lydtegn for tale(\u309b), lydtegn for semitale(\u309c), mellompunkt(\u30fb), forlenget lydtegn(\u30fc), japansk komma(\u3001), japansk punktum(\u3002), japanske klammer(\u300c\u300d\u300e\u300f) og japanske b\u00f8lgetegn(\u301c) i avlesingen."
+  },
+  "dictionarytoolstatuserrorreadingempty": {
+    "message": "Skriv inn avlesingen."
+  },
+  "dictionarytoolstatuserrorreadingtoolong": {
+    "message": "Avlesingen er for lang."
+  },
+  "dictionarytoolstatuserrortitleaddentry": {
+    "message": "Feil \u2013 kunne ikke legge til oppf\u00f8ringen"
+  },
+  "dictionarytoolstatuserrortitlecreatedictionary": {
+    "message": "Feil \u2013 kunne ikke opprette ordlisten"
+  },
+  "dictionarytoolstatuserrortitledeletedictionary": {
+    "message": "Feil \u2013 kunne ikke slette ordlisten"
+  },
+  "dictionarytoolstatuserrortitledeleteentry": {
+    "message": "Feil \u2013 kunne ikke slette oppf\u00f8ringen"
+  },
+  "dictionarytoolstatuserrortitleeditentry": {
+    "message": "Feil \u2013 kunne ikke endre oppf\u00f8ringen"
+  },
+  "dictionarytoolstatuserrortitleimportdata": {
+    "message": "Importfeil"
+  },
+  "dictionarytoolstatuserrortitlerenamedictionary": {
+    "message": "Feil \u2013 kunne ikke gi ordlisten nytt navn"
+  },
+  "dictionarytoolstatuserrorwordcontainsinvalidcharacter": {
+    "message": "Ordet inneholder ugyldige tegn."
+  },
+  "dictionarytoolstatuserrorwordempty": {
+    "message": "Skriv inn ordet."
+  },
+  "dictionarytoolstatuserrorwordtoolong": {
+    "message": "Ordet er for langt."
+  },
+  "dictionarytoolwordnewinput": {
+    "message": "Nytt ord"
+  },
+  "dictionarytoolwordtitle": {
+    "message": "Ord"
+  },
+  "dk_dan_settings_page": {
+    "message": "Danish Keyboard Settings Page"
+  },
+  "double_space_period": {
+    "message": "Double-space to type period"
+  },
+  "down_arrow": {
+    "message": "pil ned"
+  },
+  "ee_est_settings_page": {
+    "message": "Estonian Keyboard Settings Page"
+  },
+  "enable_capitalization": {
+    "message": "Auto-capitalization"
+  },
+  "enable_completion": {
+    "message": "Enable completion"
+  },
+  "enable_prediction": {
+    "message": "Enable next word prediction"
+  },
+  "enter": {
+    "message": "enter"
+  },
+  "es_cat_cat_settings_page": {
+    "message": "Catalan Keyboard Settings Page"
+  },
+  "es_spa_settings_page": {
+    "message": "Spanish Keyboard Settings Page"
+  },
+  "fi_fin_settings_page": {
+    "message": "Finnish Keyboard Settings Page"
+  },
+  "fr_fra_settings_page": {
+    "message": "French Keyboard Settings Page"
+  },
+  "fuzzy_pinyin": {
+    "message": "Aktiv\u00e9r Fuzzy pinyin-modus"
+  },
+  "gb_dvorak_eng_settings_page": {
+    "message": "Uk Dvorak Keyboard (English) Settings Page"
+  },
+  "gb_extd_eng_settings_page": {
+    "message": "Uk Keyboard (English) Settings Page"
+  },
+  "ge_geo_settings_page": {
+    "message": "Georgian Keyboard Settings Page"
+  },
+  "globe": {
+    "message": "bytt til forrige tastatur"
+  },
+  "got_it": {
+    "message": "Greit"
+  },
+  "gr_gre_settings_page": {
+    "message": "Greek Keyboard Settings Page"
+  },
+  "handwriting_back": {
+    "message": "Tilbake"
+  },
+  "handwriting_netowrk_error": {
+    "message": "Beklager, du kan ikke bruke h\u00e5ndskrift, fordi nettverket ikke er tilgjengelig."
+  },
+  "handwriting_privacy_info": {
+    "message": "Your input will be sent to a Google server to recognize text"
+  },
+  "hide_keyboard": {
+    "message": "skjul tastatur"
+  },
+  "hr_scr_settings_page": {
+    "message": "Croatian Keyboard Settings Page"
+  },
+  "hu_hun_settings_page": {
+    "message": "Hungarian Keyboard Settings Page"
+  },
+  "ie_ga_settings_page": {
+    "message": "Irish Keyboard Settings Page"
+  },
+  "il_heb_settings_page": {
+    "message": "Hebrew Keyboard Settings Page"
+  },
+  "init_lang": {
+    "message": "Det opprinnelige inndataspr\u00e5ket er kinesisk"
+  },
+  "init_punc": {
+    "message": "Opprinnelig tegnsettingsbredde er satt til Full"
+  },
+  "init_sbc": {
+    "message": "Opprinnelig tegnbredde er satt til Full"
+  },
+  "inputmethod_array": {
+    "message": "Array input method"
+  },
+  "inputmethod_cangjie": {
+    "message": "Cangjie input method"
+  },
+  "inputmethod_dayi": {
+    "message": "Dayi input method"
+  },
+  "inputmethod_pinyin": {
+    "message": "Pinyin input method"
+  },
+  "inputmethod_quick": {
+    "message": "Quick input method"
+  },
+  "inputmethod_traditional_pinyin": {
+    "message": "Pinyin input method for traditional Chinese"
+  },
+  "inputmethod_wubi": {
+    "message": "Wubi input method"
+  },
+  "inputmethod_zhuyin": {
+    "message": "Zhuyin input method"
+  },
+  "is_ice_settings_page": {
+    "message": "Icelandic Keyboard Settings Page"
+  },
+  "it_ita_settings_page": {
+    "message": "Italian Keyboard Settings Page"
+  },
+  "jp_jpn_settings_page": {
+    "message": "Japanese Keyboard Settings Page"
+  },
+  "keyboard_arabic": {
+    "message": "Arabisk tastatur"
+  },
+  "keyboard_armenian_phonetic": {
+    "message": "Armenian Phonetic keyboard"
+  },
+  "keyboard_belarusian": {
+    "message": "Belarusian keyboard"
+  },
+  "keyboard_belgian": {
+    "message": "Belgian keyboard"
+  },
+  "keyboard_bengali_phonetic": {
+    "message": "Bengalisk tastatur (fonetisk)"
+  },
+  "keyboard_brazilian": {
+    "message": "Brazilian keyboard"
+  },
+  "keyboard_bulgarian": {
+    "message": "Bulgarian keyboard"
+  },
+  "keyboard_bulgarian_phonetic": {
+    "message": "Bulgarian phonetic keyboard"
+  },
+  "keyboard_canadian_english": {
+    "message": "Canadian English keyboard"
+  },
+  "keyboard_canadian_french": {
+    "message": "Canadian French keyboard"
+  },
+  "keyboard_canadian_multilingual": {
+    "message": "Canadian Multilingual keyboard"
+  },
+  "keyboard_catalan": {
+    "message": "Catalan keyboard"
+  },
+  "keyboard_croatian": {
+    "message": "Croatian keyboard"
+  },
+  "keyboard_czech": {
+    "message": "Czech keyboard"
+  },
+  "keyboard_czech_qwerty": {
+    "message": "Czech QWERTY keyboard"
+  },
+  "keyboard_danish": {
+    "message": "Danish keyboard"
+  },
+  "keyboard_devanagari_phonetic": {
+    "message": "Devanagari-tastatur (fonetisk)"
+  },
+  "keyboard_estonian": {
+    "message": "Estonian keyboard"
+  },
+  "keyboard_ethiopic": {
+    "message": "Etiopisk tastatur"
+  },
+  "keyboard_finnish": {
+    "message": "Finnish keyboard"
+  },
+  "keyboard_french": {
+    "message": "French keyboard"
+  },
+  "keyboard_georgian": {
+    "message": "Georgian keyboard"
+  },
+  "keyboard_german": {
+    "message": "German keyboard"
+  },
+  "keyboard_german_neo_2": {
+    "message": "German Neo 2 keyboard"
+  },
+  "keyboard_greek": {
+    "message": "Greek keyboard"
+  },
+  "keyboard_gujarati_phonetic": {
+    "message": "Gujarati-tastatur (fonetisk)"
+  },
+  "keyboard_hebrew": {
+    "message": "Hebrew keyboard"
+  },
+  "keyboard_hungarian": {
+    "message": "Hungarian keyboard"
+  },
+  "keyboard_icelandic": {
+    "message": "Icelandic keyboard"
+  },
+  "keyboard_inscript": {
+    "message": "Tastatur (InScript)"
+  },
+  "keyboard_irish": {
+    "message": "Irish keyboard"
+  },
+  "keyboard_italian": {
+    "message": "Italian keyboard"
+  },
+  "keyboard_itrans": {
+    "message": "Tastatur (itrans)"
+  },
+  "keyboard_japanese": {
+    "message": "Japanese keyboard"
+  },
+  "keyboard_kannada_phonetic": {
+    "message": "Kannada-tastatur (fonetisk)"
+  },
+  "keyboard_kedmanee": {
+    "message": "Tastatur (Kedmanee)"
+  },
+  "keyboard_khmer": {
+    "message": "Khmer-tastatur"
+  },
+  "keyboard_lao": {
+    "message": "Lao-tastatur"
+  },
+  "keyboard_latin_american": {
+    "message": "Latin American keyboard"
+  },
+  "keyboard_latvian": {
+    "message": "Latvian keyboard"
+  },
+  "keyboard_lithuanian": {
+    "message": "Lithuanian keyboard"
+  },
+  "keyboard_malayalam_phonetic": {
+    "message": "Malayalam-tastatur (fonetisk)"
+  },
+  "keyboard_mongolian": {
+    "message": "Mongolian keyboard"
+  },
+  "keyboard_myanmar": {
+    "message": "Myanmar MM3-tastatur"
+  },
+  "keyboard_myanmar_myansan": {
+    "message": "Myanmar Myansan-tastatur"
+  },
+  "keyboard_nepali_inscript": {
+    "message": "Nepali-tastatur (InScript)"
+  },
+  "keyboard_nepali_phonetic": {
+    "message": "Nepali-tastatur (fonetisk)"
+  },
+  "keyboard_none": {
+    "message": "Tastatur"
+  },
+  "keyboard_norwegian": {
+    "message": "Norwegian keyboard"
+  },
+  "keyboard_pattachote": {
+    "message": "Tastatur (Pattachote)"
+  },
+  "keyboard_persian": {
+    "message": "Persisk tastatur"
+  },
+  "keyboard_phonetic": {
+    "message": "Tastatur (fonetisk)"
+  },
+  "keyboard_polish": {
+    "message": "Polish keyboard"
+  },
+  "keyboard_portuguese": {
+    "message": "Portuguese keyboard"
+  },
+  "keyboard_romanian": {
+    "message": "Romanian keyboard"
+  },
+  "keyboard_russian": {
+    "message": "Russian keyboard"
+  },
+  "keyboard_russian_phonetic": {
+    "message": "Russian phonetic keyboard"
+  },
+  "keyboard_serbian": {
+    "message": "Serbian keyboard"
+  },
+  "keyboard_sinhala": {
+    "message": "Singalesisk tastatur"
+  },
+  "keyboard_slovakian": {
+    "message": "Slovakian keyboard"
+  },
+  "keyboard_slovenian": {
+    "message": "Slovenian keyboard"
+  },
+  "keyboard_soranikurdish_ar": {
+    "message": "Sorani Kurdish Arabic-based keyboard"
+  },
+  "keyboard_soranikurdish_en": {
+    "message": "Sorani Kurdish English-based keyboard"
+  },
+  "keyboard_spanish": {
+    "message": "Spanish keyboard"
+  },
+  "keyboard_swedish": {
+    "message": "Swedish keyboard"
+  },
+  "keyboard_swiss": {
+    "message": "Swiss keyboard"
+  },
+  "keyboard_swiss_french": {
+    "message": "Swiss French keyboard"
+  },
+  "keyboard_tamil99": {
+    "message": "Tastatur (Tamil99)"
+  },
+  "keyboard_tamil_inscript": {
+    "message": "Tamilsk tastatur (InScript)"
+  },
+  "keyboard_tamil_itrans": {
+    "message": "Tamilsk tastatur (itrans)"
+  },
+  "keyboard_tamil_phonetic": {
+    "message": "Tamilsk tastatur (fonetisk)"
+  },
+  "keyboard_tamil_tamil99": {
+    "message": "Tamilsk tastatur (Tamil99)"
+  },
+  "keyboard_tamil_typewriter": {
+    "message": "Tamilsk tastatur (skrivemaskin)"
+  },
+  "keyboard_tcvn": {
+    "message": "Tastatur (TCVN)"
+  },
+  "keyboard_telex": {
+    "message": "Tastatur (Telex)"
+  },
+  "keyboard_telugu_phonetic": {
+    "message": "Telugu-tastatur (fonetisk)"
+  },
+  "keyboard_thai_kedmanee": {
+    "message": "Thai-tastatur (Kedmanee)"
+  },
+  "keyboard_thai_pattachote": {
+    "message": "Thai-tastatur (Pattachote)"
+  },
+  "keyboard_thai_tis": {
+    "message": "Thai-tastatur (TIS 820-2531)"
+  },
+  "keyboard_tis": {
+    "message": "Tastatur (TIS 820-2531)"
+  },
+  "keyboard_turkish": {
+    "message": "Turkish keyboard"
+  },
+  "keyboard_typewriter": {
+    "message": "Tastatur (skrivemaskin)"
+  },
+  "keyboard_uk": {
+    "message": "UK keyboard"
+  },
+  "keyboard_uk_dvorak": {
+    "message": "UK Dvorak keyboard"
+  },
+  "keyboard_ukrainian": {
+    "message": "Ukrainian keyboard"
+  },
+  "keyboard_us": {
+    "message": "US keyboard"
+  },
+  "keyboard_us_colemak": {
+    "message": "US Colemak keyboard"
+  },
+  "keyboard_us_dvorak": {
+    "message": "US Dvorak keyboard"
+  },
+  "keyboard_us_extended": {
+    "message": "US extended keyboard"
+  },
+  "keyboard_us_international": {
+    "message": "US international keyboard"
+  },
+  "keyboard_vietnamese_tcvn": {
+    "message": "Vietnamesisk tastatur (TCVN)"
+  },
+  "keyboard_vietnamese_telex": {
+    "message": "Vietnamesisk tastatur (Telex)"
+  },
+  "keyboard_vietnamese_viqr": {
+    "message": "Vietnamesisk tastatur (VIQR)"
+  },
+  "keyboard_vietnamese_vni": {
+    "message": "Vietnamesisk tastatur (VNI)"
+  },
+  "keyboard_viqr": {
+    "message": "Tastatur (VIQR)"
+  },
+  "keyboard_vni": {
+    "message": "Tastatur (VNI)"
+  },
+  "korean_settings_page": {
+    "message": "Korean Settings Page"
+  },
+  "latam_spa_settings_page": {
+    "message": "Latin American Keyboard (Spanish) Settings Page"
+  },
+  "latin_settings_page": {
+    "message": "Settings"
+  },
+  "left_arrow": {
+    "message": "pil venstre"
+  },
+  "lt_lit_settings_page": {
+    "message": "Lithuanian Keyboard Settings Page"
+  },
+  "lv_apostrophe_lav_settings_page": {
+    "message": "Latvian Keyboard (Latvian, Lettish) Settings Page"
+  },
+  "mn_mon_settings_page": {
+    "message": "Mongolian Keyboard Settings Page"
+  },
+  "move_page_key_above": {
+    "message": "Bruk tastene for - og = til \u00e5 paginere en kandidatliste"
+  },
+  "move_page_key_below": {
+    "message": "Bruk tastene for , og . til \u00e5 paginere en kandidatliste"
+  },
+  "never_auto_correct": {
+    "message": "Off"
+  },
+  "no_nob_settings_page": {
+    "message": "Norwegian Keyboard Settings Page"
+  },
+  "pause": {
+    "message": "Pause"
+  },
+  "pinyin_settings_page": {
+    "message": "Pinyin Settings Page"
+  },
+  "pl_pol_settings_page": {
+    "message": "Polish Keyboard Settings Page"
+  },
+  "pt_por_settings_page": {
+    "message": "Portuguese Keyboard Settings Page"
+  },
+  "right_arrow": {
+    "message": "pil h\u00f8yre"
+  },
+  "ro_rum_settings_page": {
+    "message": "Romanian Keyboard Settings Page"
+  },
+  "rs_srp_settings_page": {
+    "message": "Serbian Keyboard Settings Page"
+  },
+  "ru_phonetic_rus_settings_page": {
+    "message": "Russian Phonetic Keyboard Settings Page"
+  },
+  "ru_rus_settings_page": {
+    "message": "Russian Keyboard Settings Page"
+  },
+  "se_swe_settings_page": {
+    "message": "Swedish Keyboard Settings Page"
+  },
+  "shift": {
+    "message": "shift"
+  },
+  "shift_lock": {
+    "message": "Shift er l\u00e5st"
+  },
+  "show_candidate_mode": {
+    "message": "Delay of suggestion dropdown"
+  },
+  "show_candidates_1000": {
+    "message": "Show suggestion dropdown after 1s"
+  },
+  "show_candidates_2000": {
+    "message": "Show suggestion dropdown after 2s"
+  },
+  "show_candidates_500": {
+    "message": "Show suggestion dropdown after 500ms"
+  },
+  "show_candidates_5000": {
+    "message": "Show suggestion dropdown after 5s"
+  },
+  "show_candidates_backspace": {
+    "message": "Show suggestion dropdown by Backspace"
+  },
+  "si_slv_settings_page": {
+    "message": "Slovenian Keyboard Settings Page"
+  },
+  "sk_slo_settings_page": {
+    "message": "Slovakian Keyboard Settings Page"
+  },
+  "sometimes_auto_correct": {
+    "message": "Modest"
+  },
+  "sound_on_keypress": {
+    "message": "Sound on keypress"
+  },
+  "space": {
+    "message": "mellomrom"
+  },
+  "switch_to": {
+    "message": "bytt til "
+  },
+  "switch_to_compact_layout": {
+    "message": "Switch to compact layout"
+  },
+  "switch_to_full_layout": {
+    "message": "Switch to full layout"
+  },
+  "switched_to": {
+    "message": "byttet til "
+  },
+  "tab": {
+    "message": "tab"
+  },
+  "touch_keyboard": {
+    "message": "Touch Keyboard"
+  },
+  "tr_tur_settings_page": {
+    "message": "Turkish Keyboard Settings Page"
+  },
+  "transliteration_am": {
+    "message": "Translitterasjon (salam \u2192 \u1230\u120b\u121d)"
+  },
+  "transliteration_ar": {
+    "message": "Translitterasjon (marhaban \u2190 \u0645\u0631\u062d\u0628\u0627)"
+  },
+  "transliteration_be": {
+    "message": "Translitterasjon (pryvitannie \u2192 \u043f\u0440\u044b\u0432\u0456\u0442\u0430\u043d\u043d\u0435)"
+  },
+  "transliteration_bg": {
+    "message": "Translitterasjon (zdrasti \u2192 \u0437\u0434\u0440\u0430\u0441\u0442\u0438)"
+  },
+  "transliteration_bn": {
+    "message": "Translitterasjon (namaskar \u2192 \u09a8\u09ae\u09b8\u09cd\u0995\u09be\u09b0)"
+  },
+  "transliteration_el": {
+    "message": "Translitterasjon (geia \u2192 \u03b3\u03b5\u03b9\u03b1)"
+  },
+  "transliteration_fa": {
+    "message": "Translitterasjon (salam \u2190 \u0633\u0644\u0627\u0645)"
+  },
+  "transliteration_gu": {
+    "message": "Translitterasjon (namaste \u2192 \u0aa8\u0aae\u0ab8\u0acd\u0aa4\u0ac7)"
+  },
+  "transliteration_he": {
+    "message": "Translitterasjon (shalom \u2190 \u05e9\u05dc\u05d5\u05dd)"
+  },
+  "transliteration_hi": {
+    "message": "Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"
+  },
+  "transliteration_kn": {
+    "message": "Translitterasjon (namaskaram \u2192 \u0ca8\u0cae\u0cb8\u0ccd\u0c95\u0cbe\u0cb0)"
+  },
+  "transliteration_ml": {
+    "message": "Translitterasjon (namaskar \u2192 \u0d28\u0d2e\u0d38\u0d4d\u0d15\u0d3e\u0d30\u0d02)"
+  },
+  "transliteration_mr": {
+    "message": "Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0915\u093e\u0930)"
+  },
+  "transliteration_ne": {
+    "message": "Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"
+  },
+  "transliteration_or": {
+    "message": "Translitterasjon (mausam \u2192 \u0b28\u0b2e\u0b38\u0b4d\u0b24\u0b47)"
+  },
+  "transliteration_pa": {
+    "message": "Translitterasjon (mausam \u2192 \u0a2e\u0a4c\u0a38\u0a2e)"
+  },
+  "transliteration_ru": {
+    "message": "Translitterasjon (privet \u2192 \u043f\u0440\u0438\u0432\u0435\u0442)"
+  },
+  "transliteration_sa": {
+    "message": "Translitterasjon (namaste \u2192 \u0928\u092e\u0938\u094d\u0924\u0947)"
+  },
+  "transliteration_si": {
+    "message": "Translitterasjon (halo \u2192 \u0dc4\u0dbd\u0ddd)"
+  },
+  "transliteration_sr": {
+    "message": "Translitterasjon (zdravo \u2192 \u0437\u0434\u0440\u0430\u0432\u043e)"
+  },
+  "transliteration_ta": {
+    "message": "Translitterasjon (vanakkam \u2192 \u0bb5\u0ba3\u0b95\u0bcd\u0b95\u0bae\u0bcd)"
+  },
+  "transliteration_te": {
+    "message": "Translitterasjon (emandi \u2192 \u0c0f\u0c2e\u0c02\u0c21\u0c40)"
+  },
+  "transliteration_ti": {
+    "message": "Translitterasjon (selam \u2192 \u1230\u120b\u121d)"
+  },
+  "transliteration_uk": {
+    "message": "Translitterasjon (pryvit \u2192 \u043f\u0440\u0438\u0432\u0456\u0442)"
+  },
+  "transliteration_ur": {
+    "message": "Translitterasjon (salam \u2190 \u0633\u0644\u0627\u0645)"
+  },
+  "transliteration_vi": {
+    "message": "Translitterasjon (chao \u2192 ch\u00e0o)"
+  },
+  "ua_ukr_settings_page": {
+    "message": "Ukrainian Keyboard Settings Page"
+  },
+  "up_arrow": {
+    "message": "pil opp"
+  },
+  "us_altgr_intl_eng_settings_page": {
+    "message": "US Extended Keyboard (English) Settings Page"
+  },
+  "us_colemak_eng_settings_page": {
+    "message": "US Colemak Keyboard (English) Settings Page"
+  },
+  "us_dvorak_eng_settings_page": {
+    "message": "US Dvorak Keyboard (English) Settings Page"
+  },
+  "us_eng_settings_page": {
+    "message": "US Keyboard (English) Settings Page"
+  },
+  "us_fil_settings_page": {
+    "message": "US Keyboard (Filipino) Settings Page"
+  },
+  "us_ind_settings_page": {
+    "message": "US Keyboard (Indonesian) Settings Page"
+  },
+  "us_intl_eng_settings_page": {
+    "message": "US International Keyboard (English) Settings Page"
+  },
+  "us_intl_nld_settings_page": {
+    "message": "US International Keyboard (Dutch) Settings Page"
+  },
+  "us_intl_por_settings_page": {
+    "message": "US International Keyboard (Brazilian Portuguese) Settings Page"
+  },
+  "us_msa_settings_page": {
+    "message": "US Keyboard (Malay) Settings Page"
+  },
+  "user_dict": {
+    "message": "Sl\u00e5 p\u00e5 personlig ordliste"
+  },
+  "wait": {
+    "message": "Wait"
+  },
+  "zhuyin_keyboard_layout": {
+    "message": "Tastaturtype"
+  },
+  "zhuyin_page_size": {
+    "message": "Antall kandidater som vises per side"
+  },
+  "zhuyin_select_keys": {
+    "message": "Valgtaster"
+  },
+  "zhuyin_settings_page": {
+    "message": "Zhuyin Settings Page"
+  }
+}
