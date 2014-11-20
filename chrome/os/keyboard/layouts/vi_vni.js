@@ -1,4 +1,4 @@
-// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
+// Copyright 2013 The ChromeOS IME Authors. All Rights Reserved.
 // limitations under the License.
 // See the License for the specific language governing permissions and
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -11,9 +11,6 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-// Copyright 2013 Google Inc.
-// All Rights Reserved.
-// Reference: http://en.wikipedia.org/wiki/VNI
 
 var VI_VNI_LAYOUT = {
   'id': 'vi_vni',
