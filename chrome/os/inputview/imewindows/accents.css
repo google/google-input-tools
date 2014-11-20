@@ -1,24 +1,39 @@
 body {
-  margin: 0;
+  background-color: transparent;
+  margin: 6px;
+  -webkit-box-shadow: 0 0 6px rgba(204, 204, 204, 0.65),
+                      0 0 2px rgba(136, 136, 136, 0.65),
+                      0 0 6px rgba(204, 204, 204, 0.65),
+                      0 0 6px rgba(204, 204, 204, 0.65);
+  overflow: hidden;
 }
 
 .accent-container {
-  display: flex;
-  flex-direction: row;
+  background-color: white;
   width: 100%;
   height: 100%;
 }
 
-.accent-container div {
-  flex-grow: 1;
+.accent-row {
+  box-sizing: border-box;
+  display: block;
+}
+
+.accent-row div {
+  box-sizing: border-box;
+  display: inline-block;
   text-align: center;
 }
 
-.accent-container div:not(:last-child) {
+.accent-row:not(:last-child) {
+  border-bottom: 1px solid #cccccc;
+}
+
+.accent-row>div:not(.empty-key):not(:last-child) {
   border-right: 1px solid #cccccc;
 }
 
-.accent-container div div {
+.accent-row>div>div {
   color: #111111;
   font-size: 23px;
   height: 100%;

@@ -370,11 +370,7 @@ Controller.prototype.commitText_ = function(text, append, triggerType) {
   }
 
   if (textToCommit) {
-    var contextID = this.context.contextID;
-    chrome.input.ime.commitText(goog.object.create(
-        Name.CONTEXT_ID, contextID,
-        Name.TEXT, textToCommit
-        ));
+    this.commitText(textToCommit, !!this.compositionText_);
   }
   if (text) {
     if (this.dataSource_ && this.supportPrediction_()) {
@@ -406,9 +402,13 @@ Controller.prototype.commitText_ = function(text, append, triggerType) {
  *
  * @param {string} text .
  * @param {boolean} normalizable .
+ * @return {string} The normalized text.
  * @private
  */
 Controller.prototype.maybeNormalizeDeadKey_ = function(text, normalizable) {
+  if (!text && normalizable) {
+    return '';
+  }
   var deadKey = this.deadKey_;
   this.deadKey_ = '';
   if (util.DISPLAY_MAPPING[text]) {
@@ -501,7 +501,7 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
   }
 
   if (this.candidates_.length == 2) {
-    // Simply filters out case when there is only two candidates.
+    // Simply filters out case when there are only two candidates.
     this.candidates_ = [];
   }
 
@@ -523,36 +523,13 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
 
 
 /**
- * True if the current text box is url field.
- *
- * @private
- * @return {boolean}
- */
-Controller.prototype.isUrlBox_ = function() {
-  return !!this.context && !!this.context.type && this.context.type == 'url';
-};
-
-
-/**
- * Is a password box.
- *
- * @return {boolean} .
- * @private
- */
-Controller.prototype.isPasswdBox_ = function() {
-  return !!this.context && (!this.context.type ||
-      this.context.type == 'password');
-};
-
-
-/**
  * True if the text box supports prediction.
  *
  * @return {boolean} .
  * @private
  */
 Controller.prototype.supportPrediction_ = function() {
-  return !this.isUrlBox_() && !this.isPasswdBox_();
+  return !this.isUrlBox() && !this.isPasswdBox();
 };
 
 
@@ -638,9 +615,14 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
 };
 
 
-/** @override */
+/**
+ * Overrides handleCharacterKeyEvent instead of handleEvent because handleEvent
+ * is called for physical key events which xkb controller should NOT handle.
+ *
+ * @override
+ */
 Controller.prototype.handleCharacterKeyEvent = function(keyData) {
-  if (keyData[Name.TYPE] == goog.events.EventType.KEYUP) {
+  if (keyData[Name.TYPE] == goog.events.EventType.KEYDOWN) {
     var ch = keyData[Name.KEY];
     var commit = util.isCommitCharacter(ch);
     var isSpaceKey = keyData[Name.CODE] == KeyCodes.SPACE;
@@ -650,7 +632,7 @@ Controller.prototype.handleCharacterKeyEvent = function(keyData) {
     }
 
     if (!this.dataSource_ || !this.dataSource_.isReady() ||
-        this.isPasswdBox_() || this.isUrlBox_()) {
+        this.isPasswdBox() || this.isUrlBox()) {
       this.commitText_(ch, true, 1);
     } else {
       if (this.shouldAutoSpace_()) {

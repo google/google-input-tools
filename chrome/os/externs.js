@@ -13,13 +13,6 @@
 //
 
 /**
- * @fileoverview Externs for inputtools code.
- *
- * @author zhangchi@google.com (Chi Zhang)
- */
-
-
-/**
  * HTML5 localStorage extern.
  */
 var localStorage;
@@ -55,15 +48,6 @@ localStorage.removeItem = function(key) {};
  * @param {string} message The message.
  */
 Element.prototype.postMessage = function(message) {};
-
-
-/**
- * ChromeKeyboardEvent.prototype.code is introduced in Chrome 26 and
- * it is not defined in google3/javascript/externs/chrome_extensions.js yet.
- * TODO(horo) Move it to chrome_extensions.js when Chrome 26 become stable.
- * @type {string}
- */
-ChromeKeyboardEvent.prototype.code;
 
 
 /**
@@ -775,4 +759,35 @@ mozc.Message.prototype.args;
 
 /** @type {!number|undefined} */
 mozc.Message.prototype.id;
+
+
+/** @const */
+chrome.inputMethodPrivate = {};
+
+
+/**
+ * @param {function(!Array.<!Object>): void} callback .
+ */
+chrome.inputMethodPrivate.getInputMethods = function(callback) {};
+
+
+/**
+ * @param {function(string)} callback .
+ */
+chrome.inputMethodPrivate.getCurrentInputMethod = function(callback) {};
+
+
+/**
+ * @param {function(!Object)} callback .
+ */
+chrome.inputMethodPrivate.getInputMethodConfig = function(callback) {};
+
+
+/**
+ * @param {!string} inputMethodId .
+ * @param {function()=} callback .
+ */
+chrome.inputMethodPrivate.setCurrentInputMethod =
+    function(inputMethodId, callback) {};
+
 

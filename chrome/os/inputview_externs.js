@@ -107,7 +107,7 @@ inputview.openSettings = function() {};
  * @param {string} url URL to create.
  * @param {!Object=} opt_options The options for
  *     the new window.
- * @param {function(!Object)=} opt_createWindowCallback
+ * @param {function(!chrome.app.window.AppWindow)=} opt_createWindowCallback
  *     Callback to be run.
  */
 inputview.createWindow = function(

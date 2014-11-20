@@ -11,8 +11,8 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-
 goog.require('goog.chrome.extensions.i18n');
+
 
 var msgs = {};
 
@@ -59,12 +59,66 @@ msgs.MSG_FUZZY_PINYIN = goog.getMsg(
 
 
 /**
- * @desc It is the description of personal dictionary checkbox in Pinyin
- * setting page.
+ * @desc It is the description of personal dictionary checkbox in setting
+ * pages.
  */
 msgs.MSG_USER_DICT = goog.getMsg(
     'Enable personal dictionary'
     );
+
+
+/**
+ * @desc It is the description of to sync personal dictionary with Server
+ * checkbox in setting pages.
+ */
+msgs.MSG_USER_DICT_SYNC = goog.getMsg(
+    'Sync personal dictionary'
+    );
+
+
+/**
+ * @desc Label for button with popup user dictionary dialog.
+ */
+msgs.MSG_USER_DICT_MANAGE = goog.getMsg('Manage personal dictionary...');
+
+
+/**
+ * @desc Title for manage user dictionary popup dialog.
+ */
+msgs.MSG_USER_DICT_TITLE = goog.getMsg('Personal Dictionary');
+
+
+/**
+ * @desc Label for button that when clicked, removes the selected entries from
+ * the personal dictionary.
+ */
+msgs.MSG_USER_DICT_REMOVE = goog.getMsg('Remove Selected');
+
+
+/**
+ * @desc Label for button that clears all personal dictionary entries.
+ */
+msgs.MSG_USER_DICT_CLEAR = goog.getMsg('Clear All');
+
+
+/**
+ * @desc Label for button that user can press to submit the word they entered to
+ * be added to their personal dictionary.
+ */
+msgs.MSG_USER_DICT_ADD = goog.getMsg('Add');
+
+
+/**
+ * @desc Indicator that typing in this input box will add a new word to the
+ * person's user dictionary.
+ */
+msgs.MSG_USER_DICT_NEW_WORD = goog.getMsg('New word');
+
+
+/**
+ * @desc Button text to dismiss user dictionary popup.
+ */
+msgs.MSG_USER_DICT_DONE = goog.getMsg('Done');
 
 
 /**
@@ -667,9 +721,23 @@ msgs.MSG_KEYBOARD_RUSSIAN = goog.getMsg('Russian keyboard');
 
 
 /**
- * @desc The title of keyboard - russian phonetic_keyboard .
+ * @desc The title of keyboard - russian phonetic keyboard .
  */
 msgs.MSG_KEYBOARD_RUSSIAN_PHONETIC = goog.getMsg('Russian phonetic keyboard');
+
+
+/**
+ * @desc The title of keyboard - russian phonetic (AATSEEL) keyboard .
+ */
+msgs.MSG_KEYBOARD_RUSSIAN_PHONETIC_AATSEEL =
+    goog.getMsg('Russian phonetic (AATSEEL) keyboard');
+
+
+/**
+ * @desc The title of keyboard - russian phonetic (YaZHert) keyboard .
+ */
+msgs.MSG_KEYBOARD_RUSSIAN_PHONETIC_YAZHERT =
+    goog.getMsg('Russian phonetic (YaZHert) keyboard');
 
 
 /**
@@ -887,6 +955,12 @@ msgs.MSG_KEYBOARD_GEORGIAN = goog.getMsg('Georgian keyboard');
  * @desc The title of keyboard - mongolian keyboard .
  */
 msgs.MSG_KEYBOARD_MONGOLIAN = goog.getMsg('Mongolian keyboard');
+
+
+/**
+ * @desc The title of keyboard - maltese keyboard .
+ */
+msgs.MSG_KEYBOARD_MALTESE = goog.getMsg('Maltese keyboard');
 
 
 /**
@@ -1963,6 +2037,48 @@ msgs.MSG_GLOBE = goog.getMsg('switch to previous keyboard');
 
 
 /**
+ * @desc The message to indicate users that press this key will open keyboard
+ * menu for switching IMEs/layouts or open IME settings.
+ */
+msgs.MSG_MENU_KEY = goog.getMsg('open keyboard menu');
+
+
+/**
+ * @desc The message to indicate users that press this key will close the menu
+ * for switching IMEs/layouts or open IME settings.
+ */
+msgs.MSG_DISMISS_MENU = goog.getMsg('dismiss keyboard menu');
+
+
+/**
+ * @desc The message to indicate users that press this button will open emoji
+ * keyset.
+ */
+msgs.MSG_FOOTER_EMOJI_BUTTON = goog.getMsg('switch to emoji');
+
+
+/**
+ * @desc The message to indicate users that press this button will open
+ * handwriting keyset.
+ */
+msgs.MSG_FOOTER_HANDWRITING_BUTTON = goog.getMsg('switch to handwriting');
+
+
+/**
+ * @desc The message to indicate users that press this button will open input
+ * method settings.
+ */
+msgs.MSG_FOOTER_SETTINGS_BUTTON = goog.getMsg('open input method settings');
+
+
+/**
+ * @desc The message prefix which indicate users that press this button will
+ * switch to a new keyboard.
+ */
+msgs.MSG_SWITCH_TO_KEYBOARD_PREFIX = goog.getMsg('switch to ');
+
+
+/**
  * @desc The message to indicate the button will switch to a new layout.
  */
 msgs.MSG_SWITCH_TO = goog.getMsg('switch to ');
@@ -2060,6 +2176,26 @@ msgs.MSG_AUTO_CORRECTION_LEVEL = goog.getMsg('Auto-correction');
  * sentence.
  */
 msgs.MSG_ENABLE_CAPITALIZATION = goog.getMsg('Auto-capitalization');
+
+
+/**
+ * @desc Title for options to determine how often the input method
+ * automatically corrects user input when confidence is high.
+ */
+msgs.MSG_PHYSICAL_AUTO_CORRECTION_LEVEL = goog.getMsg('Auto-correction');
+
+
+/**
+ * @desc Option to enable automatic capitalization of first character in a
+ * sentence.
+ */
+msgs.MSG_PHYSICAL_ENABLE_CAPITALIZATION = goog.getMsg('Auto-capitalization');
+
+
+/**
+ * @desc Title for options to determine whether to show the candidates.
+ */
+msgs.MSG_SHOW_HANGUL_CANDIDATE = goog.getMsg('Show Hangul suggestions');
 
 
 /**
@@ -2506,6 +2642,13 @@ msgs.MSG_TOUCH_KEYBOARD = goog.getMsg('Touch Keyboard');
 
 
 /**
+ * @desc The title for the section containing physical-enabled keyboard
+ * settings.
+ */
+msgs.MSG_PHYSICAL_KEYBOARD = goog.getMsg('Physical Keyboard');
+
+
+/**
  * @desc Description of a checkbox that when checked, will produce a sound for
  * every keypress on the touch keyboard, and when unchecked, will be silent.
  */
@@ -2534,6 +2677,36 @@ msgs.MSG_KOREAN_SETTINGS_PAGE = goog.getMsg('Korean Settings Page');
 
 
 /**
+ * @desc It is the description of Korean Keyboard Layouts.
+ */
+msgs.MSG_KOREAN_KEYBOARD_LAYOUT = goog.getMsg('Korean Keyboard Layout');
+
+
+/**
+ * @desc It is the description of Korean Syllable Inputs.
+ */
+msgs.MSG_KOREAN_SYLLABLE_INPUT = goog.getMsg('Whether input hangul one by one');
+
+
+/**
+ * @desc It is the description of Korean Syllable Inputs.
+ */
+msgs.MSG_KOREAN_HANJA_DISPLAY = goog.getMsg('Hanja Candidate Mode');
+
+
+/**
+ * @desc It is the description of whether the user input Korean or English.
+ */
+msgs.MSG_INPUT_HANGUL = goog.getMsg('Hangul Mode');
+
+
+/**
+ * @desc It is the description of whether the user input hangul or hanja.
+ */
+msgs.MSG_INPUT_HANJA = goog.getMsg('Hanja Mode');
+
+
+/**
  * @desc Title for the switch to compact layout menu item.
  */
 msgs.MSG_SWITCH_TO_COMPACT_LAYOUT = goog.getMsg('Switch to compact layout');
@@ -2557,4 +2730,56 @@ msgs.MSG_PAUSE = goog.getMsg('Pause');
 msgs.MSG_WAIT = goog.getMsg('Wait');
 
 
+/**
+ * @desc Emoji tab spoken feedback label for category "recent".
+ */
+msgs.MSG_EMOJI_TAB_RECENT = goog.getMsg('Emoji category recent');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "hot".
+ */
+msgs.MSG_EMOJI_TAB_HOT = goog.getMsg('Emoji category hot');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "face".
+ */
+msgs.MSG_EMOJI_TAB_FACE = goog.getMsg('Emoji category face');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "symbol".
+ */
+msgs.MSG_EMOJI_TAB_SYMBOL = goog.getMsg('Emoji category symbol');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "nature".
+ */
+msgs.MSG_EMOJI_TAB_NATURE = goog.getMsg('Emoji category nature');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "place".
+ */
+msgs.MSG_EMOJI_TAB_PLACE = goog.getMsg('Emoji category place');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "object".
+ */
+msgs.MSG_EMOJI_TAB_OBJECT = goog.getMsg('Emoji category object');
+
+
+/**
+ * @desc Emoji tab spoken feedback label for category "emoticon".
+ */
+msgs.MSG_EMOJI_TAB_EMOTICON = goog.getMsg('Emoji category emoticon');
+
+for (var key in emojiMsgs) {
+  msgs[key] = emojiMsgs[key];
+}
+
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));
+

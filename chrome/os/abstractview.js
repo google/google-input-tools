@@ -92,6 +92,22 @@ AbstractView.prototype.setCandidateWindowProperties = function(engineID,
 
 
 /**
+ * Sets the composing text.
+ *
+ * @param {string} composingText The composing text.
+ * @param {number} cursorPos The cursor position.
+ */
+AbstractView.prototype.setComposingText = function(composingText, cursorPos) {
+  if (this.context) {
+    chrome.input.ime.setComposition({
+      'contextID': this.context.contextID,
+      'text': composingText,
+      'cursor': cursorPos});
+  }
+};
+
+
+/**
  * Sets the candidates.
  *
  * @param {!Array.<!Object>} candidates .

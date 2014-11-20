@@ -19,14 +19,16 @@ goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
+goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 
 
 goog.scope(function() {
+var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
-var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
+var ContextType = i18n.input.chrome.message.ContextType;
 
 
 
@@ -38,7 +40,7 @@ var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
  * @constructor
  */
 i18n.input.chrome.AbstractController = function() {
-  goog.base(this);
+  i18n.input.chrome.AbstractController.base(this, 'constructor');
 };
 var AbstractController = i18n.input.chrome.AbstractController;
 goog.inherits(AbstractController, goog.events.EventTarget);
@@ -71,6 +73,22 @@ AbstractController.FUNCTIONAL_KEYS = [
 
 
 /**
+ * The flag to controller whether enable simulating key event for commit text.
+ *
+ * @type {boolean}
+ */
+AbstractController.ENABLE_KEY_EVENT_SIMULATION = true;
+
+
+/**
+ * A flag to indicate whether IME is on switching.
+ *
+ * @type {boolean}
+ */
+AbstractController.prototype.isSwitching = false;
+
+
+/**
  * The ime context.
  *
  * @type {InputContext}
@@ -94,6 +112,18 @@ AbstractController.prototype.standalone = true;
  * @protected {string}
  */
 AbstractController.prototype.screenType = 'normal';
+
+
+/**
+ * The current keyData being processed by the controller.
+ * This is for the sub-class'ed controllers to get the keyData in any methods,
+ * particularly for determine whether it should send fake key events or commit
+ * text. As for some apps (e.g. Google Spreadsheet) doesn't support direct
+ * commit text well.
+ *
+ * @protected {ChromeKeyboardEvent}
+ */
+AbstractController.prototype.keyData = null;
 
 
 /**
@@ -176,6 +206,7 @@ AbstractController.prototype.onSurroundingTextChanged = goog.functions.NULL;
  *     Undefined means it's unsure at that moment.
  */
 AbstractController.prototype.handleEvent = function(e) {
+  this.keyData = e;
   return false;
 };
 
@@ -209,25 +240,14 @@ AbstractController.prototype.handleSendKeyEventMessage_ = function(keyData) {
     return;
   }
 
-  var kData = /** @type {!ChromeKeyboardEvent} */ (keyData);
-  if (this.isNonCharacterKeyEvent(kData)) {
-    this.handleNonCharacterKeyEvent(kData);
-  } else if (this.isPasswordBox()) {
-    this.handleSendKeyEventInPasswordBox_(kData);
+  this.keyData = /** @type {!ChromeKeyboardEvent} */ (keyData);
+  if (this.isNonCharacterKeyEvent(this.keyData)) {
+    this.handleNonCharacterKeyEvent(this.keyData);
+  } else if (this.isPasswdBox()) {
+    this.handleSendKeyEventInPasswordBox_(this.keyData);
   } else {
-    this.handleCharacterKeyEvent(kData);
+    this.handleCharacterKeyEvent(this.keyData);
   }
-};
-
-
-/**
- * Whether current input  box is password box.
- *
- * @return {boolean}
- * @protected
- */
-AbstractController.prototype.isPasswordBox = function() {
-  return !!this.context && this.context.type == 'password';
 };
 
 
@@ -240,7 +260,7 @@ AbstractController.prototype.isPasswordBox = function() {
 AbstractController.prototype.handleSendKeyEventInPasswordBox_ =
     function(keyData) {
   if (keyData[Name.TYPE] == goog.events.EventType.KEYDOWN) {
-    this.commitText(keyData[Name.KEY]);
+    this.commitText(keyData[Name.KEY], false);
   }
 };
 
@@ -344,7 +364,7 @@ AbstractController.prototype.processMessage = function(message, sender,
       break;
     case Type.COMMIT_TEXT:
       var text = message[Name.TEXT];
-      this.commitText(text);
+      this.commitText(text, false);
       break;
     case Type.VISIBILITY_CHANGE:
       this.standalone = !message[Name.VISIBILITY];
@@ -368,16 +388,25 @@ AbstractController.prototype.isStandalone = function() {
  * Commits a string.
  *
  * @param {string} text The string to commit.
+ * @param {boolean} onStage Whether to whether is composition text onstage.
+ *     This is used to check whether need to simulate key events intead of
+ *     directly committing the text.
  * @protected
  */
-AbstractController.prototype.commitText = function(text) {
-  if (this.context) {
-    chrome.input.ime.commitText(
-        goog.object.create(
-            Name.CONTEXT_ID,
-            this.context.contextID,
-            Name.TEXT,
-            text));
+AbstractController.prototype.commitText = function(text, onStage) {
+  if (this.context && text) {
+    if (AbstractController.ENABLE_KEY_EVENT_SIMULATION &&
+        this.keyData && !onStage && text.length == 1) {
+      this.keyData['key'] = text;
+      this.sendKeyEvent(this.keyData);
+    } else {
+      chrome.input.ime.commitText(
+          goog.object.create(
+              Name.CONTEXT_ID,
+              this.context.contextID,
+              Name.TEXT,
+              text));
+    }
   }
 };
 
@@ -389,9 +418,8 @@ AbstractController.prototype.commitText = function(text) {
  * @protected
  */
 AbstractController.prototype.updateSettings = function(settings) {
-  if (this.context) {
-    settings[Name.CONTEXT_TYPE] = this.context.type;
-  }
+  settings[Name.CONTEXT_TYPE] =
+      this.context ? this.context.type : ContextType.NONE;
   settings[Name.SCREEN] = this.screenType;
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.UPDATE_SETTINGS,
@@ -405,4 +433,39 @@ AbstractController.prototype.updateSettings = function(settings) {
  * @return {boolean}
  */
 AbstractController.prototype.isReady = goog.functions.TRUE;
+
+
+/**
+ * True if the current text box is url field.
+ *
+ * @return {boolean}
+ * @protected
+ */
+AbstractController.prototype.isUrlBox = function() {
+  return !!this.context && !!this.context.type && this.context.type == 'url';
+};
+
+
+/**
+ * Is a password box.
+ *
+ * @return {boolean} .
+ * @protected
+ */
+AbstractController.prototype.isPasswdBox = function() {
+  return !!this.context && (!this.context.type ||
+      this.context.type == 'password');
+};
+
+
+/**
+ * Is an email box.
+ *
+ * @return {boolean} .
+ * @protected
+ */
+AbstractController.prototype.isEmailBox = function() {
+  return !!this.context && (!this.context.type ||
+      this.context.type == 'email');
+};
 });  // goog.scope

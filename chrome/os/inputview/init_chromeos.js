@@ -22,11 +22,21 @@ goog.require('i18n.input.chrome.inputview.Controller');
 
     // TODO: remove this hack as soon as the manifest is fixed in chromium.
     var hackLanguageAndLayout = function() {
+      var isRTL = goog.i18n.bidi.isRtlLanguage(language);
+      // Case: Arabic t13n, code=t13n, passwordLayout=us.
       if (code == 't13n') {
-        if (goog.i18n.bidi.isRtlLanguage(language)) {
+        if (isRTL) {
           code = 't13n-rtl';
         }
         passwordLayout = code;
+      }
+      // Case: Arabic m17n, code=m17n:ar, passwordLayout=us.
+      if (/^m17n:/.test(code)) {
+        passwordLayout = isRTL ? 'us-rtl' : 'us';
+      }
+      // Case: Hebrew XKB, code=xkb:il::heb, passwordLayout=us.
+      if (isRTL && !/-rtl$/.test(passwordLayout)) {
+        passwordLayout += '-rtl';
       }
       if (language == 'nb') {
         language = 'no';

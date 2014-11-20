@@ -48,26 +48,236 @@ localStorage.removeItem = function(key) {};
  */
 Element.prototype.postMessage = function(message) {};
 
+
 /**
  * @const
  */
 chrome.app = {};
+
 
 /**
  * @const
  */
 chrome.app.window = {};
 
+
 /**
  * @param {string} url URL to create.
  * @param {!Object=} opt_options The options for
  *     the new window.
- * @param {function(!Object)=} opt_createWindowCallback
+ * @param {function(!chrome.app.window.AppWindow)=} opt_createWindowCallback
  *     Callback to be run.
  * @see http://developer.chrome.com/apps/app.window.html#method-create
  */
 chrome.app.window.create = function(
     url, opt_options, opt_createWindowCallback) {};
+
+
+/**
+ * @constructor
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow = function() {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.focus = function() {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.fullscreen = function() {};
+
+
+/**
+ * @return {boolean}
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.isFullscreen = function() {
+  return false;
+};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.minimize = function() {};
+
+
+/**
+ * @return {boolean}
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.isMinimized = function() {
+  return false;
+};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.maximize = function() {};
+
+
+/**
+ * @return {boolean}
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.isMaximized = function() {
+  return false;
+};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.restore = function() {};
+
+
+/**
+ * @param {number} left The new left position, in pixels.
+ * @param {number} top The new top position, in pixels.
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.moveTo = function(left, top) {};
+
+
+/**
+ * @param {number} width The new width, in pixels.
+ * @param {number} height The new height, in pixels.
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.resizeTo = function(width, height) {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.drawAttention = function() {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.clearAttention = function() {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.close = function() {};
+
+
+/**
+ * @param {boolean=} opt_focus Should the window be focused? Defaults to true.
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.show = function(opt_focus) {};
+
+
+/**
+ * @see http://developer.chrome.com/apps/app.window.html#type-AppWindow
+ */
+chrome.app.window.AppWindow.prototype.hide = function() {};
+
+
+/**
+ * @return {!chrome.app.window.Bounds} The current window bounds.
+ */
+chrome.app.window.AppWindow.prototype.getBounds = function() {
+  return chrome.app.window.Bounds;
+};
+
+
+/**
+ * @param {!chrome.app.window.Bounds} bounds The new window bounds.
+ */
+chrome.app.window.AppWindow.prototype.setBounds = function(bounds) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.app.window.AppWindow.prototype.isAlwaysOnTop = function() {
+  return false;
+};
+
+
+/**
+ * @param {boolean} alwaysOnTop Set whether the window should stay above most
+ *     other windows.
+ */
+chrome.app.window.AppWindow.prototype.setAlwaysOnTop = function(alwaysOnTop) {};
+
+
+/**
+ * The JavaScript 'window' object for the created child.
+ * @type {!Window}
+ */
+chrome.app.window.AppWindow.prototype.contentWindow;
+
+
+/**
+ * The id the window was created with.
+ * @type {string}
+ */
+chrome.app.window.AppWindow.prototype.id;
+
+
+/**
+ * The position, size and constraints of the window's content, which does not
+ * include window decorations.
+ * @type {chrome.app.window.Bounds}
+ */
+chrome.app.window.AppWindow.prototype.innerBounds;
+
+
+/**
+ * The position, size and constraints of the window's content, which includes
+ * window decorations, such as the title bar and frame.
+ * @type {chrome.app.window.Bounds}
+ */
+chrome.app.window.AppWindow.prototype.outerBounds;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onBoundsChanged;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onClosed;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onFullscreened;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onMinimized;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onMaximized;
+
+
+/** @type {!ChromeEvent} */
+chrome.app.window.AppWindow.prototype.onRestored;
+
+
+/**
+ * @typedef {{
+ *   left: (number|undefined),
+ *   top: (number|undefined),
+ *   width: (number|undefined),
+ *   height: (number|undefined)
+ * }}
+ * @see http://developer.chrome.com/apps/app.window.html#type-Bounds
+ */
+chrome.app.window.Bounds;
+
 
 /**
  * @const

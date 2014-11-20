@@ -11,30 +11,23 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-goog.provide('i18n.input.chrome.message.Event');
-
-goog.require('goog.events.Event');
-
+goog.provide('i18n.input.chrome.message.ContextType');
 
 
 /**
- * The message event.
+ * The message type.
  *
- * @param {i18n.input.chrome.message.Type} type .
- * @param {*} msg .
- * @param {Function=} opt_sendResponse .
- * @constructor
- * @extends {goog.events.Event}
+ * @enum {string}
  */
-i18n.input.chrome.message.Event = function(type, msg, opt_sendResponse) {
-  goog.base(this, type);
-
-  /** @type {*} */
-  this.msg = msg;
-
-  /** @type {Function} */
-  this.sendResponse = opt_sendResponse || null;
+i18n.input.chrome.message.ContextType = {
+  NONE: '',
+  DEFAULT: 'text',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  URL: 'url',
+  NUMBER: 'number',
+  PHONE: 'tel'
 };
-goog.inherits(i18n.input.chrome.message.Event,
-    goog.events.Event);
+
+
 
