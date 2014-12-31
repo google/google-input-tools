@@ -46,7 +46,7 @@ if __name__ == '__main__':
     config +='\tEndGlobalSection'
     configRE = re.compile(r'\tGlobalSection\(SolutionConfigurationPlatforms\) = preSolution.+?\tEndGlobalSection', re.S)
     content = configRE.sub(CONFIGS, content)
-    configPostRE = re.compile(r'\tGlobalSection\(SolutionConfigurationPlatforms\) = postSolution.+?\tEndGlobalSection', re.S)
+    configPostRE = re.compile(r'\tGlobalSection\(ProjectConfigurationPlatforms\) = postSolution.+?\tEndGlobalSection', re.S)
     content = configPostRE.sub(config, content)
     file = open('all.sln', 'w')
     file.write(content)
