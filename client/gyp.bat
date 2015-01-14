@@ -13,6 +13,7 @@
 :: limitations under the License.
 
 @echo off
+setlocal
 set PROTOC=%~dp0\depends\protoc.exe
 set PROTOBUF=%~dp0\depends\protobuf-2.5.0
 set GTEST=%~dp0\depends\gtest-1.7.0
