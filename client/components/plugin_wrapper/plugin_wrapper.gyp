@@ -20,6 +20,9 @@
       'include_dirs': [
         '<(SHARED_INTERMEDIATE_DIR)/protoc_out',
       ],
+      'dependencies': [
+        '<(DEPTH)/ipc/protos/protos.gyp:protos-cpp',
+      ],
       'sources': [
         'plugin_component_stub.cc',
         'plugin_instance_win.cc',
