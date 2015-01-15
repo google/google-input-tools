@@ -16,3 +16,4 @@ Release/
 ipch/
 depends/
 out/
+env.bat
