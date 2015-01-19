@@ -13,11 +13,14 @@
 //
 goog.provide('i18n.input.chrome.AbstractView');
 
+goog.require('goog.events.EventTarget');
 goog.require('goog.object');
+goog.require('i18n.input.chrome.Env');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 
 goog.scope(function() {
+var Env = i18n.input.chrome.Env;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
 
@@ -27,9 +30,15 @@ var Type = i18n.input.chrome.message.Type;
  * The abstract view.
  *
  * @constructor
+ * @extends {goog.events.EventTarget}
  */
-i18n.input.chrome.AbstractView = function() {};
+i18n.input.chrome.AbstractView = function() {
+  i18n.input.chrome.AbstractView.base(this, 'constructor');
+  /** @protected {!Env} */
+  this.env = Env.getInstance();
+};
 var AbstractView = i18n.input.chrome.AbstractView;
+goog.inherits(AbstractView, goog.events.EventTarget);
 
 
 /**
@@ -39,14 +48,6 @@ var AbstractView = i18n.input.chrome.AbstractView;
  * @type {boolean}
  */
 AbstractView.prototype.standalone = true;
-
-
-/**
- * The context.
- *
- * @protected {Object}
- */
-AbstractView.prototype.context = null;
 
 
 /**
@@ -98,9 +99,9 @@ AbstractView.prototype.setCandidateWindowProperties = function(engineID,
  * @param {number} cursorPos The cursor position.
  */
 AbstractView.prototype.setComposingText = function(composingText, cursorPos) {
-  if (this.context) {
+  if (this.env.context) {
     chrome.input.ime.setComposition({
-      'contextID': this.context.contextID,
+      'contextID': this.env.context.contextID,
       'text': composingText,
       'cursor': cursorPos});
   }
@@ -114,9 +115,9 @@ AbstractView.prototype.setComposingText = function(composingText, cursorPos) {
  */
 AbstractView.prototype.setCandidates = function(candidates) {
   if (this.standalone) {
-    if (this.context) {
+    if (this.env.context) {
       chrome.input.ime.setCandidates(goog.object.create(
-          Name.CONTEXT_ID, this.context.contextID,
+          Name.CONTEXT_ID, this.env.context.contextID,
           Name.CANDIDATES, candidates));
     }
   } else {
@@ -133,21 +134,11 @@ AbstractView.prototype.setCandidates = function(candidates) {
  * @param {number} cursorPosition .
  */
 AbstractView.prototype.setCursorPosition = function(cursorPosition) {
-  if (this.standalone && this.context) {
+  if (this.standalone && this.env.context) {
     chrome.input.ime.setCursorPosition(goog.object.create(
-        Name.CONTEXT_ID, this.context.contextID,
+        Name.CONTEXT_ID, this.env.context.contextID,
         Name.CANDIDATE_ID, cursorPosition));
   }
-};
-
-
-/**
- * Sets the context.
- *
- * @param {Object} context The input context.
- */
-AbstractView.prototype.setContext = function(context) {
-  this.context = context;
 };
 
 });  // goog.scope

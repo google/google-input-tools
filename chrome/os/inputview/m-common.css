@@ -1,0 +1,664 @@
+.m-inputview-layoutview {
+  position: relative;
+  -webkit-user-select: none;
+}
+.m-inputview-view {
+  border-left: 1.5px solid rgba(55, 71, 79, 0.1);
+  border-right: 1.5px solid rgba(55, 71, 79, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+}
+.m-inputview-space-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  position: relative;
+  font-size: 18px;
+  background-color: rgba(55, 71, 79, 0.15);
+  color: rgba(55, 71, 79, 0.7);
+  border-radius: 4px;
+}
+.m-inputview-canvasview,
+.m-inputview-skv {
+  display: inline-block;
+  overflow: hidden;
+}
+.m-inputview-sk {
+  margin: 4px;
+  position: relative;
+}
+.m-inputview-a11y .m-inputview-sk {
+  margin: 2px 3px 3px 2px;
+}
+#us-compact-symbol .m-inputview-sk,
+#us-compact-more .m-inputview-sk,
+#us-compact-qwerty .m-inputview-sk {
+  margin: 5px;
+}
+#us-compact-qwerty #Globe {
+  margin: 5px 0 5px 0;
+}
+.m-inputview-character {
+  position: absolute;
+  text-align: center;
+  color: #999999;
+  font-size: 16px;
+  display: inline-block;
+}
+.m-inputview-a11y .m-inputview-character {
+  font-size: 13px;
+}
+.m-inputview-ch {
+  color: #111111;
+  font-size: 23px;
+}
+.m-inputview-digit-character.m-inputview-ch {
+  font-size: 20px;
+}
+.m-inputview-font-small.m-inputview-special-key-name,
+.m-inputview-font-small.m-inputview-compact-key,
+.m-inputview-a11y .m-inputview-digit-character.m-inputview-ch {
+  font-size: 17px;
+}
+.m-inputview-a11y .m-inputview-ch {
+  font-size: 21px;
+}
+.m-inputview-vertical {
+  display: inline-block;
+  overflow: hidden;
+}
+.m-inputview-linear {
+  display: inline-block;
+}
+.m-inputview-extended-transition {
+  transition: margin-left 0.2s;
+}
+.m-inputview-linear-border {
+  display:inline-block;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #dddddd;
+}
+.m-inputview-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border: 1px solid #eeeeee;
+  background-color: #ECEFF1;
+  -webkit-user-select: none;
+  cursor: default;
+}
+.m-inputview-font {
+  font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
+}
+.m-inputview-font[lang=am] {
+  font-family: Roboto2, Roboto, Noto Sans Armenian, Sans-Serif;
+}
+.m-inputview-font[lang=il] {
+  font-family: Roboto2, Roboto, Noto Sans Hebrew, Sans-Serif;
+}
+.m-inputview-font[lang=jp] {
+  font-family: Roboto2, Roboto, MotoyaG04Gothic, IPAGothic, Sans-Serif;
+}
+.m-inputview-font[lang=ar] {
+  font-family: Roboto2, Roboto, Noto Arabic Naskh ui, Sans-Serif;
+}
+.m-inputview-font[lang=bn] {
+  font-family: Roboto2, Roboto, Noto Sans Bengali, Sans-Serif;
+}
+.m-inputview-font[lang=ethi] {
+  font-family: Roboto2, Roboto, Noto Sans Ethiopic, Sans-Serif;
+}
+.m-inputview-font[lang=fa] {
+  font-family: Roboto2, Roboto, Noto Arabic Naskh ui, Sans-Serif;
+}
+.m-inputview-font[lang=gu] {
+  font-family: Roboto2, Roboto, Noto Sans Gujarati, Lohit Gujarati, Sans-Serif;
+}
+.m-inputview-font[lang=kn] {
+  font-family: Roboto2, Roboto, Noto Sans Kannada, Lohit Kannada, Sans-Serif;
+}
+.m-inputview-font[lang=ml] {
+  font-family: Roboto2, Roboto, Noto Sans Malayalam, Lohit Malayalam, Sans-Serif;
+}
+.m-inputview-font[lang=ta] {
+  font-family: Roboto2, Roboto, Noto Sans Tamil, Lohit Tamil, Sans-Serif;
+}
+.m-inputview-font[lang=te] {
+  font-family: Roboto2, Roboto, Noto Sans Telugu, Lohit Telugu, Sans-Serif;
+}
+.m-inputview-font[lang=th] {
+  font-family: Roboto2, Roboto, Noto Sans Thai, Sans-Serif;
+}
+.m-inputview-font[lang=zh-CN] {
+  font-family: Roboto2, Roboto, MYingHeiGB18030, Droid Sans Fallback, Sans-Serif;
+}
+.m-inputview-font[lang=zh-TW],
+.m-inputview-font[lang=zh-HK] {
+  font-family: Roboto2, Roboto, MYingHeiB5HK, Droid Sans Fallback, Sans-Serif;
+}
+.m-inputview-font[lang=kr] {
+  font-family: Roboto2, Roboto, NanumGothic, Sans-Serif;
+}
+.m-inputview-emoji-font {
+  font-family: Noto Color Emoji, Noto Sans Emoji, Droid Emoji;
+}
+.m-inputview-emoticon {
+  font-family: Noto Sans Emoji, Droid Emoji;
+}
+.m-inputview-modifier {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 16px;
+  text-align: center;
+  position: relative;
+}
+.m-inputview-a11y .m-inputview-modifier {
+  font-size: 10px;
+}
+.m-inputview-menu-list-indicator {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  width: 25%;
+}
+.m-inputview-checked-menu-list .m-inputview-menu-list-name {
+  background-image: url('images/check.png');
+  background-position: right 25px center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  font-weight: bold;
+  padding-right: 50px;
+}
+.m-inputview-menu-list-name {
+  height: 100%;
+  width: 75%;
+  overflow: hidden;
+}
+.m-inputview-menu-list-indicator-name {
+  font-weight: bold;
+  height: 100%;
+  text-align: center;
+}
+.m-inputview-menu-list-indicator-name,
+.m-inputview-menu-list-name div {
+  line-height: 3;
+}
+.m-inputview-ime-list-container {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.m-inputview-ime-list-container .m-inputview-menu-list-item {
+  border-bottom: solid 1px #cccccc;
+  box-sizing: border-box;
+}
+.m-inputview-menu-list-item {
+  -webkit-box-orient: horizontal;
+  display: -webkit-box;
+  font-size: 16px;
+  width: 100%;
+}
+.m-inputview-menu-footer-item {
+  position: relative;
+}
+.m-inputview-menu-footer-item:not(:last-child):after {
+  background-color: #cccccc;
+  content: '';
+  height: 70%;
+  position: absolute;
+  right: 0;
+  top: 15%;
+  width: 1px;
+}
+.m-inputview-menu-footer-emoji-button {
+  background: url('images/emoji.png') no-repeat center;
+  background-size: 25px;
+  height: 100%;
+}
+.m-inputview-menu-footer-handwriting-button {
+  background: url('images/pencil.png') no-repeat center;
+  background-size: 25px;
+  height: 100%;
+}
+.m-inputview-menu-footer-setting-button {
+  background: url('images/setting.png') no-repeat center;
+  background-size: 25px;
+  height: 100%;
+}
+.m-inputview-menu-footer {
+  -webkit-box-orient: horizontal;
+  background: #f5f5f5;
+  display: -webkit-box;
+}
+.m-inputview-globe-icon {
+  background: transparent url('images/material/globe.png') 0 0 / 20px 20px no-repeat;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+.m-inputview-menu-view,
+.m-inputview-altdata-view {
+  position: fixed;
+  z-index: 999;
+  border: 1px solid #ccc;
+  background-color: white;
+  -webkit-box-shadow: 0 0 6px rgba(204, 204, 204, 0.65),
+                      0 0 2px rgba(136, 136, 136, 0.65),
+                      0 0 6px rgba(204, 204, 204, 0.65),
+                      0 0 6px rgba(204, 204, 204, 0.65);
+  cursor: default;
+}
+.m-inputview-altdata-separator {
+  height: 20px;
+  border-left: 1px solid #ddd;
+  position: relative;
+  display: inline-block;
+}
+.m-inputview-altdata-key {
+  display: table-cell;
+  font-size: 23px;
+  color: #111111;
+  vertical-align: middle;
+  text-align: center;
+}
+.m-inputview-a11y .m-inputview-altdata-key {
+  font-size: 18px;
+}
+.m-inputview-candidate.m-inputview-candidate-default {
+  color: #111111;
+}
+.m-inputview-candidate.m-inputview-candidate-autocorrect {
+  font-weight: bold;
+  color: #111111;
+}
+.m-inputview-candidate-view {
+  overflow: hidden;
+  display: table-cell;
+  height: 32px;
+}
+.m-inputview-candidate-button {
+  float: right;
+}
+.m-inputview-candidate {
+  display: table-cell;
+  font-size: 18px;
+  color: #555555;
+  vertical-align: middle;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+.m-inputview-a11y .m-inputview-candidate {
+  font-size: 12px;
+}
+.m-inputview-candidate-separator {
+  border-left: 1px solid #ddd;
+  position: relative;
+  display: inline-block;
+}
+.m-inputview-table-cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.m-inputview-title {
+  font-size: 16px;
+  color: #AAAAAA;
+}
+.m-inputview-special-key-name {
+  display: block;
+}
+.m-inputview-modifier-state-icon {
+  background-image: url('images/modifier-off.png');
+  background-repeat: no-repeat;
+  background-size: 16px 4px;
+  display: inline-block;
+  width: 16px;
+  height: 4px;
+}
+.m-inputview-modifier-state-icon.m-inputview-modifier-on {
+  background: url('images/modifier-on.png');
+}
+.m-inputview-modifier-state-icon.m-inputview-hold {
+  -webkit-box-shadow: 0 0 5px 1px #397FFB;
+  opacity: 0.9;
+}
+.m-inputview-altdata-cover {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 1;
+}
+.m-inputview-arrow-key {
+  display: inline-block;
+  height: 13.5px;
+}
+.m-inputview-up-key {
+  background-image: transparent url('images/up.png') 0 0/16px 13.5px no-repeat;
+  width: 16px;
+}
+.m-inputview-down-key {
+  background: transparent url('images/down.png') 0 0/16px 13.5px no-repeat;
+  width: 16px;
+}
+.m-inputview-left-key {
+  background: transparent url('images/left.png') 0 0/9px 13.5px no-repeat;
+  width: 9px;
+}
+.m-inputview-right-key {
+  background: transparent url('images/right.png') 0 0/9px 13.5px no-repeat;
+  width: 9px;
+}
+.m-inputview-page-up-icon {
+  background: transparent url('images/page_up.png') 0 0 no-repeat;
+  background-size: 10.5px 5.5px;
+  width: 10.5px;
+  height: 5.5px;
+  display: inline-block;
+}
+.m-inputview-page-down-icon {
+  background: transparent url('images/page_down.png') 0 0 no-repeat;
+  background-size: 10.5px 5.5px;
+  width: 10.5px;
+  height: 5.5px;
+  display: inline-block;
+}
+.m-inputview-menu-icon {
+  background: transparent url('images/material/3dots.png') 0 0/4px 17px no-repeat;
+  display: inline-block;
+  width: 4px;
+  height: 17px;
+}
+.m-inputview-hide-keyboard-icon {
+  background: transparent url('images/material/hidekeyboard.png') 0 0/19px 14.5px no-repeat;
+  display: inline-block;
+  width: 19px;
+  height: 14.5px;
+}
+.m-inputview-candidate.m-inputview-candidate-highlight {
+  background-color: #dddddd;
+}
+.m-inputview-menu-footer-item.m-inputview-element-highlight {
+  background-color: #cccccc;
+}
+.m-inputview-backspace-icon {
+  background: transparent url('images/material/backspace.png');
+  background-size: 24px 17px;
+  display: inline-block;
+  width: 24px;
+  height: 17px;
+}
+.m-inputview-enter-icon {
+  background: transparent url('images/material/enter.png');
+  background-size: 40px 40px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.m-inputview-space-icon {
+  background: transparent url('images/space.png');
+  background-size: 22.5px 8px;
+  display: inline-block;
+  width: 22.5px;
+  height: 8px;
+}
+
+.m-inputview-shift-icon {
+  background: transparent url('images/material/shift.png');
+  background-size: 25px 22px;
+  display: inline-block;
+  width: 25px;
+  height: 22px;
+}
+.m-inputview-element-highlight,
+.m-inputview-special-key-highlight {
+  background-color: rgba(55, 71, 79, 0.15);
+  border-radius: 4px;
+}
+.m-inputview-special-key-highlight .m-inputview-shift-icon {
+  background: transparent url('images/material/shift-pressed.png');
+  background-size: 25px 22px;
+}
+.m-inputview-functional-key-sticky .m-inputview-shift-icon {
+  background: transparent url('images/material/shift-press&hold.png');
+  background-size: 25px 22px;
+}
+.m-inputview-tab-icon {
+  background: transparent url('images/tab.png');
+  background-size: 19px 18.5px;
+  display: inline-block;
+  width: 19px;
+  height: 18.5px;
+}
+.m-inputview-capslock-dot {
+}
+.m-inputview-capslock-dot-highlight {
+  background-color: #4285f4;
+}
+.m-inputview-hint-text {
+  font-size: 16px;
+  color: #999999;
+}
+.m-inputview-inline-div {
+  display: inline-block;
+}
+.m-inputview-compact-key {
+  font-size: 28px;
+  color: #111111;
+}
+.m-inputview-compact-switcher {
+  background: transparent url('images/compact.png');
+  background-size: 19px 14px;
+  display: inline-block;
+  width: 19px;
+  height: 14px;
+}
+.m-inputview-regular-switcher {
+  background: transparent url('images/regular_size.png');
+  background-size: 19px 14px;
+  display: inline-block;
+  width: 19px;
+  height: 14px;
+}
+
+#Space {
+  color: #bbbbbb;
+  font-size: 18px;
+}
+#Menu {
+  font-weight: bold;
+  margin-left: 0 !important;
+}
+.m-inputview-a11y #Globe {
+  margin: 2px 0 3px 0;
+}
+#Globe {
+  margin: 3px 0 4px 0;
+}
+#Globe:after {
+  background-color: #cccccc;
+  content: '';
+  height: 50%;
+  position: absolute;
+  right: 0;
+  top: 25%;
+  width: 1px;
+}
+.m-inputview-candidates-line {
+  border-bottom: 1px #cfcfcf solid;
+}
+.m-inputview-candidates-top-line {
+  border-top: 1px #cfcfcf solid;
+}
+.m-inputview-three-candidates {
+  text-align: center;
+  vertical-align: middle;
+}
+.m-inputview-candidate-ic {
+  display: inline-block;
+}
+
+.m-inputview-shrink-candidates-icon {
+  background: transparent url('images/hide_candidates.png') 0 0/17px 16.5px no-repeat;
+  height: 17px;
+  width: 16.5px;
+}
+
+.m-inputview-expand-candidates-icon {
+  background: transparent url('images/show_candidates.png') 0 0/17px 16.5px no-repeat;
+  height: 17px;
+  width: 16.5px;
+}
+
+/**
+ * The following css style is for handwriting panel,
+ * please keep it in the end of the file
+ */
+
+.m-inputview-handwriting {
+  font-size: 16px;
+}
+
+.m-inputview-a11y.m-inputview-handwriting .m-inputview-modifier {
+  font-size: 16px;
+}
+
+.m-inputview-handwriting .m-inputview-wrapper{
+  background-color: #ffffff;
+  box-shadow: 1px -2px 7px 2px rgba(192, 192, 192, 0.65);
+  margin: 11px 0 11px 0;
+}
+
+.m-inputview-handwriting-switcher {
+  background: url('images/pencil.png');
+  background-size: 19px 19px;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+}
+
+.m-inputview-handwriting-back {
+  float: right;
+  color: #111111;
+  text-align: center;
+}
+
+.m-inputview-canvas {
+  cursor: url('images/pencil.png') 8 42, auto;
+}
+
+#leftSideColumn {
+  position: absolute;
+  left: 0;
+}
+
+#rightSideColumn {
+  position: absolute;
+  right: 0;
+}
+.m-inputview-handwriting .m-inputview-ch {
+  bottom: 15px !important;
+}
+.m-inputview-handwriting .m-inputview-sk {
+  background-color: #E9E9E9;
+  margin: 0 0 10 0;
+}
+
+.m-inputview-handwriting .m-inputview-element-highlight {
+  background-color: #cccccc;
+}
+
+.m-inputview-handwriting .m-inputview-special-key-bg {
+  background-color: #E9E9E9;
+}
+.m-inputview-special-key-bg.m-inputview-special-key-highlight {
+  background:none;
+}
+.m-inputview-handwriting #candidateView {
+  background-color: #ffffff;
+  border-bottom: 1px #cfcfcf solid;
+}
+#candidateView {
+  background-color: #E4E7E9;
+}
+.m-inputview-handwriting-network-error {
+  background: no-repeat url('images/error.png');
+  padding: 0 0 0 50px;
+  position: absolute;
+  width: 600px;
+  height: 100px;
+}
+
+.m-inputview-handwriting-privacy-cover {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.m-inputview-handwriting-privacy-info {
+  position: absolute;
+  width: 600px;
+  height: 100px;
+  z-index: 2;
+}
+
+.m-inputview-handwriting-privacy-info-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 2s ease;
+}
+
+.m-inputview-handwriting-privacy-info .m-inputview-sk {
+  margin-top: 10px;
+}
+
+.m-inputview-jp-ime-switch {
+  text-align: left;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.m-inputview-switcher-chinese {
+  display: inline-block;
+  background: url('images/english.png') no-repeat center;
+  background-size: 50px 20px;
+  height: 20px;
+  width: 50px;
+}
+.m-inputview-switcher-english {
+  display: inline-block;
+  background: url('images/chinese.png') no-repeat center;
+  background-size: 50px 20px;
+  height: 20px;
+  width: 50px;
+}
+.m-inputview-pinyin .m-inputview-en-switcher-default {
+  display: inline-block;
+  background: url('images/chinese_small.png') no-repeat center;
+  background-size: 40px 16px;
+  height: 16px;
+  width: 40px;
+}
+.m-inputview-pinyin .m-inputview-en-switcher-english {
+  display: inline-block;
+  background: url('images/english_small.png') no-repeat center;
+  background-size: 40px 16px;
+  height: 16px;
+  width: 40px;
+}
+.m-inputview-candidate-internal-wrapper {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+.m-inputview-three-candidates .m-inputview-candidate {
+  padding: 6px;
+}

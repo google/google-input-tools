@@ -1,19 +1,6 @@
-// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
-// limitations under the License.
-// See the License for the specific language governing permissions and
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// distributed under the License is distributed on an "AS-IS" BASIS,
-// Unless required by applicable law or agreed to in writing, software
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// You may obtain a copy of the License at
-// you may not use this file except in compliance with the License.
-// Licensed under the Apache License, Version 2.0 (the "License");
-//
 {
   "name": "Chrome OS XKB",
-  "version": "1.0.6.0",
+  "version": "1.0.4.0",
   "description": "Chrome OS XKB",
   "default_locale": "en",
   "incognito": "split",
@@ -77,7 +64,7 @@
       "layouts": [
         "be"
       ],
-      "input_view": "inputview.html?id=be.compact.qwerty&language=nl&passwordLayout=be.compact.qwerty&name=keyboard_belgian"
+      "input_view": "inputview.html?id=be&language=nl&passwordLayout=be&name=keyboard_belgian"
     },
     {
       "name": "__MSG_keyboard_bulgarian__",
@@ -590,6 +577,19 @@
       "input_view": "inputview.html?id=ro&language=ro&passwordLayout=ro&name=keyboard_romanian"
     },
     {
+      "name": "__MSG_keyboard_romanian_standard__",
+      "type": "ime",
+      "id": "xkb:ro:std:rum",
+      "description": "",
+      "language": [
+        "ro"
+      ],
+      "layouts": [
+        "ro(std)"
+      ],
+      "input_view": "inputview.html?id=ro-std&language=ro&passwordLayout=ro-std&name=keyboard_romanian_standard"
+    },
+    {
       "name": "__MSG_keyboard_serbian__",
       "type": "ime",
       "id": "xkb:rs::srp",
@@ -805,7 +805,7 @@
       "input_view": "inputview.html?id=us-intl&language=en-US&passwordLayout=us-intl&name=keyboard_us_international"
     },
     {
-      "name": "__MSG_keyboard_us_international__",
+      "name": "__MSG_keyboard_netherlands__",
       "type": "ime",
       "id": "xkb:us:intl:nld",
       "description": "",
@@ -815,7 +815,7 @@
       "layouts": [
         "us(intl)"
       ],
-      "input_view": "inputview.html?id=us-intl&language=nl&passwordLayout=us-intl&name=keyboard_us_international"
+      "input_view": "inputview.html?id=nl.compact.qwerty&language=nl&passwordLayout=nl.compact.qwerty&name=keyboard_netherlands"
     },
     {
       "name": "__MSG_keyboard_us_international__",
