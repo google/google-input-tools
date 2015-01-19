@@ -116,9 +116,9 @@ msgs.MSG_USER_DICT_NEW_WORD = goog.getMsg('New word');
 
 
 /**
- * @desc Button text to dismiss user dictionary popup.
+ * @desc Button text to save user dictionary changes.
  */
-msgs.MSG_USER_DICT_DONE = goog.getMsg('Done');
+msgs.MSG_USER_DICT_SAVE = goog.getMsg('Save');
 
 
 /**
@@ -339,6 +339,14 @@ msgs.MSG_ADVANCED = goog.getMsg(
 
 
 // The following message is for Input Tools name.
+
+
+/**
+ * @desc It is the description of Korean input method.
+ */
+msgs.MSG_INPUTMETHOD_HANGUL = goog.getMsg(
+    'Korean input method'
+    );
 
 
 /**
@@ -666,6 +674,12 @@ msgs.MSG_KEYBOARD_BELGIAN = goog.getMsg('Belgian keyboard');
 
 
 /**
+ * @desc The title of keyboard - netherlands keyboard.
+ */
+msgs.MSG_KEYBOARD_NETHERLANDS = goog.getMsg('Netherlands keyboard');
+
+
+/**
  * @desc The title of keyboard - french keyboard .
  */
 msgs.MSG_KEYBOARD_FRENCH = goog.getMsg('French keyboard');
@@ -895,6 +909,12 @@ msgs.MSG_KEYBOARD_PORTUGUESE = goog.getMsg('Portuguese keyboard');
  * @desc The title of keyboard - romanian keyboard .
  */
 msgs.MSG_KEYBOARD_ROMANIAN = goog.getMsg('Romanian keyboard');
+
+
+/**
+ * @desc The title of keyboard - romanian standard keyboard .
+ */
+msgs.MSG_KEYBOARD_ROMANIAN_STANDARD = goog.getMsg('Romanian standard keyboard');
 
 
 /**
@@ -1934,6 +1954,13 @@ msgs.MSG_HANDWRITING_PRIVACY_INFO = goog.getMsg('Your input will be' +
 
 
 /**
+ * @desc Show the privacy message when user open voice IME first time.
+ */
+msgs.MSG_VOICE_PRIVACY_INFO = goog.getMsg('Your voice will be' +
+    ' sent to a Google server to recognize text');
+
+
+/**
  * @desc The message to indicate a character is in uppercase.
  */
 msgs.MSG_CAPITAL = goog.getMsg('capital');
@@ -2076,6 +2103,12 @@ msgs.MSG_FOOTER_SETTINGS_BUTTON = goog.getMsg('open input method settings');
  * switch to a new keyboard.
  */
 msgs.MSG_SWITCH_TO_KEYBOARD_PREFIX = goog.getMsg('switch to ');
+
+
+/**
+ * @desc The message prefix which indicate users the current selected keyboard.
+ */
+msgs.MSG_CURRENT_KEYBOARD_PREFIX = goog.getMsg('current selected keyboard ');
 
 
 /**
@@ -2685,7 +2718,7 @@ msgs.MSG_KOREAN_KEYBOARD_LAYOUT = goog.getMsg('Korean Keyboard Layout');
 /**
  * @desc It is the description of Korean Syllable Inputs.
  */
-msgs.MSG_KOREAN_SYLLABLE_INPUT = goog.getMsg('Whether input hangul one by one');
+msgs.MSG_KOREAN_SYLLABLE_INPUT = goog.getMsg('Input hangul one by one');
 
 
 /**
@@ -2777,9 +2810,28 @@ msgs.MSG_EMOJI_TAB_OBJECT = goog.getMsg('Emoji category object');
  */
 msgs.MSG_EMOJI_TAB_EMOTICON = goog.getMsg('Emoji category emoticon');
 
+
 for (var key in emojiMsgs) {
   msgs[key] = emojiMsgs[key];
 }
 
-print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));
 
+/**
+ * @desc Whether to enable voice input tools
+ */
+msgs.MSG_VOICE = goog.getMsg('Voice');
+
+
+/**
+ * @desc Turn on voice input tool.
+ */
+msgs.MSG_VOICE_TURN_ON = goog.getMsg('turn on voice input tool');
+
+
+/**
+ * @desc Turn off voice input tool.
+ */
+msgs.MSG_VOICE_TURN_OFF = goog.getMsg('turn off voice input tool');
+
+
+print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));

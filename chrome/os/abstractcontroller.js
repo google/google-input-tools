@@ -14,21 +14,31 @@
 goog.provide('i18n.input.chrome.AbstractController');
 
 goog.require('goog.array');
+goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.object');
+goog.require('i18n.input.chrome.Env');
+goog.require('i18n.input.chrome.hmm.StateID');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
+goog.require('i18n.input.chrome.voice.EventType');
+goog.require('i18n.input.chrome.voice.VoiceModule');
 
 
 goog.scope(function() {
+var ContextType = i18n.input.chrome.message.ContextType;
+var Env = i18n.input.chrome.Env;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
-var ContextType = i18n.input.chrome.message.ContextType;
+var SizeSpec = i18n.input.chrome.inputview.SizeSpec;
+var StateID = i18n.input.chrome.hmm.StateID;
+var VoiceEventType = i18n.input.chrome.voice.EventType;
+var VoiceModule = i18n.input.chrome.voice.VoiceModule;
 
 
 
@@ -41,6 +51,26 @@ var ContextType = i18n.input.chrome.message.ContextType;
  */
 i18n.input.chrome.AbstractController = function() {
   i18n.input.chrome.AbstractController.base(this, 'constructor');
+
+  /** @protected {!Env} */
+  this.env = Env.getInstance();
+
+  /**
+   * The voice module.
+   *
+   * @protected {!VoiceModule}
+   */
+  this.voiceModule = VoiceModule.getInstance();
+
+  /** @protected {!goog.events.EventHandler} */
+  this.eventHandler = new goog.events.EventHandler(this);
+
+  this.eventHandler.listen(this.voiceModule,
+      [VoiceEventType.VOICE_RECOG_START,
+       VoiceEventType.VOICE_RECOG_END,
+       VoiceEventType.VOICE_RECOG_ERROR,
+       VoiceEventType.VOICE_RECOG_TIMEOUT],
+      this.onVoiceState_);
 };
 var AbstractController = i18n.input.chrome.AbstractController;
 goog.inherits(AbstractController, goog.events.EventTarget);
@@ -89,29 +119,12 @@ AbstractController.prototype.isSwitching = false;
 
 
 /**
- * The ime context.
- *
- * @type {InputContext}
- * @protected
- */
-AbstractController.prototype.context = null;
-
-
-/**
  * True if this IME is running in standalone mode in which there is no
  * touchscreen keyboard attached.
  *
  * @type {boolean}
  */
 AbstractController.prototype.standalone = true;
-
-
-/**
- * The current screen type.
- *
- * @protected {string}
- */
-AbstractController.prototype.screenType = 'normal';
 
 
 /**
@@ -132,7 +145,7 @@ AbstractController.prototype.keyData = null;
  * @param {string} screenType .
  */
 AbstractController.prototype.setScreenType = function(screenType) {
-  this.screenType = screenType;
+  this.env.screenType = screenType;
   this.updateSettings({});
 };
 
@@ -140,17 +153,21 @@ AbstractController.prototype.setScreenType = function(screenType) {
 /**
  * Activates an input tool.
  *
- * @param {string} inputToolCode The input tool or engine ID.
+ * @param {string} engineId The input tool or engine ID.
  */
-AbstractController.prototype.activate = function(inputToolCode) {
-  this.updateOptions(inputToolCode);
+AbstractController.prototype.activate = function(engineId) {
+  this.updateOptions(engineId);
+  this.updateInputToolMenu();
+  this.voiceModule.activate(engineId);
 };
 
 
 /**
  * Deactivates the current input tool.
  */
-AbstractController.prototype.deactivate = goog.functions.NULL;
+AbstractController.prototype.deactivate = function() {
+  this.voiceModule.deactivate();
+};
 
 
 /**
@@ -165,16 +182,14 @@ AbstractController.prototype.onInputContextUpdate = goog.functions.NULL;
  *
  * @param {!InputContext} context The context.
  */
-AbstractController.prototype.register = function(context) {
-  this.context = context;
-};
+AbstractController.prototype.register = goog.functions.NULL;
 
 
 /**
  * Unregister the current context.
  */
 AbstractController.prototype.unregister = function() {
-  this.context = null;
+  this.voiceModule.unregister();
 };
 
 
@@ -187,7 +202,9 @@ AbstractController.prototype.reset = goog.functions.NULL;
 /**
  * Callback when composition is cancelled by system.
  */
-AbstractController.prototype.onCompositionCanceled = goog.functions.NULL;
+AbstractController.prototype.onCompositionCanceled = function() {
+  this.voiceModule.onCompositionCanceled();
+};
 
 
 /**
@@ -199,6 +216,33 @@ AbstractController.prototype.onSurroundingTextChanged = goog.functions.NULL;
 
 
 /**
+ * Handler for voice module state change.
+ *
+ * @param {goog.events.Event} e .
+ * @private
+ */
+AbstractController.prototype.onVoiceState_ = function(e) {
+  chrome.runtime.sendMessage(goog.object.create(
+      Name.TYPE, Type.VOICE_STATE_CHANGE,
+      Name.MSG, goog.object.create(
+          Name.VOICE_STATE, e.type == VoiceEventType.VOICE_RECOG_START)));
+};
+
+
+/**
+ * Gets whether the key event was simulated for commitText.
+ *
+ * @param {!ChromeKeyboardEvent} e the key event.
+ * @return {boolean} .
+ * @protected
+ */
+AbstractController.prototype.isSimulated = function(e) {
+  return AbstractController.ENABLE_KEY_EVENT_SIMULATION && e.key.length == 1 &&
+      !!e.extensionId;
+};
+
+
+/**
  * Handles key event.
  *
  * @param {!ChromeKeyboardEvent} e the key event.
@@ -206,6 +250,10 @@ AbstractController.prototype.onSurroundingTextChanged = goog.functions.NULL;
  *     Undefined means it's unsure at that moment.
  */
 AbstractController.prototype.handleEvent = function(e) {
+  // Press any key on physical keyboard, stop voice recognition.
+  if (/^key/.test(e.type)) {
+    this.voiceModule.reset();
+  }
   this.keyData = e;
   return false;
 };
@@ -240,6 +288,7 @@ AbstractController.prototype.handleSendKeyEventMessage_ = function(keyData) {
     return;
   }
 
+  keyData['fromInputView'] = true;
   this.keyData = /** @type {!ChromeKeyboardEvent} */ (keyData);
   if (this.isNonCharacterKeyEvent(this.keyData)) {
     this.handleNonCharacterKeyEvent(this.keyData);
@@ -330,7 +379,17 @@ AbstractController.prototype.selectCandidate = goog.functions.NULL;
  * @param {string} stateId The state ID.
  * @param {boolean=} opt_stateIdValue The value of state ID.
  */
-AbstractController.prototype.switchInputToolState = goog.functions.NULL;
+AbstractController.prototype.switchInputToolState =
+    function(stateId, opt_stateIdValue) {
+  if (stateId == StateID.VOICE) {
+    if (this.voiceModule.isVisible()) {
+      this.voiceModule.deactivate();
+    } else {
+      this.voiceModule.activate(this.env.engineId);
+    }
+  }
+  this.updateInputToolMenu();
+};
 
 
 /**
@@ -353,6 +412,7 @@ AbstractController.prototype.updateOptions = goog.functions.NULL;
  */
 AbstractController.prototype.processMessage = function(message, sender,
     sendResponse) {
+  this.keyData = null;
   var msgType = message[Name.TYPE];
   switch (msgType) {
     case Type.SEND_KEY_EVENT:
@@ -368,6 +428,15 @@ AbstractController.prototype.processMessage = function(message, sender,
       break;
     case Type.VISIBILITY_CHANGE:
       this.standalone = !message[Name.VISIBILITY];
+      break;
+    case Type.VOICE_VIEW_STATE_CHANGE:
+      if (!this.standalone) {
+        if (message[Name.MSG]) {
+          this.voiceModule.start();
+        } else {
+          this.voiceModule.stop();
+        }
+      }
       break;
   }
 };
@@ -388,22 +457,25 @@ AbstractController.prototype.isStandalone = function() {
  * Commits a string.
  *
  * @param {string} text The string to commit.
- * @param {boolean} onStage Whether to whether is composition text onstage.
- *     This is used to check whether need to simulate key events intead of
+ * @param {boolean} onStage Whether is composition text onstage.
+ *     This is used to check whether need to simulate key events instead of
  *     directly committing the text.
  * @protected
  */
 AbstractController.prototype.commitText = function(text, onStage) {
-  if (this.context && text) {
+  if (this.env.context && text) {
+    // this.keyData.key.length == 1 means the recorded keyData is character key
+    // instead of special key like Backspace, Enter, Esc, etc.
     if (AbstractController.ENABLE_KEY_EVENT_SIMULATION &&
-        this.keyData && !onStage && text.length == 1) {
+        this.keyData && !onStage && text.length == 1 &&
+        this.keyData.key.length == 1) {
       this.keyData['key'] = text;
       this.sendKeyEvent(this.keyData);
     } else {
       chrome.input.ime.commitText(
           goog.object.create(
               Name.CONTEXT_ID,
-              this.context.contextID,
+              this.env.context.contextID,
               Name.TEXT,
               text));
     }
@@ -419,8 +491,8 @@ AbstractController.prototype.commitText = function(text, onStage) {
  */
 AbstractController.prototype.updateSettings = function(settings) {
   settings[Name.CONTEXT_TYPE] =
-      this.context ? this.context.type : ContextType.NONE;
-  settings[Name.SCREEN] = this.screenType;
+      this.env.context ? this.env.context.type : ContextType.NONE;
+  settings[Name.SCREEN] = this.env.screenType;
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.UPDATE_SETTINGS,
       Name.MSG, settings));
@@ -436,36 +508,67 @@ AbstractController.prototype.isReady = goog.functions.TRUE;
 
 
 /**
- * True if the current text box is url field.
- *
- * @return {boolean}
- * @protected
- */
-AbstractController.prototype.isUrlBox = function() {
-  return !!this.context && !!this.context.type && this.context.type == 'url';
-};
-
-
-/**
  * Is a password box.
  *
  * @return {boolean} .
  * @protected
  */
 AbstractController.prototype.isPasswdBox = function() {
-  return !!this.context && (!this.context.type ||
-      this.context.type == 'password');
+  return !!this.env.context && (!this.env.context.type ||
+      this.env.context.type == 'password');
 };
 
 
 /**
- * Is an email box.
+ * Is suggestions supported.
+ * This is only for XKB/Latin controllers.
  *
- * @return {boolean} .
+ * @return {boolean}
  * @protected
  */
-AbstractController.prototype.isEmailBox = function() {
-  return !!this.context && (!this.context.type ||
-      this.context.type == 'email');
+AbstractController.prototype.isSuggestionSupported = function() {
+  var context = this.env.context;
+  if (!context || !goog.array.contains(['text', 'search'], context.type)) {
+    return false;
+  }
+  return !goog.isDef(context.autoCorrect) && !goog.isDef(context.spellCheck) ||
+      !!context.autoCorrect && !!context.spellCheck;
+};
+
+
+/**
+ * Gets the Input Tool menus
+ *
+ * @return {Array.<!Object.<string, *>>} The menus.
+ * @protected
+ */
+AbstractController.prototype.getInputToolMenu = function() {
+  // Disable voice menu for physical keyboard.
+  return null;
+};
+
+
+/**
+ * Update the Input Tool menu.
+ *
+ * @protected
+ */
+AbstractController.prototype.updateInputToolMenu = function() {
+  var menus = this.getInputToolMenu();
+  if (menus) {
+    // Sets up voice option.
+    chrome.input.ime.setMenuItems(goog.object.create(
+        'engineID', this.env.engineId,
+        'items', menus));
+  }
+};
+
+
+/** @override */
+AbstractController.prototype.disposeInternal = function() {
+  goog.dispose(this.voiceModule);
+  goog.dispose(this.eventHandler);
+  goog.base(this, 'disposeInternal');
 };
 });  // goog.scope
+

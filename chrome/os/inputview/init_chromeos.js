@@ -20,30 +20,6 @@ goog.require('i18n.input.chrome.inputview.Controller');
   window.onload = function() {
     var code, language, passwordLayout, name;
 
-    // TODO: remove this hack as soon as the manifest is fixed in chromium.
-    var hackLanguageAndLayout = function() {
-      var isRTL = goog.i18n.bidi.isRtlLanguage(language);
-      // Case: Arabic t13n, code=t13n, passwordLayout=us.
-      if (code == 't13n') {
-        if (isRTL) {
-          code = 't13n-rtl';
-        }
-        passwordLayout = code;
-      }
-      // Case: Arabic m17n, code=m17n:ar, passwordLayout=us.
-      if (/^m17n:/.test(code)) {
-        passwordLayout = isRTL ? 'us-rtl' : 'us';
-      }
-      // Case: Hebrew XKB, code=xkb:il::heb, passwordLayout=us.
-      if (isRTL && !/-rtl$/.test(passwordLayout)) {
-        passwordLayout += '-rtl';
-      }
-      if (language == 'nb') {
-        language = 'no';
-        passwordLayout = code;
-      }
-    };
-
     var fetchHashParam = function() {
       var hash = window.location.hash;
       if (!hash) {
@@ -58,7 +34,6 @@ goog.require('i18n.input.chrome.inputview.Controller');
       language = param['language'] || 'en';
       passwordLayout = param['passwordLayout'] || 'us';
       name = chrome.i18n.getMessage(param['name'] || 'English');
-      hackLanguageAndLayout();
       return true;
     };
 
@@ -68,7 +43,6 @@ goog.require('i18n.input.chrome.inputview.Controller');
       language = uri.getParameterValue('language') || 'en';
       passwordLayout = uri.getParameterValue('passwordLayout') || 'us';
       name = chrome.i18n.getMessage(uri.getParameterValue('name') || 'English');
-      hackLanguageAndLayout();
     }
 
     var controller = new i18n.input.chrome.inputview.Controller(code,

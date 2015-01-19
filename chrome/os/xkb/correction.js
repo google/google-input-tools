@@ -51,7 +51,7 @@ i18n.input.chrome.xkb.Correction = function(source, target) {
  * @return {boolean} .
  */
 i18n.input.chrome.xkb.Correction.prototype.shouldCancel = function(text) {
-  var cancel = !goog.string.endsWith(text, this.target);
+  var cancel = !goog.string.endsWith(text.replace(/\u00a0/g, ' '), this.target);
   if (this.isTriggerredByEnter && cancel) {
     cancel = !goog.string.endsWith(text, this.target + '\n');
   }

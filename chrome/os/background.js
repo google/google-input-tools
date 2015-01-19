@@ -17,6 +17,7 @@ goog.require('goog.Disposable');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.object');
+goog.require('i18n.input.chrome.Env');
 goog.require('i18n.input.chrome.EventType');
 goog.require('i18n.input.chrome.inputview.PerfTracker');
 goog.require('i18n.input.chrome.message.Name');
@@ -26,9 +27,11 @@ goog.require('i18n.input.chrome.xkb.Controller');
 
 
 goog.scope(function() {
+var Env = i18n.input.chrome.Env;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
 var PerfTracker = i18n.input.chrome.inputview.PerfTracker;
+
 
 
 /**
@@ -112,6 +115,9 @@ i18n.input.chrome.Background = function() {
   /** @protected {!goog.events.EventHandler} */
   this.eventHandler = new goog.events.EventHandler(this);
 
+  /** @protected {!Env} */
+  this.env = Env.getInstance();
+
   // Sets up a listener which communicate with the
   // option page or inputview
   // window.
@@ -125,10 +131,6 @@ i18n.input.chrome.Background = function() {
 };
 goog.inherits(i18n.input.chrome.Background, goog.Disposable);
 var Background = i18n.input.chrome.Background;
-
-
-/** @protected {string} */
-Background.prototype.engineId = '';
 
 
 /**
@@ -153,7 +155,8 @@ Background.ControllerType = {
   XKB: 6,
   VKD: 7,
   KOREAN: 8,
-  EMOJI: 9
+  EMOJI: 9,
+  VOICE: 10
 };
 var ControllerType = Background.ControllerType;
 
@@ -176,19 +179,11 @@ Background.prototype.previousActiveController;
 
 
 /**
- * The ime context.
- *
- * @type {InputContext}
- */
-Background.prototype.context = null;
-
-
-/**
  * Uninit.
  *
- * @private
+ * @protected
  */
-Background.prototype.uninit_ = function() {
+Background.prototype.uninit = function() {
   if (!this.initialized_) {
     return;
   }
@@ -259,6 +254,9 @@ Background.prototype.init_ = function() {
 
   this.initialized_ = true;
   window['setContext'] = this.onFocus.bind(this);
+  window['addEventListener']('unload', function() {
+    this.dispose();
+  }.bind(this));
 };
 
 
@@ -330,7 +328,7 @@ Background.prototype.onMessage = function(message, sender, sendResponse) {
   if (message[Name.TYPE] == Type.VISIBILITY_CHANGE &&
       message[Name.VISIBILITY]) {
     chrome.input.ime.setCandidateWindowProperties(goog.object.create(
-        Name.ENGINE_ID, this.engineId,
+        Name.ENGINE_ID, this.env.engineId,
         Name.PROPERTIES, goog.object.create(
             Name.VISIBLE, false)));
   }
@@ -348,8 +346,9 @@ Background.prototype.onMessage = function(message, sender, sendResponse) {
  * @param {string} screenType The current screen type.
  */
 Background.prototype.onActivate = function(engineId, screenType) {
+  this.env.engineId = engineId;
   chrome.runtime.onSuspend.addListener((function() {
-    this.uninit_();
+    this.uninit();
   }).bind(this));
 
   if (this.activeController) {
@@ -364,8 +363,8 @@ Background.prototype.onActivate = function(engineId, screenType) {
   }
   this.activeController.activate(engineId);
   this.activeController.setScreenType(screenType);
-  if (this.context) {
-    this.activeController.register(this.context);
+  if (this.env.context) {
+    this.activeController.register(this.env.context);
   }
 };
 
@@ -386,7 +385,7 @@ Background.prototype.onDeactivate_ = function(engineID) {
  * @protected
  */
 Background.prototype.onFocus = function(context) {
-  this.context = context;
+  this.env.context = context;
   this.activeController && this.activeController.register(context);
 };
 
@@ -399,7 +398,7 @@ Background.prototype.onFocus = function(context) {
  * @protected
  */
 Background.prototype.onBlur = function(contextID, opt_screen) {
-  this.context = null;
+  this.env.context = null;
   this.activeController && this.activeController.unregister();
 };
 
@@ -486,6 +485,9 @@ Background.prototype.onInputContextUpdate_ = function(context) {
  * @private
  */
 Background.prototype.onSurroundingTextChanged_ = function(engineID, info) {
+  this.env.surroundingInfo = info;
+  this.env.textBeforeCursor = info.text.slice(0,
+      Math.min(info.anchor, info.focus)).replace(/\u00a0/g, ' ');
   this.activeController &&
       this.activeController.onSurroundingTextChanged(engineID, info);
 };
@@ -493,6 +495,9 @@ Background.prototype.onSurroundingTextChanged_ = function(engineID, info) {
 
 /** @override */
 Background.prototype.disposeInternal = function() {
+  for (var type in this.controllers) {
+    this.controllers[Number(type)].dispose();
+  }
   goog.dispose(this.eventHandler);
   goog.base(this, 'disposeInternal');
 };

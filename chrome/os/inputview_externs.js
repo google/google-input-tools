@@ -25,6 +25,7 @@ chrome.metricsPrivate = {};
 chrome.metricsPrivate.recordValue = function(metrics, value) {};
 
 
+
 /**
  * @param {number} num .
  * @param {Function} callback .
@@ -49,6 +50,14 @@ xkb.DataSource.prototype.sendCompletionRequest = function(query, context,
 
 
 /**
+ * @param {string} word .
+ * @param {string} context .
+ */
+xkb.DataSource.prototype.sendCompletionRequestForWord = function(word,
+    context) {};
+
+
+/**
  * @param {string} context .
  */
 xkb.DataSource.prototype.sendPredictionRequest = function(context) {};
@@ -61,6 +70,12 @@ xkb.DataSource.prototype.setCorrectionLevel = function(level) {};
 
 
 /**
+ * @param {boolean} enabled .
+ */
+xkb.DataSource.prototype.setEnableUserDict = function(enabled) {};
+
+
+/**
  * @return {boolean} .
  */
 xkb.DataSource.prototype.isReady = function() {return false};
@@ -68,6 +83,12 @@ xkb.DataSource.prototype.isReady = function() {return false};
 
 /** Clears the data source. */
 xkb.DataSource.prototype.clear = function() {};
+
+
+/**
+ * @param {string} text .
+ */
+xkb.DataSource.prototype.commitText = function(text) {};
 
 
 /**
@@ -83,6 +104,12 @@ var inputview = {};
  * @param {!Function} callback .
  */
 inputview.getKeyboardConfig = function(callback) {};
+
+
+/**
+ * @param {!Function} callback .
+ */
+inputview.getInputMethodConfig = function(callback) {};
 
 
 /**

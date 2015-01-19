@@ -12,6 +12,7 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
 
+
 /**
  * HTML5 localStorage extern.
  */
@@ -783,11 +784,97 @@ chrome.inputMethodPrivate.getCurrentInputMethod = function(callback) {};
 chrome.inputMethodPrivate.getInputMethodConfig = function(callback) {};
 
 
+/** @const */
+chrome.inputMethodPrivate.onCompositionBoundsChanged = {};
+
+
+/**
+ * @param {function(!BoundSize, !Array.<!BoundSize>): (boolean|undefined)}
+ *     callback .
+ */
+chrome.inputMethodPrivate.onCompositionBoundsChanged.addListener =
+    function(callback) {};
+
+
 /**
  * @param {!string} inputMethodId .
- * @param {function()=} callback .
+ * @param {function()=} opt_callback .
  */
 chrome.inputMethodPrivate.setCurrentInputMethod =
-    function(inputMethodId, callback) {};
+    function(inputMethodId, opt_callback) {};
 
 
+/** @const */
+chrome.virtualKeyboardPrivate = {};
+
+
+/**
+ * @param {function(!Object)} callback .
+ */
+chrome.virtualKeyboardPrivate.getKeyboardConfig = function(callback) {};
+
+
+/** Opens the language settings page in ChromeOS. */
+chrome.virtualKeyboardPrivate.openSettings = function() {};
+
+
+/**
+ * @param {!Object} parameters
+ * @param {function(): void=} opt_callback Callback function.
+ */
+chrome.virtualKeyboardPrivate.sendKeyEvent =
+    function(parameters, opt_callback) {};
+
+
+/** @type {chrome.app.window.Bounds} */
+chrome.app.window.AppWindow.prototype.outerBounds;
+
+
+/**
+ * Sets the position.
+ *
+ * @param {number} x The x position.
+ * @param {number} y The y position.
+ */
+chrome.app.window.Bounds.prototype.setPosition = function(x, y) {};
+
+
+/**
+ * Sets the size.
+ *
+ * @param {number} w The width.
+ * @param {number} h The height.
+ */
+chrome.app.window.Bounds.prototype.setSize = function(w, h) {};
+
+
+/**
+ * Callback parameter which bring by composition bounds changed event.
+ *
+ * @constructor
+ */
+var BoundSize = function() {};
+
+
+/** @type {number} */
+BoundSize.prototype.x;
+
+
+/** @type {number} */
+BoundSize.prototype.y;
+
+
+/** @type {number} */
+BoundSize.prototype.w;
+
+
+/** @type {number} */
+BoundSize.prototype.h;
+
+
+/** @type {boolean} */
+InputContext.prototype.autoCorrect;
+
+
+/** @type {boolean} */
+InputContext.prototype.spellCheck;

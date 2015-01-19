@@ -20,6 +20,8 @@ goog.provide('i18n.input.chrome.EventType');
  * @enum {string}
  */
 i18n.input.chrome.EventType = {
-  EXECUTE_WAITING_EVENT: 'ewe'
+  CLICK_CANDIDATE_EVENT: 'cce',
+  EXECUTE_WAITING_EVENT: 'ewe',
+  INSERT_USERDICT_EVENT: 'iue'
 };
 
