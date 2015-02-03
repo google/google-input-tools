@@ -10,7 +10,7 @@ body {
 }
 
 .accent-container {
-  background-color: #ffffff;
+  background-color: #FBFCFE;
   width: 100%;
   height: 100%;
 }
@@ -25,13 +25,13 @@ body {
 }
 
 .accent-row>div>div {
-  color: #111111;
-  font-size: 23px;
+  color: #37474f;
+  font-size: 40px;
   height: 100%;
   vertical-align: middle;
   text-align: center;
 }
 
 .highlight {
-  background-color: #ebebeb;
+  background-color: #E4E7E9;
 }

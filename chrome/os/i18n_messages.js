@@ -77,6 +77,12 @@ msgs.MSG_USER_DICT_SYNC = goog.getMsg(
 
 
 /**
+ * @desc Label for button that resets all user dictionary changes.
+ */
+msgs.MSG_USER_DICT_RESET = goog.getMsg('Reset All Dictionary Entries');
+
+
+/**
  * @desc Label for button with popup user dictionary dialog.
  */
 msgs.MSG_USER_DICT_MANAGE = goog.getMsg('Manage personal dictionary...');
@@ -2832,6 +2838,42 @@ msgs.MSG_VOICE_TURN_ON = goog.getMsg('turn on voice input tool');
  * @desc Turn off voice input tool.
  */
 msgs.MSG_VOICE_TURN_OFF = goog.getMsg('turn off voice input tool');
+
+
+/**
+ * @desc Adds the current edition word into personal dictionary.
+ */
+msgs.MSG_ADD_TO_PERSONAL_DICTIONARY = goog.getMsg('Add to personal dictionary');
+
+
+/**
+ * @desc Ignore auto correction feature for the given word.
+ */
+msgs.MSG_IGNORE_CORRECTION = goog.getMsg('Ignore correction for');
+
+
+/**
+ * @desc Settings for a Input Tool.
+ */
+msgs.MSG_SETTINGS = goog.getMsg('Settings');
+
+
+/**
+ * @desc expand the menu
+ */
+msgs.MSG_EXPAND = goog.getMsg('Expand');
+
+
+/**
+ * @desc expand the menu
+ */
+msgs.MSG_SHRINK_CANDIDATES = goog.getMsg('shrink candidate list');
+
+
+/**
+ * @desc expand the menu
+ */
+msgs.MSG_EXPAND_CANDIDATES = goog.getMsg('expand candidate list');
 
 
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));
