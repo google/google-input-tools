@@ -214,6 +214,8 @@ Background.prototype.uninit = function() {
     chrome.input.ime.onReset.removeListener(this.onResetFn_);
   }
 
+  this.activeController.deactivate();
+
   this.initialized_ = false;
 };
 

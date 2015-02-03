@@ -797,6 +797,14 @@ chrome.inputMethodPrivate.onCompositionBoundsChanged.addListener =
 
 
 /**
+ * @param {function(!BoundSize, !Array.<!BoundSize>): (boolean|undefined)}
+ *     callback .
+ */
+chrome.inputMethodPrivate.onCompositionBoundsChanged.removeListener =
+    function(callback) {};
+
+
+/**
  * @param {!string} inputMethodId .
  * @param {function()=} opt_callback .
  */

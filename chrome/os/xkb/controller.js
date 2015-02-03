@@ -13,6 +13,7 @@
 //
 goog.provide('i18n.input.chrome.xkb.Controller');
 
+goog.require('goog.Timer');
 goog.require('goog.array');
 goog.require('goog.events.EventType');
 goog.require('goog.object');
@@ -55,12 +56,20 @@ var REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS =
 
 
 /**
- * The regex to split the last word of a sentence.
+ * The regex to split the portion of word before cursor if any.
  *
  * @type {!RegExp}
  */
-var REGEX_LETTER = new RegExp(Constant.LATIN_VALID_CHAR, 'i');
+var LETTERS_BEFORE_CURSOR = new RegExp(Constant.LATIN_VALID_CHAR + '+$', 'i');
 
+
+/**
+ * The regex to split the portion of word after cursor if any.
+ *
+ * @type {!RegExp}
+ */
+var LETTERS_AFTER_CURSOR =
+    new RegExp('^' + Constant.LATIN_VALID_CHAR + '+', 'i');
 
 
 /**
@@ -181,14 +190,6 @@ Controller.prototype.committedText_ = '';
 
 
 /**
- * The surrounding text.
- *
- * @private {string}
- */
-Controller.prototype.surroundingText_ = '';
-
-
-/**
  * The type of the last commit.
  *
  * @private {number}
@@ -221,58 +222,87 @@ Controller.prototype.isBackspaceDownHandled_ = false;
 Controller.prototype.isVisible_ = false;
 
 
+/**
+ * Whether to skip next attempt to set the word which has cursor to composition
+ * mode.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.skipNextSetComposition_ = false;
+
+
+/**
+ * Whether physical keyboard is used for typing.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.usingPhysicalKeyboard_ = false;
+
+
+/**
+ * When surrounding text change, not going to trigger complementation at once.
+ * Will delay 500ms to do it.
+ *
+ * @private {number}
+ */
+Controller.prototype.delayTimer_ = 0;
+
+
 /** @override */
 Controller.prototype.onSurroundingTextChanged = function(
     engineID, surroundingInfo) {
-  var text = surroundingInfo.text.slice(
-      0, Math.min(surroundingInfo.anchor, surroundingInfo.focus));
-  var clearCallback = true;
+  this.maybeSetExistingWordToCompositonMode_();
 
-  if (this.shouldSetComposition_(surroundingInfo)) {
-    var cursorPosition = surroundingInfo.focus;
-    if (cursorPosition == surroundingInfo.text.length ||
-        !REGEX_LETTER.test(surroundingInfo.text[cursorPosition])) {
-      var startPosition = cursorPosition == 0 ? 0 : cursorPosition - 1;
-      while (startPosition >= 0 &&
-             surroundingInfo.text[startPosition].match(REGEX_LETTER)) {
-        startPosition--;
-      }
-      if (startPosition != 0) {
-        // Point to the first character of a word.
-        startPosition++;
-      }
-      if (cursorPosition != startPosition) {
-        if (this.isVisible_) {
-          this.setToCompositionMode_(startPosition, cursorPosition,
-              surroundingInfo);
-          return;
-        } else {
-          // Keyboard may not yet initialized or visible when cursor moved. If a
-          // cursor movement triggers the keyboard becomes visible, suggestions
-          // should be provided through this callback.
-          this.setToCompositionModeCallback_ = this.setToCompositionMode_.bind(
-              this, startPosition, cursorPosition, surroundingInfo);
-          clearCallback = false;
-        }
-      }
-    }
-  }
-
-  if (clearCallback) {
-    this.setToCompositionModeCallback_ = null;
-  }
-  this.surroundingText_ = text;
   if (!this.compositionText_) {
     if (this.lastCorrection_ && !this.lastCorrection_.reverting &&
-        this.lastCorrection_.shouldCancel(text)) {
+        this.lastCorrection_.shouldCancel(this.env.textBeforeCursor)) {
       // Clears the last correct if the cursor changed.
       this.lastCorrection_ = null;
     }
 
     chrome.runtime.sendMessage(goog.object.create(
         Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
-        Name.TEXT, text));
+        Name.TEXT, this.env.textBeforeCursor,
+        Name.ANCHOR, surroundingInfo.anchor,
+        Name.FOCUS, surroundingInfo.focus));
   }
+};
+
+
+/**
+ * Sets the word which has cursor to composition mode if needed.
+ *
+ * @private
+ */
+Controller.prototype.maybeSetExistingWordToCompositonMode_ = function() {
+  goog.Timer.clear(this.delayTimer_);
+  if (this.shouldSetComposition_()) {
+    var cursorPosition = this.env.surroundingInfo.focus;
+    var beforeCursorMatched =
+        LETTERS_BEFORE_CURSOR.exec(this.env.textBeforeCursor);
+    var startPosition = cursorPosition;
+    if (beforeCursorMatched) {
+      var word = beforeCursorMatched[0];
+      startPosition = this.env.textBeforeCursor.length - word.length;
+    }
+
+    var textAfterCursor = this.env.surroundingInfo.text.slice(cursorPosition);
+    var afterCursorMatched = LETTERS_AFTER_CURSOR.exec(textAfterCursor);
+    var endPosition = cursorPosition;
+    if (afterCursorMatched) {
+      var word = afterCursorMatched[0];
+      endPosition += word.length;
+    }
+
+    if (startPosition != endPosition) {
+      var word = this.env.surroundingInfo.text.slice(
+          startPosition, endPosition);
+      var cb = this.setToCompositionMode_.bind(this, startPosition,
+          endPosition, cursorPosition, word);
+      this.delayTimer_ = goog.Timer.callOnce(cb, 500);
+    }
+  }
+  this.skipNextSetComposition_ = false;
 };
 
 
@@ -281,28 +311,28 @@ Controller.prototype.onSurroundingTextChanged = function(
  *
  * @param {number} start .
  * @param {number} end .
- * @param {!Object} surroundingInfo
+ * @param {number} cursor .
+ * @param {string} word .
  *
  * @private
  */
 Controller.prototype.setToCompositionMode_ =
-    function(start, end, surroundingInfo) {
-  var word = surroundingInfo.text.slice(start, end);
+    function(start, end, cursor, word) {
   this.compositionText_ = word;
-  this.surroundingText_ = surroundingInfo.text.slice(0, start);
+  this.env.textBeforeCursor = this.env.textBeforeCursor.slice(0, start);
   this.committedText_ = '';
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
       Name.TEXT, this.committedText_));
-  this.deleteSurroudingText_(start - end, end - start, (function() {
+
+  this.deleteSurroudingText_(start - cursor, end - start, (function() {
     chrome.input.ime.setComposition(goog.object.create(
         Name.CONTEXT_ID, this.env.context.contextID,
         Name.TEXT, word,
-        Name.CURSOR, word.length));
-    this.dataSource_.sendCompletionRequestForWord(
-        word, this.filterPreviousText_(this.surroundingText_));
+        Name.CURSOR, cursor - start));
+    this.dataSource_.sendCompletionRequestForWord(word,
+        this.filterPreviousText_(this.env.textBeforeCursor));
   }).bind(this));
-  this.setToCompositionModeCallback_ = null;
 };
 
 
@@ -336,6 +366,7 @@ Controller.prototype.activate = function(inputToolCode) {
         i18n.input.chrome.EngineIdLanguageMap[this.env.engineId][0]);
   }
   this.statistics_.setInputMethodId(inputToolCode);
+  this.statistics_.setPhysicalKeyboard(false);
 };
 
 
@@ -365,11 +396,9 @@ Controller.prototype.updateOptions = function(inputToolCode) {
       OptionType.AUTO_CORRECTION_LEVEL));
   var autoCapital = /** @type {boolean} */ (optionStorageHandler.get(
       OptionType.ENABLE_CAPITALIZATION));
-  var enableUserDict = /** @type {boolean} */ (optionStorageHandler.get(
-      OptionType.ENABLE_USER_DICT));
   this.correctionLevel = correctionLevel;
   if (this.dataSource_) {
-    this.dataSource_.setEnableUserDict(enableUserDict);
+    this.dataSource_.setEnableUserDict(true);
     this.dataSource_.setCorrectionLevel(this.correctionLevel);
     this.statistics_.setAutoCorrectLevel(this.correctionLevel);
   }
@@ -472,12 +501,10 @@ Controller.prototype.commitText_ = function(
   if (text) {
     var target = textToCommit.trim();
     if (this.dataSource_) {
-      // This must come before the prediction request since the prediction
-      // request's callback causes the NaCl module to no longer be ready.
       this.dataSource_.commitText(target);
       if (this.isSuggestionSupported()) {
         this.dataSource_.sendPredictionRequest(
-            this.filterPreviousText_(this.surroundingText_ + textToCommit));
+            this.filterPreviousText_(this.env.textBeforeCursor + textToCommit));
       }
     }
     // statstics for text committing.
@@ -564,7 +591,7 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
 
   if (text) {
     this.dataSource_ && this.dataSource_.sendCompletionRequest(
-        text, this.filterPreviousText_(this.surroundingText_),
+        text, this.filterPreviousText_(this.env.textBeforeCursor),
         opt_spatialData);
   } else {
     this.clearCandidates_();
@@ -627,27 +654,27 @@ Controller.prototype.shouldAutoSpace_ = function() {
 /**
  * True if the word which has cursor should be set to composition mode.
  *
- * @param {!Object} surroundingInfo .
  * @return {boolean}
  * @private
  */
-Controller.prototype.shouldSetComposition_ = function(surroundingInfo) {
+Controller.prototype.shouldSetComposition_ = function() {
   // Sets exisiting word to composition mode if:
   // 1. suggestion is avaiable and enabled;
   // 2. no composition in progress;
   // 3. no text selection;
   // 4. surround text is not empty;
-  // 5. cursor is at the end of the existing word.
-  // TODO(bshe): Due to crbug.com/446249, condition 5 is temporarily introduced.
-  // Ideally, the existing word should be in composition mode when cursor moved
-  // in it.
+  // 5. virtual keyboard is visible;
+  // 6. skipNextSetComposition_ is false;
+  // 7. not typing by physical keyboard.
   return !!this.isExperimental_ &&
          !!this.dataSource_ &&
-         this.dataSource_.isReady() &&
          this.isSuggestionSupported() &&
          !this.compositionText_ &&
-         surroundingInfo.focus == surroundingInfo.anchor &&
-         surroundingInfo.text.length > 0;
+         this.env.surroundingInfo.focus == this.env.surroundingInfo.anchor &&
+         this.env.surroundingInfo.text.length > 0 &&
+         this.isVisible_ &&
+         !this.skipNextSetComposition_ &&
+         !this.usingPhysicalKeyboard_;
 };
 
 
@@ -686,6 +713,18 @@ Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
 
 
 /** @override */
+Controller.prototype.handleEvent = function(e) {
+  goog.base(this, 'handleEvent', e);
+  this.usingPhysicalKeyboard_ = true;
+  // For physical key events, just confirm the composition and release the key.
+  if (this.compositionText_) {
+    this.commitText_('', true, 1, false);
+  }
+  return false;
+};
+
+
+/** @override */
 Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
   var code = keyData[Name.CODE];
   var type = keyData[Name.TYPE];
@@ -701,11 +740,11 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
 
       if (this.lastCorrection_) {
         var offset = this.lastCorrection_.getTargetLength(
-            this.surroundingText_);
+            this.env.textBeforeCursor);
         this.lastCorrection_.reverting = true;
-        this.deleteSurroudingText_(offset, offset, (function() {
+        this.deleteSurroudingText_(-offset, offset, (function() {
           this.commitText_(
-              this.lastCorrection_.getSource(this.surroundingText_),
+              this.lastCorrection_.getSource(this.env.textBeforeCursor),
               false, 5, false);
           this.lastCorrection_ = null;
         }).bind(this));
@@ -777,11 +816,11 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       // TODO: A hack to workaround the IME bug: surrounding text event won't
       // trigger when composition text is equal to committed text. Remove this
       // line when bug is fixed.
-      this.surroundingText_ = candidate[Name.CANDIDATE];
+      this.env.textBeforeCursor = candidate[Name.CANDIDATE];
       break;
     case Type.DOUBLE_CLICK_ON_SPACE_KEY:
-      if (this.doubleSpacePeriod_ &&
-          REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS.test(this.surroundingText_)) {
+      if (this.doubleSpacePeriod_ && REGEX_DOUBLE_SPACE_PERIOD_CHARACTERS.test(
+          this.env.textBeforeCursor)) {
         if (this.compositionText_) {
           console.error('Composition text is not expected when double click' +
               ' on space key.');
@@ -799,6 +838,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       this.updateOptions(this.env.engineId);
       break;
     case Type.SEND_KEY_EVENT:
+      this.usingPhysicalKeyboard_ = false;
       var keyData = /** @type {!Array.<!ChromeKeyboardEvent>} */
           (message[Name.KEY_DATA]);
       if (keyData.length >= 2 && keyData[0][Name.CODE] == 'Toggle') {
@@ -818,11 +858,8 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       break;
     case Type.VISIBILITY_CHANGE:
       this.isVisible_ = message[Name.VISIBILITY];
-      if (this.isVisible_ && this.setToCompositionModeCallback_) {
-        // Set word to composition mode only when input view become visible. The
-        // suggestions are displayed in input view.
-        this.setToCompositionModeCallback_();
-      }
+      this.usingPhysicalKeyboard_ = !this.isVisible_;
+      this.maybeSetExistingWordToCompositonMode_();
       break;
     case Type.OPTION_CHANGE:
       var optionType = message[Name.OPTION_TYPE];
@@ -836,6 +873,16 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
   }
 
   goog.base(this, 'processMessage', message, sender, sendResponse);
+};
+
+
+/** @override */
+Controller.prototype.commitText = function(text, onStage) {
+  // Commit text will result onSurroundingTextChanged event. It is not necessary
+  // to try to set a just committed word to composition mode in this case, so
+  // set skipNextSetComposition_ to true.
+  this.skipNextSetComposition_ = true;
+  goog.base(this, 'commitText', text, onStage);
 };
 
 });  // goog.scope
