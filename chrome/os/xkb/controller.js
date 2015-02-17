@@ -173,6 +173,14 @@ Controller.prototype.compositionText_ = '';
 
 
 /**
+ * The cursor position in composition text.
+ *
+ * @private {number}
+ */
+Controller.prototype.compositionTextCursorPosition_ = 0;
+
+
+/**
  * The dead key.
  *
  * @private {string}
@@ -212,6 +220,15 @@ Controller.prototype.isPredict_ = false;
  * @private {boolean}
  */
 Controller.prototype.isBackspaceDownHandled_ = false;
+
+
+/**
+ * Whether the left/right arrow keydown is handled.
+ * This is for handling the left/right arrow keyup correctly.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.isArrowKeyDownHandled_ = false;
 
 
 /**
@@ -319,17 +336,18 @@ Controller.prototype.maybeSetExistingWordToCompositonMode_ = function() {
 Controller.prototype.setToCompositionMode_ =
     function(start, end, cursor, word) {
   this.compositionText_ = word;
+  this.compositionTextCursorPosition_ = cursor - start;
   this.env.textBeforeCursor = this.env.textBeforeCursor.slice(0, start);
   this.committedText_ = '';
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
       Name.TEXT, this.committedText_));
 
-  this.deleteSurroudingText_(start - cursor, end - start, (function() {
+  this.deleteSurroundingText_(start - cursor, end - start, (function() {
     chrome.input.ime.setComposition(goog.object.create(
         Name.CONTEXT_ID, this.env.context.contextID,
         Name.TEXT, word,
-        Name.CURSOR, cursor - start));
+        Name.CURSOR, this.compositionTextCursorPosition_));
     this.dataSource_.sendCompletionRequestForWord(word,
         this.filterPreviousText_(this.env.textBeforeCursor));
   }).bind(this));
@@ -344,7 +362,7 @@ Controller.prototype.setToCompositionMode_ =
  * @param {!Function} callback .
  * @private
  */
-Controller.prototype.deleteSurroudingText_ = function(offset, length,
+Controller.prototype.deleteSurroundingText_ = function(offset, length,
     callback) {
   if (!this.env.context) {
     return;
@@ -418,6 +436,7 @@ Controller.prototype.unregister = function() {
   goog.base(this, 'unregister');
 
   this.compositionText_ = '';
+  this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
   this.textBeforeCursor_ = '';
   this.lastCommitType_ = -1;
@@ -431,6 +450,7 @@ Controller.prototype.reset = function() {
 
   this.commitText_('', false, 1, false);
   this.compositionText_ = '';
+  this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
   this.dataSource_ && this.dataSource_.clear();
 };
@@ -442,6 +462,7 @@ Controller.prototype.onCompositionCanceled = function() {
 
   this.clearCandidates_();
   this.compositionText_ = '';
+  this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
   this.dataSource_ && this.dataSource_.clear();
 };
@@ -519,6 +540,7 @@ Controller.prototype.commitText_ = function(
   }
 
   this.compositionText_ = '';
+  this.compositionTextCursorPosition_ = 0;
   if (textToCommit != ' ') {
     // If it is a space, don't reset the committed text.
     this.committedText_ = textToCommit;
@@ -580,19 +602,35 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
 
   this.committedText_ = '';
   if (append) {
-    text = this.compositionText_ + text;
+    var cursorPosition = this.compositionTextCursorPosition_;
+    this.compositionText_ = this.compositionText_.slice(0, cursorPosition) +
+        text + this.compositionText_.slice(cursorPosition);
+    this.compositionTextCursorPosition_ = cursorPosition + text.length;
+  } else {
+    this.compositionText_ = text;
+    this.compositionTextCursorPosition_ = text.length;
   }
-  this.compositionText_ = text;
   chrome.input.ime.setComposition(goog.object.create(
       Name.CONTEXT_ID, this.env.context.contextID,
-      Name.TEXT, text,
-      Name.CURSOR, text.length
+      Name.TEXT, this.compositionText_,
+      Name.CURSOR, this.compositionTextCursorPosition_
       ));
 
-  if (text) {
-    this.dataSource_ && this.dataSource_.sendCompletionRequest(
-        text, this.filterPreviousText_(this.env.textBeforeCursor),
-        opt_spatialData);
+  if (this.compositionText_) {
+    if (this.compositionTextCursorPosition_ == this.compositionText_.length) {
+      this.dataSource_ && this.dataSource_.sendCompletionRequest(
+          this.compositionText_,
+          this.filterPreviousText_(this.env.textBeforeCursor),
+          opt_spatialData);
+    } else {
+      // sendCompletionRequest assumes spatia data is for the last character in
+      // compositionText_. In cases that we want to add/delete characters beside
+      // the last one in compositionText_, we use sendCompletionRequestForWord.
+      // Spatial data is not use here.
+      this.dataSource_ && this.dataSource_.sendCompletionRequestForWord(
+          this.compositionText_,
+          this.filterPreviousText_(this.env.textBeforeCursor));
+    }
   } else {
     this.clearCandidates_();
   }
@@ -712,6 +750,43 @@ Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
 };
 
 
+/**
+ * Moves cursor position in composition text. Note chrome.input APIs do not
+ * support move cursor in composition text directly, but support set cursor
+ * position when set composition text. To move cursor, we need to set
+ * composition on the same text but with a different cursor position to move it
+ * to the correct place. If the cursor moves out of the composition word, this
+ * function will not consume the arrow key event and return false.
+ *
+ * @param {boolean} isRight True if move the cursor to right.
+ * @return {boolean} True if move cursor successfully.
+ * @private
+ */
+Controller.prototype.moveCursorInComposition_ = function(isRight) {
+  if (this.compositionText_) {
+    if (isRight) {
+      if (this.compositionTextCursorPosition_ == this.compositionText_.length) {
+        return false;
+      }
+      this.compositionTextCursorPosition_++;
+    } else {
+      if (this.compositionTextCursorPosition_ == 0) {
+        return false;
+      }
+      this.compositionTextCursorPosition_--;
+    }
+    chrome.input.ime.setComposition(goog.object.create(
+        Name.CONTEXT_ID, this.env.context.contextID,
+        Name.TEXT, this.compositionText_,
+        Name.CURSOR, this.compositionTextCursorPosition_));
+    this.dataSource_.sendCompletionRequestForWord(this.compositionText_,
+        this.filterPreviousText_(this.env.textBeforeCursor));
+    return true;
+  }
+  return false;
+};
+
+
 /** @override */
 Controller.prototype.handleEvent = function(e) {
   goog.base(this, 'handleEvent', e);
@@ -730,10 +805,55 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
   var type = keyData[Name.TYPE];
   if (code == KeyCodes.BACKSPACE) {
     if (type == goog.events.EventType.KEYDOWN) {
+      this.statistics_.recordBackspace();
       if (this.compositionText_) {
-        this.compositionText_ = this.compositionText_.substring(
-            0, this.compositionText_.length - 1);
-        this.setComposition_(this.compositionText_, false, false);
+        if (this.compositionTextCursorPosition_ == 0) {
+          // removes previous character and combines two word if needed.
+          var compositionText = this.compositionText_;
+          var textBeforeCursor = this.env.textBeforeCursor;
+          if (textBeforeCursor) {
+            // Text before cursor after remove one character
+            textBeforeCursor = textBeforeCursor.slice(0, -1);
+            // clear previous composition.
+            this.setComposition_('', false, false);
+
+            var word = compositionText;
+            this.env.textBeforeCursor = textBeforeCursor;
+            var offset = 1;
+            this.compositionTextCursorPosition_ = 0;
+            var beforeCursorMatched =
+                LETTERS_BEFORE_CURSOR.exec(textBeforeCursor);
+            if (beforeCursorMatched) {
+              word = beforeCursorMatched[0] + word;
+              this.env.textBeforeCursor = textBeforeCursor.slice(0,
+                  -beforeCursorMatched[0].length);
+              offset += beforeCursorMatched[0].length;
+              this.compositionTextCursorPosition_ =
+                  beforeCursorMatched[0].length;
+            }
+            this.compositionText_ = word;
+            this.deleteSurroundingText_(-offset, offset, (function() {
+              chrome.input.ime.setComposition(goog.object.create(
+                  Name.CONTEXT_ID, this.env.context.contextID,
+                  Name.TEXT, word,
+                  Name.CURSOR, this.compositionTextCursorPosition_));
+              this.dataSource_.sendCompletionRequestForWord(word,
+                  this.filterPreviousText_(this.env.textBeforeCursor));
+            }).bind(this));
+          }
+        } else {
+          this.compositionText_ =
+              this.compositionText_.slice(0,
+                  this.compositionTextCursorPosition_ - 1) +
+              this.compositionText_.slice(this.compositionTextCursorPosition_);
+          this.compositionTextCursorPosition_--;
+          chrome.input.ime.setComposition(goog.object.create(
+              Name.CONTEXT_ID, this.env.context.contextID,
+              Name.TEXT, this.compositionText_,
+              Name.CURSOR, this.compositionTextCursorPosition_));
+          this.dataSource_.sendCompletionRequestForWord(this.compositionText_,
+              this.filterPreviousText_(this.env.textBeforeCursor));
+        }
         this.isBackspaceDownHandled_ = true;
         return;
       }
@@ -742,7 +862,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
         var offset = this.lastCorrection_.getTargetLength(
             this.env.textBeforeCursor);
         this.lastCorrection_.reverting = true;
-        this.deleteSurroudingText_(-offset, offset, (function() {
+        this.deleteSurroundingText_(-offset, offset, (function() {
           this.commitText_(
               this.lastCorrection_.getSource(this.env.textBeforeCursor),
               false, 5, false);
@@ -751,6 +871,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
         this.isBackspaceDownHandled_ = true;
         return;
       }
+
       this.isBackspaceDownHandled_ = false;
       this.clearCandidates_();
     } else if (type == goog.events.EventType.KEYUP &&
@@ -766,6 +887,37 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
     }
   }
 
+  // Hide in experimental flag. Will enable it once get official review.
+  if (this.isExperimental_ &&
+      (code == KeyCodes.ARROW_LEFT || code == KeyCodes.ARROW_RIGHT)) {
+    if (type == goog.events.EventType.KEYDOWN && this.compositionText_) {
+      this.isArrowKeyDownHandled_ =
+          this.moveCursorInComposition_(code == KeyCodes.ARROW_RIGHT);
+      if (this.isArrowKeyDownHandled_) {
+        return;
+      }
+      // If arrow event is not consumed by moveCursorInComposition_, it means
+      // the cursor is about to move across the composition word boundary. We
+      // need to commit the composition text and then move cursor accordingly.
+      // If the cursor is at the beginning of a word (position 0) and user
+      // pressed left arrow key, it triggers ChromeOS IMF to commit the
+      // composition text and move the cursor to the end of the committed word.
+      // To move the cursor to the expected place,  we send a ctrl+left arrow
+      // key event to move the cursor back to the beginning of a word before
+      // send the plain left arrow key event.
+      if (this.compositionTextCursorPosition_ == 0 &&
+          code == KeyCodes.ARROW_LEFT) {
+        var keyDataClone = goog.object.clone(keyData);
+        keyDataClone.ctrlKey = true;
+        this.sendKeyEvent(/** @type {!ChromeKeyboardEvent} **/(keyDataClone));
+      }
+    } else if (type == goog.events.EventType.KEYUP &&
+        this.isArrowKeyDownHandled_) {
+      return;
+    }
+  }
+
+  this.isArrowKeyDownHandled_ = false;
   this.lastCommitType_ = -1;
   goog.base(this, 'handleNonCharacterKeyEvent', keyData);
 };
@@ -779,6 +931,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
  */
 Controller.prototype.handleCharacterKeyEvent = function(keyData) {
   if (keyData[Name.TYPE] == goog.events.EventType.KEYDOWN) {
+    this.statistics_.recordCharacterKey();
     var ch = keyData[Name.KEY];
     var commit = util.isCommitCharacter(ch);
     var isSpaceKey = keyData[Name.CODE] == KeyCodes.SPACE;
@@ -825,7 +978,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
           console.error('Composition text is not expected when double click' +
               ' on space key.');
         }
-        this.deleteSurroudingText_(-1, 1, (function() {
+        this.deleteSurroundingText_(-1, 1, (function() {
           this.commitText_('. ', false, 4, false);
           this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(' ',
               '. ');
