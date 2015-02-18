@@ -1,4 +1,4 @@
-// Copyright 2014 The ChromeOS IME Authors. All Rights Reserved.
+// Copyright 2015 The ChromeOS IME Authors. All Rights Reserved.
 // limitations under the License.
 // See the License for the specific language governing permissions and
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -11,18 +11,17 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
-goog.provide('i18n.input.chrome.EventType');
-
+goog.provide('i18n.input.chrome.inputview.FeatureName');
 
 /**
+ * All features.
  *
- * Chrome OS Event Type.
  * @enum {string}
  */
-i18n.input.chrome.EventType = {
-  CLICK_CANDIDATE_EVENT: 'cce',
-  EXECUTE_WAITING_EVENT: 'ewe',
-  INSERT_USERDICT_EVENT: 'iue',
-  IGNORE_CORRECT_EVENT: 'ice'
+i18n.input.chrome.inputview.FeatureName = {
+  // List all features.
+  GESTURE_EDITTING: 'gesture-editting',
+  GESTURE_TYPING: 'gesturetyping',
+  OPTIMIZED_LAYOUTS: 'optimized-layouts',
+  EXPERIMENTAL: 'experimental'
 };
-

@@ -2853,6 +2853,12 @@ msgs.MSG_IGNORE_CORRECTION = goog.getMsg('Ignore correction for');
 
 
 /**
+ * @desc Ignore auto correction feature for the given word.
+ */
+msgs.MSG_IGNORE_CORRECTION_SHORT = goog.getMsg('Ignore correction');
+
+
+/**
  * @desc Settings for a Input Tool.
  */
 msgs.MSG_SETTINGS = goog.getMsg('Settings');

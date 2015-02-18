@@ -240,6 +240,16 @@
   background: rgba(55, 71, 89, .08);
   display: -webkit-box;
 }
+.inputview-gesture-canvas-view {
+  /* Overlap */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
 .inputview-globe-icon {
   background: transparent url('images/material/globe.png') 0 0 / 20px 20px no-repeat;
   display: inline-block;
@@ -770,4 +780,13 @@
 #hwt {
   border-left: 1.5px solid rgba(55, 71, 79, 0.1);
   border-right: 1.5px solid rgba(55, 71, 79, 0.1);
+}
+.inputview-toolbar-button {
+  float: right;
+}
+.inputview-toolbar-button.float-left {
+  float: left;
+}
+.inputview-voice-btn {
+  float: right;
 }

@@ -885,4 +885,8 @@ InputContext.prototype.autoCorrect;
 
 
 /** @type {boolean} */
+InputContext.prototype.autoComplete;
+
+
+/** @type {boolean} */
 InputContext.prototype.spellCheck;

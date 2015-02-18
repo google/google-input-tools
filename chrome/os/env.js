@@ -25,6 +25,17 @@ goog.scope(function() {
  * @constructor
  */
 i18n.input.chrome.Env = function() {
+  if (chrome.accessibilityFeatures &&
+      chrome.accessibilityFeatures.spokenFeedback) {
+    chrome.accessibilityFeatures.spokenFeedback.get({}, (function(details) {
+      this.isChromeVoxOn = details['value'];
+    }).bind(this));
+
+    chrome.accessibilityFeatures.spokenFeedback.onChange.addListener(
+        function(details) {
+          this.isChromeVoxOn = details['value'];
+        }.bind(this));
+  }
 };
 var Env = i18n.input.chrome.Env;
 goog.addSingletonGetter(Env);
@@ -56,4 +67,8 @@ Env.prototype.textBeforeCursor = '';
 
 /** @type {Object.<{text: string, focus: number, anchor: number}>} */
 Env.prototype.surroundingInfo = null;
+
+
+/** @type {boolean} */
+Env.prototype.isChromeVoxOn = false;
 });  // goog.scope

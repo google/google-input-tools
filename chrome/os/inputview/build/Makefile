@@ -27,6 +27,7 @@ inputview.js:
 	--js=$(BASE_DIR)/message/**.js \
 	--js=$(BASE_DIR)/keyboard/**.js \
 	--js=$(BASE_DIR)/datasource.js \
+	--js=$(BASE_DIR)/sounds/**.js \
 	--js=!**.js \
 	--closure_entry_point=i18n.input.chrome.inputview.Controller \
 	--closure_entry_point=i18n.input.chrome.inputview.content.compact.letter \

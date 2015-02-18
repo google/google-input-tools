@@ -17,7 +17,8 @@ styleElem['rel'] = 'stylesheet';
 if (chrome.inputMethodPrivate &&
     chrome.inputMethodPrivate.getInputMethodConfig) {
   chrome.inputMethodPrivate.getInputMethodConfig(function(config) {
-    if (!!config['isNewQPInputViewEnabled']) {
+    if (!!config['isNewQPInputViewEnabled'] ||
+        !!config['isNewMDInputViewEnabled']) {
       styleElem['href'] = 'inputview_css_material.css';
     } else {
       styleElem['href'] = 'inputview_css.css';
