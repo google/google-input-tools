@@ -46,9 +46,7 @@ inputview.js:
 	--closure_entry_point=i18n.input.chrome.inputview.layouts.SpaceRow \
 	--closure_entry_point=i18n.input.chrome.inputview.layouts.util \
 	--closure_entry_point=i18n.input.hwt.util \
-	--externs=$(BASE_DIR)/api_externs.js \
-	--externs=$(BASE_DIR)/inputview_externs.js \
-	--externs=$(BASE_DIR)/xkb_externs.js \
+	--externs=$(BASE_DIR)/externs.js \
 	--compilation_level=WHITESPACE_ONLY \
 	--only_closure_dependencies \
 	--formatting=PRETTY_PRINT \

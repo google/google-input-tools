@@ -13,18 +13,28 @@
 //
 goog.provide('i18n.input.chrome.Env');
 
-goog.scope(function() {
+goog.require('i18n.input.chrome.inputview.FeatureTracker');
 
+goog.scope(function() {
+var FeatureTracker = i18n.input.chrome.inputview.FeatureTracker;
 
 
 /**
- * The Enviornment class which hols some status' of ChromeOS for input methods.
+ * The Environment class which holds some status' of ChromeOS for input methods.
  * e.g. the current input field context, the current input method engine ID,
  * the flags, etc.
  *
  * @constructor
  */
 i18n.input.chrome.Env = function() {
+
+  /**
+   * Tracker for which FeatureName are enabled.
+   *
+   * @type {!FeatureTracker};
+   */
+  this.featureTracker = new FeatureTracker();
+
   if (chrome.accessibilityFeatures &&
       chrome.accessibilityFeatures.spokenFeedback) {
     chrome.accessibilityFeatures.spokenFeedback.get({}, (function(details) {
@@ -35,6 +45,12 @@ i18n.input.chrome.Env = function() {
         function(details) {
           this.isChromeVoxOn = details['value'];
         }.bind(this));
+  }
+
+  if (window.inputview && inputview.getKeyboardConfig) {
+    inputview.getKeyboardConfig((function(config) {
+        this.featureTracker.initialize(config);
+    }).bind(this));
   }
 };
 var Env = i18n.input.chrome.Env;
@@ -54,10 +70,6 @@ Env.prototype.screenType = 'normal';
 
 
 /** @type {boolean} */
-Env.prototype.isInputViewExperimental = false;
-
-
-/** @type {boolean} */
 Env.prototype.isPhysicalKeyboardAutocorrectEnabled = false;
 
 
@@ -71,4 +83,5 @@ Env.prototype.surroundingInfo = null;
 
 /** @type {boolean} */
 Env.prototype.isChromeVoxOn = false;
+
 });  // goog.scope

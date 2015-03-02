@@ -393,6 +393,13 @@ AbstractController.prototype.switchInputToolState =
 
 
 /**
+ * Ends the current session.
+ *
+ */
+AbstractController.prototype.endSession = goog.functions.NULL;
+
+
+/**
  * Updates options for this input tool code.
  *
  * @param {string} inputToolCode The input method to update.
