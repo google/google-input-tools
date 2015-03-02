@@ -22,6 +22,7 @@ goog.require('i18n.input.chrome.Constant');
 goog.require('i18n.input.chrome.DataSource');
 goog.require('i18n.input.chrome.EngineIdLanguageMap');
 goog.require('i18n.input.chrome.Statistics');
+goog.require('i18n.input.chrome.inputview.FeatureName');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.inputview.util');
 goog.require('i18n.input.chrome.message.Name');
@@ -36,6 +37,7 @@ goog.scope(function() {
 var AbstractController = i18n.input.chrome.AbstractController;
 var Constant = i18n.input.chrome.Constant;
 var EventType = i18n.input.chrome.DataSource.EventType;
+var FeatureName = i18n.input.chrome.inputview.FeatureName;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var LatinInputToolCode = i18n.input.chrome.xkb.LatinInputToolCode;
 var Name = i18n.input.chrome.message.Name;
@@ -97,19 +99,9 @@ i18n.input.chrome.xkb.Controller = function() {
 
   /** @private {!Array.<!Object>} */
   this.candidates_ = [];
-
-  if (window.inputview && inputview.getKeyboardConfig) {
-    inputview.getKeyboardConfig((function(config) {
-      this.isExperimental_ = !!config['experimental'];
-    }).bind(this));
-  }
 };
 var Controller = i18n.input.chrome.xkb.Controller;
 goog.inherits(Controller, i18n.input.chrome.AbstractController);
-
-
-/** @private {boolean} */
-Controller.prototype.isExperimental_ = false;
 
 
 /**
@@ -432,15 +424,22 @@ Controller.prototype.updateOptions = function(inputToolCode) {
 
 
 /** @override */
+Controller.prototype.endSession = function() {
+  goog.base(this, 'endSession');
+  this.statistics_.recordSessionEnd();
+};
+
+
+/** @override */
 Controller.prototype.unregister = function() {
   goog.base(this, 'unregister');
-
   this.compositionText_ = '';
   this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
   this.textBeforeCursor_ = '';
   this.lastCommitType_ = -1;
   this.deadKey_ = '';
+  this.endSession();
 };
 
 
@@ -650,7 +649,7 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
     this.candidates_ = candidates;
   }
 
-  if (!this.isExperimental_) {
+  if (!this.env.featureTracker.isEnabled(FeatureName.EXPERIMENTAL)) {
     this.candidates_ = goog.array.filter(this.candidates_, function(candidate) {
       return !candidate[Name.IS_EMOJI];
     });
@@ -697,14 +696,14 @@ Controller.prototype.shouldAutoSpace_ = function() {
  */
 Controller.prototype.shouldSetComposition_ = function() {
   // Sets exisiting word to composition mode if:
-  // 1. suggestion is avaiable and enabled;
+  // 1. suggestion is available and enabled;
   // 2. no composition in progress;
   // 3. no text selection;
   // 4. surround text is not empty;
   // 5. virtual keyboard is visible;
   // 6. skipNextSetComposition_ is false;
   // 7. not typing by physical keyboard.
-  return !!this.isExperimental_ &&
+  return this.env.featureTracker.isEnabled(FeatureName.EXPERIMENTAL) &&
          !!this.dataSource_ &&
          this.isSuggestionSupported() &&
          !this.compositionText_ &&

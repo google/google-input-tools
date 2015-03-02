@@ -1,6 +1,6 @@
 {
   "name": "Chrome OS XKB",
-  "version": "1.0.4.1",
+  "version": "1.0.4.2",
   "description": "Chrome OS XKB",
   "default_locale": "en",
   "incognito": "split",

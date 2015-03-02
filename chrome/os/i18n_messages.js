@@ -1956,14 +1956,14 @@ msgs.MSG_HANDWRITING_NETOWRK_ERROR = goog.getMsg('Sorry, you can not use' +
  * @desc Show the privacy message when user open handwriting IME first time.
  */
 msgs.MSG_HANDWRITING_PRIVACY_INFO = goog.getMsg('Your input will be' +
-    ' sent to a Google server to recognize text');
+    ' sent to Google servers to recognize text.');
 
 
 /**
  * @desc Show the privacy message when user open voice IME first time.
  */
-msgs.MSG_VOICE_PRIVACY_INFO = goog.getMsg('Your voice will be' +
-    ' sent to a Google server to recognize text');
+msgs.MSG_VOICE_PRIVACY_INFO = goog.getMsg('Your voice input will be' +
+    ' sent to Google servers to recognize text.');
 
 
 /**

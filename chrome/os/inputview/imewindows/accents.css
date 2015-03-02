@@ -9,29 +9,36 @@ body {
   overflow: hidden;
 }
 
-.accent-container {
+.inputview-accent-container {
   background-color: #FBFCFE;
   width: 100%;
   height: 100%;
 }
 
-.accent-row {
+.inputview-accent-row {
   display: block;
 }
 
-.accent-row div {
+.inputview-accent-key {
   display: inline-block;
   text-align: center;
 }
 
-.accent-row>div>div {
+.inputview-accent-key > div {
   color: #37474f;
-  font-size: 40px;
   height: 100%;
   vertical-align: middle;
   text-align: center;
 }
 
-.highlight {
+.inputview-font {
+  font-size: 40px;
+}
+
+.inputview-font-small {
+  font-size: 24px;
+}
+
+.inputview-element-highlight {
   background-color: #E4E7E9;
 }

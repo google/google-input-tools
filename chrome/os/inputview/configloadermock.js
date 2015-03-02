@@ -23,7 +23,7 @@ goog.require('i18n.input.chrome.message.ContextType');
 
 var asyncTestCase;
 var isA11yMode = false;
-var isExperimental = false;
+var featureList = [];
 var controller;
 var ElementType, EventType, Command;
 var Name, Type;
@@ -75,7 +75,7 @@ i18n.input.chrome.inputview.ConfigLoaderMock.init = function() {
   var root = '/google3/i18n/input/javascript/chos/inputview/';
 
   inputview.getKeyboardConfig = function(callback) {
-    callback({'a11ymode': isA11yMode, 'experimental': isExperimental});
+    callback({'a11ymode': isA11yMode, 'features': featureList});
   };
   i18n.input.chrome.inputview.Model.prototype.loadingCount = 0;
   i18n.input.chrome.inputview.Model.prototype.onLoaded = function() {};
