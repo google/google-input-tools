@@ -538,9 +538,8 @@ AbstractController.prototype.isSuggestionSupported = function() {
   if (!context || !goog.array.contains(['text', 'search'], context.type)) {
     return false;
   }
-  return !goog.isDef(context.autoCorrect) && !goog.isDef(context.spellCheck) &&
-      !goog.isDef(context.autoComplete) || !!context.autoCorrect &&
-      !!context.spellCheck && !!context.autoComplete;
+  return !goog.isDef(context.autoCorrect) && !goog.isDef(context.spellCheck) ||
+      !!context.autoCorrect && !!context.spellCheck;
 };
 
 
