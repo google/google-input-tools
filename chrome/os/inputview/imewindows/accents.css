@@ -26,9 +26,10 @@ body {
 
 .inputview-accent-key > div {
   color: #37474f;
+  display: inline-block;
   height: 100%;
-  vertical-align: middle;
   text-align: center;
+  vertical-align: middle;
 }
 
 .inputview-font {

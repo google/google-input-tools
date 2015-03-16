@@ -1012,6 +1012,9 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       this.isVisible_ = message[Name.VISIBILITY];
       this.usingPhysicalKeyboard_ = !this.isVisible_;
       this.maybeSetExistingWordToCompositonMode_();
+      if (!this.isVisible_) {
+        this.statistics_.recordSessionEnd();
+      }
       break;
     case Type.OPTION_CHANGE:
       var optionType = message[Name.OPTION_TYPE];
