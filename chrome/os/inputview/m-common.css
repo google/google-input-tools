@@ -57,7 +57,7 @@
   font-size: 23px;
 }
 .inputview-digit-character.inputview-ch {
-  font-size: 24px;
+  font-size: 20px;
 }
 .inputview-font-small.inputview-special-key-name,
 .inputview-font-small.inputview-compact-key,
@@ -153,37 +153,36 @@
   position: relative;
 }
 .inputview-a11y .inputview-modifier {
-  font-size: 10px;
+  font-size: 17px;
 }
 .inputview-menu-list-indicator {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 25px;
-  width: 25%;
+  width: 20%;
 }
 .inputview-checked-menu-list {
   background-image: url('images/material/check_in_menu.png');
-  background-position: 25px center;
+  background-position: 10px center;
   background-repeat: no-repeat;
   background-size: 18px 15px;
   box-sizing: border-box;
   font-weight: bold;
 }
 .inputview-checked-menu-list .inputview-menu-list-name {
-  color: #282828;
+  color: #37474f;
   font-weight: bold;
   font-size: 16px;
 }
 .inputview-menu-list-name {
   height: 100%;
-  width: 75%;
-  font-size: 16px;
-  color: #37474f;
+  width: 80%;
+  font-size: 14px;
+  color: rgba(55, 71, 89, .6);
   overflow: hidden;
 }
 .inputview-menu-list-indicator-name {
-  font-weight: bold;
-  height: 100%;
+  height: 90%;
   text-align: center;
 }
 .inputview-menu-list-indicator-name,
@@ -203,7 +202,7 @@
 }
 .inputview-menu-list-item {
   -webkit-box-orient: horizontal;
-  padding-left: 41px;
+  padding-left: 25px;
   display: -webkit-box;
   font-size: 16px;
   width: 100%;
@@ -222,17 +221,17 @@
 }
 .inputview-menu-footer-emoji-button {
   background: url('images/material/emoji.png') no-repeat center;
-  background-size: 25px;
+  background-size: 18px;
   height: 100%;
 }
 .inputview-menu-footer-handwriting-button {
   background: url('images/material/handwriting_access.png') no-repeat center;
-  background-size: 25px;
+  background-size: 18px;
   height: 100%;
 }
 .inputview-menu-footer-setting-button {
   background: url('images/material/setting.png') no-repeat center;
-  background-size: 25px;
+  background-size: 18px;
   height: 100%;
 }
 .inputview-menu-footer {
@@ -373,34 +372,42 @@
   height: 13.5px;
 }
 .inputview-up-key {
-  background-image: transparent url('images/up.png') 0 0/16px 13.5px no-repeat;
+  background-image: transparent url('images/material/up.png') 0 0/16px 13.5px no-repeat;
   width: 16px;
 }
 .inputview-down-key {
-  background: transparent url('images/down.png') 0 0/16px 13.5px no-repeat;
+  background: transparent url('images/material/down.png') 0 0/16px 13.5px no-repeat;
   width: 16px;
 }
 .inputview-left-key {
-  background: transparent url('images/left.png') 0 0/9px 13.5px no-repeat;
+  background: transparent url('images/material/left.png') 0 0/8.5px 13.5px no-repeat;
   width: 9px;
 }
 .inputview-right-key {
-  background: transparent url('images/right.png') 0 0/9px 13.5px no-repeat;
+  background: transparent url('images/material/right.png') 0 0/9px 13.5px no-repeat;
   width: 9px;
 }
 .inputview-page-up-icon {
-  background: transparent url('images/page_up.png') 0 0 no-repeat;
-  background-size: 10.5px 5.5px;
-  width: 10.5px;
-  height: 5.5px;
+  background: transparent url('images/material/arrow_up_active.png') 0 0 no-repeat;
+  background-size: 10px 6.5px;
+  width: 10px;
+  height: 6.5px;
   display: inline-block;
 }
+.inputview-page-navi-inactive .inputview-page-up-icon {
+  background: transparent url('images/material/arrow_up_inactive.png') 0 0 no-repeat;
+  background-size: 10px 6.5px;
+}
 .inputview-page-down-icon {
-  background: transparent url('images/page_down.png') 0 0 no-repeat;
-  background-size: 10.5px 5.5px;
-  width: 10.5px;
-  height: 5.5px;
+  background: transparent url('images/material/arrow_down_active.png') 0 0 no-repeat;
+  background-size: 10px 6.5px;
+  width: 10px;
+  height: 6.5px;
   display: inline-block;
+}
+.inputview-page-navi-inactive .inputview-page-down-icon {
+  background: transparent url('images/material/arrow_down_inactive.png') 0 0 no-repeat;
+  background-size: 10px 6.5px;
 }
 .inputview-menu-icon {
   background: transparent url('images/material/3dots.png') 0 0/4px 17px no-repeat;
@@ -446,11 +453,11 @@
   background-size: 40px 40px;
 }
 .inputview-space-icon {
-  background: transparent url('images/space.png');
-  background-size: 22.5px 8px;
+  background: transparent url('images/material/space-key.png');
+  background-size: 30px 7.5px;
   display: inline-block;
-  width: 22.5px;
-  height: 8px;
+  width: 30px;
+  height: 7.5px;
 }
 
 .inputview-shift-icon {
@@ -460,8 +467,9 @@
   width: 25px;
   height: 22px;
 }
-.inputview-element-highlight,
-.inputview-special-key-highlight {
+#OsLeft .inputview-special-key-highlight,
+.inputview-special-key-highlight .inputview-compact-key,
+.inputview-element-highlight {
   background-color: rgba(55, 71, 79, 0.15);
   border-radius: 4px;
 }
@@ -474,11 +482,11 @@
   background-size: 25px 22px;
 }
 .inputview-tab-icon {
-  background: transparent url('images/tab.png');
-  background-size: 19px 18.5px;
+  background: transparent url('images/material/tab_in_fullsize.png');
+  background-size: 21px 12px;
   display: inline-block;
-  width: 19px;
-  height: 18.5px;
+  width: 21px;
+  height: 12px;
 }
 .inputview-capslock-dot {
 }
@@ -533,12 +541,6 @@
   right: 0;
   top: 25%;
   width: 1px;
-}
-.inputview-candidates-line {
-  border-bottom: 1px #cfcfcf solid;
-}
-.inputview-candidates-top-line {
-  border-top: 1px #cfcfcf solid;
 }
 .inputview-three-candidates {
   text-align: center;
@@ -628,11 +630,11 @@
 }
 
 .inputview-handwriting-switcher {
-  background: url('images/pencil.png');
-  background-size: 19px 19px;
+  background: url('images/handwriting-circle.png');
+  background-size: 12px 12px;
   display: inline-block;
-  width: 19px;
-  height: 19px;
+  width: 12px;
+  height: 12px;
 }
 
 .inputview-handwriting-back {
@@ -642,15 +644,7 @@
 }
 
 .inputview-canvas {
-  cursor: url('images/pencil.png') 8 42, auto;
-}
-#leftSideColumn {
-  position: absolute;
-  left: 0;
-}
-#rightSideColumn {
-  position: absolute;
-  right: 0;
+  cursor: url('images/material/handwriting-circle.png') 12 12, auto;
 }
 #candidateView {
   background-color: #E4E7E9;
@@ -674,19 +668,18 @@
 
 .inputview-handwriting-privacy-info {
   position: absolute;
-  width: 600px;
-  height: 100px;
   z-index: 2;
+}
+
+.inputview-handwriting-got-it {
+  color: #3974df;
+  margin-left: 10px;
 }
 
 .inputview-handwriting-privacy-info-hidden {
   visibility: hidden;
   opacity: 0;
   transition: all 2s ease;
-}
-
-.inputview-handwriting-privacy-info .inputview-sk {
-  margin-top: 10px;
 }
 
 .inputview-jp-ime-switch {
@@ -697,14 +690,14 @@
 
 .inputview-switcher-chinese {
   display: inline-block;
-  background: url('images/english.png') no-repeat center;
+  background: url('images/material/en.png') no-repeat center;
   background-size: 50px 20px;
   height: 20px;
   width: 50px;
 }
 .inputview-switcher-english {
   display: inline-block;
-  background: url('images/chinese.png') no-repeat center;
+  background: url('images/material/cn.png') no-repeat center;
   background-size: 50px 20px;
   height: 20px;
   width: 50px;
@@ -796,3 +789,10 @@
 .inputview-voice-btn {
   float: right;
 }
+.inputview-ime-list-container::-webkit-scrollbar-thumb {
+  background-color: #c9ced1;
+}
+.inputview-ime-list-container::-webkit-scrollbar {
+  width: 12px;
+}
+

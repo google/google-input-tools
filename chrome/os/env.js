@@ -19,6 +19,7 @@ goog.scope(function() {
 var FeatureTracker = i18n.input.chrome.inputview.FeatureTracker;
 
 
+
 /**
  * The Environment class which holds some status' of ChromeOS for input methods.
  * e.g. the current input field context, the current input method engine ID,
@@ -35,6 +36,25 @@ i18n.input.chrome.Env = function() {
    */
   this.featureTracker = new FeatureTracker();
 
+  /** @private {!Function} */
+  this.compositionBoundsChangedHandler_ =
+      this.onBoundsChanged_.bind(this);
+
+  /**
+   * The current initial bounds.
+   * @type {!BoundSize}
+   */
+  this.currentBounds = /** @type {!BoundSize} */ ({x: 0, y: 0, w: 0, h: 0});
+
+
+  /**
+   * The current bounds list.
+   * @type {!Array.<!BoundSize>}
+   */
+  this.currentBoundsList = [
+      /** @type {!BoundSize} */ ({x: 0, y: 0, w: 0, h: 0})];
+
+
   if (chrome.accessibilityFeatures &&
       chrome.accessibilityFeatures.spokenFeedback) {
     chrome.accessibilityFeatures.spokenFeedback.get({}, (function(details) {
@@ -49,7 +69,7 @@ i18n.input.chrome.Env = function() {
 
   if (window.inputview && inputview.getKeyboardConfig) {
     inputview.getKeyboardConfig((function(config) {
-        this.featureTracker.initialize(config);
+      this.featureTracker.initialize(config);
     }).bind(this));
   }
 };
@@ -84,4 +104,41 @@ Env.prototype.surroundingInfo = null;
 /** @type {boolean} */
 Env.prototype.isChromeVoxOn = false;
 
+
+/**
+ * Handler for onCompositionBoundsChanged event.
+ *
+ * @param {!BoundSize} bounds The bounds of the composition text.
+ * @param {!Array.<!BoundSize>} boundsList The list of bounds of each
+ *     composition character.
+ * @private
+ */
+Env.prototype.onBoundsChanged_ = function(bounds, boundsList) {
+  this.currentBounds = bounds;
+  this.currentBoundsList = boundsList;
+};
+
+
+/**
+ * Let Env listen "onCompositionBoundsChanged" event.
+ */
+Env.prototype.listenCompositionBoundsChanged = function() {
+  if (chrome.inputMethodPrivate &&
+      chrome.inputMethodPrivate.onCompositionBoundsChanged) {
+    chrome.inputMethodPrivate.onCompositionBoundsChanged.addListener(
+        this.compositionBoundsChangedHandler_);
+  }
+};
+
+
+/**
+ * Let Env unlisten "onCompositionBoundsChanged" event.
+ */
+Env.prototype.unlistenCompositionBoundsChanged = function() {
+  if (chrome.inputMethodPrivate &&
+      chrome.inputMethodPrivate.onCompositionBoundsChanged) {
+    chrome.inputMethodPrivate.onCompositionBoundsChanged.removeListener(
+        this.compositionBoundsChangedHandler_);
+  }
+};
 });  // goog.scope

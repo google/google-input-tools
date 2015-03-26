@@ -86,9 +86,10 @@ xkb.DataSource.prototype.clear = function() {};
 
 
 /**
- * @param {string} text .
+ * @param {string} word .
+ * @param {number} frequency .
  */
-xkb.DataSource.prototype.commitText = function(text) {};
+xkb.DataSource.prototype.changeWordFrequency = function(word, frequency) {};
 
 
 /**

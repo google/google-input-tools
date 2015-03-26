@@ -2234,7 +2234,7 @@ msgs.MSG_PHYSICAL_ENABLE_CAPITALIZATION = goog.getMsg('Auto-capitalization');
 /**
  * @desc Title for options to determine whether to show the candidates.
  */
-msgs.MSG_SHOW_HANGUL_CANDIDATE = goog.getMsg('Show Hangul suggestions');
+msgs.MSG_SHOW_HANGUL_CANDIDATE = goog.getMsg('Show candidates in Hangul mode');
 
 
 /**
@@ -2677,14 +2677,14 @@ msgs.MSG_US_INTL_POR_SETTINGS_PAGE =
 /**
  * @desc The title for the section containing touch-enabled keyboard settings.
  */
-msgs.MSG_TOUCH_KEYBOARD = goog.getMsg('Touch Keyboard');
+msgs.MSG_TOUCH_KEYBOARD = goog.getMsg('On-screen keyboard');
 
 
 /**
  * @desc The title for the section containing physical-enabled keyboard
  * settings.
  */
-msgs.MSG_PHYSICAL_KEYBOARD = goog.getMsg('Physical Keyboard');
+msgs.MSG_PHYSICAL_KEYBOARD = goog.getMsg('Physical keyboard');
 
 
 /**
@@ -2712,7 +2712,8 @@ msgs.MSG_ENABLE_COMPLETION = goog.getMsg('Enable completion');
 /**
  * @desc It is the description of Korean setting pages.
  */
-msgs.MSG_KOREAN_SETTINGS_PAGE = goog.getMsg('Korean Settings Page');
+msgs.MSG_KOREAN_SETTINGS_PAGE =
+    goog.getMsg('Korean Input Method Settings Page');
 
 
 /**
@@ -2724,7 +2725,7 @@ msgs.MSG_KOREAN_KEYBOARD_LAYOUT = goog.getMsg('Korean Keyboard Layout');
 /**
  * @desc It is the description of Korean Syllable Inputs.
  */
-msgs.MSG_KOREAN_SYLLABLE_INPUT = goog.getMsg('Input hangul one by one');
+msgs.MSG_KOREAN_SYLLABLE_INPUT = goog.getMsg('Input a syllable at a time');
 
 
 /**

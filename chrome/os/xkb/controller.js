@@ -19,9 +19,9 @@ goog.require('goog.events.EventType');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.AbstractController');
 goog.require('i18n.input.chrome.Constant');
-goog.require('i18n.input.chrome.DataSource');
 goog.require('i18n.input.chrome.EngineIdLanguageMap');
 goog.require('i18n.input.chrome.Statistics');
+goog.require('i18n.input.chrome.TriggerType');
 goog.require('i18n.input.chrome.inputview.FeatureName');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.inputview.util');
@@ -32,11 +32,8 @@ goog.require('i18n.input.chrome.options.OptionType');
 goog.require('i18n.input.chrome.xkb.Correction');
 goog.require('i18n.input.chrome.xkb.LatinInputToolCode');
 
-
 goog.scope(function() {
-var AbstractController = i18n.input.chrome.AbstractController;
 var Constant = i18n.input.chrome.Constant;
-var EventType = i18n.input.chrome.DataSource.EventType;
 var FeatureName = i18n.input.chrome.inputview.FeatureName;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var LatinInputToolCode = i18n.input.chrome.xkb.LatinInputToolCode;
@@ -44,6 +41,7 @@ var Name = i18n.input.chrome.message.Name;
 var OptionType = i18n.input.chrome.options.OptionType;
 var OptionStorageHandlerFactory =
     i18n.input.chrome.options.OptionStorageHandlerFactory;
+var TriggerType = i18n.input.chrome.TriggerType;
 var Type = i18n.input.chrome.message.Type;
 var util = i18n.input.chrome.inputview.util;
 
@@ -72,6 +70,7 @@ var LETTERS_BEFORE_CURSOR = new RegExp(Constant.LATIN_VALID_CHAR + '+$', 'i');
  */
 var LETTERS_AFTER_CURSOR =
     new RegExp('^' + Constant.LATIN_VALID_CHAR + '+', 'i');
+
 
 
 /**
@@ -192,9 +191,9 @@ Controller.prototype.committedText_ = '';
 /**
  * The type of the last commit.
  *
- * @private {number}
+ * @private {!TriggerType}
  */
-Controller.prototype.lastCommitType_ = -1;
+Controller.prototype.lastCommitType_ = TriggerType.UNKNOWN;
 
 
 /**
@@ -413,7 +412,6 @@ Controller.prototype.updateOptions = function(inputToolCode) {
     this.statistics_.setAutoCorrectLevel(this.correctionLevel);
   }
   this.doubleSpacePeriod_ = doubleSpacePeriod;
-  this.autoCapital_ = autoCapital;
   this.updateSettings({
     'autoSpace': true,
     'autoCapital': autoCapital,
@@ -436,8 +434,7 @@ Controller.prototype.unregister = function() {
   this.compositionText_ = '';
   this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
-  this.textBeforeCursor_ = '';
-  this.lastCommitType_ = -1;
+  this.lastCommitType_ = TriggerType.UNKNOWN;
   this.deadKey_ = '';
   this.endSession();
 };
@@ -447,7 +444,7 @@ Controller.prototype.unregister = function() {
 Controller.prototype.reset = function() {
   goog.base(this, 'reset');
 
-  this.commitText_('', false, 1, false);
+  this.commitText_('', false, TriggerType.RESET, false);
   this.compositionText_ = '';
   this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
@@ -489,9 +486,7 @@ Controller.prototype.clearCandidates_ = function() {
  *
  * @param {string} text .
  * @param {boolean} append .
- * @param {number} triggerType The trigger type:
- *     0: BySpace; 1: ByReset; 2: ByCandidate; 3: BySymbolOrNumber;
- *     4: ByDoubleSpaceToPeriod; 5: ByRevert.
+ * @param {!TriggerType} triggerType What triggered the commit.
  * @param {boolean} simulateKeypress Whether allowing keypress simulation.
  * @private
  */
@@ -521,7 +516,10 @@ Controller.prototype.commitText_ = function(
   if (text) {
     var target = textToCommit.trim();
     if (this.dataSource_) {
-      this.dataSource_.commitText(target);
+      if (triggerType == TriggerType.CANDIDATE) {
+        // Only increase frequency if the user selected this candidate manually.
+        this.dataSource_.changeWordFrequency(target, 1);
+      }
       if (this.isSuggestionSupported()) {
         this.dataSource_.sendPredictionRequest(
             this.filterPreviousText_(this.env.textBeforeCursor + textToCommit));
@@ -667,7 +665,6 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
     }
   }
 
-  this.isPredict_ = !source;
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.CANDIDATES_BACK,
       Name.MSG, goog.object.create(
@@ -684,7 +681,8 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
  * @private
  */
 Controller.prototype.shouldAutoSpace_ = function() {
-  return !this.compositionText_ && this.lastCommitType_ == 2;
+  return !this.compositionText_ &&
+      this.lastCommitType_ == TriggerType.CANDIDATE;
 };
 
 
@@ -732,7 +730,7 @@ Controller.prototype.filterPreviousText_ = function(preText) {
  * True to do the auto-correct.
  *
  * @param {string} ch .
- * @param {number} triggerType .
+ * @param {!TriggerType} triggerType .
  * @private
  */
 Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
@@ -792,7 +790,7 @@ Controller.prototype.handleEvent = function(e) {
   this.usingPhysicalKeyboard_ = true;
   // For physical key events, just confirm the composition and release the key.
   if (this.compositionText_) {
-    this.commitText_('', true, 1, false);
+    this.commitText_('', true, TriggerType.RESET, false);
   }
   return false;
 };
@@ -864,7 +862,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
         this.deleteSurroundingText_(-offset, offset, (function() {
           this.commitText_(
               this.lastCorrection_.getSource(this.env.textBeforeCursor),
-              false, 5, false);
+              false, TriggerType.REVERT, false);
           this.lastCorrection_ = null;
         }).bind(this));
         this.isBackspaceDownHandled_ = true;
@@ -880,7 +878,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
   }
 
   if (code == KeyCodes.ENTER) {
-    this.maybeTriggerAutoCorrect_('', 1);
+    this.maybeTriggerAutoCorrect_('', TriggerType.RESET);
     if (this.lastCorrection_) {
       this.lastCorrection_.isTriggerredByEnter = true;
     }
@@ -917,7 +915,7 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
   }
 
   this.isArrowKeyDownHandled_ = false;
-  this.lastCommitType_ = -1;
+  this.lastCommitType_ = TriggerType.UNKNOWN;
   goog.base(this, 'handleNonCharacterKeyEvent', keyData);
 };
 
@@ -931,17 +929,26 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
 Controller.prototype.handleCharacterKeyEvent = function(keyData) {
   if (keyData[Name.TYPE] == goog.events.EventType.KEYDOWN) {
     this.statistics_.recordCharacterKey();
+    // Simulates the key event if no input field is focused.
+    // Please refer to crbug.com/423880.
+    if (!this.env.context) {
+      this.sendKeyEvent(keyData);
+      return;
+    }
     var ch = keyData[Name.KEY];
     var commit = util.isCommitCharacter(ch);
     var isSpaceKey = keyData[Name.CODE] == KeyCodes.SPACE;
-    if (isSpaceKey || commit) {
-      this.maybeTriggerAutoCorrect_(ch, isSpaceKey ? 0 : 3);
+    if (isSpaceKey) {
+      this.maybeTriggerAutoCorrect_(ch, TriggerType.SPACE);
+      return;
+    } else if (commit) {
+      this.maybeTriggerAutoCorrect_(ch, TriggerType.SYMBOL_OR_NUMBER);
       return;
     }
 
     if (!this.dataSource_ || !this.dataSource_.isReady() ||
         !this.isSuggestionSupported()) {
-      this.commitText_(ch, true, 1, true);
+      this.commitText_(ch, true, TriggerType.RESET, true);
     } else {
       if (this.shouldAutoSpace_()) {
         // Calls this.commitText instead of this.commitText_ to avoid side
@@ -964,7 +971,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       var candidate = message[Name.CANDIDATE];
       var committingText = this.shouldAutoSpace_() ?
           ' ' + candidate[Name.CANDIDATE] : candidate[Name.CANDIDATE];
-      this.commitText_(committingText, false, 2, false);
+      this.commitText_(committingText, false, TriggerType.CANDIDATE, false);
       // TODO: A hack to workaround the IME bug: surrounding text event won't
       // trigger when composition text is equal to committed text. Remove this
       // line when bug is fixed.
@@ -978,12 +985,13 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
               ' on space key.');
         }
         this.deleteSurroundingText_(-1, 1, (function() {
-          this.commitText_('. ', false, 4, false);
+          this.commitText_('. ', false, TriggerType.DOUBLE_SPACE_TO_PERIOD,
+              false);
           this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(' ',
               '. ');
         }).bind(this));
       } else {
-        this.commitText_(' ', true, 0, true);
+        this.commitText_(' ', true, TriggerType.SPACE, true);
       }
       break;
     case Type.CONNECT:
@@ -1017,7 +1025,6 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       }
       break;
     case Type.OPTION_CHANGE:
-      var optionType = message[Name.OPTION_TYPE];
       var prefix = message[Name.OPTION_PREFIX];
       // We only need to immediately update controller when the currently active
       // IME's options are changed.
