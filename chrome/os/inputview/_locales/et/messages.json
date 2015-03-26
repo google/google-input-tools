@@ -3000,10 +3000,10 @@
     "message": "Korea klaviatuuri paigutus"
   },
   "korean_settings_page": {
-    "message": "Korea keele seadete leht"
+    "message": "Korea sisestusmeetodi seadete leht"
   },
   "korean_syllable_input": {
-    "message": "Hanguli \u00fckshaaval sisestamine"
+    "message": "Sisestab \u00fche silbi korraga"
   },
   "latam_spa_settings_page": {
     "message": "Ladina-Ameerika klaviatuuri (hispaania keel) seadete leht"
@@ -3105,7 +3105,7 @@
     "message": "Kuva soovituste rippmen\u00fc\u00fc tagasil\u00fckkeklahvi vajutamisel"
   },
   "show_hangul_candidate": {
-    "message": "Kuva hanguli soovitused"
+    "message": "Kuva kandidaadid hanguli re\u017eiimis"
   },
   "shrink_candidates": {
     "message": "kahanda kandidaatide loendit"
@@ -3147,7 +3147,7 @@
     "message": "tabulaator"
   },
   "touch_keyboard": {
-    "message": "Puutetundlik klaviatuur"
+    "message": "Ekraanil kuvatav klaviatuur"
   },
   "tr_tur_settings_page": {
     "message": "T\u00fcrgi klaviatuuri seadete leht"

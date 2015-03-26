@@ -3000,10 +3000,10 @@
     "message": "Esquema de teclado coreano"
   },
   "korean_settings_page": {
-    "message": "P\u00e1gina de defini\u00e7\u00f5es de coreano"
+    "message": "P\u00e1gina de defini\u00e7\u00f5es do m\u00e9todo de introdu\u00e7\u00e3o coreano"
   },
   "korean_syllable_input": {
-    "message": "Introdu\u00e7\u00e3o hangul uma a uma"
+    "message": "Introduzir uma s\u00edlaba de cada vez"
   },
   "latam_spa_settings_page": {
     "message": "P\u00e1gina de defini\u00e7\u00f5es do teclado da Am\u00e9rica Latina (espanhol)"
@@ -3105,7 +3105,7 @@
     "message": "Mostrar menu pendente de sugest\u00f5es ao premir a tecla Retrocesso"
   },
   "show_hangul_candidate": {
-    "message": "Mostrar sugest\u00f5es em hangul"
+    "message": "Mostrar candidatos no modo hangul"
   },
   "shrink_candidates": {
     "message": "reduzir lista de candidatos"
@@ -3147,7 +3147,7 @@
     "message": "separador"
   },
   "touch_keyboard": {
-    "message": "Teclado t\u00e1til"
+    "message": "Teclado no ecr\u00e3"
   },
   "tr_tur_settings_page": {
     "message": "P\u00e1gina de defini\u00e7\u00f5es do teclado turco"

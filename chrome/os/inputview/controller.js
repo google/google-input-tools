@@ -707,14 +707,6 @@ Controller.prototype.onPointerEvent_ = function(e) {
 
   if (e.view) {
     this.handlePointerAction_(e.view, e);
-  } else if (e.type == EventType.POINTER_DOWN) {
-    var tabbableKeysets = [
-      Controller.HANDWRITING_VIEW_CODE_,
-      Controller.EMOJI_VIEW_CODE_];
-    if (goog.array.contains(tabbableKeysets, this.currentKeyset_)) {
-      this.resetAll_();
-      this.switchToKeyset(this.container_.currentKeysetView.fromKeyset);
-    }
   }
 };
 
@@ -842,6 +834,17 @@ Controller.prototype.handlePointerAction_ = function(view, e) {
     this.container_.gestureCanvasView.startStroke(e);
   }
 
+  if (this.adapter_.isGestureTypingEnabled() &&
+      e.type == EventType.POINTER_UP) {
+    this.container_.gestureCanvasView.endStroke(e);
+  }
+
+  // Do not trigger other actives when gesturing.
+  if (this.adapter_.isGestureTypingEnabled() &&
+      this.container_.gestureCanvasView.isGesturing) {
+    return;
+  }
+
   // Listen for DOUBLE_CLICK as well to capture secondary taps on the spacebar.
   if (e.type == EventType.POINTER_UP || e.type == EventType.DOUBLE_CLICK) {
     this.recordStatsForClosing_(
@@ -853,6 +856,17 @@ Controller.prototype.handlePointerAction_ = function(view, e) {
     this.handleSwipeAction_(view, e);
   }
   switch (view.type) {
+    case ElementType.KEYBOARD_CONTAINER_VIEW:
+      if (e.type == EventType.POINTER_DOWN) {
+        var tabbableKeysets = [
+          Controller.HANDWRITING_VIEW_CODE_,
+          Controller.EMOJI_VIEW_CODE_];
+        if (goog.array.contains(tabbableKeysets, this.currentKeyset_)) {
+          this.resetAll_();
+          this.switchToKeyset(this.container_.currentKeysetView.fromKeyset);
+        }
+      }
+      return;
     case ElementType.BACK_BUTTON:
     case ElementType.BACK_TO_KEYBOARD:
       if (e.type == EventType.POINTER_OUT || e.type == EventType.POINTER_UP) {
@@ -1632,9 +1646,13 @@ Controller.prototype.clearCandidates_ = function() {
        this.currentKeyset_ == Controller.EMOJI_VIEW_CODE_)) {
     this.container_.candidateView.switchToIcon(
         CandidateView.IconType.BACK, true);
-  } else {
+  } else if (this.currentKeyset_ != Controller.HANDWRITING_VIEW_CODE_ &&
+      this.currentKeyset_ != Controller.EMOJI_VIEW_CODE_) {
     this.container_.candidateView.switchToIcon(CandidateView.IconType.VOICE,
         this.adapter_.isVoiceInputEnabled);
+  } else {
+    this.container_.candidateView.switchToIcon(CandidateView.IconType.VOICE,
+        false);
   }
 };
 
@@ -1862,7 +1880,7 @@ Controller.prototype.resize = function(opt_ignoreWindowResize) {
     return;
   }
 
-  this.container_.resize(screen.width, height, widthPercent,
+  this.container_.setContainerSize(screen.width, height, widthPercent,
       candidateViewHeight);
   this.container_.candidateView.setToolbarVisible(this.shouldShowToolBar_());
   if (this.container_.currentKeysetView) {
