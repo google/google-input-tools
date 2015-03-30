@@ -2848,6 +2848,20 @@ msgs.MSG_ADD_TO_PERSONAL_DICTIONARY = goog.getMsg('Add to personal dictionary');
 
 
 /**
+ * @desc Adds the current edition word into dictionary.
+ */
+msgs.MSG_ADD_TO_DICTIONARY = goog.getMsg('Add to dictionary');
+
+
+/**
+ * @desc Adds the given word  into dictionary. The given word is a placeholder.
+ */
+msgs.MSG_ADD_WORD_TO_DICTIONARY = goog.getMsg('Add "{$word}" to dictionary', {
+  'word': '$1'
+});
+
+
+/**
  * @desc Ignore auto correction feature for the given word.
  */
 msgs.MSG_IGNORE_CORRECTION = goog.getMsg('Ignore correction for');

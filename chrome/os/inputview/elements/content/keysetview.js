@@ -31,6 +31,7 @@ goog.require('i18n.input.chrome.inputview.elements.content.CompactKey');
 goog.require('i18n.input.chrome.inputview.elements.content.CompactKeyModel');
 goog.require('i18n.input.chrome.inputview.elements.content.EmojiKey');
 goog.require('i18n.input.chrome.inputview.elements.content.EnSwitcherKey');
+goog.require('i18n.input.chrome.inputview.elements.content.EnterKey');
 goog.require('i18n.input.chrome.inputview.elements.content.FunctionalKey');
 goog.require('i18n.input.chrome.inputview.elements.content.KeyboardView');
 goog.require('i18n.input.chrome.inputview.elements.content.MenuKey');
@@ -627,6 +628,8 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
       this.backspaceKey = elem;
       break;
     case ElementType.ENTER_KEY:
+      elem = new content.EnterKey(id, iconCssClass);
+      break;
     case ElementType.TAB_KEY:
     case ElementType.ARROW_UP:
     case ElementType.ARROW_DOWN:

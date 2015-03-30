@@ -1,6 +1,17 @@
 {
+  "add_to_dictionary": {
+    "message": "Add to dictionary"
+  },
   "add_to_personal_dictionary": {
     "message": "\u0935\u094d\u092f\u0915\u094d\u0924\u093f\u0917\u0924 \u0936\u092c\u094d\u0926\u0915\u094b\u0936 \u092e\u0947\u0902 \u091c\u094b\u0921\u093c\u0947\u0902"
+  },
+  "add_word_to_dictionary": {
+    "message": "Add \"$1\" to dictionary",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   },
   "advanced": {
     "message": "\u0909\u0928\u094d\u0928\u0924"

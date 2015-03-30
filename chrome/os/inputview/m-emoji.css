@@ -11,8 +11,8 @@
 .inputview-emoji-switch-hot {
   background: url('images/material/emoji_hot.png') no-repeat center;
   background-size: 18px 23px;
-  height: 18px;
-  width: 23px;
+  height: 23px;
+  width: 18px;
 }
 .inputview-emoji-tabbar-key-highlight .inputview-emoji-switch-hot {
   background: url('images/material/emoji_hot_selected.png') no-repeat center;
@@ -21,8 +21,8 @@
 .inputview-emoji-switch-emoticon {
   background: url('images/material/emoji_emoticon.png') no-repeat center;
   background-size: 30px 20.5px;
-  height: 30px;
-  width: 20.5px;
+  height: 20.5px;
+  width: 30px;
 }
 .inputview-emoji-tabbar-key-highlight .inputview-emoji-switch-emoticion {
   background: url('images/material/emoji_emoticon_selected.png') no-repeat center;
@@ -57,8 +57,8 @@
 .inputview-emoji-switch-poi {
   background: url('images/material/emoji_car.png') no-repeat center;
   background-size: 24px 19px;
-  height: 24px;
-  width: 19px;
+  height: 19px;
+  width: 24px;
 }
 .inputview-emoji-tabbar-key-highlight .inputview-emoji-switch-poi {
   background: url('images/material/emoji_car_selected.png') no-repeat center;

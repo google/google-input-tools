@@ -40,6 +40,7 @@ goog.require('i18n.input.chrome.inputview.SizeSpec');
 goog.require('i18n.input.chrome.inputview.SpecNodeName');
 goog.require('i18n.input.chrome.inputview.StateType');
 goog.require('i18n.input.chrome.inputview.SwipeDirection');
+goog.require('i18n.input.chrome.inputview.elements.Element');
 goog.require('i18n.input.chrome.inputview.elements.ElementType');
 goog.require('i18n.input.chrome.inputview.elements.content.Candidate');
 goog.require('i18n.input.chrome.inputview.elements.content.CandidateView');
@@ -687,7 +688,8 @@ Controller.prototype.onPointerEvent_ = function(e) {
   // keyboard window bounds. For other cases, we expect a view associated with a
   // pointer up event.
   if (e.type == EventType.POINTER_UP && !e.view) {
-    if (this.container_.altDataView.isVisible()) {
+    if (this.container_.altDataView.isVisible() &&
+        e.identifier == this.container_.altDataView.identifier) {
       var altDataView = this.container_.altDataView;
       var ch = altDataView.getHighlightedCharacter();
       if (ch) {
@@ -737,7 +739,7 @@ Controller.prototype.onDragEvent_ = function(e) {
 Controller.prototype.handleSwipeAction_ = function(view, e) {
   var direction = e.direction;
   if (this.container_.altDataView.isVisible()) {
-    this.container_.altDataView.highlightItem(e.x, e.y);
+    this.container_.altDataView.highlightItem(e.x, e.y, e.identifier);
     return;
   }
   if (view.type == ElementType.BACKSPACE_KEY) {
@@ -762,7 +764,6 @@ Controller.prototype.handleSwipeAction_ = function(view, e) {
   }
 
   if (view.type == ElementType.COMPACT_KEY) {
-
     view = /** @type {!i18n.input.chrome.inputview.elements.content.
         CompactKey} */ (view);
     if ((direction & i18n.input.chrome.inputview.SwipeDirection.UP) &&
@@ -920,10 +921,7 @@ Controller.prototype.handlePointerAction_ = function(view, e) {
     case ElementType.ALTDATA_VIEW:
       view = /** @type {!i18n.input.chrome.inputview.elements.content.
           AltDataView} */ (view);
-      if (e.type == EventType.POINTER_DOWN &&
-          e.target == view.getCoverElement()) {
-        view.hide();
-      } else if (e.type == EventType.POINTER_UP) {
+      if (e.type == EventType.POINTER_UP && e.identifier == view.identifier) {
         var ch = view.getHighlightedCharacter();
         if (ch) {
           this.adapter_.sendKeyDownAndUpEvent(ch, view.triggeredBy.id,
@@ -939,7 +937,7 @@ Controller.prototype.handlePointerAction_ = function(view, e) {
     case ElementType.MENU_ITEM:
       view = /** @type {!i18n.input.chrome.inputview.elements.content.
           MenuItem} */ (view);
-      if (e.type == EventType.CLICK) {
+      if (e.type == EventType.POINTER_UP) {
         this.executeCommand_.apply(this, view.getCommand());
         this.container_.menuView.hide();
         this.soundController_.onKeyUp(view.type);
@@ -954,7 +952,7 @@ Controller.prototype.handlePointerAction_ = function(view, e) {
       view = /** @type {!i18n.input.chrome.inputview.elements.content.
           MenuView} */ (view);
 
-      if (e.type == EventType.POINTER_DOWN &&
+      if (e.type == EventType.CLICK &&
           e.target == view.getCoverElement()) {
         view.hide();
       }
@@ -1084,7 +1082,8 @@ Controller.prototype.handlePointerEventForSoftKey_ = function(softKey, e) {
           CharacterKey} */ (softKey);
       if (e.type == EventType.LONG_PRESS) {
         this.container_.altDataView.show(
-            key, goog.i18n.bidi.isRtlLanguage(this.languageCode_));
+            key, goog.i18n.bidi.isRtlLanguage(this.languageCode_),
+            e.identifier);
       } else if (e.type == EventType.POINTER_UP) {
         this.model_.stateManager.triggerChording();
         var ch = key.getActiveCharacter();
@@ -1239,7 +1238,8 @@ Controller.prototype.handlePointerEventForSoftKey_ = function(softKey, e) {
           CompactKey} */(softKey);
       if (e.type == EventType.LONG_PRESS) {
         this.container_.altDataView.show(
-            key, goog.i18n.bidi.isRtlLanguage(this.languageCode_));
+            key, goog.i18n.bidi.isRtlLanguage(this.languageCode_),
+            e.identifier);
       } else if (e.type == EventType.POINTER_UP) {
         this.model_.stateManager.triggerChording();
         var ch = key.getActiveCharacter();

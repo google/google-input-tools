@@ -1,6 +1,17 @@
 {
+  "add_to_dictionary": {
+    "message": "Add to dictionary"
+  },
   "add_to_personal_dictionary": {
     "message": "Agregar a diccionario personal"
+  },
+  "add_word_to_dictionary": {
+    "message": "Add \"$1\" to dictionary",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
   },
   "advanced": {
     "message": "Configuraci\u00f3n avanzada"
@@ -3105,7 +3116,7 @@
     "message": "Mostrar men\u00fa desplegable de sugerencias mediante tecla de retroceso"
   },
   "show_hangul_candidate": {
-    "message": "Mostrar los candidatos en modo Hangul"
+    "message": "Mostrar los candidatos en modo hangul"
   },
   "shrink_candidates": {
     "message": "reducir lista de candidatos"

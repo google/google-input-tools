@@ -29,6 +29,14 @@ Util.MOUSE_EVENT_IDENTIFIER = -1;
 
 
 /**
+ * Represents invalid event identifier.
+ *
+ * @type {number}
+ */
+Util.INVALID_EVENT_IDENTIFIER = -2;
+
+
+/**
  * Gets the view.
  *
  * @param {Node} target .

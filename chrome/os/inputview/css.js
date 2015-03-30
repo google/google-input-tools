@@ -174,6 +174,8 @@ i18n.input.chrome.inputview.Css = {
   SPACE_GREY_BG: goog.getCssName('inputview-space-grey-bg'),
   SPECIAL_KEY_BG: goog.getCssName('inputview-special-key-bg'),
   SPECIAL_KEY_HIGHLIGHT: goog.getCssName('inputview-special-key-highlight'),
+  SPECIAL_KEY_DISABLE_BG_HIGHLIGHT: goog.getCssName(
+      'inputview-special-key-disable-bg-hl'),
   SPECIAL_KEY_NAME: goog.getCssName('inputview-special-key-name'),
   SWIPE_KEY: goog.getCssName('inputview-swipe-key'),
   SWIPE_SEPARATOR: goog.getCssName('inputview-swipe-separator'),
