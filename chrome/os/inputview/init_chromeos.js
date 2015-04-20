@@ -50,6 +50,7 @@ goog.require('i18n.input.chrome.inputview.Controller');
 
     window.onhashchange = function() {
       fetchHashParam();
+      controller.resetAll();
       controller.initialize(code, language, passwordLayout, name);
     };
 

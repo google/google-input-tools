@@ -52,7 +52,7 @@ i18n.input.chrome.Env = function() {
    * @type {!Array.<!BoundSize>}
    */
   this.currentBoundsList = [
-      /** @type {!BoundSize} */ ({x: 0, y: 0, w: 0, h: 0})];
+    /** @type {!BoundSize} */ ({x: 0, y: 0, w: 0, h: 0})];
 
 
   if (chrome.accessibilityFeatures &&
@@ -103,6 +103,10 @@ Env.prototype.surroundingInfo = null;
 
 /** @type {boolean} */
 Env.prototype.isChromeVoxOn = false;
+
+
+/** @type {boolean} */
+Env.prototype.isOnScreenKeyboardShown = false;
 
 
 /**

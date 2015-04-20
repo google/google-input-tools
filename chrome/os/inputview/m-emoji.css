@@ -98,16 +98,20 @@
 .inputview-emoji-tabbar-key.inputview-emoji-tabbar-key-highlight {
   border-bottom-width:5px;
   border-bottom-style:solid;
-  border-bottom-color: #03A9F4;
+  border-bottom-color: #4285f4;
 }
-.inputview-emoji-key .inputview-modifier {
+.inputview-emoji-key {
+  display: table-cell;
+  vertical-align: middle;
+}
+.inputview-emoji-key .inputview-special-key-name {
   font-size: 30px;
   text-align: center;
 }
-.inputview-landscape .inputview-emoticon.inputview-emoji-key .inputview-modifier {
+.inputview-landscape .inputview-emoticon.inputview-emoji-key .inputview-special-key-name {
   font-size: 20px;
 }
-.inputview-portrait .inputview-emoticon.inputview-emoji-key .inputview-modifier {
+.inputview-portrait .inputview-emoticon.inputview-emoji-key .inputview-special-key-name {
   font-size: 15px;
 }
 .inputview-emoji-back {

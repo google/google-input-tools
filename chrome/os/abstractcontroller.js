@@ -25,17 +25,18 @@ goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
+goog.require('i18n.input.chrome.sync.CustomDictionarySyncer');
 goog.require('i18n.input.chrome.voice.EventType');
 goog.require('i18n.input.chrome.voice.VoiceModule');
 
 
 goog.scope(function() {
 var ContextType = i18n.input.chrome.message.ContextType;
+var CustomDictionarySyncer = i18n.input.chrome.sync.CustomDictionarySyncer;
 var Env = i18n.input.chrome.Env;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
-var SizeSpec = i18n.input.chrome.inputview.SizeSpec;
 var StateID = i18n.input.chrome.hmm.StateID;
 var VoiceEventType = i18n.input.chrome.voice.EventType;
 var VoiceModule = i18n.input.chrome.voice.VoiceModule;
@@ -64,6 +65,13 @@ i18n.input.chrome.AbstractController = function() {
 
   /** @protected {!goog.events.EventHandler} */
   this.eventHandler = new goog.events.EventHandler(this);
+
+  /**
+   * Whether the dictionary has been synced or not.
+   *
+   * @protected {boolean}
+   */
+  this.syncedDictionary = false;
 
   this.eventHandler.listen(this.voiceModule,
       [VoiceEventType.VOICE_RECOG_START,
@@ -119,15 +127,6 @@ AbstractController.prototype.isSwitching = false;
 
 
 /**
- * True if this IME is running in standalone mode in which there is no
- * touchscreen keyboard attached.
- *
- * @type {boolean}
- */
-AbstractController.prototype.standalone = true;
-
-
-/**
  * The current keyData being processed by the controller.
  * This is for the sub-class'ed controllers to get the keyData in any methods,
  * particularly for determine whether it should send fake key events or commit
@@ -159,6 +158,7 @@ AbstractController.prototype.activate = function(engineId) {
   this.updateOptions(engineId);
   this.updateInputToolMenu();
   this.voiceModule.activate(engineId);
+  this.syncedDictionary = false;
 };
 
 
@@ -433,11 +433,8 @@ AbstractController.prototype.processMessage = function(message, sender,
       var text = message[Name.TEXT];
       this.commitText(text, false);
       break;
-    case Type.VISIBILITY_CHANGE:
-      this.standalone = !message[Name.VISIBILITY];
-      break;
     case Type.VOICE_VIEW_STATE_CHANGE:
-      if (!this.standalone) {
+      if (this.env.isOnScreenKeyboardShown) {
         if (message[Name.MSG]) {
           this.voiceModule.start();
         } else {
@@ -450,13 +447,17 @@ AbstractController.prototype.processMessage = function(message, sender,
 
 
 /**
- * True if this IME is running in standalone mode in which the IME doesn't get
- * attached to a touchscreen keyboard.
+ * Syncs the custom dictionary if it has not been synced already. If necessary
+ * the engine will be updated asynchronously.
  *
- * @return {boolean} .
+ * @protected
  */
-AbstractController.prototype.isStandalone = function() {
-  return this.standalone;
+AbstractController.prototype.syncCustomDictionaryIfNecessary = function() {
+  if (!this.syncedDictionary) {
+    this.syncedDictionary = true;
+    // TODO: Only the languages that have NaCl support should request sync.
+    CustomDictionarySyncer.getInstance().syncInputTool(this.env.engineId);
+  }
 };
 
 
@@ -485,6 +486,7 @@ AbstractController.prototype.commitText = function(text, onStage) {
               this.env.context.contextID,
               Name.TEXT,
               text));
+      this.syncCustomDictionaryIfNecessary();
     }
   }
 };

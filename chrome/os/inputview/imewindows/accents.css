@@ -32,12 +32,16 @@ body {
   vertical-align: middle;
 }
 
-.inputview-font {
-  font-size: 40px;
+.inputview-compact-font {
+  font-size: 28px;
+}
+
+.inputview-full-font {
+  font-size: 23px;
 }
 
 .inputview-font-small {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .inputview-element-highlight {

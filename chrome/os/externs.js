@@ -129,7 +129,7 @@ mozc.UserDictionary.prototype.enabled;
 mozc.UserDictionary.prototype.name;
 
 
-/** @type {!Array.<!mozc.UserDictionaryEntry>} */
+/** @type {!Array<!mozc.UserDictionaryEntry>} */
 mozc.UserDictionary.prototype.entries;
 
 
@@ -142,7 +142,7 @@ mozc.UserDictionaryStorage = function() {};
 mozc.UserDictionaryStorage.prototype.version;
 
 
-/** @type {!Array.<!mozc.UserDictionary>} */
+/** @type {!Array<!mozc.UserDictionary>} */
 mozc.UserDictionaryStorage.prototype.dictionaries;
 
 
@@ -167,7 +167,7 @@ mozc.UserDictionaryCommand.prototype.dictionary_id;
 mozc.UserDictionaryCommand.prototype.dictionary_name;
 
 
-/** @type {!Array.<number>} */
+/** @type {!Array<number>} */
 mozc.UserDictionaryCommand.prototype.entry_index;
 
 
@@ -200,7 +200,7 @@ mozc.UserDictionaryCommandStatus.prototype.session_id;
 mozc.UserDictionaryCommandStatus.prototype.storage;
 
 
-/** @type {!Array.<!mozc.UserDictionaryEntry>|undefined} */
+/** @type {!Array<!mozc.UserDictionaryEntry>|undefined} */
 mozc.UserDictionaryCommandStatus.prototype.entries;
 
 
@@ -225,7 +225,7 @@ mozc.KeyEvent.prototype.key_code;
 mozc.KeyEvent.prototype.special_key;
 
 
-/** @type {!Array.<string>} */
+/** @type {!Array<string>} */
 mozc.KeyEvent.prototype.modifier_keys;
 
 
@@ -323,7 +323,7 @@ mozc.Input.prototype.key;
 mozc.Input.prototype.command;
 
 
-/** @type {!Object.<string,*>|undefined} */
+/** @type {!Object<string,*>|undefined} */
 mozc.Input.prototype.config;
 
 
@@ -398,7 +398,7 @@ mozc.Preedit = function() {};
 mozc.Preedit.prototype.cursor;
 
 
-/** @type {!Array.<!mozc.Segment>} */
+/** @type {!Array<!mozc.Segment>} */
 mozc.Preedit.prototype.segment;
 
 
@@ -468,6 +468,36 @@ mozc.Annotation.prototype.shortcut;
 
 
 /** @constructor */
+mozc.CandidateWord = function() {};
+
+
+/** @type {number} */
+mozc.CandidateWord.prototype.id;
+
+
+/** @type {number} */
+mozc.CandidateWord.prototype.index;
+
+
+/** @type {string} */
+mozc.CandidateWord.prototype.key;
+
+
+/** @type {string} */
+mozc.CandidateWord.prototype.value;
+
+
+
+/** @constructor */
+mozc.CandidateList = function() {};
+
+
+/** @type {!Array.<!mozc.CandidateWord>} */
+mozc.CandidateList.prototype.candidates;
+
+
+
+/** @constructor */
 mozc.Candidate = function() {};
 
 
@@ -508,7 +538,7 @@ mozc.Information.prototype.title;
 mozc.Information.prototype.description;
 
 
-/** @type {!Array.<number>} */
+/** @type {!Array<number>} */
 mozc.Information.prototype.candidate_id;
 
 
@@ -521,7 +551,7 @@ mozc.InformationList = function() {};
 mozc.InformationList.prototype.focused_index;
 
 
-/** @type {!Array.<!mozc.Information>} */
+/** @type {!Array<!mozc.Information>} */
 mozc.InformationList.prototype.information;
 
 
@@ -571,7 +601,7 @@ mozc.Candidates.prototype.focused_index;
 mozc.Candidates.prototype.size;
 
 
-/** @type {!Array.<!mozc.Candidate>} */
+/** @type {!Array<!mozc.Candidate>} */
 mozc.Candidates.prototype.candidate;
 
 
@@ -579,7 +609,7 @@ mozc.Candidates.prototype.candidate;
 mozc.Candidates.prototype.position;
 
 
-/** @type {!Array.<!mozc.Candidate>} */
+/** @type {!Array<!mozc.Candidate>} */
 mozc.Candidates.prototype.subcandidates;
 
 
@@ -632,6 +662,10 @@ mozc.Output.prototype.preedit;
 mozc.Output.prototype.candidates;
 
 
+/** @type {!mozc.CandidateList|undefined} */
+mozc.Output.prototype.all_candidate_words;
+
+
 /** @type {!mozc.KeyEvent|undefined} */
 mozc.Output.prototype.key;
 
@@ -640,7 +674,7 @@ mozc.Output.prototype.key;
 mozc.Output.prototype.url;
 
 
-/** @type {!Object.<string,*>|undefined} */
+/** @type {!Object<string,*>|undefined} */
 mozc.Output.prototype.config;
 
 
@@ -666,7 +700,6 @@ mozc.Output.prototype.callback;
 
 /** @type {!mozc.UserDictionaryCommandStatus|undefined} */
 mozc.Output.prototype.user_dictionary_command_status;
-
 
 
 /** @constructor */
@@ -725,7 +758,7 @@ mozc.Event.prototype.big_dictionary_version;
 mozc.Event.prototype.big_dictionary_state;
 
 
-/** @type {!Object.<string,*>|undefined} */
+/** @type {!Object<string,*>|undefined} */
 mozc.Event.prototype.config;
 
 
@@ -737,7 +770,7 @@ mozc.Event.prototype.result;
 mozc.Event.prototype.error;
 
 
-/** @type {!Array.<!mozc.PosType>|undefined} */
+/** @type {!Array<!mozc.PosType>|undefined} */
 mozc.Event.prototype.posList;
 
 
@@ -767,7 +800,7 @@ chrome.inputMethodPrivate = {};
 
 
 /**
- * @param {function(!Array.<!Object>): void} callback .
+ * @param {function(!Array<!Object>): void} callback .
  */
 chrome.inputMethodPrivate.getInputMethods = function(callback) {};
 
@@ -784,12 +817,33 @@ chrome.inputMethodPrivate.getCurrentInputMethod = function(callback) {};
 chrome.inputMethodPrivate.getInputMethodConfig = function(callback) {};
 
 
+/**
+ * @param {!string} inputMethodId .
+ * @param {function()=} opt_callback .
+ */
+chrome.inputMethodPrivate.setCurrentInputMethod =
+    function(inputMethodId, opt_callback) {};
+
+
+/**
+ * @param {function(!Array<string>)} callback .
+ */
+chrome.inputMethodPrivate.fetchAllDictionaryWords = function(callback) {};
+
+
+/**
+ * @param {string} word
+ * @param {function()} callback .
+ */
+chrome.inputMethodPrivate.addWordToDictionary = function(word, callback) {};
+
+
 /** @const */
 chrome.inputMethodPrivate.onCompositionBoundsChanged = {};
 
 
 /**
- * @param {function(!BoundSize, !Array.<!BoundSize>): (boolean|undefined)}
+ * @param {function(!BoundSize, !Array<!BoundSize>): (boolean|undefined)}
  *     callback .
  */
 chrome.inputMethodPrivate.onCompositionBoundsChanged.addListener =
@@ -797,19 +851,47 @@ chrome.inputMethodPrivate.onCompositionBoundsChanged.addListener =
 
 
 /**
- * @param {function(!BoundSize, !Array.<!BoundSize>): (boolean|undefined)}
+ * @param {function(!BoundSize, !Array<!BoundSize>): (boolean|undefined)}
  *     callback .
  */
 chrome.inputMethodPrivate.onCompositionBoundsChanged.removeListener =
     function(callback) {};
 
 
+/** @const */
+chrome.inputMethodPrivate.onDictionaryLoaded = {};
+
+
 /**
- * @param {!string} inputMethodId .
- * @param {function()=} opt_callback .
+ * @param {function()} callback .
  */
-chrome.inputMethodPrivate.setCurrentInputMethod =
-    function(inputMethodId, opt_callback) {};
+chrome.inputMethodPrivate.onDictionaryLoaded.addListener =
+    function(callback) {};
+
+
+/**
+ * @param {function()} callback .
+ */
+chrome.inputMethodPrivate.onDictionaryLoaded.removeListener =
+    function(callback) {};
+
+
+/** @const */
+chrome.inputMethodPrivate.onDictionaryChanged = {};
+
+
+/**
+ * @param {function(!Array<string>, !Array<string>)} callback .
+ */
+chrome.inputMethodPrivate.onDictionaryChanged.addListener =
+    function(callback) {};
+
+
+/**
+ * @param {function(!Array<string>, !Array<string>)} callback .
+ */
+chrome.inputMethodPrivate.onDictionaryChanged.removeListener =
+    function(callback) {};
 
 
 /** @const */
@@ -854,6 +936,7 @@ chrome.app.window.Bounds.prototype.setPosition = function(x, y) {};
  * @param {number} h The height.
  */
 chrome.app.window.Bounds.prototype.setSize = function(w, h) {};
+
 
 
 /**
