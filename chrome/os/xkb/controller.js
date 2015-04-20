@@ -414,7 +414,7 @@ Controller.prototype.updateOptions = function(inputToolCode) {
   this.doubleSpacePeriod_ = doubleSpacePeriod;
   this.updateSettings({
     'autoSpace': true,
-    'autoCapital': autoCapital,
+    'autoCapital': correctionLevel > 0 && autoCapital,
     'doubleSpacePeriod': doubleSpacePeriod,
     'soundOnKeypress': soundOnKeypress
   });
@@ -1047,6 +1047,13 @@ Controller.prototype.commitText = function(text, onStage) {
   goog.base(this, 'commitText', text, onStage);
 };
 
+
+/** @override */
+Controller.prototype.isSuggestionSupported = function() {
+  var context = this.env.context;
+  if (!context || !goog.array.contains(['text', 'search'], context.type)) {
+    return false;
+  }
+  return !goog.isDef(context.autoCorrect) || !!context.autoCorrect;
+};
 });  // goog.scope
-
-

@@ -49,7 +49,7 @@
   display: inline-block;
 }
 .inputview-a11y .inputview-character {
-  font-size: 13px;
+  font-size: 10px;
 }
 .inputview-ch {
   color: #37474f;
@@ -64,7 +64,7 @@
   font-size: 17px;
 }
 .inputview-a11y .inputview-ch {
-  font-size: 21px;
+  font-size: 17px;
 }
 .inputview-vertical {
   display: inline-block;
@@ -415,10 +415,10 @@
   height: 17px;
 }
 .inputview-hide-keyboard-icon {
-  background: transparent url('images/material/hidekeyboard.png') 0 0/19px 14.5px no-repeat;
+  background: transparent url('images/material/hidekeyboard.png') 0 0/32px 32px no-repeat;
   display: inline-block;
-  width: 19px;
-  height: 14.5px;
+  width: 32px;
+  height: 32px;
 }
 .inputview-candidate.inputview-candidate-highlight,
 .inputview-toolbar-button.inputview-candidate-highlight,
@@ -435,10 +435,10 @@
 }
 .inputview-backspace-icon {
   background: transparent url('images/material/backspace.png');
-  background-size: 24px 17px;
+  background-size: 24px 24px;
   display: inline-block;
   width: 24px;
-  height: 17px;
+  height: 24px;
 }
 .inputview-enter-icon {
   background: transparent url('images/material/enter.png');
@@ -471,6 +471,9 @@
 .inputview-element-highlight {
   background-color: rgba(55, 71, 79, 0.15);
 }
+.inputview-element-highlight.inputview-container {
+  background-color: #ECEFF1;
+}
 .inputview-special-key-disable-bg-hl.inputview-special-key-highlight {
   background-color: transparent;
 }
@@ -490,6 +493,12 @@
   height: 12px;
 }
 .inputview-capslock-dot {
+  background-color: #ccc;
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 .inputview-capslock-dot-highlight {
   background-color: #4285f4;
@@ -662,19 +671,35 @@
   position: relative;
   bottom: 0;
   left: 0;
-  background-color: white;
   opacity: 0.5;
   z-index: 1;
 }
 
+.inputview-voice-privacy-info,
 .inputview-handwriting-privacy-info {
   position: absolute;
   z-index: 2;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  background-color: white;
+  padding: 20px;
 }
 
+.inputview-voice-privacy-info > :first-child,
+.inputview-handwriting-privacy-info > :first-child {
+  color: #37474f;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.inputview-voice-got-it,
 .inputview-handwriting-got-it {
-  color: #3974df;
-  margin-left: 10px;
+  color: #ffffff;
+  background-color: #4285f4;
+  float: right;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 .inputview-handwriting-privacy-info-hidden {

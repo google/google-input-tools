@@ -42,15 +42,6 @@ goog.inherits(AbstractView, goog.events.EventTarget);
 
 
 /**
- * True if this IME is running in standalone mode which means no touchscreen
- * keyboard is attached.
- *
- * @type {boolean}
- */
-AbstractView.prototype.standalone = true;
-
-
-/**
  * A flag being flipped when onCompsitionCanceled to avoid composition ops
  * when hiding. Defualt to true and only be set to false when
  * onCompsitionCanceled.
@@ -71,7 +62,7 @@ AbstractView.prototype.resetCompositionWhenHiding = true;
  */
 AbstractView.prototype.setCandidateWindowProperties = function(engineID,
     visible, opt_cursorVisible, opt_vertical, opt_pageSize) {
-  if (this.standalone) {
+  if (!this.env.isOnScreenKeyboardShown) {
     var properties = goog.object.create(Name.VISIBLE, visible);
     if (goog.isDef(opt_cursorVisible)) {
       properties[Name.CURSOR_VISIBLE] = !!opt_cursorVisible;
@@ -114,7 +105,7 @@ AbstractView.prototype.setComposingText = function(composingText, cursorPos) {
  * @param {!Array.<!Object>} candidates .
  */
 AbstractView.prototype.setCandidates = function(candidates) {
-  if (this.standalone) {
+  if (!this.env.isOnScreenKeyboardShown) {
     if (this.env.context) {
       chrome.input.ime.setCandidates(goog.object.create(
           Name.CONTEXT_ID, this.env.context.contextID,
@@ -134,7 +125,7 @@ AbstractView.prototype.setCandidates = function(candidates) {
  * @param {number} cursorPosition .
  */
 AbstractView.prototype.setCursorPosition = function(cursorPosition) {
-  if (this.standalone && this.env.context) {
+  if (!this.env.isOnScreenKeyboardShown && this.env.context) {
     chrome.input.ime.setCursorPosition(goog.object.create(
         Name.CONTEXT_ID, this.env.context.contextID,
         Name.CANDIDATE_ID, cursorPosition));
