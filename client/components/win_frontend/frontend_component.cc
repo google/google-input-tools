@@ -184,7 +184,6 @@ FrontendComponent::FrontendComponent(Delegate* delegate)
     : context_(NULL),
       caret_(0),
       caret_in_window_(0),
-      was_backspace_(false),
       composition_terminating_(false),
       icid_(0),
       is_rtl_language_(false),
@@ -350,8 +349,6 @@ void FrontendComponent::ProcessKey(const ipc::proto::KeyEvent& key) {
     return;
   if (!ime_loaded_ || !ui_loaded_)
     return;
-  // TODO(haicsun): remove variable |was_backspace_|.
-  was_backspace_ = (key.keycode() == VK_BACK);
 
   if (!waiting_process_key_) {
     // It's not supposed to happen, but in case it happened, send a
@@ -963,14 +960,13 @@ void FrontendComponent::OnMsgCompositionChanged(ipc::proto::Message* message) {
   ReplyTrue(mptr.release());
 
   // |composition_| may be different from |composition_in_window_| in
-  // inline_mode, when last key is not backspace and the caret is in the end.
-  // the composition_ should include converted active candidate instead of
-  // active clauses in raw composition string in this case.
-  if (!ShouldAssembleComposition()) {
+  // inline_mode, when inline_text field is provided in the message.
+  if (raw_composition_.has_inline_text()) {
+    composition_ = Utf8ToWide(raw_composition_.inline_text().text());
+    caret_ = raw_composition_.inline_selection().end();
+  } else {
     composition_ = composition_in_window_;
     caret_ = caret_in_window_;
-  } else {
-    AssembleComposition();
   }
 
   UpdateComposition();
@@ -985,7 +981,6 @@ void FrontendComponent::OnMsgCandidateListChanged(
   if (candidates_.has_footnote())
     help_tips_ = Utf8ToWide(candidates_.footnote().text());
 
-  AssembleComposition();
   context_->UpdateCandidates(candidates_.candidate_size() > 0, candidates_);
   ReplyTrue(mptr.release());
 }
@@ -1134,70 +1129,6 @@ void FrontendComponent::GetIntegerValue(std::string key, int32* int_value) {
     *int_value = settings_integers_[key];
 }
 
-void FrontendComponent::AssembleComposition() {
-  if (!ShouldAssembleComposition())
-    return;
-
-  // Now that all below conditions are met:
-  // * caret is at the end of the composition string
-  // * Previous key is not a backspace
-  // * Inline mode is on.
-  composition_.clear();
-  caret_ = 0;
-
-  composition_in_window_ = Utf8ToWide(raw_composition_.text().text());
-  for (int i = 0; i < raw_composition_.text().attribute_size(); ++i) {
-    const ipc::proto::Attribute& attribute =
-        raw_composition_.text().attribute(i);
-
-    // Filter out non composition state type attributes.
-    if (attribute.type() != ipc::proto::Attribute::COMPOSITION_STATE)
-      continue;
-
-    // Filtering out invalid attributes.
-    DCHECK_LE(attribute.end(), composition_in_window_.size());
-    if (attribute.end() > composition_in_window_.size())
-      continue;
-    DCHECK_LT(attribute.start(), attribute.end());
-    if (attribute.start() >= attribute.end())
-      continue;
-
-    if (attribute.composition_state() == ipc::proto::Attribute::CS_CONVERTED ||
-        attribute.composition_state() == ipc::proto::Attribute::CS_INPUT) {
-      composition_ += composition_in_window_.substr(
-          attribute.start(), attribute.end() - attribute.start());
-    } else {
-      // The info in clause.phrase() / clause.composition() is not accurately
-      // assembled if converter trigger is on. We obtain the info from the
-      // active candidate.
-      if (candidates_.candidate_size() > 0) {
-        const ipc::proto::Candidate& current_candidate =
-            candidates_.candidate(candidates_.selected_candidate());
-        composition_ += Utf8ToWide(current_candidate.text().text());
-      }
-    }
-  }
-  if (composition_.empty()) {
-    composition_ = composition_in_window_;
-  }
-  caret_ = static_cast<int>(composition_.size());
-  DVLOG(3) << __SHORT_FUNCTION__
-           << L" caret: " << caret_
-           << L" composition: " << composition_;
-}
-
-bool FrontendComponent::ShouldAssembleComposition() const {
-  bool should_assemble_composition = true;
-  AppSensorHelper::Instance()->HandleCommand(CMD_SHOULD_ASSEMBLE_COMPOSITION,
-                                             &should_assemble_composition);
-  if (caret_in_window_ != composition_in_window_.size() ||
-      was_backspace_ || !should_assemble_composition ||
-      context_->GetPlatform() == ContextInterface::PLATFORM_WINDOWS_IMM) {
-    return false;
-  }
-  return true;
-}
-
 void FrontendComponent::OnIPCDisconnected() {
   // Clear context related states if ipc fails.
   candidates_.Clear();
@@ -1206,7 +1137,6 @@ void FrontendComponent::OnIPCDisconnected() {
   caret_ = 0;
   composition_in_window_ = L"";
   caret_in_window_ = 0;
-  was_backspace_ = 0;
   composition_terminating_ = false;
   help_tips_ = L"";
   icid_ = 0;
