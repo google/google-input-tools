@@ -505,6 +505,13 @@ message Composition {
   // encoding, in order to simplify code for Windows and Mac, indexes stored in
   // |selection| are number of UTF-16 code points
   optional Range selection = 2;
+
+  // The text displayed inline, if supported by the frontend.
+  // Typically this is the resulting text if we were to commit the composition.
+  optional Text inline_text = 3;
+
+  // The selection range for |inline_text| .
+  optional Range inline_selection = 4;
 }
 
 // A message to represent a keyboard event.

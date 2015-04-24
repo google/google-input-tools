@@ -109,8 +109,6 @@ class FrontendComponent : public EngineInterface,
   // Gets value from settings store, if failed, set int_value to default value.
   void GetIntegerValue(std::string key, int32* int_value);
 
-  void AssembleComposition();
-  bool ShouldAssembleComposition() const;
   void OnIPCDisconnected();
   void CacheMessage(ipc::proto::Message* message);
   void SwitchInputMethod();
@@ -133,7 +131,6 @@ class FrontendComponent : public EngineInterface,
   int caret_;
   std::wstring composition_in_window_;
   int caret_in_window_;
-  bool was_backspace_;
 
   // Legacy variable from engine.cc, used to prevent EndComposition from
   // being re-entrant.
