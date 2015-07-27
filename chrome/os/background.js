@@ -122,10 +122,12 @@ i18n.input.chrome.Background = function() {
   // option page or inputview
   // window.
   chrome.runtime.onMessage.addListener(this.wrapAsyncHandler_(this.onMessage));
-  this.eventHandler.listen(
-      this.eventTarget,
+  this.eventHandler.listen(this.eventTarget,
       i18n.input.chrome.EventType.EXECUTE_WAITING_EVENT,
-      this.executeWaitingEventHandlers);
+      this.executeWaitingEventHandlers)
+  .listen(this.eventTarget,
+      i18n.input.chrome.EventType.LISTEN_KEY_EVENT,
+      this.handleListenKeyEvent_);
 
   this.init_();
 };
@@ -179,6 +181,31 @@ Background.prototype.previousActiveController;
 
 
 /**
+ * Whether the background is listening the key events.
+ *
+ * @private {boolean}
+ */
+Background.prototype.listeningKeyEvents_ = false;
+
+
+/**
+ * Listens or unlistens the key events.
+ *
+ * @param {boolean} listen Whether listen or unlisten.
+ * @protected
+ */
+Background.prototype.listenKeyEvents = function(listen) {
+  if (this.listeningKeyEvents_ == listen) return;
+  if (listen) {
+    chrome.input.ime.onKeyEvent.addListener(this.onKeyEventFn_, ['async']);
+  } else {
+    chrome.input.ime.onKeyEvent.removeListener(this.onKeyEventFn_);
+  }
+  this.listeningKeyEvents_ = listen;
+};
+
+
+/**
  * Uninit.
  *
  * @protected
@@ -188,7 +215,7 @@ Background.prototype.uninit = function() {
     return;
   }
 
-  // Registers event handlers.
+  // Removes event handlers.
   chrome.input.ime.onActivate.removeListener(
       this.activateFn_);
   chrome.input.ime.onDeactivated.removeListener(
@@ -238,8 +265,6 @@ Background.prototype.init_ = function() {
       this.focusFn_);
   chrome.input.ime.onBlur.addListener(
       this.blurFn_);
-  chrome.input.ime.onKeyEvent.addListener(
-      this.onKeyEventFn_, ['async']);
   chrome.input.ime.onCandidateClicked.addListener(
       this.onCandidateClickFn_);
   chrome.input.ime.onMenuItemActivated.addListener(
@@ -291,6 +316,16 @@ Background.prototype.wrapAsyncHandler_ = function(handler) {
  */
 Background.prototype.isControllerReady = function() {
   return this.activeController.isReady();
+};
+
+
+/**
+ * Handles listen key event from the controller.
+ *
+ * @private
+ */
+Background.prototype.handleListenKeyEvent_ = function() {
+  this.listenKeyEvents(this.activeController.isInterestedInKeyEvents());
 };
 
 
@@ -368,6 +403,7 @@ Background.prototype.onActivate = function(engineId, screenType) {
   if (this.env.context) {
     this.activeController.register(this.env.context);
   }
+  this.listenKeyEvents(this.activeController.isInterestedInKeyEvents());
 };
 
 
@@ -378,6 +414,7 @@ Background.prototype.onActivate = function(engineId, screenType) {
  */
 Background.prototype.onDeactivate_ = function(engineID) {
   this.activeController && this.activeController.deactivate();
+  this.listenKeyEvents(false);
 };
 
 

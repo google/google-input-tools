@@ -19,27 +19,24 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.object');
+goog.require('i18n.input.chrome.Constant');
 goog.require('i18n.input.chrome.Env');
-goog.require('i18n.input.chrome.hmm.StateID');
 goog.require('i18n.input.chrome.inputview.events.KeyCodes');
 goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
 goog.require('i18n.input.chrome.sync.CustomDictionarySyncer');
-goog.require('i18n.input.chrome.voice.EventType');
-goog.require('i18n.input.chrome.voice.VoiceModule');
+goog.require('i18n.input.lang.InputTool');
 
 
 goog.scope(function() {
+var Constant = i18n.input.chrome.Constant;
 var ContextType = i18n.input.chrome.message.ContextType;
 var CustomDictionarySyncer = i18n.input.chrome.sync.CustomDictionarySyncer;
 var Env = i18n.input.chrome.Env;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
-var StateID = i18n.input.chrome.hmm.StateID;
-var VoiceEventType = i18n.input.chrome.voice.EventType;
-var VoiceModule = i18n.input.chrome.voice.VoiceModule;
 
 
 
@@ -56,29 +53,17 @@ i18n.input.chrome.AbstractController = function() {
   /** @protected {!Env} */
   this.env = Env.getInstance();
 
-  /**
-   * The voice module.
-   *
-   * @protected {!VoiceModule}
-   */
-  this.voiceModule = VoiceModule.getInstance();
-
   /** @protected {!goog.events.EventHandler} */
   this.eventHandler = new goog.events.EventHandler(this);
 
   /**
    * Whether the dictionary has been synced or not.
+   *    Key: The language code.
+   *    Value: Whether it's synced.
    *
-   * @protected {boolean}
+   * @protected {Object.<string, boolean>}
    */
-  this.syncedDictionary = false;
-
-  this.eventHandler.listen(this.voiceModule,
-      [VoiceEventType.VOICE_RECOG_START,
-       VoiceEventType.VOICE_RECOG_END,
-       VoiceEventType.VOICE_RECOG_ERROR,
-       VoiceEventType.VOICE_RECOG_TIMEOUT],
-      this.onVoiceState_);
+  this.dictSyncedMap = {};
 };
 var AbstractController = i18n.input.chrome.AbstractController;
 goog.inherits(AbstractController, goog.events.EventTarget);
@@ -157,7 +142,6 @@ AbstractController.prototype.setScreenType = function(screenType) {
 AbstractController.prototype.activate = function(engineId) {
   this.updateOptions(engineId);
   this.updateInputToolMenu();
-  this.voiceModule.activate(engineId);
   this.syncedDictionary = false;
 };
 
@@ -165,9 +149,7 @@ AbstractController.prototype.activate = function(engineId) {
 /**
  * Deactivates the current input tool.
  */
-AbstractController.prototype.deactivate = function() {
-  this.voiceModule.deactivate();
-};
+AbstractController.prototype.deactivate = goog.functions.NULL;
 
 
 /**
@@ -188,9 +170,7 @@ AbstractController.prototype.register = goog.functions.NULL;
 /**
  * Unregister the current context.
  */
-AbstractController.prototype.unregister = function() {
-  this.voiceModule.unregister();
-};
+AbstractController.prototype.unregister = goog.functions.NULL;
 
 
 /**
@@ -202,9 +182,7 @@ AbstractController.prototype.reset = goog.functions.NULL;
 /**
  * Callback when composition is cancelled by system.
  */
-AbstractController.prototype.onCompositionCanceled = function() {
-  this.voiceModule.onCompositionCanceled();
-};
+AbstractController.prototype.onCompositionCanceled = goog.functions.NULL;
 
 
 /**
@@ -213,20 +191,6 @@ AbstractController.prototype.onCompositionCanceled = function() {
  * @param {!Object} surroundingInfo
  */
 AbstractController.prototype.onSurroundingTextChanged = goog.functions.NULL;
-
-
-/**
- * Handler for voice module state change.
- *
- * @param {goog.events.Event} e .
- * @private
- */
-AbstractController.prototype.onVoiceState_ = function(e) {
-  chrome.runtime.sendMessage(goog.object.create(
-      Name.TYPE, Type.VOICE_STATE_CHANGE,
-      Name.MSG, goog.object.create(
-          Name.VOICE_STATE, e.type == VoiceEventType.VOICE_RECOG_START)));
-};
 
 
 /**
@@ -250,10 +214,6 @@ AbstractController.prototype.isSimulated = function(e) {
  *     Undefined means it's unsure at that moment.
  */
 AbstractController.prototype.handleEvent = function(e) {
-  // Press any key on physical keyboard, stop voice recognition.
-  if (/^key/.test(e.type)) {
-    this.voiceModule.reset();
-  }
   this.keyData = e;
   return false;
 };
@@ -381,13 +341,6 @@ AbstractController.prototype.selectCandidate = goog.functions.NULL;
  */
 AbstractController.prototype.switchInputToolState =
     function(stateId, opt_stateIdValue) {
-  if (stateId == StateID.VOICE) {
-    if (this.voiceModule.isVisible()) {
-      this.voiceModule.deactivate();
-    } else {
-      this.voiceModule.activate(this.env.engineId);
-    }
-  }
   this.updateInputToolMenu();
 };
 
@@ -433,15 +386,6 @@ AbstractController.prototype.processMessage = function(message, sender,
       var text = message[Name.TEXT];
       this.commitText(text, false);
       break;
-    case Type.VOICE_VIEW_STATE_CHANGE:
-      if (this.env.isOnScreenKeyboardShown) {
-        if (message[Name.MSG]) {
-          this.voiceModule.start();
-        } else {
-          this.voiceModule.stop();
-        }
-      }
-      break;
   }
 };
 
@@ -453,10 +397,13 @@ AbstractController.prototype.processMessage = function(message, sender,
  * @protected
  */
 AbstractController.prototype.syncCustomDictionaryIfNecessary = function() {
-  if (!this.syncedDictionary) {
-    this.syncedDictionary = true;
-    // TODO: Only the languages that have NaCl support should request sync.
-    CustomDictionarySyncer.getInstance().syncInputTool(this.env.engineId);
+  var inputTool = i18n.input.lang.InputTool.get(this.env.engineId);
+  if (inputTool && goog.array.contains(
+      Constant.NACL_LANGUAGES, inputTool.languageCode)) {
+    if (!this.dictSyncedMap[inputTool.languageCode]) {
+      this.dictSyncedMap[inputTool.languageCode] = true;
+      CustomDictionarySyncer.getInstance().syncInputTool(this.env.engineId);
+    }
   }
 };
 
@@ -476,9 +423,17 @@ AbstractController.prototype.commitText = function(text, onStage) {
     // instead of special key like Backspace, Enter, Esc, etc.
     if (AbstractController.ENABLE_KEY_EVENT_SIMULATION &&
         this.keyData && !onStage && text.length == 1 &&
-        this.keyData.key.length == 1) {
+        this.keyData.key.length == 1 && this.keyData['fromInputView']) {
       this.keyData['key'] = text;
       this.sendKeyEvent(this.keyData);
+      if (this.keyData.type == goog.events.EventType.KEYDOWN) {
+        // Hack: simulate keyup events. All controllers must not simulate keyup
+        // events by its own.
+        var copiedKeyData = /** @type {!ChromeKeyboardEvent} **/ (
+            goog.object.clone(this.keyData));
+        copiedKeyData.type = goog.events.EventType.KEYUP;
+        this.sendKeyEvent(copiedKeyData);
+      }
     } else {
       chrome.input.ime.commitText(
           goog.object.create(
@@ -551,10 +506,7 @@ AbstractController.prototype.isSuggestionSupported = function() {
  * @return {Array.<!Object.<string, *>>} The menus.
  * @protected
  */
-AbstractController.prototype.getInputToolMenu = function() {
-  // Disable voice menu for physical keyboard.
-  return null;
-};
+AbstractController.prototype.getInputToolMenu = goog.functions.NULL;
 
 
 /**
@@ -565,7 +517,6 @@ AbstractController.prototype.getInputToolMenu = function() {
 AbstractController.prototype.updateInputToolMenu = function() {
   var menus = this.getInputToolMenu();
   if (menus) {
-    // Sets up voice option.
     chrome.input.ime.setMenuItems(goog.object.create(
         'engineID', this.env.engineId,
         'items', menus));
@@ -573,9 +524,19 @@ AbstractController.prototype.updateInputToolMenu = function() {
 };
 
 
+/**
+ * Gets whether the controller is interested in physical key events.
+ * By default, this returns true. The sub controller may override this.
+ *
+ * @return {boolean}
+ */
+AbstractController.prototype.isInterestedInKeyEvents = function() {
+  return true;
+};
+
+
 /** @override */
 AbstractController.prototype.disposeInternal = function() {
-  goog.dispose(this.voiceModule);
   goog.dispose(this.eventHandler);
   goog.base(this, 'disposeInternal');
 };

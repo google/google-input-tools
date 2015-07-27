@@ -28,16 +28,23 @@ chrome.metricsPrivate.recordValue = function(metrics, value) {};
 
 /**
  * @param {number} num .
- * @param {Function} callback .
+ * @param {Function} candidatesCallback .
+ * @param {Function} gestureCallback .
  * @constructor
  */
-xkb.DataSource = function(num, callback) {};
+xkb.Model = function(num, candidatesCallback, gestureCallback) {};
+
+
+/**
+ * @param {!Array.<!Object>} gestureData .
+ */
+xkb.Model.prototype.decodeGesture = function(gestureData) {};
 
 
 /**
  * @param {string} language .
  */
-xkb.DataSource.prototype.setLanguage = function(language) {};
+xkb.Model.prototype.setLanguage = function(language) {};
 
 
 /**
@@ -45,7 +52,7 @@ xkb.DataSource.prototype.setLanguage = function(language) {};
  * @param {string} context .
  * @param {!Object=} opt_spatialData .
  */
-xkb.DataSource.prototype.sendCompletionRequest = function(query, context,
+xkb.Model.prototype.sendCompletionRequest = function(query, context,
     opt_spatialData) {};
 
 
@@ -53,43 +60,49 @@ xkb.DataSource.prototype.sendCompletionRequest = function(query, context,
  * @param {string} word .
  * @param {string} context .
  */
-xkb.DataSource.prototype.sendCompletionRequestForWord = function(word,
+xkb.Model.prototype.sendCompletionRequestForWord = function(word,
     context) {};
+
+
+/**
+ * @param {?Object} keyboardLayout .
+ */
+xkb.Model.prototype.sendKeyboardLayout = function(keyboardLayout) {};
 
 
 /**
  * @param {string} context .
  */
-xkb.DataSource.prototype.sendPredictionRequest = function(context) {};
+xkb.Model.prototype.sendPredictionRequest = function(context) {};
 
 
 /**
  * @param {number} level .
  */
-xkb.DataSource.prototype.setCorrectionLevel = function(level) {};
+xkb.Model.prototype.setCorrectionLevel = function(level) {};
 
 
 /**
  * @param {boolean} enabled .
  */
-xkb.DataSource.prototype.setEnableUserDict = function(enabled) {};
+xkb.Model.prototype.setEnableUserDict = function(enabled) {};
 
 
 /**
  * @return {boolean} .
  */
-xkb.DataSource.prototype.isReady = function() {return false};
+xkb.Model.prototype.isReady = function() {return false};
 
 
 /** Clears the data source. */
-xkb.DataSource.prototype.clear = function() {};
+xkb.Model.prototype.clear = function() {};
 
 
 /**
  * @param {string} word .
  * @param {number} frequency .
  */
-xkb.DataSource.prototype.changeWordFrequency = function(word, frequency) {};
+xkb.Model.prototype.changeWordFrequency = function(word, frequency) {};
 
 
 /**
@@ -132,6 +145,13 @@ inputview.openSettings = function() {};
 
 
 /**
+ * Sets the virtual keyboard mode.
+ * @param {string} mode .
+ */
+inputview.setMode = function(mode) {};
+
+
+/**
  * @param {string} url URL to create.
  * @param {!Object=} opt_options The options for
  *     the new window.
@@ -170,3 +190,14 @@ accents.highlightItem = function(x, y) {};
  * @param {!Array.<string>} accents .
  */
 accents.setAccents = function(accents) {};
+
+
+var gesturePreview = {};
+
+
+/**
+ * Sets the gesture preview word which this window will display.
+ *
+ * @param {!string} word The word to display.
+ */
+gesturePreview.setPreviewWord = function(word) {};

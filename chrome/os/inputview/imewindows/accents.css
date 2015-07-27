@@ -1,18 +1,17 @@
 body {
-  background-color: transparent;
-  box-shadow: 0 0 6px rgba(204, 204, 204, 0.65),
-              0 0 2px rgba(136, 136, 136, 0.65),
-              0 0 6px rgba(204, 204, 204, 0.65),
-              0 0 6px rgba(204, 204, 204, 0.65);
   font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
-  margin: 6px;
+  margin: 0;
   overflow: hidden;
+  padding: 0;
 }
 
 .inputview-accent-container {
   background-color: #FBFCFE;
-  width: 100%;
-  height: 100%;
+  box-shadow: 0 0 6px rgba(204, 204, 204, 0.65),
+            0 0 2px rgba(136, 136, 136, 0.65),
+            0 0 6px rgba(204, 204, 204, 0.65),
+            0 0 6px rgba(204, 204, 204, 0.65);
+  display: inline-block;
 }
 
 .inputview-accent-row {

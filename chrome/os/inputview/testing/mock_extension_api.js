@@ -17,7 +17,12 @@
 
 goog.provide('i18n.input.chrome.inputview.testing.MockExtensionApi');
 
-var chrome = {};
+if (!chrome) {
+  /**
+   * @type {!Object}
+   */
+  chrome = {};
+}
 
 /**
  * Adds mocks for chrome extension API calls.
@@ -57,10 +62,5 @@ function mockExtensionApis(mockControl) {
   // Ignore calls to addListener. Reevaluate if important to properly track the
   // flow of events.
   chrome.runtime.onMessage.addListener = function() {};
-
-  chrome.i18n = {};
-  chrome.i18n.getMessage = function(name) {
-    return name;
-  };
 }
 

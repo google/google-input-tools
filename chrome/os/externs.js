@@ -909,6 +909,13 @@ chrome.virtualKeyboardPrivate.openSettings = function() {};
 
 
 /**
+ * Sets the virtual keyboard mode in ChromeOS.
+ * @param {string} mode .
+ * */
+chrome.virtualKeyboardPrivate.setMode = function(mode) {};
+
+
+/**
  * @param {!Object} parameters
  * @param {function(): void=} opt_callback Callback function.
  */

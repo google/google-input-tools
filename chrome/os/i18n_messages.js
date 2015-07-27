@@ -43,6 +43,30 @@ msgs.MSG_PINYIN_SETTINGS_PAGE = goog.getMsg(
 
 
 /**
+ * @desc Description of selection tooltip.
+ */
+msgs.MSG_SWIPE_SELECTION_TOOLTIP = goog.getMsg(
+    'Swipe left or right to move the cursor.'
+    );
+
+
+/**
+ * @desc Description of restoration tooltip.
+ */
+msgs.MSG_SWIPE_RESTORATION_TOOLTIP = goog.getMsg(
+    'Swipe right to restore words.'
+    );
+
+
+/**
+ * @desc Description of deletion tooltip.
+ */
+msgs.MSG_SWIPE_DELETION_TOOLTIP = goog.getMsg(
+    'Swipe left to delete whole words.'
+    );
+
+
+/**
  * @desc It is the description of Zhuyin setting pages.
  */
 msgs.MSG_ZHUYIN_SETTINGS_PAGE = goog.getMsg(
@@ -990,23 +1014,29 @@ msgs.MSG_KEYBOARD_MALTESE = goog.getMsg('Maltese keyboard');
 
 
 /**
+ * @desc The title of keyboard - macedonian keyboard .
+ */
+msgs.MSG_KEYBOARD_MACEDONIAN = goog.getMsg('Macedonian keyboard');
+
+
+/**
  * @desc The title of keyboard - irish keyboard .
  */
 msgs.MSG_KEYBOARD_IRISH = goog.getMsg('Irish keyboard');
 
 
 /**
- * @desc The title of keyboard - Sorani Kurdish English-based keyboard .
+ * @desc The title of keyboard - Kurdish English-based keyboard .
  */
 msgs.MSG_KEYBOARD_SORANIKURDISH_EN =
-    goog.getMsg('Sorani Kurdish English-based keyboard');
+    goog.getMsg('Kurdish English-based keyboard');
 
 
 /**
- * @desc The title of keyboard - Sorani Kurdish Arabic-based keyboard .
+ * @desc The title of keyboard - Kurdish Arabic-based keyboard .
  */
 msgs.MSG_KEYBOARD_SORANIKURDISH_AR =
-    goog.getMsg('Sorani Kurdish Arabic-based keyboard');
+    goog.getMsg('Kurdish Arabic-based keyboard');
 
 
 /**
@@ -2105,6 +2135,22 @@ msgs.MSG_FOOTER_SETTINGS_BUTTON = goog.getMsg('open input method settings');
 
 
 /**
+ * @desc The message to indicate to users that pressing this button will make
+ * the virtual keyboard floating, which means users can move the virtual
+ * keyboard to anywhere on the screen.
+ */
+msgs.MSG_FOOTER_FLOATING_BUTTON = goog.getMsg('make virtual keyboard movable');
+
+
+/**
+ * @desc The message to indicate to users that pressing this button will dock
+ * the virtual keyboard, which means the virtual keyboard will show at the
+ * bottom of the screen and is as wide as the screen.
+ */
+msgs.MSG_FOOTER_DOCKING_BUTTON = goog.getMsg('dock virtual keyboard');
+
+
+/**
  * @desc The message prefix which indicate users that press this button will
  * switch to a new keyboard.
  */
@@ -2771,6 +2817,12 @@ msgs.MSG_WAIT = goog.getMsg('Wait');
 
 
 /**
+ * @desc Button to initiate moving floating virtual keyboard by press and drag.
+ */
+msgs.MSG_DRAG_BUTTON = goog.getMsg('Drag to move virtual keyboard');
+
+
+/**
  * @desc Emoji tab spoken feedback label for category "recent".
  */
 msgs.MSG_EMOJI_TAB_RECENT = goog.getMsg('Emoji category recent');
@@ -2896,5 +2948,19 @@ msgs.MSG_SHRINK_CANDIDATES = goog.getMsg('shrink candidate list');
  */
 msgs.MSG_EXPAND_CANDIDATES = goog.getMsg('expand candidate list');
 
+
+/**
+ * @desc Enable gesture editing.
+ */
+msgs.MSG_ENABLE_GESTURE_EDITING = goog.getMsg(
+    'Swipe from the edges of the keyboard to move the cursor, or from the ' +
+    'backspace key to delete whole words.');
+
+
+/**
+ * @desc Enable gesture typing.
+ */
+msgs.MSG_ENABLE_GESTURE_TYPING = goog.getMsg(
+    'Enable gesture typing. Input a word by sliding through the letters.');
 
 print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));

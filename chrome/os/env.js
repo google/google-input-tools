@@ -13,10 +13,17 @@
 //
 goog.provide('i18n.input.chrome.Env');
 
+goog.require('goog.array');
+goog.require('i18n.input.chrome.Constant');
 goog.require('i18n.input.chrome.inputview.FeatureTracker');
+goog.require('i18n.input.lang.InputTool');
+goog.require('i18n.input.lang.InputToolType');
 
 goog.scope(function() {
+var Constant = i18n.input.chrome.Constant;
 var FeatureTracker = i18n.input.chrome.inputview.FeatureTracker;
+var InputTool = i18n.input.lang.InputTool;
+var InputToolType = i18n.input.lang.InputToolType;
 
 
 
@@ -67,8 +74,8 @@ i18n.input.chrome.Env = function() {
         }.bind(this));
   }
 
-  if (window.inputview && inputview.getKeyboardConfig) {
-    inputview.getKeyboardConfig((function(config) {
+  if (window.inputview && window.inputview.getKeyboardConfig) {
+    window.inputview.getKeyboardConfig((function(config) {
       this.featureTracker.initialize(config);
     }).bind(this));
   }
@@ -144,5 +151,18 @@ Env.prototype.unlistenCompositionBoundsChanged = function() {
     chrome.inputMethodPrivate.onCompositionBoundsChanged.removeListener(
         this.compositionBoundsChangedHandler_);
   }
+};
+
+
+/**
+ * Returns whether the XKB engine id supports NACL.
+ *
+ * @param {string} xkbEngineId The XKB engine Id.
+ * @return {boolean} supported or not.
+ */
+Env.isXkbAndNaclEnabled = function(xkbEngineId) {
+  var inputTool = InputTool.get(xkbEngineId);
+  return !!inputTool && inputTool.type == InputToolType.XKB &&
+      goog.array.contains(Constant.NACL_LANGUAGES, inputTool.languageCode);
 };
 });  // goog.scope

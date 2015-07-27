@@ -11,22 +11,12 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
+/**
+ * The loading start time.
+ * @type {number}
+ */
 window.InputViewPageStartLoading = new Date().getTime();
 var styleElem = document.createElement('link');
 styleElem['rel'] = 'stylesheet';
-if (chrome.inputMethodPrivate &&
-    chrome.inputMethodPrivate.getInputMethodConfig) {
-  chrome.inputMethodPrivate.getInputMethodConfig(function(config) {
-    if (!!config['isNewQPInputViewEnabled'] ||
-        !!config['isNewMDInputViewEnabled']) {
-      styleElem['href'] = 'inputview_css_material.css';
-    } else {
-      styleElem['href'] = 'inputview_css.css';
-    }
-    document.head.appendChild(styleElem);
-  });
-} else {
-  styleElem['href'] = 'inputview_css.css';
-  document.head.appendChild(styleElem);
-}
-
+styleElem['href'] = 'inputview_css.css';
+document.head.appendChild(styleElem);
