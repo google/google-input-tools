@@ -1,0 +1,134 @@
+body {
+  background-color: transparent;
+  margin: 0px;
+  overflow: hidden;
+}
+
+.inputview-voice-view {
+
+}
+
+
+.inputview-voice-panel {
+  position: fixed;
+  border-radius: 100%;
+  padding: 45px;
+  z-index: 200;
+  top: 4px;
+}
+
+.inputview-voice-opacity {
+  background-size: 60px 60px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  z-index: 3;
+  position:absolute;
+}
+
+@-webkit-keyframes visible-animation
+{
+  0% {transform: scale(0);}
+  100% {transform: scale(1);}
+}
+
+@-webkit-keyframes invisible-animation
+{
+  0% {transform: scale(1);}
+  100% {transform: scale(0);}
+}
+
+.enter-key-grey {
+  -webkit-filter: grayscale(1);
+  transition: -webkit-filter 1s ease;
+}
+
+.inputview-voice-level {
+  background-color: #03A9F4;
+  border-radius: 100%;
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+  opacity: .15;
+  z-index: 2;
+  margin:0;
+  transform: scale(0);
+}
+
+.inputview-voice-mic-ing {
+  background-image: url('images/voice_speaking.png');
+}
+
+.inputview-voice-mic-on {
+  background-image: url('images/voice_enabled.png');
+}
+
+.inputview-voice-mic-off {
+  background-image: url('images/voice_disabled.png');
+}
+
+.inputview-voice-mic-bar {
+  background: url('images/voice_bar.png');
+  background-size: 18px 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.inputview-voice-mask {
+  background-color: #EBEBEB;
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity:0;
+  transition:visibility 0s linear .5s,opacity .5s linear;
+  visibility:hidden;
+}
+
+.inputview-voice-mask-opacity {
+  visibility:visible;
+  opacity:.8;
+  transition-delay:0s;
+}
+
+.inputview-voice-menu {
+  border: 1px solid #ccc;
+  -webkit-box-shadow: 0 0 6px rgba(204,204,204,0.65),
+                      0 0 2px rgba(136,136,136,0.65),
+                      0 0 6px rgba(204,204,204,0.65),
+                      0 0 6px rgba(204,204,204,0.65);
+  background-color: #F9F9F9;
+  font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
+  color: #37474F;
+  cursor: default;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.inputview-voice-menuitem {
+  padding: 8px 10px 8px 10px;
+}
+
+.inputview-voice-bold {
+ font-weight: bold;
+}
+
+.inputview-voice-menuitem :highlight {
+  background-color: #BBBBBB;
+}
+
+.inputview-voice-delete-btn {
+  background-color: #EEEEEE;
+}
+
+.inputview-voice-candidates {
+
+}
+
+.inputview-voice-separator {
+  border-bottom: 1px solid #B9B9B9;
+}
+
+.inputview-voice-opacity-none {
+ opacity: 1 !important;
+}
