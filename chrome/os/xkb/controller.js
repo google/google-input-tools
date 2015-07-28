@@ -19,7 +19,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.AbstractController');
 goog.require('i18n.input.chrome.Constant');
-goog.require('i18n.input.chrome.EngineIdLanguageMap');
+goog.require('i18n.input.chrome.Env');
 goog.require('i18n.input.chrome.Statistics');
 goog.require('i18n.input.chrome.TriggerType');
 goog.require('i18n.input.chrome.inputview.FeatureName');
@@ -30,13 +30,13 @@ goog.require('i18n.input.chrome.message.Type');
 goog.require('i18n.input.chrome.options.OptionStorageHandlerFactory');
 goog.require('i18n.input.chrome.options.OptionType');
 goog.require('i18n.input.chrome.xkb.Correction');
-goog.require('i18n.input.chrome.xkb.LatinInputToolCode');
+goog.require('i18n.input.lang.InputTool');
 
 goog.scope(function() {
 var Constant = i18n.input.chrome.Constant;
+var Env = i18n.input.chrome.Env;
 var FeatureName = i18n.input.chrome.inputview.FeatureName;
 var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
-var LatinInputToolCode = i18n.input.chrome.xkb.LatinInputToolCode;
 var Name = i18n.input.chrome.message.Name;
 var OptionType = i18n.input.chrome.options.OptionType;
 var OptionStorageHandlerFactory =
@@ -44,6 +44,7 @@ var OptionStorageHandlerFactory =
 var TriggerType = i18n.input.chrome.TriggerType;
 var Type = i18n.input.chrome.message.Type;
 var util = i18n.input.chrome.inputview.util;
+var InputTool = i18n.input.lang.InputTool;
 
 
 /**
@@ -72,6 +73,22 @@ var LETTERS_AFTER_CURSOR =
     new RegExp('^' + Constant.LATIN_VALID_CHAR + '+', 'i');
 
 
+/**
+ * Max length of surrounding text events.
+ *
+ * @const {number}
+ */
+var MAX_SURROUNDING_TEXT_LENGTH = 100;
+
+
+/**
+ * The number of gesture results to return to the UI.
+ *
+ * @const {number}
+ */
+var GESTURE_RESULTS_TO_RETURN = 4;
+
+
 
 /**
  * The background page.
@@ -82,10 +99,11 @@ var LETTERS_AFTER_CURSOR =
 i18n.input.chrome.xkb.Controller = function() {
   i18n.input.chrome.xkb.Controller.base(this, 'constructor');
 
-  if (window.xkb && xkb.DataSource) {
-    this.dataSource_ = new xkb.DataSource(5,
-        this.onCandidatesBack_.bind(this));
-    this.dataSource_.setCorrectionLevel(this.correctionLevel);
+  if (window.xkb && xkb.Model) {
+    this.model_ = new xkb.Model(5,
+        this.onCandidatesBack_.bind(this),
+        this.onGesturesBack_.bind(this));
+    this.model_.setCorrectionLevel(this.correctionLevel);
   }
 
   /**
@@ -139,11 +157,11 @@ Controller.prototype.lastCorrection_ = null;
 
 
 /**
- * The data source.
+ * The model.
  *
- * @private {xkb.DataSource}
+ * @private {xkb.Model}
  */
-Controller.prototype.dataSource_ = null;
+Controller.prototype.model_ = null;
 
 
 /**
@@ -194,6 +212,14 @@ Controller.prototype.committedText_ = '';
  * @private {!TriggerType}
  */
 Controller.prototype.lastCommitType_ = TriggerType.UNKNOWN;
+
+
+/**
+ * Whether or not the last composition set was from a gesture.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.lastCompositionWasGesture_ = false;
 
 
 /**
@@ -254,6 +280,22 @@ Controller.prototype.usingPhysicalKeyboard_ = false;
  * @private {number}
  */
 Controller.prototype.delayTimer_ = 0;
+
+
+/**
+ * Whether gesture editing is in progress.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.gestureEditingInProgress_ = false;
+
+
+/**
+ * Whether the NACL is enabled.
+ *
+ * @private {boolean}
+ */
+Controller.prototype.isNaclEnabled_ = false;
 
 
 /** @override */
@@ -330,16 +372,14 @@ Controller.prototype.setToCompositionMode_ =
   this.compositionTextCursorPosition_ = cursor - start;
   this.env.textBeforeCursor = this.env.textBeforeCursor.slice(0, start);
   this.committedText_ = '';
-  chrome.runtime.sendMessage(goog.object.create(
-      Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
-      Name.TEXT, this.committedText_));
+  this.updateCompositionSurroundingText();
 
   this.deleteSurroundingText_(start - cursor, end - start, (function() {
     chrome.input.ime.setComposition(goog.object.create(
         Name.CONTEXT_ID, this.env.context.contextID,
         Name.TEXT, word,
         Name.CURSOR, this.compositionTextCursorPosition_));
-    this.dataSource_.sendCompletionRequestForWord(word,
+    this.model_.sendCompletionRequestForWord(word,
         this.filterPreviousText_(this.env.textBeforeCursor));
   }).bind(this));
 };
@@ -370,9 +410,9 @@ Controller.prototype.deleteSurroundingText_ = function(offset, length,
 /** @override */
 Controller.prototype.activate = function(inputToolCode) {
   Controller.base(this, 'activate', inputToolCode);
-  if (this.dataSource_) {
-    this.dataSource_.setLanguage(
-        i18n.input.chrome.EngineIdLanguageMap[this.env.engineId][0]);
+  this.isNaclEnabled_ = Env.isXkbAndNaclEnabled(inputToolCode);
+  if (this.isNaclEnabled_ && this.model_) {
+    this.model_.setLanguage(InputTool.get(inputToolCode).languageCode);
   }
   this.statistics_.setInputMethodId(inputToolCode);
   this.statistics_.setPhysicalKeyboard(false);
@@ -383,19 +423,17 @@ Controller.prototype.activate = function(inputToolCode) {
 Controller.prototype.updateOptions = function(inputToolCode) {
   var optionStorageHandler =
       OptionStorageHandlerFactory.getInstance().getHandler(inputToolCode);
-  if (goog.object.containsKey(LatinInputToolCode, inputToolCode)) {
-    // Override default of false for latin, all users with no pre-existing
-    // stored values should have default set to true instead. Non-latin XKB
-    // input components require the option default as false.
-    // This is required both in xkb/controller.js and hmm/init_options.js as
-    // the user can access them in either order and the experience in both
-    // should be the same.
-    if (!optionStorageHandler.has(OptionType.DOUBLE_SPACE_PERIOD)) {
-      optionStorageHandler.set(OptionType.DOUBLE_SPACE_PERIOD, true);
-    }
-    if (!optionStorageHandler.has(OptionType.ENABLE_CAPITALIZATION)) {
-      optionStorageHandler.set(OptionType.ENABLE_CAPITALIZATION, true);
-    }
+  // Override default of false for xkb, all users with no pre-existing
+  // stored values should have default set to true instead. Non-latin XKB
+  // input components require the option default as false.
+  // This is required both in xkb/controller.js and hmm/init_options.js as
+  // the user can access them in either order and the experience in both
+  // should be the same.
+  if (!optionStorageHandler.has(OptionType.DOUBLE_SPACE_PERIOD)) {
+    optionStorageHandler.set(OptionType.DOUBLE_SPACE_PERIOD, true);
+  }
+  if (!optionStorageHandler.has(OptionType.ENABLE_CAPITALIZATION)) {
+    optionStorageHandler.set(OptionType.ENABLE_CAPITALIZATION, true);
   }
   var doubleSpacePeriod = /** @type {boolean} */
       (optionStorageHandler.get(OptionType.DOUBLE_SPACE_PERIOD));
@@ -405,10 +443,14 @@ Controller.prototype.updateOptions = function(inputToolCode) {
       OptionType.AUTO_CORRECTION_LEVEL));
   var autoCapital = /** @type {boolean} */ (optionStorageHandler.get(
       OptionType.ENABLE_CAPITALIZATION));
+  var enableGestureEditing = /** @type {boolean} */ (optionStorageHandler.get(
+      OptionType.ENABLE_GESTURE_EDITING));
+  var enableGestureTyping = /** @type {boolean} */ (optionStorageHandler.get(
+      OptionType.ENABLE_GESTURE_TYPING));
   this.correctionLevel = correctionLevel;
-  if (this.dataSource_) {
-    this.dataSource_.setEnableUserDict(true);
-    this.dataSource_.setCorrectionLevel(this.correctionLevel);
+  if (this.model_) {
+    this.model_.setEnableUserDict(true);
+    this.model_.setCorrectionLevel(this.correctionLevel);
     this.statistics_.setAutoCorrectLevel(this.correctionLevel);
   }
   this.doubleSpacePeriod_ = doubleSpacePeriod;
@@ -416,7 +458,9 @@ Controller.prototype.updateOptions = function(inputToolCode) {
     'autoSpace': true,
     'autoCapital': correctionLevel > 0 && autoCapital,
     'doubleSpacePeriod': doubleSpacePeriod,
-    'soundOnKeypress': soundOnKeypress
+    'soundOnKeypress': soundOnKeypress,
+    'gestureEditing': enableGestureEditing,
+    'gestureTyping': enableGestureTyping
   });
 };
 
@@ -448,19 +492,18 @@ Controller.prototype.reset = function() {
   this.compositionText_ = '';
   this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
-  this.dataSource_ && this.dataSource_.clear();
+  this.model_ && this.model_.clear();
 };
 
 
 /** @override */
 Controller.prototype.onCompositionCanceled = function() {
   goog.base(this, 'onCompositionCanceled');
-
   this.clearCandidates_();
   this.compositionText_ = '';
   this.compositionTextCursorPosition_ = 0;
   this.committedText_ = '';
-  this.dataSource_ && this.dataSource_.clear();
+  this.model_ && this.model_.clear();
 };
 
 
@@ -499,7 +542,15 @@ Controller.prototype.commitText_ = function(
   if (!simulateKeypress) {
     this.keyData = null;
   }
-  this.lastCommitType_ = triggerType;
+  // Override the trigger type with GESTURE. This needs to be done because
+  // gesture commit events only result in setting the gesture text as the
+  // current composition, rather than actually committing it.
+  if (this.lastCompositionWasGesture_) {
+    this.lastCommitType_ = TriggerType.GESTURE;
+    this.lastCompositionWasGesture_ = false;
+  } else {
+    this.lastCommitType_ = triggerType;
+  }
   text = this.maybeNormalizeDeadKey_(text, append);
   var textToCommit;
   if (text && append) {
@@ -515,13 +566,15 @@ Controller.prototype.commitText_ = function(
   }
   if (text) {
     var target = textToCommit.trim();
-    if (this.dataSource_) {
-      if (triggerType == TriggerType.CANDIDATE) {
+    if (this.model_) {
+      // If source is the same with commit text, don't increase frequency.
+      if (text != this.compositionText_ &&
+          triggerType == TriggerType.CANDIDATE) {
         // Only increase frequency if the user selected this candidate manually.
-        this.dataSource_.changeWordFrequency(target, 1);
+        this.model_.changeWordFrequency(target, 1);
       }
       if (this.isSuggestionSupported()) {
-        this.dataSource_.sendPredictionRequest(
+        this.model_.sendPredictionRequest(
             this.filterPreviousText_(this.env.textBeforeCursor + textToCommit));
       }
     }
@@ -584,10 +637,11 @@ Controller.prototype.maybeNormalizeDeadKey_ = function(text, normalizable) {
  * @param {boolean} append .
  * @param {boolean} normalizable .
  * @param {!Object=} opt_spatialData .
+ * @param {boolean=} opt_isGesture .
  * @private
  */
 Controller.prototype.setComposition_ = function(text, append, normalizable,
-    opt_spatialData) {
+    opt_spatialData, opt_isGesture) {
   if (!this.env.context) {
     return;
   }
@@ -613,29 +667,35 @@ Controller.prototype.setComposition_ = function(text, append, normalizable,
       Name.CURSOR, this.compositionTextCursorPosition_
       ));
 
-  if (this.compositionText_) {
-    if (this.compositionTextCursorPosition_ == this.compositionText_.length) {
-      this.dataSource_ && this.dataSource_.sendCompletionRequest(
-          this.compositionText_,
-          this.filterPreviousText_(this.env.textBeforeCursor),
-          opt_spatialData);
-    } else {
-      // sendCompletionRequest assumes spatia data is for the last character in
-      // compositionText_. In cases that we want to add/delete characters beside
-      // the last one in compositionText_, we use sendCompletionRequestForWord.
-      // Spatial data is not use here.
-      this.dataSource_ && this.dataSource_.sendCompletionRequestForWord(
-          this.compositionText_,
-          this.filterPreviousText_(this.env.textBeforeCursor));
-    }
+  if (opt_isGesture) {
+    this.lastCompositionWasGesture_ = true;
   } else {
-    this.clearCandidates_();
+    this.lastCompositionWasGesture_ = false;
+    if (this.compositionText_) {
+      if (this.compositionTextCursorPosition_ == this.compositionText_.length) {
+        this.model_ && this.model_.sendCompletionRequest(
+            this.compositionText_,
+            this.filterPreviousText_(this.env.textBeforeCursor),
+            opt_spatialData);
+      } else {
+        // sendCompletionRequest assumes spatia data is for the last character
+        // in compositionText_. In cases that we want to add/delete characters
+        // beside the last one in compositionText_, we use
+        // sendCompletionRequestForWord. Spatial data is not use here.
+        this.model_ && this.model_.sendCompletionRequestForWord(
+            this.compositionText_,
+            this.filterPreviousText_(this.env.textBeforeCursor));
+      }
+    } else {
+      this.clearCandidates_();
+    }
   }
+  this.updateCompositionSurroundingText();
 };
 
 
 /**
- * Callback when candidates is fetched back.
+ * Callback when candidates are fetched back.
  *
  * @param {string} source .
  * @param {!Array.<!Object>} candidates .
@@ -675,6 +735,24 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
 
 
 /**
+ * Callback when gesture results are fetched back.
+ *
+ * @param {!Array.<!string>} results .
+ * @private
+ */
+Controller.prototype.onGesturesBack_ = function(results) {
+  if (results.length > GESTURE_RESULTS_TO_RETURN) {
+    results = results.slice(0, GESTURE_RESULTS_TO_RETURN);
+  }
+  chrome.runtime.sendMessage(goog.object.create(
+      Name.TYPE, Type.GESTURES_BACK,
+      Name.MSG, goog.object.create(
+          Name.GESTURE_RESULTS, results
+      )));
+};
+
+
+/**
  * If the previous text is not whitespace, then add a space automatically.
  *
  * @return {boolean}
@@ -682,7 +760,27 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
  */
 Controller.prototype.shouldAutoSpace_ = function() {
   return !this.compositionText_ &&
-      this.lastCommitType_ == TriggerType.CANDIDATE;
+      (this.lastCommitType_ == TriggerType.CANDIDATE ||
+          this.lastCommitType_ == TriggerType.GESTURE);
+};
+
+
+/**
+ * Returns true if a space should be automatically inserted before the next
+ * gestured text.
+ *
+ * @return {boolean}
+ * @private
+ */
+Controller.prototype.shouldAutoSpaceForGesture_ = function() {
+  if (!this.env.textBeforeCursor) {
+    return false;
+  }
+  var charBeforeCursor =
+      this.env.textBeforeCursor.charAt(this.env.textBeforeCursor.length - 1);
+  // If the text before the cursor was not whitespace, a space should be added
+  // before a gesture text is inserted.
+  return !(charBeforeCursor == ' ' || charBeforeCursor == '\n');
 };
 
 
@@ -694,22 +792,24 @@ Controller.prototype.shouldAutoSpace_ = function() {
  */
 Controller.prototype.shouldSetComposition_ = function() {
   // Sets exisiting word to composition mode if:
-  // 1. suggestion is available and enabled;
-  // 2. no composition in progress;
-  // 3. no text selection;
-  // 4. surround text is not empty;
-  // 5. virtual keyboard is visible;
-  // 6. skipNextSetComposition_ is false;
-  // 7. not typing by physical keyboard.
+  // 1. Suggestion is available and enabled.
+  // 2. No composition in progress.
+  // 3. No text selection.
+  // 4. Surround text is not empty.
+  // 5. Virtual keyboard is visible.
+  // 6. skipNextSetComposition_ is false.
+  // 7. Not typing on the physical keyboard.
+  // 8. Not gesture editing.
   return this.env.featureTracker.isEnabled(FeatureName.EXPERIMENTAL) &&
-         !!this.dataSource_ &&
+         !!this.model_ &&
          this.isSuggestionSupported() &&
          !this.compositionText_ &&
          this.env.surroundingInfo.focus == this.env.surroundingInfo.anchor &&
          this.env.surroundingInfo.text.length > 0 &&
          this.isVisible_ &&
          !this.skipNextSetComposition_ &&
-         !this.usingPhysicalKeyboard_;
+         !this.usingPhysicalKeyboard_ &&
+         !this.gestureEditingInProgress_;
 };
 
 
@@ -776,7 +876,7 @@ Controller.prototype.moveCursorInComposition_ = function(isRight) {
         Name.CONTEXT_ID, this.env.context.contextID,
         Name.TEXT, this.compositionText_,
         Name.CURSOR, this.compositionTextCursorPosition_));
-    this.dataSource_.sendCompletionRequestForWord(this.compositionText_,
+    this.model_.sendCompletionRequestForWord(this.compositionText_,
         this.filterPreviousText_(this.env.textBeforeCursor));
     return true;
   }
@@ -804,7 +904,10 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
     if (type == goog.events.EventType.KEYDOWN) {
       this.statistics_.recordBackspace();
       if (this.compositionText_) {
-        if (this.compositionTextCursorPosition_ == 0) {
+        if (this.lastCompositionWasGesture_) {
+          // Backspace clears the gesture-typed composition.
+          this.setComposition_('', false, false);
+        } else if (this.compositionTextCursorPosition_ == 0) {
           // removes previous character and combines two word if needed.
           var compositionText = this.compositionText_;
           var textBeforeCursor = this.env.textBeforeCursor;
@@ -834,9 +937,10 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
                   Name.CONTEXT_ID, this.env.context.contextID,
                   Name.TEXT, word,
                   Name.CURSOR, this.compositionTextCursorPosition_));
-              this.dataSource_.sendCompletionRequestForWord(word,
+              this.model_.sendCompletionRequestForWord(word,
                   this.filterPreviousText_(this.env.textBeforeCursor));
             }).bind(this));
+            this.updateCompositionSurroundingText();
           }
         } else {
           this.compositionText_ =
@@ -848,8 +952,9 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
               Name.CONTEXT_ID, this.env.context.contextID,
               Name.TEXT, this.compositionText_,
               Name.CURSOR, this.compositionTextCursorPosition_));
-          this.dataSource_.sendCompletionRequestForWord(this.compositionText_,
+          this.model_.sendCompletionRequestForWord(this.compositionText_,
               this.filterPreviousText_(this.env.textBeforeCursor));
+          this.updateCompositionSurroundingText();
         }
         this.isBackspaceDownHandled_ = true;
         return;
@@ -946,10 +1051,15 @@ Controller.prototype.handleCharacterKeyEvent = function(keyData) {
       return;
     }
 
-    if (!this.dataSource_ || !this.dataSource_.isReady() ||
+    if (!this.isNaclEnabled_ || !this.model_ || !this.model_.isReady() ||
         !this.isSuggestionSupported()) {
       this.commitText_(ch, true, TriggerType.RESET, true);
     } else {
+      if (this.lastCompositionWasGesture_) {
+        // Commit any composed text from a gesture. This call will force the
+        // auto space below.
+        this.commitText_('', false, TriggerType.GESTURE, false);
+      }
       if (this.shouldAutoSpace_()) {
         // Calls this.commitText instead of this.commitText_ to avoid side
         // effects like prediction.
@@ -994,8 +1104,34 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
         this.commitText_(' ', true, TriggerType.SPACE, true);
       }
       break;
+    case Type.CONFIRM_GESTURE_RESULT:
+      if (this.shouldAutoSpaceForGesture_()) {
+        this.commitText(' ', false);
+      }
+      var committingText = message[Name.TEXT];
+      this.setComposition_(committingText, false, false, undefined, true);
+      break;
     case Type.CONNECT:
       this.updateOptions(this.env.engineId);
+      break;
+    case Type.SEND_GESTURE_EVENT:
+      // Commit the previous composition.
+      if (this.compositionText_) {
+        // TODO: This commitText_ call does not seem to trigger
+        // onSurroundingTextChanged, and so we are always one commit-text late
+        // when trying to figure out autospacing in the CONFIRM_GESTURE_RESULT
+        // handling code. However, commiting actual text does seem to trigger
+        // onSurroundingTextChanged.
+        this.commitText_('', true, TriggerType.RESET, false);
+        // Force onSurroundingText to update.
+        this.setComposition_(' ', false, false);
+        this.setComposition_('', false, false);
+      }
+      if (this.model_) {
+        var gestureData = /** @type {!Array.<!Object>} */
+            (message[Name.GESTURE_DATA]);
+        this.model_.decodeGesture(gestureData);
+      }
       break;
     case Type.SEND_KEY_EVENT:
       this.usingPhysicalKeyboard_ = false;
@@ -1016,6 +1152,13 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
         xkb.handleSendKeyEvent(keyData);
       }
       break;
+    case Type.SEND_KEYBOARD_LAYOUT:
+      if (this.model_) {
+        var keyboardLayout = /** @type {?Object} */
+            (message[Name.KEYBOARD_LAYOUT]);
+        this.model_.sendKeyboardLayout(keyboardLayout);
+      }
+      break;
     case Type.VISIBILITY_CHANGE:
       this.isVisible_ = message[Name.VISIBILITY];
       this.usingPhysicalKeyboard_ = !this.isVisible_;
@@ -1032,9 +1175,42 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
         this.updateOptions(prefix);
       }
       break;
+    case Type.SET_GESTURE_EDITING:
+      this.gestureEditingInProgress_ = message[Name.IN_PROGRESS];
+      var isSwipe = message[Name.IS_SWIPE];
+      // Commit any existing commit text.
+      if (this.compositionText_ && this.gestureEditingInProgress_) {
+        this.commitText_('', false, TriggerType.COMPOSITION_DISABLED, false);
+        if (isSwipe) {
+          // If the first action is a swipe, need to send a surrounding text
+          // changed event since an IMF bug prevents it from being sent.
+          this.updateCompositionSurroundingText();
+        }
+      }
+      break;
   }
 
   goog.base(this, 'processMessage', message, sender, sendResponse);
+};
+
+
+/**
+ * Updates surrounding text as a result of change in composition text.
+ *
+ * This is a workaround to the fact that composition changes do not cause IMF
+ * to send the native event.
+ */
+Controller.prototype.updateCompositionSurroundingText = function() {
+  var text = this.env.textBeforeCursor + this.compositionText_;
+  var commitLength = this.compositionText_.length;
+  var offset = text.length > MAX_SURROUNDING_TEXT_LENGTH ?
+      text.length - MAX_SURROUNDING_TEXT_LENGTH : 0;
+  var commitText = text.slice(-MAX_SURROUNDING_TEXT_LENGTH);
+  chrome.runtime.sendMessage(goog.object.create(
+      Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
+      Name.TEXT, commitText,
+      Name.ANCHOR, this.env.surroundingInfo.anchor + commitLength - offset,
+      Name.FOCUS, this.env.surroundingInfo.focus + commitLength - offset));
 };
 
 

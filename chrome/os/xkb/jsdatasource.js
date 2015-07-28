@@ -28,12 +28,14 @@ var Name = i18n.input.chrome.message.Name;
  * The js data source.
  *
  * @param {number} numOfCandidate The number of canddiate to fetch.
- * @param {function(string, !Array.<!Object>)} callback .
+ * @param {function(string, !Array.<!Object>)} candidatesCallback .
+ * @param {function(!Array.<string>)} gestureCallback .
  * @constructor
  * @extends {i18n.input.chrome.DataSource}
  */
-i18n.input.chrome.xkb.JsDataSource = function(numOfCandidate, callback) {
-  goog.base(this, numOfCandidate, callback);
+i18n.input.chrome.xkb.JsDataSource = function(numOfCandidate,
+    candidatesCallback, gestureCallback) {
+  goog.base(this, numOfCandidate, candidatesCallback, gestureCallback);
 };
 var JsDataSource = i18n.input.chrome.xkb.JsDataSource;
 goog.inherits(JsDataSource, i18n.input.chrome.DataSource);
@@ -72,13 +74,27 @@ JsDataSource.prototype.sendCompletionRequest = function(query, context,
         Name.MATCHED_LENGTHS, query.length,
         Name.IS_EMOJI, false);
   });
-  this.callback(query, candidates || []);
+  this.candidatesCallback(query, candidates || []);
 };
 
 
 /** @override */
 JsDataSource.prototype.sendPredictionRequest = function(context) {
-  this.callback('', []);
+  this.candidatesCallback('', []);
+};
+
+
+/**
+ * @param {?Object} keyboardLayout .
+ */
+JsDataSource.prototype.sendKeyboardLayout = function(keyboardLayout) {
+};
+
+
+/**
+ * @param {!Array.<!Object>} gestureData .
+ */
+JsDataSource.prototype.decodeGesture = function(gestureData) {
 };
 
 
@@ -87,24 +103,28 @@ JsDataSource.prototype.clear = function() {};
 
 
 (function() {
-  goog.exportSymbol('xkb.DataSource', JsDataSource);
-  var dataSourceProto = JsDataSource.prototype;
-  goog.exportProperty(dataSourceProto, 'setLanguage', dataSourceProto.
+  goog.exportSymbol('xkb.Model', JsDataSource);
+  var modelProto = JsDataSource.prototype;
+  goog.exportProperty(modelProto, 'setLanguage', modelProto.
       setLanguage);
-  goog.exportProperty(dataSourceProto, 'sendCompletionRequest',
-      dataSourceProto.sendCompletionRequest);
-  goog.exportProperty(dataSourceProto, 'sendPredictionRequest',
-      dataSourceProto.sendPredictionRequest);
-  goog.exportProperty(dataSourceProto, 'setCorrectionLevel',
-      dataSourceProto.setCorrectionLevel);
-  goog.exportProperty(dataSourceProto, 'setEnableUserDict',
-      dataSourceProto.setEnableUserDict);
-  goog.exportProperty(dataSourceProto, 'changeWordFrequency',
-      dataSourceProto.changeWordFrequency);
-  goog.exportProperty(dataSourceProto, 'clear',
-      dataSourceProto.clear);
-  goog.exportProperty(dataSourceProto, 'isReady',
-      dataSourceProto.isReady);
+  goog.exportProperty(modelProto, 'sendCompletionRequest',
+      modelProto.sendCompletionRequest);
+  goog.exportProperty(modelProto, 'sendPredictionRequest',
+      modelProto.sendPredictionRequest);
+  goog.exportProperty(modelProto, 'setCorrectionLevel',
+      modelProto.setCorrectionLevel);
+  goog.exportProperty(modelProto, 'setEnableUserDict',
+      modelProto.setEnableUserDict);
+  goog.exportProperty(modelProto, 'changeWordFrequency',
+      modelProto.changeWordFrequency);
+  goog.exportProperty(modelProto, 'clear',
+      modelProto.clear);
+  goog.exportProperty(modelProto, 'sendKeyboardLayout',
+      modelProto.sendKeyboardLayout);
+  goog.exportProperty(modelProto, 'decodeGesture',
+      modelProto.decodeGesture);
+  goog.exportProperty(modelProto, 'isReady',
+      modelProto.isReady);
 }) ();
 
 

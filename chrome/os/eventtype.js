@@ -23,6 +23,7 @@ i18n.input.chrome.EventType = {
   CLICK_CANDIDATE_EVENT: 'cce',
   EXECUTE_WAITING_EVENT: 'ewe',
   INSERT_USERDICT_EVENT: 'iue',
-  IGNORE_CORRECT_EVENT: 'ice'
+  IGNORE_CORRECT_EVENT: 'ice',
+  LISTEN_KEY_EVENT: 'lke'
 };
 

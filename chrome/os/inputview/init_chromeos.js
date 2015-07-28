@@ -12,8 +12,10 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
 goog.require('goog.Uri');
-goog.require('goog.i18n.bidi');
+goog.require('goog.object');
 goog.require('i18n.input.chrome.inputview.Controller');
+goog.require('i18n.input.chrome.message.Name');
+goog.require('i18n.input.chrome.message.Type');
 
 
 (function() {
@@ -54,7 +56,12 @@ goog.require('i18n.input.chrome.inputview.Controller');
       controller.initialize(code, language, passwordLayout, name);
     };
 
-    window.onbeforeunload = function() {
+    window.onunload = function() {
+      chrome.runtime.sendMessage(goog.object.create(
+            i18n.input.chrome.message.Name.TYPE,
+            i18n.input.chrome.message.Type.VISIBILITY_CHANGE,
+            i18n.input.chrome.message.Name.VISIBILITY,
+            false));
       goog.dispose(controller);
     };
 

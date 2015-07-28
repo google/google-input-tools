@@ -1,0 +1,59 @@
+.inputview-suggest-body {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.inputview-suggest-menu.inputview-suggest-show {
+  border: 1px solid #ccc;
+  -webkit-box-shadow: 0 0 6px rgba(204,204,204,0.65),
+                      0 0 2px rgba(136,136,136,0.65),
+                      0 0 6px rgba(204,204,204,0.65),
+                      0 0 6px rgba(204,204,204,0.65);
+  background-color: #ECEFF1;
+  font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
+  font-size: 14px;
+  color: #37474f;
+  padding: 0;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.inputview-suggest-menuitem {
+  padding: 4px 16px 4px 10px;
+  cursor: pointer;
+}
+
+.inputview-suggest-bold {
+}
+
+.inputview-suggest-normal {
+ font-weight: normal;
+}
+
+.inputview-suggest-menuitem.inputview-suggest-highlight {
+  background-color: rgba(55,71,79,0.08);
+  color: #1F1F1F;
+  font-weight: bold;
+}
+
+.inputview-suggest-separator {
+  border-bottom: 1px solid #B9B9B9;
+}
+
+.inputview-suggest-expand {
+  color: transparent;
+  background: url('/images/material/arrow_down_for_floating.png') no-repeat center;
+  background-size: 6px 4px;
+  cursor: pointer;
+  height: 10px;
+}
+
+.inputview-suggest-inline-block {
+  display: inline-block;
+}
+
+.inputview-suggest-mark-window {
+  border-top: 1px solid black;
+  height: 2px;
+}

@@ -19,3 +19,28 @@ goog.provide('i18n.input.chrome.Constant');
  */
 i18n.input.chrome.Constant.LATIN_VALID_CHAR =
     "[a-z\\-\\\'\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u017F]";
+
+
+/**
+ * Languages need to support NACL module for XKB.
+ *
+ * @type {!Array.<string>}
+ */
+i18n.input.chrome.Constant.NACL_LANGUAGES = [
+  'da',
+  'de',
+  'en',
+  'es',
+  'fi',
+  'fr',
+  'it',
+  'nl',
+  // When enable "no-t-i0-und" make NACL crash, so disable it now.
+  // 'no',
+  'pl',
+  'pt',
+  'pt-BR',
+  'pt-PT',
+  'sv',
+  'tr'
+];
