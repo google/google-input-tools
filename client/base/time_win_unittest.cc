@@ -185,7 +185,7 @@ TEST(TimeTicks, TimerPerformance) {
   // Due to the fact that these run on bbots, which are horribly slow,
   // we can't really make any guarantees about minimum runtime.
   // Really, we want these to finish in ~10ms, and that is generous.
-  const int kMaxTime = 35;  // Maximum acceptible milliseconds for test.
+  const int kMaxTime = 35;  // Maximum acceptable milliseconds for test.
 
   typedef TimeTicks (*TestFunc)();
   struct TestCase {
@@ -209,7 +209,7 @@ TEST(TimeTicks, TimerPerformance) {
     for (int index = 0; index < kLoops; index++)
       cases[test_case].func();
     TimeTicks stop = TimeTicks::HighResNow();
-    // Turning off the check for acceptible delays.  Without this check,
+    // Turning off the check for acceptable delays.  Without this check,
     // the test really doesn't do much other than measure.  But the
     // measurements are still useful for testing timers on various platforms.
     // The reason to remove the check is because the tests run on many
