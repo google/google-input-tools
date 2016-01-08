@@ -923,10 +923,6 @@ chrome.virtualKeyboardPrivate.sendKeyEvent =
     function(parameters, opt_callback) {};
 
 
-/** @type {chrome.app.window.Bounds} */
-chrome.app.window.AppWindow.prototype.outerBounds;
-
-
 /**
  * Sets the position.
  *

@@ -37,8 +37,9 @@ xkb.Model = function(num, candidatesCallback, gestureCallback) {};
 
 /**
  * @param {!Array.<!Object>} gestureData .
+ * @param {string} precedingText .
  */
-xkb.Model.prototype.decodeGesture = function(gestureData) {};
+xkb.Model.prototype.decodeGesture = function(gestureData, precedingText) {};
 
 
 /**
@@ -130,6 +131,12 @@ inputview.getInputMethodConfig = function(callback) {};
  * @param {!Function} callback .
  */
 inputview.getInputMethods = function(callback) {};
+
+
+/**
+ * @param {!Function} callback .
+ */
+inputview.getDisplayInInches = function(callback) {};
 
 
 /**

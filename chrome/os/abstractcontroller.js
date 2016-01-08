@@ -21,7 +21,7 @@ goog.require('goog.functions');
 goog.require('goog.object');
 goog.require('i18n.input.chrome.Constant');
 goog.require('i18n.input.chrome.Env');
-goog.require('i18n.input.chrome.inputview.events.KeyCodes');
+goog.require('i18n.input.chrome.events.KeyCodes');
 goog.require('i18n.input.chrome.message.ContextType');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
@@ -34,7 +34,7 @@ var Constant = i18n.input.chrome.Constant;
 var ContextType = i18n.input.chrome.message.ContextType;
 var CustomDictionarySyncer = i18n.input.chrome.sync.CustomDictionarySyncer;
 var Env = i18n.input.chrome.Env;
-var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
+var KeyCodes = i18n.input.chrome.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var Type = i18n.input.chrome.message.Type;
 
@@ -338,9 +338,12 @@ AbstractController.prototype.selectCandidate = goog.functions.NULL;
  *
  * @param {string} stateId The state ID.
  * @param {boolean=} opt_stateIdValue The value of state ID.
+ * @param {boolean=} opt_fromInputView Whether the switch was triggered by input
+ *     view. If true, the controller should NOT send back the switch message
+ *     back the input view to avoid dead loop.
  */
 AbstractController.prototype.switchInputToolState =
-    function(stateId, opt_stateIdValue) {
+    function(stateId, opt_stateIdValue, opt_fromInputView) {
   this.updateInputToolMenu();
 };
 

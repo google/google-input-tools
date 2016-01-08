@@ -107,6 +107,12 @@ msgs.MSG_USER_DICT_RESET = goog.getMsg('Reset All Dictionary Entries');
 
 
 /**
+ * @desc Label for button that edit user dictionary entries.
+ */
+msgs.MSG_USER_DICT_EDIT = goog.getMsg('Edit Dictionary Entries');
+
+
+/**
  * @desc Label for button with popup user dictionary dialog.
  */
 msgs.MSG_USER_DICT_MANAGE = goog.getMsg('Manage personal dictionary...');
@@ -449,6 +455,14 @@ msgs.MSG_INPUTMETHOD_QUICK = goog.getMsg(
     'Quick input method'
     );
 
+/**
+ * @desc It is the description of Cantonese (\u5ee3\u6771\u8a71) input method for
+ * Traditional Chinese.
+ */
+msgs.MSG_INPUTMETHOD_CANTONESE = goog.getMsg(
+    'Cantonese input method'
+    );
+
 
 /**
  * @desc It is the label of Bengali Phonetic keyboard in the input method list.
@@ -692,6 +706,12 @@ msgs.MSG_KEYBOARD_US_DVORAK = goog.getMsg('US Dvorak keyboard');
 
 
 /**
+ * @desc The title of keyboard - us dvp_keyboard .
+ */
+msgs.MSG_KEYBOARD_US_DVP = goog.getMsg('US programmer Dvorak keyboard');
+
+
+/**
  * @desc The title of keyboard - us colemak_keyboard .
  */
 msgs.MSG_KEYBOARD_US_COLEMAK = goog.getMsg('US Colemak keyboard');
@@ -704,9 +724,21 @@ msgs.MSG_KEYBOARD_BELGIAN = goog.getMsg('Belgian keyboard');
 
 
 /**
+ * @desc The title of keyboard - faroese keyboard .
+ */
+msgs.MSG_KEYBOARD_FAROESE = goog.getMsg('Faroese keyboard');
+
+
+/**
  * @desc The title of keyboard - netherlands keyboard.
  */
 msgs.MSG_KEYBOARD_NETHERLANDS = goog.getMsg('Netherlands keyboard');
+
+
+/**
+ * @desc The title of keyboard - french bepo_keyboard .
+ */
+msgs.MSG_KEYBOARD_FRENCH_BEPO = goog.getMsg('French BÉPO keyboard');
 
 
 /**
@@ -906,6 +938,13 @@ msgs.MSG_KEYBOARD_HUNGARIAN = goog.getMsg('Hungarian keyboard');
 
 
 /**
+ * @desc The title of keyboard - hungarian qwerty_keyboard .
+ */
+msgs.MSG_KEYBOARD_HUNGARIAN_QWERTY = goog.getMsg('Hungarian Qwerty keyboard');
+
+
+
+/**
  * @desc The title of keyboard - italian keyboard .
  */
 msgs.MSG_KEYBOARD_ITALIAN = goog.getMsg('Italian keyboard');
@@ -954,9 +993,15 @@ msgs.MSG_KEYBOARD_SWEDISH = goog.getMsg('Swedish keyboard');
 
 
 /**
- * @desc The title of keyboard - slovakian keyboard .
+ * @desc The title of keyboard - slovak keyboard .
  */
-msgs.MSG_KEYBOARD_SLOVAKIAN = goog.getMsg('Slovakian keyboard');
+msgs.MSG_KEYBOARD_SLOVAKIAN = goog.getMsg('Slovak keyboard');
+
+
+/**
+ * @desc The title of keyboard - slovak keyboard .
+ */
+msgs.MSG_KEYBOARD_SLOVAK = goog.getMsg('Slovak keyboard');
 
 
 /**
@@ -975,6 +1020,12 @@ msgs.MSG_KEYBOARD_SERBIAN = goog.getMsg('Serbian keyboard');
  * @desc The title of keyboard - turkish keyboard .
  */
 msgs.MSG_KEYBOARD_TURKISH = goog.getMsg('Turkish keyboard');
+
+
+/**
+ * @desc The title of keyboard - turkish-f keyboard .
+ */
+msgs.MSG_KEYBOARD_TURKISH_F = goog.getMsg('Turkish-F keyboard');
 
 
 /**
@@ -1045,6 +1096,18 @@ msgs.MSG_KEYBOARD_SORANIKURDISH_AR =
 msgs.MSG_KEYBOARD_MYANMAR_MYANSAN = goog.getMsg(
     'Myanmar Myansan keyboard'
     );
+
+
+/**
+ * @desc The title of keyboard - Laothian keyboard
+ */
+msgs.MSG_KEYBOARD_LAOTHIAN = goog.getMsg('Laothian keyboard');
+
+
+/**
+ * @desc The title of keyboard - Kazakh keyboard
+ */
+msgs.MSG_KEYBOARD_KAZAKH = goog.getMsg('Kazakh keyboard');
 
 
 /**
@@ -1309,663 +1372,6 @@ msgs.MSG_TRANSLITERATION_VI = goog.getMsg(
     });
 
 // End of the Input Tools name.
-
-
-// The following string is used by Japanese IME.
-/**
- * @desc Original string in Janpanese is "Google 日本語入力（日本語キーボード用）"
-*/
-msgs.MSG_appNameJpKeyboard = goog.getMsg(
-    'Google Japanese Input (for Japanese keyboard)');
-
-
-/**
- * @desc Original string in Janpanese is "Google 日本語入力（USキーボード用）"
-*/
-msgs.MSG_appNameUsKeyboard = goog.getMsg(
-    'Google Japanese Input (for US keyboard)');
-
-
-/**
- * @desc Original string in Janpanese is "ひらがな"
-*/
-msgs.MSG_compositionModeHiragana = goog.getMsg('Hiragana');
-
-
-/**
- * @desc Original string in Janpanese is "全角カタカナ"
-*/
-msgs.MSG_compositionModeFullKatakana = goog.getMsg('Katakana');
-
-
-/**
- * @desc Original string in Janpanese is "全角英数"
-*/
-msgs.MSG_compositionModeFullAscii = goog.getMsg('Wide Latin');
-
-
-/**
- * @desc Original string in Janpanese is "半角カタカナ"
-*/
-msgs.MSG_compositionModeHalfKatakana = goog.getMsg('Half width katakana');
-
-
-/**
- * @desc Original string in Janpanese is "半角英数"
-*/
-msgs.MSG_compositionModeHalfAscii = goog.getMsg('Latin');
-
-
-/**
- * @desc Original string in Janpanese is "直接入力"
-*/
-msgs.MSG_compositionModeDirect = goog.getMsg('Direct input');
-
-
-/**
- * @desc Original string in Janpanese is "句読点:"
-*/
-msgs.MSG_configPunctuationMethod = goog.getMsg('Punctuation style:');
-
-
-/**
- * @desc Original string in Janpanese is "ローマ字入力・かな入力:"
-*/
-msgs.MSG_configPreeditMethod = goog.getMsg('Input mode:');
-
-
-/**
- * @desc Original string in Janpanese is "ローマ字入力"
-*/
-msgs.MSG_configPreeditMethodRomaji = goog.getMsg('Romaji');
-
-
-/**
- * @desc Original string in Janpanese is "かな入力"
-*/
-msgs.MSG_configPreeditMethodKana = goog.getMsg('Kana');
-
-
-/**
- * @desc Original string in Janpanese is "記号:"
-*/
-msgs.MSG_configSymbolMethod = goog.getMsg('Symbol style:');
-
-
-/**
- * @desc Original string in Janpanese is "スペースの入力:"
-*/
-msgs.MSG_configSpaceCharacterForm = goog.getMsg('Space input style:');
-
-
-/**
- * @desc Original string in Janpanese is "入力モードに従う"
-*/
-msgs.MSG_configSpaceCharacterFormFollow = goog.getMsg('Follow input mode');
-
-
-/**
- * @desc Original string in Janpanese is "全角"
-*/
-msgs.MSG_configSpaceCharacterFormFull = goog.getMsg('Fullwidth');
-
-
-/**
- * @desc Original string in Janpanese is "半角"
-*/
-msgs.MSG_configSpaceCharacterFormHalf = goog.getMsg('Halfwidth');
-
-
-/**
- * @desc Original string in Janpanese is "候補選択ショートカット:"
-*/
-msgs.MSG_configSelectionShortcut = goog.getMsg('Selection shortcut:');
-
-
-/**
- * @desc Original string in Janpanese is "なし"
-*/
-msgs.MSG_configSelectionShortcutNo = goog.getMsg('No shortcut');
-
-
-/**
- * @desc Original string in Janpanese is "シフトキーでの入力切替:"
-*/
-msgs.MSG_configShiftKeyModeSwitch = goog.getMsg('Shift key mode switch:');
-
-
-/**
- * @desc Original string in Janpanese is "オフ"
-*/
-msgs.MSG_configShiftKeyModeSwitchOff = goog.getMsg('Off');
-
-
-/**
- * @desc Original string in Janpanese is "英数字"
-*/
-msgs.MSG_configShiftKeyModeSwitchAlphanumeric = goog.getMsg(
-    'Alphanumeric');
-
-
-/**
- * @desc Original string in Janpanese is "カタカナ"
-*/
-msgs.MSG_configShiftKeyModeSwitchKatakana = goog.getMsg('Katakana');
-
-
-/**
- * @desc Original string in Janpanese is "キー設定の選択:"
-*/
-msgs.MSG_configSessionKeymap = goog.getMsg('Keymap style:');
-
-
-/**
- * @desc Original string in Janpanese is "ATOK"
-*/
-msgs.MSG_configSessionKeymapAtok = goog.getMsg('ATOK');
-
-
-/**
- * @desc Original string in Janpanese is "Chrome OS"
-*/
-msgs.MSG_configSessionKeymapChromeOs = goog.getMsg('Chrome OS');
-
-
-/**
- * @desc Original string in Janpanese is "MS-IME"
-*/
-msgs.MSG_configSessionKeymapMsIme = goog.getMsg('MS-IME');
-
-
-/**
- * @desc Original string in Janpanese is "ことえり"
-*/
-msgs.MSG_configSessionKeymapKotoeri = goog.getMsg('Kotoeri');
-
-
-/**
- * @desc Original string in Janpanese is "カスタム"
-*/
-msgs.MSG_configSessionKeymapCustom = goog.getMsg('Custom keymap');
-
-
-/**
- * @desc Original string in Janpanese is
- * "学習機能、入力履歴からのサジェスト機能、ユーザ辞書機能を無効にする"
-*/
-msgs.MSG_configIncognitoMode = goog.getMsg(
-    'Disable personalized conversions and suggestions as well as user ' +
-    'dictionary');
-
-
-/**
- * @desc Original string in Janpanese is "自動英数変換を有効にする"
-*/
-msgs.MSG_configUseAutoImeTurnOff = goog.getMsg(
-    'Automatically switch to halfwidth');
-
-
-/**
- * @desc Original string in Janpanese is "入力履歴からのサジェスト自動表示を有効にする"
-*/
-msgs.MSG_configUseHistorySuggest = goog.getMsg('Use input history');
-
-
-/**
- * @desc Original string in Janpanese is
- * "システム辞書からのサジェスト自動表示を有効にする"
-*/
-msgs.MSG_configUseDictionarySuggest = goog.getMsg('Use system dictionary');
-
-
-/**
- * @desc Original string in Janpanese is "サジェストの候補数:"
-*/
-msgs.MSG_configSuggestionsSize = goog.getMsg('Number of suggestions:');
-
-
-/**
- * @desc Original string in Janpanese is "日本語入力の設定"
-*/
-msgs.MSG_configSettingsTitle = goog.getMsg('Japanese input settings');
-
-
-/**
- * @desc Original string in Janpanese is "基本設定"
-*/
-msgs.MSG_configBasicsTitle = goog.getMsg('Basics');
-
-
-/**
- * @desc Original string in Janpanese is "入力補助"
-*/
-msgs.MSG_configInputAssistanceTitle = goog.getMsg('Input assistance');
-
-
-/**
- * @desc Original string in Janpanese is "サジェスト"
-*/
-msgs.MSG_configSuggestTitle = goog.getMsg('Suggest');
-
-
-/**
- * @desc Original string in Janpanese is "プライバシー"
-*/
-msgs.MSG_configPrivacyTitle = goog.getMsg('Privacy');
-
-
-/**
- * @desc Original string in Janpanese is "入力履歴の消去..."
-*/
-msgs.MSG_configClearHistory = goog.getMsg('Clear personalization data...');
-
-
-/**
- * @desc Original string in Janpanese is "入力履歴を消去する"
-*/
-msgs.MSG_configClearHistoryTitle = goog.getMsg('Clear personalization data');
-
-
-/**
- * @desc Original string in Janpanese is "次のアイテムを消去:"
-*/
-msgs.MSG_configClearHistoryMessage = goog.getMsg(
-    'Obliterate the following items:');
-
-
-/**
- * @desc Original string in Janpanese is "変換履歴"
-*/
-msgs.MSG_configClearHistoryConversionHistory = goog.getMsg(
-    'Conversion history');
-
-
-/**
- * @desc Original string in Janpanese is "サジェスト用履歴"
-*/
-msgs.MSG_configClearHistorySuggestionHistory = goog.getMsg(
-    'Suggestion history');
-
-
-/**
- * @desc Original string in Janpanese is "入力履歴を消去する"
-*/
-msgs.MSG_configClearHistoryOkButton = goog.getMsg(
-    'Clear personalization data');
-
-
-/**
- * @desc Original string in Janpanese is "キャンセル"
-*/
-msgs.MSG_configClearHistoryCancelButton = goog.getMsg('Cancel');
-
-
-/**
- * @desc Original string in Janpanese is
- * "Copyright © 2014 Google Inc. All Rights Reserved."
-*/
-msgs.MSG_configCreditsDescription = goog.getMsg(
-    'Copyright © 2013 Google Inc. All Rights Reserved.');
-
-
-/**
- * @desc Only translate it in Japanese. Don't translate in any other languages.
- * Original string in Janpanese is "本ソフトウェアは<a href="./credits_ja.html">
- * オープンソースソフトウェア</a>を利用しています。"
-*/
-msgs.MSG_configOssCreditsDescription = goog.getMsg(
-    'This software is made possible by ' +
-    '<a href="./credits_en.html">open source software</a>.');
-
-
-/**
- * @desc Original string in Janpanese is "キャンセル"
-*/
-msgs.MSG_configDialogCancel = goog.getMsg('Cancel');
-
-
-/**
- * @desc Original string in Janpanese is "OK"
-*/
-msgs.MSG_configDialogOk = goog.getMsg('OK');
-
-
-/**
- * @desc Original string in Janpanese is "ユーザー辞書"
-*/
-msgs.MSG_configDictionaryToolTitle = goog.getMsg('User dictionaries');
-
-
-/**
- * @desc Original string in Janpanese is
- * "よく使う単語をユーザー辞書に登録することができます。"
-*/
-msgs.MSG_configDictionaryToolDescription = goog.getMsg(
-    'Add your own words to the user dictionary in order to customize the ' +
-    'conversion candidates.');
-
-
-/**
- * @desc Original string in Janpanese is "ユーザー辞書の管理..."
-*/
-msgs.MSG_configDictionaryToolButton = goog.getMsg(
-    'Manage user dictionary...');
-
-
-/**
- * @desc Original string in Janpanese is "ユーザー辞書"
-*/
-msgs.MSG_dictionaryToolPageTitle = goog.getMsg('User dictionaries');
-
-
-/**
- * @desc Original string in Janpanese is "辞書"
-*/
-msgs.MSG_dictionaryToolDictionaryListTitle = goog.getMsg('Dictionaries');
-
-
-/**
- * @desc Original string in Janpanese is "よみ"
-*/
-msgs.MSG_dictionaryToolReadingTitle = goog.getMsg('Reading');
-
-
-/**
- * @desc Original string in Janpanese is "単語"
-*/
-msgs.MSG_dictionaryToolWordTitle = goog.getMsg('Word');
-
-
-/**
- * @desc Original string in Janpanese is "品詞"
-*/
-msgs.MSG_dictionaryToolCategoryTitle = goog.getMsg('Category');
-
-
-/**
- * @desc Original string in Janpanese is "コメント"
-*/
-msgs.MSG_dictionaryToolCommentTitle = goog.getMsg('Comment');
-
-
-/**
- * @desc Original string in Janpanese is "辞書管理"
-*/
-msgs.MSG_dictionaryToolMenuTitle = goog.getMsg('Dictionary management');
-
-
-/**
- * @desc Original string in Janpanese is "エクスポート"
-*/
-msgs.MSG_dictionaryToolExportButton = goog.getMsg('Export');
-
-
-/**
- * @desc Original string in Janpanese is "インポート..."
-*/
-msgs.MSG_dictionaryToolImportButton = goog.getMsg('Import...');
-
-
-/**
- * @desc Original string in Janpanese is "完了"
-*/
-msgs.MSG_dictionaryToolDoneButton = goog.getMsg('Done');
-
-
-/**
- * @desc Original string in Janpanese is "新しい単語のよみ"
-*/
-msgs.MSG_dictionaryToolReadingNewInput = goog.getMsg('New reading');
-
-
-/**
- * @desc Original string in Janpanese is "新しい単語"
-*/
-msgs.MSG_dictionaryToolWordNewInput = goog.getMsg('New word');
-
-
-/**
- * @desc Original string in Janpanese is "コメント"
-*/
-msgs.MSG_dictionaryToolCommentNewInput = goog.getMsg('Comment');
-
-
-/**
- * @desc Original string in Janpanese is "辞書を削除"
-*/
-msgs.MSG_dictionaryToolDeleteDictionaryTitle = goog.getMsg(
-    'Delete dictionary');
-
-
-/**
- * @desc Original string in Janpanese is "辞書名"
-*/
-msgs.MSG_dictionaryToolDictionaryName = goog.getMsg(
-    'Dictionary Name');
-
-
-/**
- * @desc Original string in Janpanese is "新規辞書"
-*/
-msgs.MSG_dictionaryToolNewDictionaryNamePlaceholder = goog.getMsg(
-    'New dictionary');
-
-
-/**
- * @desc Original string in Janpanese is "{$dictName}を削除しますか?"
-*/
-msgs.MSG_dictionaryToolDeleteDictionaryConfirm = goog.getMsg(
-    'Do you want to delete {$dictName}?', {
-      'dictName': {
-        'content': '$1',
-        'example': 'Dictionary Name'
-      }
-    });
-
-
-/**
- * @desc Original string in Janpanese is "操作を実行できません。"
-*/
-msgs.MSG_dictionaryToolStatusErrorGeneral = goog.getMsg(
-    'The operation has failed.');
-
-
-/**
- * @desc Original string in Janpanese is "ファイルを開けません。"
-*/
-msgs.MSG_dictionaryToolStatusErrorFileNotFound = goog.getMsg(
-    'Could not open the file.');
-
-
-/**
- * @desc Original string in Janpanese is "ファイルを読み込めません。"
-*/
-msgs.MSG_dictionaryToolStatusErrorInvalidFileFormat = goog.getMsg(
-    'Could not read the file.');
-
-
-/**
- * @desc Original string in Janpanese is "空のファイルです。"
-*/
-msgs.MSG_dictionaryToolStatusErrorEmptyFile = goog.getMsg(
-    'The file is empty.');
-
-
-/**
- * @desc Original string in Janpanese is "ファイルが大きすぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorFileSizeLimitExceeded = goog.getMsg(
-    'The data size exceeds the file size limit.');
-
-
-/**
- * @desc Original string in Janpanese is "これ以上辞書を作成できません。"
-*/
-msgs.MSG_dictionaryToolStatusErrorDictionarySizeLimitExceeded =
-    goog.getMsg('Can\'t create any more dictionaries.');
-
-
-/**
- * @desc Original string in Janpanese is "一つの辞書に含む単語が多すぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorEntrySizeLimitExceeded =
-    goog.getMsg('Can\'t create any more entries in this dictionary.');
-
-
-/**
- * @desc Original string in Janpanese is "辞書名を入力してください。"
-*/
-msgs.MSG_dictionaryToolStatusErrorDictionaryNameEmpty = goog.getMsg(
-    'Please type a dictionary name.');
-
-
-/**
- * @desc Original string in Janpanese is "辞書名が長すぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorDictionaryNameTooLong = goog.getMsg(
-    'The name is too long.');
-
-
-/**
- * @desc Original string in Janpanese is "辞書名に使用できない文字が含まれています。"
-*/
-msgs.MSG_dictionaryToolStatusErrorDictionaryNameContainsInvalidCharacter =
-    goog.getMsg('The name contains invalid character(s).');
-
-
-/**
- * @desc Original string in Janpanese is "その辞書名はすでに使われています。"
-*/
-msgs.MSG_dictionaryToolStatusErrorDictionaryNameDuplicated = goog.getMsg(
-    'The name already exists.');
-
-
-/**
- * @desc Original string in Janpanese is "よみを入力してください。"
-*/
-msgs.MSG_dictionaryToolStatusErrorReadingEmpty = goog.getMsg(
-    'Please type the reading.');
-
-
-/**
- * @desc Original string in Janpanese is "よみが長すぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorReadingTooLong = goog.getMsg(
-    'The reading is too long.');
-
-
-/**
- * @desc Original string in Janpanese is "よみに使用できない文字が含まれています。
- * Ascii文字、ひらがな、濁点(゛)、半濁点(゜)、中点(・)、長音符(ー)、読点(、)、句点(。)、
- * 括弧(「」『』)、波ダッシュ(〜)をよみに使用できます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorReadingContainsInvalidCharacter =
-    goog.getMsg('The reading contains invalid character(s). You can use use ' +
-        'ASCII characters, Hiragana, voiced sound mark(゛), semi-voiced ' +
-        'sound mark(゜), middle dot(・), prolonged sound mark(ー), Japanese ' +
-        'comma(、), Japanese period(。), Japanese brackets(「」『』) and ' +
-        'Japanese wavedash(〜) in the reading.');
-
-
-/**
- * @desc Original string in Janpanese is "単語を入力してください。"
-*/
-msgs.MSG_dictionaryToolStatusErrorWordEmpty = goog.getMsg(
-    'Please type the word.');
-
-
-/**
- * @desc Original string in Janpanese is "単語が長すぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorWordTooLong = goog.getMsg(
-    'The word is too long.');
-
-
-/**
- * @desc Original string in Janpanese is "単語に使用できない文字が含まれています。"
-*/
-msgs.MSG_dictionaryToolStatusErrorWordContainsInvalidCharacter =
-    goog.getMsg('The word contains invalid character(s).');
-
-
-/**
- * @desc Original string in Janpanese is "インポートする単語が多すぎます。"
-*/
-msgs.MSG_dictionaryToolStatusErrorImportTooManyWords = goog.getMsg(
-    'The import source contains too many words.');
-
-
-/**
- * @desc Original string in Janpanese is "インポートできない単語がありました。"
-*/
-msgs.MSG_dictionaryToolStatusErrorImportInvalidEntries = goog.getMsg(
-    'Some words could not be imported.');
-
-
-/**
- * @desc Original string in Janpanese is "これ以上操作を取り消せません。"
-*/
-msgs.MSG_dictionaryToolStatusErrorNoUndoHistory = goog.getMsg(
-    'No more undo-able operation.');
-
-
-/**
- * @desc Original string in Janpanese is "新規辞書エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleCreateDictionary = goog.getMsg(
-    'Create dictionary error');
-
-
-/**
- * @desc Original string in Janpanese is "辞書削除エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleDeleteDictionary = goog.getMsg(
-    'Delete dictionary error');
-
-
-/**
- * @desc Original string in Janpanese is "辞書名変更エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleRenameDictionary = goog.getMsg(
-    'Rename dictionary error');
-
-
-/**
- * @desc Original string in Janpanese is "単語編集エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleEditEntry = goog.getMsg(
-    'Edit entry error');
-
-
-/**
- * @desc Original string in Janpanese is "単語削除エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleDeleteEntry = goog.getMsg(
-    'Delete entry error');
-
-
-/**
- * @desc Original string in Janpanese is "単語追加エラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleAddEntry = goog.getMsg(
-    'Add entry error');
-
-
-/**
- * @desc Original string in Janpanese is "インポートエラー"
-*/
-msgs.MSG_dictionaryToolStatusErrorTitleImportData = goog.getMsg(
-    'Import error');
-
-
-/**
- * @desc Original string in Janpanese is
- * "使用統計データや障害レポートを Google に自動送信する"
-*/
-msgs.MSG_configUploadUsageStats = goog.getMsg(
-    'Automatically send usage statistics and crash reports to Google');
-
-// End of Japanese IME message.
 
 
 /**
@@ -2446,10 +1852,24 @@ msgs.MSG_ES_CAT_CAT_SETTINGS_PAGE =
 
 
 /**
+ * @desc The title for the Faroese Keyboard (Faroese) settings page.
+ */
+msgs.MSG_FO_FAO_SETTINGS_PAGE =
+    goog.getMsg('Faroese Keyboard Settings Page');
+
+
+/**
  * @desc The title for the Finnish Keyboard (Finnish) settings page.
  */
 msgs.MSG_FI_FIN_SETTINGS_PAGE =
     goog.getMsg('Finnish Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the French BÉPO Keyboard (French) settings page.
+ */
+msgs.MSG_FR_BEPO_FRA_SETTINGS_PAGE =
+    goog.getMsg('French BÉPO Keyboard (French) Settings Page');
 
 
 /**
@@ -2499,6 +1919,13 @@ msgs.MSG_HR_SCR_SETTINGS_PAGE =
  */
 msgs.MSG_HU_HUN_SETTINGS_PAGE =
     goog.getMsg('Hungarian Keyboard Settings Page');
+
+
+/**
+ * @desc The title for the Hungarian Qwerty Keyboard (Hungarian) settings page.
+ */
+msgs.MSG_HU_QWERTY_HUN_SETTINGS_PAGE =
+    goog.getMsg('Hungarian Qwerty Keyboard Settings Page');
 
 
 /**
@@ -2639,6 +2066,12 @@ msgs.MSG_SK_SLO_SETTINGS_PAGE =
  */
 msgs.MSG_TR_TUR_SETTINGS_PAGE =
     goog.getMsg('Turkish Keyboard Settings Page');
+
+/**
+ * @desc The title for the Turkish-F Keyboard (Turkish) settings page.
+ */
+msgs.MSG_TR_F_TUR_SETTINGS_PAGE =
+    goog.getMsg('Turkish-F Keyboard Settings Page');
 
 
 /**
@@ -2870,11 +2303,6 @@ msgs.MSG_EMOJI_TAB_OBJECT = goog.getMsg('Emoji category object');
 msgs.MSG_EMOJI_TAB_EMOTICON = goog.getMsg('Emoji category emoticon');
 
 
-for (var key in emojiMsgs) {
-  msgs[key] = emojiMsgs[key];
-}
-
-
 /**
  * @desc Whether to enable voice input tools
  */
@@ -2950,17 +2378,29 @@ msgs.MSG_EXPAND_CANDIDATES = goog.getMsg('expand candidate list');
 
 
 /**
- * @desc Enable gesture editing.
+ * @desc Title for gesture editing.
  */
 msgs.MSG_ENABLE_GESTURE_EDITING = goog.getMsg(
-    'Swipe from the edges of the keyboard to move the cursor, or from the ' +
-    'backspace key to delete whole words.');
+    'Enable swipe gestures');
 
 
 /**
- * @desc Enable gesture typing.
+ * @desc Description for gesture editing.
+ */
+msgs.MSG_ENABLE_GESTURE_EDITING_DESC = goog.getMsg(
+    'Swipe from the edges of the keyboard to move the cursor, or from the ' +
+        'backspace key to delete whole words');
+
+
+/**
+ * @desc Title for gesture typing.
  */
 msgs.MSG_ENABLE_GESTURE_TYPING = goog.getMsg(
-    'Enable gesture typing. Input a word by sliding through the letters.');
+    'Enable gesture typing');
 
-print(goog.chrome.extensions.i18n.messagesToJsonString(msgs));
+
+/**
+ * @desc Description for gesture typing.
+ */
+msgs.MSG_ENABLE_GESTURE_TYPING_DESC = goog.getMsg(
+    'Input a word by sliding through the letters');

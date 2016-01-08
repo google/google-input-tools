@@ -36,7 +36,7 @@ var Name = i18n.input.chrome.message.Name;
  *
  * @param {number} numOfCandidate The number of candidate to fetch.
  * @param {function(string, !Array.<!Object>)} candidatesCallback .
- * @param {function(!Array.<string>)} gestureCallback .
+ * @param {function(!Object)} gestureCallback .
  * @constructor
  * @extends {i18n.input.chrome.DataSource}
  */
@@ -77,6 +77,14 @@ i18n.input.chrome.xkb.Model = function(numOfCandidate, candidatesCallback,
 goog.inherits(i18n.input.chrome.xkb.Model,
     i18n.input.chrome.DataSource);
 var Model = i18n.input.chrome.xkb.Model;
+
+
+/**
+ * The length of the gesture response array when it includes the commit message.
+ *
+ * @private {number}
+ */
+Model.GESTURE_RESPONSE_COMMIT_LENGTH_ = 3;
 
 
 /**
@@ -338,7 +346,12 @@ Model.prototype.onGestureResponse_ = function(data) {
     results.push(resultsArray[i][0]);
   }
 
-  this.gestureCallback(results);
+  var isCommit = data.length >= Model.GESTURE_RESPONSE_COMMIT_LENGTH_ ?
+      data[2] == 'commit' : false;
+  this.gestureCallback(goog.object.create(
+    'results', results,
+    'commit', isCommit
+  ));
 };
 
 
@@ -409,8 +422,9 @@ Model.prototype.sendKeyboardLayout = function(keyboardLayout) {
  * Sends a gesture typing trail to the backend for decoding.
  *
  * @param {!Array.<!Object>} gestureData .
+ * @param {string} precedingText .
  */
-Model.prototype.decodeGesture = function(gestureData) {
+Model.prototype.decodeGesture = function(gestureData, precedingText) {
   var messageObj = {};
   messageObj[MessageKey.IME] = this.getInputToolCode();
   messageObj[MessageKey.DECODE_GESTURE] = {
@@ -418,6 +432,7 @@ Model.prototype.decodeGesture = function(gestureData) {
       'touch_points': gestureData
     }
   };
+  messageObj[MessageKey.PRECEDING_TEXT] = precedingText;
   this.naclModule_.postMessage(messageObj, this.onGestureResponse_.bind(this));
 };
 

@@ -1,0 +1,19 @@
+body {
+  background-color: transparent;
+  font-family: Roboto2, Roboto, Noto Sans, Sans-Serif;
+  overflow: hidden;
+}
+
+.inputview-gesture-preview-container {
+  background-color: rgba(251, 252, 254, 0.85);
+  border-radius: 2px;
+  height: 100%;
+  text-align: center;
+  width: 100%;
+}
+
+.inputview-gesture-preview-text {
+  display: inline-block;
+  font-size: 24px;
+  padding-top: 11px;
+}

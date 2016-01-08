@@ -20,10 +20,10 @@ goog.require('goog.object');
 goog.require('i18n.input.chrome.AbstractController');
 goog.require('i18n.input.chrome.Constant');
 goog.require('i18n.input.chrome.Env');
+goog.require('i18n.input.chrome.FeatureName');
 goog.require('i18n.input.chrome.Statistics');
 goog.require('i18n.input.chrome.TriggerType');
-goog.require('i18n.input.chrome.inputview.FeatureName');
-goog.require('i18n.input.chrome.inputview.events.KeyCodes');
+goog.require('i18n.input.chrome.events.KeyCodes');
 goog.require('i18n.input.chrome.inputview.util');
 goog.require('i18n.input.chrome.message.Name');
 goog.require('i18n.input.chrome.message.Type');
@@ -35,8 +35,8 @@ goog.require('i18n.input.lang.InputTool');
 goog.scope(function() {
 var Constant = i18n.input.chrome.Constant;
 var Env = i18n.input.chrome.Env;
-var FeatureName = i18n.input.chrome.inputview.FeatureName;
-var KeyCodes = i18n.input.chrome.inputview.events.KeyCodes;
+var FeatureName = i18n.input.chrome.FeatureName;
+var KeyCodes = i18n.input.chrome.events.KeyCodes;
 var Name = i18n.input.chrome.message.Name;
 var OptionType = i18n.input.chrome.options.OptionType;
 var OptionStorageHandlerFactory =
@@ -103,7 +103,6 @@ i18n.input.chrome.xkb.Controller = function() {
     this.model_ = new xkb.Model(5,
         this.onCandidatesBack_.bind(this),
         this.onGesturesBack_.bind(this));
-    this.model_.setCorrectionLevel(this.correctionLevel);
   }
 
   /**
@@ -309,12 +308,12 @@ Controller.prototype.onSurroundingTextChanged = function(
       // Clears the last correct if the cursor changed.
       this.lastCorrection_ = null;
     }
-
     chrome.runtime.sendMessage(goog.object.create(
         Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
-        Name.TEXT, this.env.textBeforeCursor,
+        Name.TEXT_BEFORE_CURSOR, this.env.textBeforeCursor,
         Name.ANCHOR, surroundingInfo.anchor,
-        Name.FOCUS, surroundingInfo.focus));
+        Name.FOCUS, surroundingInfo.focus,
+        Name.OFFSET, surroundingInfo.offset));
   }
 };
 
@@ -409,11 +408,13 @@ Controller.prototype.deleteSurroundingText_ = function(offset, length,
 
 /** @override */
 Controller.prototype.activate = function(inputToolCode) {
-  Controller.base(this, 'activate', inputToolCode);
   this.isNaclEnabled_ = Env.isXkbAndNaclEnabled(inputToolCode);
   if (this.isNaclEnabled_ && this.model_) {
     this.model_.setLanguage(InputTool.get(inputToolCode).languageCode);
   }
+  // In parent activate method will call update option to use
+  // this.model_ language files.
+  Controller.base(this, 'activate', inputToolCode);
   this.statistics_.setInputMethodId(inputToolCode);
   this.statistics_.setPhysicalKeyboard(false);
 };
@@ -735,19 +736,20 @@ Controller.prototype.onCandidatesBack_ = function(source, candidates) {
 
 
 /**
- * Callback when gesture results are fetched back.
+ * Callback when gesture response is fetched back.
  *
- * @param {!Array.<!string>} results .
+ * @param {!Object} response .
  * @private
  */
-Controller.prototype.onGesturesBack_ = function(results) {
+Controller.prototype.onGesturesBack_ = function(response) {
+  var results = response.results;
   if (results.length > GESTURE_RESULTS_TO_RETURN) {
     results = results.slice(0, GESTURE_RESULTS_TO_RETURN);
   }
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.GESTURES_BACK,
       Name.MSG, goog.object.create(
-          Name.GESTURE_RESULTS, results
+          Name.GESTURE_RESULTS, response
       )));
 };
 
@@ -837,7 +839,8 @@ Controller.prototype.maybeTriggerAutoCorrect_ = function(ch, triggerType) {
   var firstCandidate = this.candidates_.length > 0 ? this.candidates_[0][
       Name.CANDIDATE] : '';
   if (firstCandidate && this.compositionText_ &&
-      firstCandidate != this.compositionText_) {
+      firstCandidate != this.compositionText_ &&
+      !this.lastCompositionWasGesture_) {
     this.lastCorrection_ = new i18n.input.chrome.xkb.Correction(
         this.compositionText_ + ch, firstCandidate + ch);
     this.commitText_(firstCandidate + ch, false, triggerType, false);
@@ -907,6 +910,10 @@ Controller.prototype.handleNonCharacterKeyEvent = function(keyData) {
         if (this.lastCompositionWasGesture_) {
           // Backspace clears the gesture-typed composition.
           this.setComposition_('', false, false);
+          this.statistics_.recordEnum(
+              i18n.input.chrome.Statistics.GESTURE_TYPING_METRIC_NAME,
+              i18n.input.chrome.Statistics.GestureTypingEvent.DELETED,
+              i18n.input.chrome.Statistics.GestureTypingEvent.MAX);
         } else if (this.compositionTextCursorPosition_ == 0) {
           // removes previous character and combines two word if needed.
           var compositionText = this.compositionText_;
@@ -1105,7 +1112,8 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       }
       break;
     case Type.CONFIRM_GESTURE_RESULT:
-      if (this.shouldAutoSpaceForGesture_()) {
+      var forceAutoSpace = message[Name.FORCE_AUTO_SPACE];
+      if (this.shouldAutoSpaceForGesture_() || forceAutoSpace) {
         this.commitText(' ', false);
       }
       var committingText = message[Name.TEXT];
@@ -1130,7 +1138,7 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       if (this.model_) {
         var gestureData = /** @type {!Array.<!Object>} */
             (message[Name.GESTURE_DATA]);
-        this.model_.decodeGesture(gestureData);
+        this.model_.decodeGesture(gestureData, this.env.textBeforeCursor);
       }
       break;
     case Type.SEND_KEY_EVENT:
@@ -1189,7 +1197,6 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
       }
       break;
   }
-
   goog.base(this, 'processMessage', message, sender, sendResponse);
 };
 
@@ -1203,14 +1210,13 @@ Controller.prototype.processMessage = function(message, sender, sendResponse) {
 Controller.prototype.updateCompositionSurroundingText = function() {
   var text = this.env.textBeforeCursor + this.compositionText_;
   var commitLength = this.compositionText_.length;
-  var offset = text.length > MAX_SURROUNDING_TEXT_LENGTH ?
-      text.length - MAX_SURROUNDING_TEXT_LENGTH : 0;
-  var commitText = text.slice(-MAX_SURROUNDING_TEXT_LENGTH);
+
   chrome.runtime.sendMessage(goog.object.create(
       Name.TYPE, Type.SURROUNDING_TEXT_CHANGED,
-      Name.TEXT, commitText,
-      Name.ANCHOR, this.env.surroundingInfo.anchor + commitLength - offset,
-      Name.FOCUS, this.env.surroundingInfo.focus + commitLength - offset));
+      Name.TEXT_BEFORE_CURSOR, text,
+      Name.ANCHOR, this.env.surroundingInfo.anchor + commitLength,
+      Name.FOCUS, this.env.surroundingInfo.focus + commitLength,
+      Name.OFFSET, this.env.surroundingInfo.offset));
 };
 
 

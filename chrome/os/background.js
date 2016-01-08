@@ -87,7 +87,7 @@ i18n.input.chrome.Background = function() {
 
   /** @private {!Function} */
   this.onKeyEventFn_ = this.wrapAsyncHandler_(
-      this.onKeyEventAsync_);
+      this.onKeyEventAsync);
 
   /** @private {!Function} */
   this.onCandidateClickFn_ = this.wrapAsyncHandler_(
@@ -98,7 +98,7 @@ i18n.input.chrome.Background = function() {
       this.onMenuItemActivated_);
 
   /** @private {!Function} */
-  this.onResetFn_ = this.wrapAsyncHandler_(this.onReset_);
+  this.onResetFn_ = this.wrapAsyncHandler_(this.onReset);
 
   /** @private {!PerfTracker} */
   this.perfTracker_ = new PerfTracker(PerfTracker.TickName.
@@ -125,9 +125,9 @@ i18n.input.chrome.Background = function() {
   this.eventHandler.listen(this.eventTarget,
       i18n.input.chrome.EventType.EXECUTE_WAITING_EVENT,
       this.executeWaitingEventHandlers)
-  .listen(this.eventTarget,
-      i18n.input.chrome.EventType.LISTEN_KEY_EVENT,
-      this.handleListenKeyEvent_);
+      .listen(this.eventTarget,
+          i18n.input.chrome.EventType.LISTEN_KEY_EVENT,
+          this.handleListenKeyEvent_);
 
   this.init_();
 };
@@ -445,9 +445,9 @@ Background.prototype.onBlur = function(contextID, opt_screen) {
 /**
  * Callback method called when Chrome terminates ongoing text input session.
  * @param {string} engineID ID of the engine.
- * @private
+ * @protected
  */
-Background.prototype.onReset_ = function(engineID) {
+Background.prototype.onReset = function(engineID) {
   this.activeController && this.activeController.onCompositionCanceled();
 };
 
@@ -456,9 +456,9 @@ Background.prototype.onReset_ = function(engineID) {
  * Callback method called when IME catches a new key event.
  * @param {string} engineID ID of the engine.
  * @param {!ChromeKeyboardEvent} keyData key event data.
- * @private
+ * @protected
  */
-Background.prototype.onKeyEventAsync_ = function(engineID, keyData) {
+Background.prototype.onKeyEventAsync = function(engineID, keyData) {
   if (this.activeController) {
     // Sets the correct next request id.
     this.activeController.requestId = Number(keyData.requestId) + 1;
@@ -519,8 +519,8 @@ Background.prototype.onInputContextUpdate_ = function(context) {
  * the caret position is moved. The text length is limited to 100 characters for
  * each back and forth direction.
  * @param {string} engineID ID of the engine.
- * @param {!Object.<{text: string, focus: number, anchor: number}>} info The
- *     surrounding information.
+ * @param {!Object.<{text: string, focus: number, anchor: number,
+ *     offset: number}>} info The surrounding information.
  * @private
  */
 Background.prototype.onSurroundingTextChanged_ = function(engineID, info) {
