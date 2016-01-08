@@ -29,7 +29,7 @@ var Name = i18n.input.chrome.message.Name;
  *
  * @param {number} numOfCandidate The number of canddiate to fetch.
  * @param {function(string, !Array.<!Object>)} candidatesCallback .
- * @param {function(!Array.<string>)} gestureCallback .
+ * @param {function(!Object)} gestureCallback .
  * @constructor
  * @extends {i18n.input.chrome.DataSource}
  */
@@ -93,8 +93,9 @@ JsDataSource.prototype.sendKeyboardLayout = function(keyboardLayout) {
 
 /**
  * @param {!Array.<!Object>} gestureData .
+ * @param {string} precedingText .
  */
-JsDataSource.prototype.decodeGesture = function(gestureData) {
+JsDataSource.prototype.decodeGesture = function(gestureData, precedingText) {
 };
 
 

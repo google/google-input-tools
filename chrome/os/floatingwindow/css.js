@@ -25,7 +25,6 @@ i18n.input.chrome.floatingwindow.Css = {
   EXPAND: goog.getCssName('inputview-suggest-expand'),
   HIGHLIGHT: goog.getCssName('inputview-suggest-highlight'),
   INLINE_BLOCK: goog.getCssName('inputview-suggest-inline-block'),
-  MARK_WINDOW: goog.getCssName('inputview-suggest-mark-window'),
   MENU: goog.getCssName('inputview-suggest-menu'),
   MENUITEM: goog.getCssName('inputview-suggest-menuitem'),
   NORMAL: goog.getCssName('inputview-suggest-normal'),

@@ -82,7 +82,6 @@ i18n.input.chrome.inputview.elements.ElementType = {
   KEYBOARD_CONTAINER_VIEW: 59,
   DRAG: 60,
   FLOATING_VIEW: 61,
-  RESIZE: 62,
-  GESTURE_PREVIEW_VIEW: 63
+  GESTURE_PREVIEW_VIEW: 62
 };
 

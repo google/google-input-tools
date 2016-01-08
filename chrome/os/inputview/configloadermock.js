@@ -18,16 +18,16 @@ goog.require('goog.array');
 goog.require('goog.net.jsloader');
 goog.require('i18n.input.chrome.inputview.Controller');
 goog.require('i18n.input.chrome.inputview.Model');
-goog.require('i18n.input.chrome.message.ContextType');
 
 
 var isA11yMode = false;
+var isHotrodMode = false;
 var featureList = [];
 
 goog.scope(function() {
-var queue;
-var loadingResources;
-var loadingCount;
+var loadingResources = [];
+var loadingCount = 0;
+var pendingResources = [];
 
 
 /**
@@ -47,11 +47,30 @@ i18n.input.chrome.inputview.ConfigLoaderMock.loadUrl_ = function(url, model) {
     deferred.addCallback(function() {
       // Async call onLoaded to avoid loadingCount reduced to 0 unexpectely,
       // because when config is loaded, controller may trigger layout loading.
-      goog.Timer.callOnce(function() {
+      var id = goog.Timer.callOnce(function() {
+        goog.array.remove(pendingResources, id);
         if (--loadingCount == 0) {
           queue.resume();
         }
       });
+      pendingResources.push(id);
+    });
+  }
+};
+
+
+/**
+ * Resets the states related to testing. It should be called in tearDown.
+ */
+i18n.input.chrome.inputview.ConfigLoaderMock.reset = function() {
+  loadingResources = [];
+  loadingCount = 0;
+  // If the last task added to this queue has async resource loading, it may
+  // pollute next test. So we need to clear all pending loading before start
+  // a new test.
+  if (!goog.array.isEmpty(pendingResources)) {
+    goog.array.forEach(pendingResources, function(id) {
+      goog.Timer.clear(id);
     });
   }
 };
@@ -64,11 +83,11 @@ i18n.input.chrome.inputview.ConfigLoaderMock.loadUrl_ = function(url, model) {
  */
 i18n.input.chrome.inputview.ConfigLoaderMock.init = function(qu) {
   queue = qu;
-  var ContextType = i18n.input.chrome.message.ContextType;
   var root = '/google3/i18n/input/javascript/chos/inputview/';
 
   inputview.getKeyboardConfig = function(callback) {
-    callback({'a11ymode': isA11yMode, 'features': featureList});
+    callback({'a11ymode': isA11yMode, 'hotrodmode': isHotrodMode,
+      'features': featureList});
   };
 
   // Override the function to reset the ticker. Because will re-create Model
@@ -76,8 +95,7 @@ i18n.input.chrome.inputview.ConfigLoaderMock.init = function(qu) {
   var tempFunc = i18n.input.chrome.inputview.Controller.prototype.initialize;
   i18n.input.chrome.inputview.Controller.prototype.initialize = function(
       keyset, languageCode, passwordLayout, title) {
-    loadingResources = [];
-    loadingCount = [];
+    i18n.input.chrome.inputview.ConfigLoaderMock.reset();
     tempFunc.apply(this, [keyset, languageCode, passwordLayout, title]);
   };
 

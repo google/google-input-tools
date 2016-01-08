@@ -43,7 +43,7 @@
 
 .inputview-suggest-expand {
   color: transparent;
-  background: url('/images/material/arrow_down_for_floating.png') no-repeat center;
+  background: url('/images/arrow_down_for_floating.png') no-repeat center;
   background-size: 6px 4px;
   cursor: pointer;
   height: 10px;

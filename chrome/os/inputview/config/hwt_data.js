@@ -11,14 +11,14 @@
 // you may not use this file except in compliance with the License.
 // Licensed under the Apache License, Version 2.0 (the "License");
 //
+goog.require('i18n.input.chrome.ElementType');
 goog.require('i18n.input.chrome.inputview.Css');
 goog.require('i18n.input.chrome.inputview.SpecNodeName');
 goog.require('i18n.input.chrome.inputview.content.util');
-goog.require('i18n.input.chrome.inputview.elements.ElementType');
 
 (function() {
   var util = i18n.input.chrome.inputview.content.util;
-  var ElementType = i18n.input.chrome.inputview.elements.ElementType;
+  var ElementType = i18n.input.chrome.ElementType;
   var SpecNodeName = i18n.input.chrome.inputview.SpecNodeName;
   var Css = i18n.input.chrome.inputview.Css;
 
