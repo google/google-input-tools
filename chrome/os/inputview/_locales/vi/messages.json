@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Ch\u1edd"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Lo\u1ea1i b\u00e0n ph\u00edm"
   },

@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "\u0391\u03bd\u03b1\u03bc\u03bf\u03bd\u03ae"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "\u03a4\u03cd\u03c0\u03bf\u03c2 \u03c0\u03bb\u03b7\u03ba\u03c4\u03c1\u03bf\u03bb\u03bf\u03b3\u03af\u03bf\u03c5"
   },

@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Po\u010dka\u0165"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Typ kl\u00e1vesnice"
   },

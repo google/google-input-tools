@@ -907,7 +907,7 @@ SwipeView.prototype.showSelectionTrack_ = function(x, y, width, height) {
 
     keyElem = this.addSeparator_(width, height);
     goog.style.setSize(keyElem, width, height);
-    this.trackElements_.push(keyElem);
+    this.trackElements_.push(keyElem || undefined);
 
     if (this.ltr) {
       keyElem = this.addKey_();

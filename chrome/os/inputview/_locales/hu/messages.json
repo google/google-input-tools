@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "V\u00e1rakoz\u00e1s"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Billenty\u0171zet t\u00edpusa"
   },

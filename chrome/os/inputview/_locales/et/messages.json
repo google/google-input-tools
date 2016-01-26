@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Oota"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Klaviatuuri t\u00fc\u00fcp"
   },

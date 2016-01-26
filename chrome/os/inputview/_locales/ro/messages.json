@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "A\u0219tepta\u021bi"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Tip de tastatur\u0103"
   },

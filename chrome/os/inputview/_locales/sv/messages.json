@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "V\u00e4nta"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Typ av tangentbord"
   },

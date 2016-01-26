@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Bekle"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Klavye t\u00fcr\u00fc"
   },

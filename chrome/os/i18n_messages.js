@@ -252,6 +252,16 @@ msgs.MSG_ZHUYIN_PAGE_SIZE = goog.getMsg(
 
 
 /**
+ * @desc It is the label of a dropdown list for choosing keyboard layouts in
+ * option pages of some of input methods. The keyboard layouts are like US,
+ * Dvorak, Colemak, etc.
+ */
+msgs.MSG_XKB_LAYOUT = goog.getMsg(
+    'Keyboard layouts'
+    );
+
+
+/**
  * @desc It is the label of keyboard without any descriptor in the input method
  * list.
  */

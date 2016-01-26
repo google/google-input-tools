@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "\u010cakanje"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Vrsta tipkovnice"
   },
