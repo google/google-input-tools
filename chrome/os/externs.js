@@ -838,6 +838,13 @@ chrome.inputMethodPrivate.fetchAllDictionaryWords = function(callback) {};
 chrome.inputMethodPrivate.addWordToDictionary = function(word, callback) {};
 
 
+/**
+ * @param {string} xkb .
+ * @param {function()=} opt_callback .
+ */
+chrome.inputMethodPrivate.setXkbLayout = function(xkb, opt_callback) {};
+
+
 /** @const */
 chrome.inputMethodPrivate.onCompositionBoundsChanged = {};
 

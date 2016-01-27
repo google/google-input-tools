@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Attendi"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Tipo di tastiera"
   },

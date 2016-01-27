@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "\u1320\u1265\u1245"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "\u12e8\u1241\u120d\u134d \u1230\u120c\u12f3 \u12d3\u12ed\u1290\u1275"
   },

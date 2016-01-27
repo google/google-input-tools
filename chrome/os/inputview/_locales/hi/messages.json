@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "\u092a\u094d\u0930\u0924\u0940\u0915\u094d\u0937\u093e \u0915\u0930\u0947\u0902"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "\u0915\u0940\u092c\u094b\u0930\u094d\u0921 \u092a\u094d\u0930\u0915\u093e\u0930"
   },

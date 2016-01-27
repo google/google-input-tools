@@ -187,6 +187,7 @@ i18n.input.lang.InputToolCode = {
   KEYBOARD_SENECA: 'see-t-k0-und',
   KEYBOARD_SERBIAN_CYRILLIC: 'sr-cyrl-t-k0-und',
   KEYBOARD_SERBIAN_LATIN: 'sr-latn-t-k0-und',
+  KEYBOARD_SINDHI: 'sd-t-k0-und',
   KEYBOARD_SINHALA: 'si-t-k0-und',
   KEYBOARD_SLOVAK: 'sk-t-k0-und',
   KEYBOARD_SLOVAK_QWERTY: 'sk-t-k0-qwerty',
@@ -230,6 +231,26 @@ i18n.input.lang.InputToolCode = {
   KEYBOARD_VIETNAMESE_VNI: 'vi-t-k0-vni',
   KEYBOARD_WELSH: 'cy-t-k0-und',
   KEYBOARD_YIDDISH: 'yi-t-k0-und',
+
+  // Accents
+  KEYBOARD_GENMAN_ACCENTS: 'de-t-k0-accents',
+  KEYBOARD_SPANISH_ACCENTS: 'es-t-k0-accents',
+  KEYBOARD_FRENCH_ACCENTS: 'fr-t-k0-accents',
+  KEYBOARD_ITALIAN_ACCENTS: 'it-t-k0-accents',
+  EYBOARD_DUTCH_ACCENTS: 'nl-t-k0-accents',
+  KEYBOARD_POLISH_ACCENTS: 'pl-t-k0-accents',
+  KEYBOARD_PORTUGUESE_BRAZIL_ACCENTS: 'pt-br-t-k0-accents',
+  KEYBOARD_PORTUGUESE_PORTUGAL_ACCENTS: 'pt-pt-t-k0-accents',
+  // Gmail doesn't allow any string prefix is 'tr'.
+  // String with 'tr' prefix will obfuscated in css compiling pharse.
+  KEYBOARD_TURKISH_F_ACCENTS: 'tr' + '-t-k0-f-accents',
+  KEYBOARD_TURKISH_Q_ACCENTS: 'tr' + '-t-k0-q-accents',
+  KEYBOARD_CORSICAN_ACCENTS: 'co-t-k0-accents',
+  KEYBOARD_HAWAIIAN_ACCENTS: 'haw-t-k0-accents',
+  KEYBOARD_SAMOAN_ACCENTS: 'sm-t-k0-accents',
+  KEYBOARD_SCOTS_GAELIC_ACCENTS: 'gd-t-k0-accents',
+  KEYBOARD_WEST_FRISIAN_ACCENTS: 'fy-t-k0-accents',
+  KEYBORAD_LUXEMBOURGISH_ACCENTS: 'lb-t-k0-accents',
 
   // Handwriting codes
   HANDWRIT_AFRIKAANS: 'af-t-i0-handwrit',

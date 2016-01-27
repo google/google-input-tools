@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Odota"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "N\u00e4pp\u00e4imist\u00f6n tyyppi"
   },

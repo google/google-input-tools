@@ -438,7 +438,7 @@ InputTool.prototype.parseLayoutCode_ = function() {
       var matches = inputToolType.match(/k0-(.*)/);
       if (matches[1]) {
         this.layoutCode = countryCode + '_' + matches[1].replace(
-            'qwerty', 'phone');
+            'qwerty', 'phone').replace('-', '_');
       }
     }
   }

@@ -136,7 +136,7 @@ goog.require('i18n.input.chrome.inputview.content.util');
       mapping[key['spec'][SpecNodeName.ID]] = viewIdPrefix + i;
     });
 
-    var result = [];
+    var result = {};
     result[SpecNodeName.KEY_LIST] = keyList;
     result[SpecNodeName.MAPPING] = mapping;
     result[SpecNodeName.LAYOUT] = 'jpkbd';

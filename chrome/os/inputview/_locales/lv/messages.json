@@ -3397,6 +3397,9 @@
   "wait": {
     "message": "Gaid\u012bt"
   },
+  "xkb_layout": {
+    "message": "Keyboard layouts"
+  },
   "zhuyin_keyboard_layout": {
     "message": "Tastat\u016bras veids"
   },

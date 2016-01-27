@@ -772,7 +772,8 @@ KeysetView.prototype.createKey_ = function(spec, hasAltGrCharacterInTheKeyset) {
           characters);
       var enableShiftRendering = !!spec[SpecNodeName.ENABLE_SHIFT_RENDERING];
       elem = new content.CharacterKey(id, keyCode || 0,
-          characters, isLetterKey, hasAltGrCharacterInTheKeyset[isLetterKey],
+          characters, isLetterKey,
+          hasAltGrCharacterInTheKeyset[isLetterKey ? 1 : 0],
           this.dataModel_.settings.alwaysRenderAltGrCharacter,
           this.dataModel_.stateManager,
           goog.i18n.bidi.isRtlLanguage(this.languageCode),
